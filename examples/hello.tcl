@@ -1,0 +1,2 @@
+# prototypical
+puts "Hello World"
