@@ -256,6 +256,10 @@ env_loop_done:
 .include 'languages/tcl/src/grammar/expr/functions.pir'
 .include 'languages/tcl/src/grammar/expr/operators.pir'
 
+.HLL 'tcl', ''
+.namespace [ 'tcl'; 'mathop' ]
+.include 'languages/tcl/src/mathops.pir'
+
 # Load the standard library
 .HLL 'Tcl', ''
 .namespace []

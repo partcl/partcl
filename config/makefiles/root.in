@@ -49,6 +49,7 @@ runtime/string_to_list.pir \
 runtime/variables.pir \
 runtime/options.pir \
 src/macros.pir \
+src/mathops.pir \
 src/returncodes.pasm \
 src/grammar/expr/expression.pir \
 src/grammar/expr/functions.pir \
