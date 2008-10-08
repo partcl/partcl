@@ -1,0 +1,34 @@
+﻿# $Id: CREDITS 31521 2008-09-30 19:01:38Z moritz $
+
+  Here is the partial list of people who have contributed to ParTcl.
+  It is sorted by name and formatted to allow easy searching.
+  The fields are: name (N), email (E), web-address (W),
+  description (D) and snail-mail address (S).
+
+    Thanks,
+
+    The ParTcl Team
+    PS: Yes, this looks remarkably like the Linux CREDITS format
+    PPS: This file is encoded in UTF-8
+
+----------
+N: Amos Robinson
+D: IMCC Optimizer patches
+D: ParTcl builtins
+E: amos@coscom.net
+
+N: Jerry Gay a.k.a. particle
+E: Jerry.Gay@gmail.com
+D: twiddles random bits
+S: Seattle, WA
+
+N: Matt Diephouse
+D: Run Tcl test suite in partcl, and add various partcl bits
+
+N: Thilo Planz
+D: partcl tests and inspiration
+
+N: Will "Coke" Coleda
+E: will@coleda.com
+D: Tcl language (partcl), APL, website, various languages/ upkeep, misc.
+
