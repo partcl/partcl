@@ -4,11 +4,11 @@
 
 Track our progress against the test suite.
 
-Given a file containing tcl-style test output (and a little bit more),
-overwrite one file with the summary lines only, and append a summary of
-that to another file.
+Run the equivalent of 'make spectest' and update docs/* with the findings
+of the current run.
 
-Requires tcl.pbc
+Requires tcl.pbc, and should be run against an up to date partcl checkout with
+no local modifications.
 
 =cut
 
