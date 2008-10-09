@@ -1,8 +1,4 @@
-I'm happy to distribute under the same license as parrot itself, and
-to assign the copyright to The Perl Foundation.
+This project is distributed under the Artistic License and is copyright
+The Perl Foundation.
 
-(perhaps this will encourage more people to contribute. =-)
-
-Will "Coke" Coleda                                    will at coleda dot com
-
-library/ is covered by library/license.terms
+Except the directory "library", which is covered by library/license.terms
