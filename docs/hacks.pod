@@ -76,7 +76,8 @@ to interoperate.
 
 At the moment, there doesn't seem to be a parrot method for determining if
 a filehandle was opened for reading/writing. We can work around this by
-tracking it in a hash in the _Tcl namespace.
+create a parrot-specific subclass of IO and tracking the information
+ourselves.
 
 =back
 
