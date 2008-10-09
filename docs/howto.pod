@@ -1,27 +1,6 @@
-=head1 contributing to tcl/parrot
-
-A brief overview on how to help out, if you're interested. In general, 
-it's ok to send patches for tcl to the RT system for anything that isn't
-"BIG STUFF" - those, please bounce off the MAINTAINERS first.
-We'd prefer C<diff -u> patches, but are happy to take complete files as well.
-
-Since partcl is bundled with the parrot source, svn access is handled via
-the same mechanism as for parrot itself. 
-
 =head1 BIG STUFF
 
 =over 4
-
-=item Writing Builtins
-
-partcl is a compiler. Given a section of tcl code, it translates that code
-into an AST (in the form of a Tcl* object from lib/*). Once a section of code
-has been translated, the object's C<compile> method is invoked, which then
-generates PIR which can be compiled by parrot.
-
-The commands themselves are all dispatched at runtime. These are all written
-in PIR, and can be found, e.g. in F<runtime/builtins/while.pir>. These variants
-take a variable number of already compiled arguments at runtime. 
 
 =item speed
 
@@ -35,8 +14,6 @@ course be applied.
 We're currently missing some things that require support from parrot. See
 L<hacks.pod> for a list. In general, though, a lot of what we need to do is
 possible with parrot.
-
-If you're looking for something to to do, see L<TODO> one level up.
 
 =back
 
@@ -60,8 +37,7 @@ are already documented at L<http://www.tcl.tk/man/tcl8.5/TclCmd/contents.htm>
 =item Missing Commands
 
 Every builtin command corresponds to an appropriately named file in
-C<src/builtin> or C<runtime/builtin>. Use a similar command as a
-template
+C<runtime/builtin>. Use a similar command as a template.
 
 If the return value would be TCL_OK, then simply C<.return> the value from the
 sub. For a standard error, just use parrot's C<die> opcode. For any other
