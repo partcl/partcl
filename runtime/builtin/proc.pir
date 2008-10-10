@@ -250,11 +250,11 @@ END_PIR
   .local pmc ns_target
   ns_target = get_hll_namespace
 
-  .local pmc iter, sub_ns
-  iter = new 'Iterator', ns
+  .local pmc iterator, sub_ns
+  iterator = iter ns
 walk_ns:
-  unless iter goto done_walk
-  sub_ns = shift iter
+  unless iterator goto done_walk
+  sub_ns = shift iterator
   ns_target = ns_target[sub_ns]
   goto walk_ns
 done_walk:

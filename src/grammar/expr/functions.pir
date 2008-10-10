@@ -409,12 +409,12 @@ is_string:
 .sub '&max'
     .param pmc args :slurpy
 
-    .local pmc iter, max
-    iter = new 'Iterator', args
-    max  = shift iter
+    .local pmc iterator, max
+    iterator = iter args
+    max  = shift iterator
 loop:
-    unless iter goto done
-    $P0 = shift iter
+    unless iterator goto done
+    $P0 = shift iterator
     unless $P0 > max goto loop
     max = $P0
     goto loop
@@ -425,12 +425,12 @@ done:
 .sub '&min'
     .param pmc args :slurpy
 
-    .local pmc iter, min
-    iter = new 'Iterator', args
-    min  = shift iter
+    .local pmc iterator, min
+    iterator = iter args
+    min  = shift iterator
 loop:
-    unless iter goto done
-    $P0 = shift iter
+    unless iterator goto done
+    $P0 = shift iterator
     unless $P0 < min goto loop
     min = $P0
     goto loop

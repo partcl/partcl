@@ -189,7 +189,7 @@ bad_args:
 check_arg:
   # there's no default. is there even an arg?
   $P3 = toList($P9)
-  $P4 = new 'Iterator', $P3
+  $P4 = iter $P3
 loop:
   unless $P4 goto not_argument
   $S1 = shift $P4
@@ -238,8 +238,7 @@ bad_args:
   .local pmc mathfunc,iterator,retval
 
   mathfunc = get_root_namespace ['tcl'; 'tcl'; 'mathfunc']
-  iterator = new 'Iterator', mathfunc
-  iterator = 0
+  iterator = iter mathfunc
   retval = new 'TclList'
 
   .local pmc globber,rule,match
@@ -297,11 +296,11 @@ bad_args:
     .local pmc ns
     ns = get_root_global 'tcl'
 
-    .local pmc iter
-    iter = new 'Iterator', ns
+    .local pmc iterator
+    iterator = iter ns
   iter_loop:
-     unless iter goto iter_loop_end
-     $S1 = shift iter
+     unless iterator goto iter_loop_end
+     $S1 = shift iterator
      $S2 = substr $S1, 0, 1
      unless $S2 == '&' goto iter_loop
      $S1 = substr $S1, 1
@@ -409,13 +408,13 @@ iterate:
 
   lexpad     = call_chain[-1]
 
-  .local pmc    iter, retval
+  .local pmc    iterator, retval
   .local string elem
-  iter   = new 'Iterator', lexpad
+  iterator = iter lexpad
   retval = new 'TclList'
 loop:
-  unless iter goto end
-  elem = shift iter
+  unless iterator goto end
+  elem = shift iterator
   $S0 = substr elem, 0, 1, ''
   unless $S0 == '$' goto loop
   push retval, elem
@@ -476,8 +475,7 @@ find_info_level:
   .local pmc ns,iterator,retval
 
   ns = get_root_namespace ['tcl']
-  iterator = new 'Iterator', ns
-  iterator = 0
+  iterator = iter ns
   retval = new 'TclList'
 
   .local pmc globber,rule,match

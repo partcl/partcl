@@ -13,11 +13,11 @@
     storeVar = get_root_global ['_tcl'], 'storeVar'
     splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
 
-    .local pmc iter, name, value, ns
-    iter = new 'Iterator', argv
+    .local pmc iterator, name, value, ns
+    iterator = iter argv
 loop:
-    unless iter goto end
-    name = shift iter
+    unless iterator goto end
+    name = shift iterator
 
     # check to see if name is an array
     $S0  = substr name, -1, 1
@@ -31,8 +31,8 @@ loop:
     die $S0
 
 store:
-    unless iter goto no_value
-    value = shift iter
+    unless iterator goto no_value
+    value = shift iterator
 
     ns = splitNamespace(name)
     $S0 = ns[-1]

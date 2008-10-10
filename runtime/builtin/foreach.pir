@@ -30,15 +30,15 @@
 
   .local int iterations
   iterations = 0
-  .local pmc iter
-  iter = new 'Iterator', argv
+  .local pmc iterator
+  iterator = iter argv
 arg_loop:
-  unless iter goto arg_done
+  unless iterator goto arg_done
 
   .local pmc varList, list
-  varList = shift iter
+  varList = shift iterator
   varList = toList(varList)
-  list    = shift iter
+  list    = shift iterator
   list    = toList(list)
 
   $I0 = elements varList
@@ -50,7 +50,7 @@ arg_loop:
   $N0 = $N1 / $N0
   $I0 = ceil $N0
 
-  list = new 'Iterator', list
+  list = iter list
   push varLists, varList
   push lists, list
 

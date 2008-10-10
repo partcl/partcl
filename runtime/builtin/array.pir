@@ -178,7 +178,6 @@ odd_args:
 .end
 
 
-.include 'iterator.pasm'
 .sub 'get'
   .param int is_array
   .param pmc the_array
@@ -202,7 +201,7 @@ no_args:
 
   .local pmc retval
 
-  .local pmc iter, val
+  .local pmc iterator, val
   .local string str
 
   .local pmc globber
@@ -210,7 +209,7 @@ no_args:
   .local pmc rule
   rule = globber.'compile'(match_str)
 
-  iter = new 'Iterator', the_array
+  iterator = iter the_array
 
   retval = new 'TclList'
 
@@ -218,8 +217,8 @@ no_args:
   count = 0
 
 push_loop:
-  unless iter goto push_end
-  str = shift iter
+  unless iterator goto push_end
+  str = shift iterator
 
   # check for match
   $P2 = rule(str)
@@ -267,7 +266,7 @@ no_args:
 
   .local pmc retval
 
-  .local pmc iter, val
+  .local pmc iterator, val
   .local string str
 
   .local pmc globber
@@ -275,11 +274,11 @@ no_args:
   .local pmc rule
   (rule, $P0, $P1) = globber.'compile'(match_str)
 
-  iter = new 'Iterator', the_array
+  iterator = iter the_array
 
 push_loop:
-  unless iter goto push_end
-  str = shift iter
+  unless iterator goto push_end
+  str = shift iterator
 
  # check for match
   $P2 = rule(str)
@@ -351,7 +350,7 @@ not_array:
   .param pmc the_array
   .param string pattern
 
-  .local pmc iter
+  .local pmc iterator
   .local string name
 
   .local pmc globber, retval
@@ -359,7 +358,7 @@ not_array:
   .local pmc rule
   rule = globber.'compile'(pattern)
 
-  iter = new 'Iterator', the_array
+  iterator = iter the_array
 
   retval = new 'TclList'
 
@@ -367,8 +366,8 @@ not_array:
   count = 0
 
 check_loop:
-  unless iter goto check_end
-  name = shift iter
+  unless iterator goto check_end
+  name = shift iterator
   $P0 = rule(name)
   unless $P0 goto check_loop
 
@@ -385,17 +384,17 @@ check_end:
   .param pmc the_array
   .param string match
 
-  .local pmc iter, retval
+  .local pmc iterator, retval
   .local string name
 
-  iter = new 'Iterator', the_array
+  iterator = iter the_array
 
   retval = new 'TclString'
   retval = ''
 
 check_loop:
-  unless iter goto check_end
-  name = shift iter
+  unless iterator goto check_end
+  name = shift iterator
 
   if name == match goto found_match
   branch check_loop
@@ -411,7 +410,7 @@ found_match:
   .param pmc the_array
   .param string pattern
 
-  .local pmc iter
+  .local pmc iterator
   .local string name
 
   .local pmc tclARE, retval
@@ -419,7 +418,7 @@ found_match:
   .local pmc rule
   rule = tclARE(pattern)
 
-  iter = new 'Iterator', the_array
+  iterator = iter the_array
 
   retval = new 'TclList'
 
@@ -427,8 +426,8 @@ found_match:
   count = 0
 
 check_loop:
-  unless iter goto check_end
-  name = shift iter
+  unless iterator goto check_end
+  name = shift iterator
   $P0 = rule(name)
   unless $P0 goto check_loop
 

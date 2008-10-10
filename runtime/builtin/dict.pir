@@ -206,7 +206,7 @@ bad_args:
 
   .local pmc rule, match, iterator
   rule = globber.'compile'(pattern)
-  iterator = new 'Iterator', dictionary
+  iterator = iter dictionary
 
   if option == 'key' goto do_key_loop
 
@@ -248,7 +248,7 @@ do_script_prelude:
   valueVar = vars[1]
 
   .local pmc iterator
-  iterator = new 'Iterator', dictionary
+  iterator = iter dictionary
   .local pmc retval
   retval = new 'TclDict'
   .local pmc body_proc
@@ -324,7 +324,7 @@ bad_args:
   code = compileTcl(body)
 
   .local pmc iterator
-  iterator = new 'Iterator', dictionary
+  iterator = iter dictionary
 for_loop:
   unless iterator goto for_loop_done
   $P1 = shift iterator
@@ -578,7 +578,7 @@ got_pattern:
   rule = globber.'compile'(pattern)
 
   .local pmc iterator
-  iterator = new 'Iterator', dictionary
+  iterator = iter dictionary
 
   .local pmc results, key
   results = new 'TclList'
@@ -619,7 +619,7 @@ dict_loop:
   unless $I1 goto done
   dictionary = shift argv
   dictionary = toDict(dictionary)
-  iterator = new 'Iterator', dictionary
+  iterator = iter dictionary
 key_loop:
   unless iterator goto dict_loop
   key = shift iterator
@@ -895,8 +895,8 @@ done_key_loop:
 
 # go through the varnames, setting the appropriate keys to those values.
   .local pmc iter1,iter2
-  iter1 = new 'Iterator', keys
-  iter2 = new 'Iterator', varnames
+  iter1 = iter keys
+  iter2 = iter varnames
 set_loop:
   unless iter1 goto set_loop_done
   $P1 = shift iter1
@@ -946,7 +946,7 @@ got_pattern:
   rule = globber.'compile'(pattern)
 
   .local pmc iterator
-  iterator = new 'Iterator', dictionary
+  iterator = iter dictionary
 
   .local pmc results, key, value
   results = new 'TclList'
@@ -1006,7 +1006,7 @@ while_keys:
 
 done_keys:
   .local pmc iterator
-  iterator = new 'Iterator', dictionary
+  iterator = iter dictionary
 
 alias_keys:
   unless iterator goto done_alias
@@ -1019,7 +1019,7 @@ done_alias:
   $P1 = compileTcl(body)
   retval = $P1()
 
-  iterator = new 'Iterator', dictionary
+  iterator = iter dictionary
 update_keys:
   unless iterator goto done_update
   $P1 = shift iterator

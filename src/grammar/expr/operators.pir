@@ -980,12 +980,12 @@ empty_string:
     $P0 = get_root_namespace
     toList = $P0['_tcl'; 'toList']
 
-    .local pmc iter
+    .local pmc iterator
     list = toList(list)
-    iter = new 'Iterator', list
+    iterator = iter list
 loop:
-    unless iter goto false
-    $P0 = shift iter
+    unless iterator goto false
+    $P0 = shift iterator
     $I0 = 'infix:=='(elem, $P0)
     if $I0 goto true
     goto loop
@@ -1003,12 +1003,12 @@ false:
     $P0 = get_root_namespace
     toList = $P0['_tcl'; 'toList']
 
-    .local pmc iter
+    .local pmc iterator
     list = toList(list)
-    iter = new 'Iterator', list
+    iterator = iter list
 loop:
-    unless iter goto true
-    $P0 = shift iter
+    unless iterator goto true
+    $P0 = shift iterator
     $I0 = 'infix:=='(elem, $P0)
     if $I0 goto false
     goto loop

@@ -24,8 +24,8 @@
   list = toList(list)
   pattern = shift argv
 
-  .local pmc iter
-  iter = new 'Iterator', list
+  .local pmc iterator
+  iterator = iter list
 
   .local int pos, result
   result = -1
@@ -49,8 +49,8 @@ glob_begin:
   rule = globber.'compile'(pattern)
 
 glob_loop:
-  unless iter goto done
-  $S0 = shift iter
+  unless iterator goto done
+  $S0 = shift iterator
   unless lc goto glob_match
   $S0 = downcase $S0
 glob_match:
@@ -69,8 +69,8 @@ regexp_begin: # very similar to glob_...
   rule = regexp(pattern)
 
 regexp_loop:
-  unless iter goto done
-  $S0 = shift iter
+  unless iterator goto done
+  $S0 = shift iterator
   unless lc goto regexp_match
   $S0 = downcase $S0
 regexp_match:
@@ -83,8 +83,8 @@ regexp_next:
   goto regexp_loop
 
 exact_loop:
-  unless iter goto done
-  $S0 = shift iter
+  unless iterator goto done
+  $S0 = shift iterator
   unless lc goto exact_match
   $S0 = downcase $S0
 exact_match:

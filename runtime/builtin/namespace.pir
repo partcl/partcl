@@ -319,11 +319,11 @@ getname:
   ns = get_root_namespace ns_name
   if null ns goto unknown_namespace
 
-  .local pmc iter
-  iter = new 'Iterator', ns
+  .local pmc iterator
+  iterator = iter ns
 loop:
-  unless iter goto end
-  $S0 = shift iter
+  unless iterator goto end
+  $S0 = shift iterator
   $P0 = ns[$S0]
   $I0 = isa $P0, 'NameSpace'
   unless $I0 goto loop

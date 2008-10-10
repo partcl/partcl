@@ -70,8 +70,8 @@ bad_args:
 
     .local pmc setVar, variables, values
     setVar = get_root_global ['_tcl'], 'setVar'
-    variables = new 'Iterator', argv
-    values    = new 'Iterator', ret
+    variables = iter argv
+    values    = iter ret
 loop:
     unless variables goto end
     unless values    goto end

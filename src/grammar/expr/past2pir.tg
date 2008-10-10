@@ -43,11 +43,11 @@ transform pir (PAST::Program) {
     epoch = get_root_global ['_tcl'], 'epoch'
 END_PIR
 
-    .local pmc iter, child
-    iter = node.'child_iter'()
+    .local pmc iterator, child
+    iterator = node.'child_iter'()
 loop:
-    unless iter goto end
-    child = shift iter
+    unless iterator goto end
+    child = shift iterator
     $P0 = tree.'get'('pir', child)
     $S0 = $P0
     pir .= $S0
@@ -129,15 +129,15 @@ END_PIR
 }
 
 transform pir (PAST::Op) {
-    .local pmc args,iter,pir
+    .local pmc args,iterator,pir
     .local pmc return_register
  
     pir = new 'CodeString'
     args = new 'TclList'
-    iter = node.'child_iter'()
+    iterator = node.'child_iter'()
   iter_loop: 
-    unless iter goto iter_done
-    $P1 = shift iter
+    unless iterator goto iter_done
+    $P1 = shift iterator
     $P0 = tree.get('pir', $P1)
     return_register = $P1['ret']
     push args, return_register
@@ -164,15 +164,15 @@ transform pir (PAST::Op) {
 }
 
 transform pir (PAST::MathFunc) {
-    .local pmc args,iter,pir
+    .local pmc args,iterator,pir
     .local pmc return_register
  
     pir  = new 'CodeString'
     args = new 'TclList'
-    iter = node.'child_iter'()
+    iterator = node.'child_iter'()
   iter_loop: 
-    unless iter goto iter_done
-    $P1 = shift iter
+    unless iterator goto iter_done
+    $P1 = shift iterator
     $P0 = tree.get('pir', $P1)
     return_register = $P1['ret']
     push args, return_register
@@ -196,21 +196,21 @@ transform pir (PAST::MathFunc) {
 }
 
 transform pir (PAST::StaticCommand) {
-    .local pmc args, children, iter, pir
+    .local pmc args, children, iterator, pir
     .local string reg
     
     pir  = new 'CodeString'
     args = new 'TclList'
     children = node.'get_children'()
-    iter = new 'Iterator', children
+    iterator = iter children
 
     .local string name
-    $P0  = shift iter
+    $P0  = shift iterator
     name = $P0['value']
 
   iter_loop: 
-    unless iter goto iter_done
-    $P1 = shift iter
+    unless iterator goto iter_done
+    $P1 = shift iterator
     $P0 = tree.get('pir', $P1)
     reg = $P1['ret']
     push args, reg
@@ -308,15 +308,15 @@ END_PIR
 }
 
 transform pir (PAST::DynamicCommand) {
-    .local pmc args, children, iter, pir, reg
+    .local pmc args, children, iterator, pir, reg
     
     pir  = new 'CodeString'
     args = new 'TclList'
     children = node.'get_children'()
-    iter = new 'Iterator', children
+    iterator = iter children
   iter_loop: 
-    unless iter goto iter_done
-    $P1 = shift iter
+    unless iterator goto iter_done
+    $P1 = shift iterator
     $P0 = tree.get('pir', $P1)
     reg = $P1['ret']
     push args, reg

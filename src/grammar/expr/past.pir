@@ -141,7 +141,7 @@ with C<Data::Dumper>.
     .param pmc dumper
     .param string label
     .local string indent, subindent
-    .local pmc iter, val
+    .local pmc iterator, val
     .local string key
     .local pmc hash
     .local int hascapts
@@ -154,18 +154,17 @@ with C<Data::Dumper>.
     print ' @ '
     print $I0
     hascapts = 0
-    iter = new 'Iterator', self
-    iter = 0
+    iterator = iter self
   dump_hash_1:
-    unless iter goto dump_end
+    unless iterator goto dump_end
     if hascapts goto dump_hash_2
     print ' {'
     hascapts = 1
   dump_hash_2:
     print "\n"
     print subindent
-    key = shift iter
-    val = iter[key]
+    key = shift iterator
+    val = iterator[key]
     print '<'
     print key
     print '> => '
@@ -190,8 +189,7 @@ with C<Data::Dumper>.
 
 .sub 'child_iter' :method
     $P0 = getattribute self, '@.children'
-    $P1 = new 'Iterator', $P0
-    $P1 = 0
+    $P1 = iter $P0
     .return ($P1)
 .end
 

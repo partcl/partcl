@@ -144,7 +144,7 @@ nested:
 transform past (operator) {
     # for each child of this operator, dispatch to get the past,
     # use those as our children.
-    .local pmc children, iter, past
+    .local pmc children, iterator, past
     .local string name
 
     name = node['type']
@@ -157,10 +157,10 @@ transform past (operator) {
     past['opfunc'] = name
     $P0 = node.'get_array'()
     if null $P0 goto iter_end
-    iter = new 'Iterator', $P0
+    iterator = iter $P0
   iter_loop:
-    unless iter goto iter_end
-    $P0 = shift iter
+    unless iterator goto iter_end
+    $P0 = shift iterator
     $S0 = $P0
     $P1 = tree.'get'('dispatch', $P0, 'TclExpr::Grammar')
     past.'add_child'($P1)
@@ -192,11 +192,11 @@ transform past (program) {
     .local pmc past
     past = new 'PAST::Program'
 
-    .local pmc iter
-    iter = new 'Iterator', node
+    .local pmc iterator
+    iterator = iter node
 loop:
-    unless iter goto end
-    $P0 = shift iter
+    unless iterator goto end
+    $P0 = shift iterator
     $P0 = tree.'get'('past', $P0, 'command')
     if null $P0 goto loop
     past.'add_child'($P0)
@@ -271,11 +271,11 @@ has_argc:
     if argc < 1 goto too_few
     function_name = node['nary_function']
 
-    .local pmc iter
-    iter = new 'Iterator', args
+    .local pmc iterator
+    iterator = iter args
   nary_loop:
-    unless iter goto arguments
-    $P0 = shift iter
+    unless iterator goto arguments
+    $P0 = shift iterator
     $P0 = tree.'get'('expression', $P0)
     past.'add_child'($P0)
     goto nary_loop
@@ -516,13 +516,13 @@ empty_string:
 
 transform past (array) {
     .local pmc past
-    .local pmc iter
-    iter = new 'Iterator', node
+    .local pmc iterator
+    iterator = iter node
     null past
   iter_loop:
-    unless iter goto iter_end
+    unless iterator goto iter_end
     .local pmc cnode, cpast
-    cnode = shift iter
+    cnode = shift iterator
     $I0 = exists cnode['substitution']
     unless $I0 goto cpast_str
     cnode = cnode['substitution']
@@ -554,7 +554,7 @@ transform past (array) {
 }
 
 transform past (command) {
-    .local pmc past, words, iter
+    .local pmc past, words, iterator
     .local string node_type
 
     words = node['word']
@@ -577,10 +577,10 @@ create_node:
     past.set_node(node)
     past.'add_child'(command)
 
-    iter = new 'Iterator', words
+    iterator = iter words
 loop2:
-    unless iter goto end2
-    $P0 = shift iter
+    unless iterator goto end2
+    $P0 = shift iterator
     $P1 = tree.'get'('dispatch', $P0, 'TclExpr::Grammar')
     past.'add_child'($P1)
     goto loop2

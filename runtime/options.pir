@@ -148,7 +148,7 @@ init:
   .local pmc with_type, results
   with_type = new 'Hash'
   results = new 'Hash'
-  $P1 = new 'Iterator', switches
+  $P1 = iter switches
   .local string switch,type
 init_loop:
   unless $P1 goto init_loop_done

@@ -68,8 +68,7 @@ providing a compreg-compatible method.
   env = new 'Env'
   tcl_env = new 'TclArray'
 
-  iterator = new 'Iterator', env
-  iterator = 0
+  iterator = iter env
 
   .local string key,value
 env_loop:

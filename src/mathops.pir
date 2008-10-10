@@ -39,14 +39,14 @@ bad_args:
      .local pmc toNumber
      toNumber = get_root_global ['_tcl'], 'toNumber'
 
-    .local pmc aiter, arg
-    aiter = iter args
+    .local pmc iterator, arg
+    iterator = iter args
     .local pmc result
     result = new TclInt
     result = 0
 loop_begin:
-    unless aiter goto loop_end
-    arg = shift aiter
+    unless iterator goto loop_end
+    arg = shift iterator
     push_eh bad_arg
         arg = toNumber(arg)
     pop_eh
@@ -83,12 +83,12 @@ empty_string:
      pop_eh
      if argc == 1 goto unary
 
-    .local pmc aiter, arg
-    aiter = iter args
+    .local pmc iterator, arg
+    iterator = iter args
     .local pmc result
 loop_begin:
-    unless aiter goto loop_end
-    arg = shift aiter
+    unless iterator goto loop_end
+    arg = shift iterator
     push_eh bad_arg
         arg = toNumber(arg)
     pop_eh
@@ -122,14 +122,14 @@ bad_args:
      .local pmc toNumber
      toNumber = get_root_global ['_tcl'], 'toNumber'
 
-    .local pmc aiter, arg
-    aiter = iter args
+    .local pmc iterator, arg
+    iterator = iter args
     .local pmc result
     result = new TclInt
     result = 0
 loop_begin:
-    unless aiter goto loop_end
-    arg = shift aiter
+    unless iterator goto loop_end
+    arg = shift iterator
     push_eh bad_arg
         arg = toNumber(arg)
     pop_eh
@@ -162,12 +162,12 @@ bad_arg:
      pop_eh
      if argc == 1 goto unary
 
-    .local pmc aiter, arg
-    aiter = iter args
+    .local pmc iterator, arg
+    iterator = iter args
     .local pmc result
 loop_begin:
-    unless aiter goto loop_end
-    arg = shift aiter
+    unless iterator goto loop_end
+    arg = shift iterator
     push_eh bad_arg
         arg = toNumber(arg)
     pop_eh
@@ -259,11 +259,11 @@ bad_args:
 
     if argc == 1 goto unary
 
-    .local pmc aiter, arg
-    aiter = iter args
+    .local pmc iterator, arg
+    iterator = iter args
 loop_begin:
-    unless aiter goto loop_end
-    arg = shift aiter
+    unless iterator goto loop_end
+    arg = shift iterator
     push_eh bad_arg
         arg = toNumber(arg)
     pop_eh
