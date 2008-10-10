@@ -211,6 +211,8 @@ bad_args:
       b = toNumber(b)
     pop_eh
 
+    if b == 0 goto divide_by_zero
+
     $I0 = isa a, 'TclFloat'
     if $I0 goto is_float
     $I0 = isa b, 'TclFloat'
@@ -230,6 +232,9 @@ empty_string:
 
 is_float:
     die "can't use floating-point value as operand of \"%\""
+
+divide_by_zero:
+    die "divide by zero"
 
 bad_args:
     die "wrong # args: should be \"::tcl::mathop::% integer integer\""
