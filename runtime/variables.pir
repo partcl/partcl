@@ -267,7 +267,6 @@ Gets the actual variable from memory and returns it.
   .param int    depth    :named('depth')  :optional
 
   .local pmc value, ns
-  ns = new 'ResizableStringArray'
 
   .local int absolute
   absolute = 0
