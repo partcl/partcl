@@ -216,9 +216,14 @@ transform pir (PAST::StaticCommand) {
     push args, reg
     pir .= $P0
     $S0 = typeof $P1
-    if $S0 == 'PAST::Expand' goto iter_loop
+    if $S0 == 'PAST::Expand' goto iter_expand
     unless $S0 == 'PAST::Var' goto iter_loop
     pir.emit("    %0 = clone %0", reg)
+    goto iter_loop
+  iter_expand:
+    $P0 = pop args
+    reg .= " :flat"
+    push args, reg
     goto iter_loop
   iter_done:
     .local string retval
@@ -316,7 +321,22 @@ transform pir (PAST::DynamicCommand) {
     reg = $P1['ret']
     push args, reg
     pir .= $P0
+    $S0 = typeof $P1
+    if $S0 == 'PAST::Expand' goto iter_expand
     pir.emit("%0 = clone %0", reg)
+    goto iter_loop
+  iter_expand:
+    $P0 = pop args
+    $P0 = reg . " :flat"
+    push args, $P0
+    # this is a dirty hack, but we need to handle the case
+    # where {*}... is the first argument
+    $I0 = args
+    if $I0 != 1 goto iter_loop
+    $S0 = reg
+    $S0 = "shift " . $S0
+    reg = $S0
+    unshift args, reg
     goto iter_loop
   iter_done:
     .local pmc retval, name
@@ -327,7 +347,6 @@ transform pir (PAST::DynamicCommand) {
     $S2 = pir.unique('done_')
 
     $P0 = shift children
-    $S0 = $P0['value']
     $S0 = join ", ", args
     $S4 = pir.unique('curr_namespace')
     $S5 = pir.unique('root_namespace')
@@ -388,7 +407,6 @@ transform pir (PAST::Expand) {
   %0 = toList(%0)
 END_PIR
 
-    $S0 .= ' :flat'
     node['ret'] = $S0
     .return(pir)
 }
