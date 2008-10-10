@@ -363,8 +363,7 @@ Sets the actual variable from memory.
   .param int    isglobal :named('global') :optional
   .param int    depth    :named('depth')  :optional
 
-  .local pmc value, ns
-  ns = new 'ResizableStringArray'
+  .local pmc ns
 
   $I0 = index name, '::'
   if $I0 != -1 goto global_var
