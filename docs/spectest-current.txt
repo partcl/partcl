@@ -1,6 +1,17 @@
+append.test:	Total	37	Passed	33	Skipped	0	Failed	4
+appendComp.test:	Total	40	Passed	31	Skipped	0	Failed	9
+apply.test:	Total	41	Passed	3	Skipped	0	Failed	38
+chan.test:	Total	35	Passed	2	Skipped	0	Failed	33
+cmdIL.test:	Total	122	Passed	76	Skipped	3	Failed	43
+compExpr-old.test:	Total	190	Passed	171	Skipped	4	Failed	15
+compExpr.test:	Total	80	Passed	75	Skipped	0	Failed	5
+compile.test:	Total	94	Passed	40	Skipped	29	Failed	25
+concat.test:	Total	9	Passed	9	Skipped	0	Failed	0
 error.test:	Total	34	Passed	20	Skipped	0	Failed	14
 eval.test:	Total	12	Passed	11	Skipped	0	Failed	1
 event.test:	Total	64	Passed	3	Skipped	31	Failed	30
+for-old.test:	Total	9	Passed	9	Skipped	0	Failed	0
+for.test:	Total	50	Passed	42	Skipped	0	Failed	8
 foreach.test:	Total	40	Passed	39	Skipped	0	Failed	1
 format.test:	Total	256	Passed	187	Skipped	29	Failed	40
 get.test:	Total	20	Passed	3	Skipped	14	Failed	3

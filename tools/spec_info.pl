@@ -19,6 +19,10 @@ my $svn_info  = `svn info .`;
 $svn_info =~ /Revision:\s+(\d+)/sm;
 my $revision = $1;
 
+$svn_info  = `svn info ..`;
+$svn_info =~ /Revision:\s+(\d+)/sm;
+my $parrot_revision = $1;
+
 open my $fh, "$^X tools/tcl_test.pl|";
 
 my $csv = "docs/spectest-progress.csv";
@@ -46,8 +50,8 @@ while (my $line = <$fh>) {
  }
 }
 
-printf {$csv_fh} '"%s",%i,%i,%i,%i,%i,%i' . "\n",
-  $time,$revision,$files,$total,$passed,$failed,$skipped;
+printf {$csv_fh} '"%s",%i,%i,%i,%i,%i,%i,%i' . "\n",
+  $time,$revision,$parrot_revision,$files,$total,$passed,$failed,$skipped;
 
 close $sum_fh;
 close $csv_fh;
