@@ -41,7 +41,53 @@ PMCS = \
  tclarray \
  tcldict
 
-RUNTIME_PIR = $(addprefix runtime/builtin/,$(notdir $(wildcard languages/tcl/runtime/builtin/*.pir)))
+RUNTIME_PIR = runtime/builtin/after.pir        runtime/builtin/linsert.pir \
+runtime/builtin/append.pir       runtime/builtin/list.pir \
+runtime/builtin/apply.pir        runtime/builtin/llength.pir \
+runtime/builtin/array.pir        runtime/builtin/load.pir \
+runtime/builtin/auto_execok.pir  runtime/builtin/lrange.pir \
+runtime/builtin/auto_load.pir    runtime/builtin/lrepeat.pir \
+runtime/builtin/bgerror.pir      runtime/builtin/lreplace.pir \
+runtime/builtin/binary.pir       runtime/builtin/lreverse.pir \
+runtime/builtin/break.pir        runtime/builtin/lsearch.pir \
+runtime/builtin/catch.pir        runtime/builtin/lset.pir \
+runtime/builtin/cd.pir           runtime/builtin/lsort.pir \
+runtime/builtin/chan.pir         runtime/builtin/memory.pir \
+runtime/builtin/clock.pir        runtime/builtin/namespace.pir \
+runtime/builtin/close.pir        runtime/builtin/open.pir \
+runtime/builtin/concat.pir       runtime/builtin/package.pir \
+runtime/builtin/continue.pir     runtime/builtin/parray.pir \
+runtime/builtin/dde.pir          runtime/builtin/pid.pir \
+runtime/builtin/dict.pir         runtime/builtin/proc.pir \
+runtime/builtin/encoding.pir     runtime/builtin/puts.pir \
+runtime/builtin/eof.pir          runtime/builtin/pwd.pir \
+runtime/builtin/error.pir        runtime/builtin/read.pir \
+runtime/builtin/eval.pir         runtime/builtin/regexp.pir \
+runtime/builtin/exec.pir         runtime/builtin/registry.pir \
+runtime/builtin/exit.pir         runtime/builtin/regsub.pir \
+runtime/builtin/expr.pir         runtime/builtin/rename.pir \
+runtime/builtin/fblocked.pir     runtime/builtin/return.pir \
+runtime/builtin/fconfigure.pir   runtime/builtin/scan.pir \
+runtime/builtin/fcopy.pir        runtime/builtin/seek.pir \
+runtime/builtin/file.pir         runtime/builtin/set.pir \
+runtime/builtin/fileevent.pir    runtime/builtin/socket.pir \
+runtime/builtin/flush.pir        runtime/builtin/source.pir \
+runtime/builtin/for.pir          runtime/builtin/split.pir \
+runtime/builtin/foreach.pir      runtime/builtin/string.pir \
+runtime/builtin/format.pir       runtime/builtin/subst.pir \
+runtime/builtin/gets.pir         runtime/builtin/switch.pir \
+runtime/builtin/glob.pir         runtime/builtin/tell.pir \
+runtime/builtin/global.pir       runtime/builtin/time.pir \
+runtime/builtin/history.pir      runtime/builtin/trace.pir \
+runtime/builtin/if.pir           runtime/builtin/unknown.pir \
+runtime/builtin/incr.pir         runtime/builtin/unload.pir \
+runtime/builtin/info.pir         runtime/builtin/unset.pir \
+runtime/builtin/inline.pir       runtime/builtin/update.pir \
+runtime/builtin/interp.pir       runtime/builtin/uplevel.pir \
+runtime/builtin/join.pir         runtime/builtin/upvar.pir \
+runtime/builtin/lappend.pir      runtime/builtin/variable.pir \
+runtime/builtin/lassign.pir      runtime/builtin/vwait.pir \
+runtime/builtin/lindex.pir       runtime/builtin/while.pir
 
 DEPS = \
 runtime/conversions.pir \
