@@ -367,8 +367,9 @@ bad_args:
 
   if argc != 0 goto bad_args
 
-  $P1 = get_root_global ['tcl'], '$tcl_patchLevel'
-  .return($P1)
+  .local pmc read
+  read = get_root_global ['_tcl'], 'readVar'
+  .return read('tcl_patchLevel')
 
 bad_args:
   die 'wrong # args: should be "info patchlevel"'
@@ -384,7 +385,12 @@ bad_args:
   if argc != 0 goto bad_args
 
   $P1 = get_root_global ['tcl'], '$tcl_library'
+  $S0 = $P1
+  if $S0 == '' goto empty
   .return($P1)
+
+empty:
+  die "no library has been specified for Tcl"
 
 bad_args:
   die 'wrong # args: should be "info library"'
