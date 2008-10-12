@@ -225,14 +225,6 @@ env_loop_done:
   $P1 = new 'TclList'
   store_global 'call_chain', $P1
 
-  # Change counter: when something is compiled, it is compared to
-  # This counter: if the counter hasn't changed since it was compiled,
-  # it's safe to use the inline version (if available)
-  # Otherwise fallback to the interpreted version.
-  $P1 = new 'TclInt'
-  $P1 = 0
-  store_global 'epoch', $P1
-
   # the regex used for namespaces
   .local pmc p6rule, colons
   p6rule = compreg 'PGE::Perl6Regex'

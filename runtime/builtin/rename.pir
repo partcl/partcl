@@ -12,10 +12,6 @@
   oldName = argv[0]
   newName = argv[1]
 
-  # Change the epoch
-  $P0 = get_root_global ['_tcl'], 'epoch'
-  inc $P0
-
   .local pmc sub, args, builtin, ns
 
   $P1 = getinterp
