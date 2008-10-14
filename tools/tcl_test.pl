@@ -46,7 +46,7 @@ my @skipfiles = qw(
   indexObj info init interp io iocmd iogt
   link list lset
   macOSXFCmd macOSXLoad main mathop misc msgcat
-  namespace namespace-old notify
+  namespace notify
   obj opt
   parse parseExpr pid pkg pkgMkIndex platform
   reg regexp regexpComp registry result

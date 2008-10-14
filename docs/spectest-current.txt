@@ -31,6 +31,7 @@ lrepeat.test:	Total	10	Passed	10	Skipped	0	Failed	0
 lreplace.test:	Total	34	Passed	34	Skipped	0	Failed	0
 lsearch.test:	Total	101	Passed	47	Skipped	0	Failed	54
 lsetComp.test:	Total	19	Passed	17	Skipped	0	Failed	2
+namespace-old.test:	Total	126	Passed	62	Skipped	0	Failed	64
 package.test:	Total	16	Passed	6	Skipped	0	Failed	10
 parseOld.test:	Total	179	Passed	146	Skipped	21	Failed	12
 proc-old.test:	Total	75	Passed	49	Skipped	0	Failed	26
@@ -42,12 +43,12 @@ security.test:	Total	1	Passed	1	Skipped	0	Failed	0
 set-old.test:	Total	149	Passed	91	Skipped	0	Failed	58
 set.test:	Total	63	Passed	58	Skipped	1	Failed	4
 split.test:	Total	16	Passed	16	Skipped	0	Failed	0
-stringComp.test:	Total	143	Passed	133	Skipped	0	Failed	10
+stringComp.test:	Total	143	Passed	131	Skipped	0	Failed	12
 switch.test:	Total	108	Passed	66	Skipped	0	Failed	42
 unknown.test:	Total	7	Passed	1	Skipped	0	Failed	6
 uplevel.test:	Total	19	Passed	17	Skipped	0	Failed	2
 upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
-utf.test:	Total	114	Passed	82	Skipped	12	Failed	20
+utf.test:	Total	114	Passed	67	Skipped	12	Failed	35
 var.test:	Total	84	Passed	33	Skipped	17	Failed	34
 while-old.test:	Total	15	Passed	14	Skipped	0	Failed	1
 while.test:	Total	46	Passed	42	Skipped	0	Failed	4
