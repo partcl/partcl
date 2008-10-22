@@ -23,6 +23,7 @@ D: twiddles random bits
 S: Seattle, WA
 
 N: Matt Diephouse
+E: matt at diephouse dot com
 D: Initial run of Tcl's spec test in partcl, namespaces, lots more.
 
 N: Thilo Planz
@@ -31,3 +32,10 @@ D: partcl tests and inspiration
 N: Will "Coke" Coleda
 E: will@coleda.com
 D: ringleader
+S: NY, US
+
+N: Alberto Sim��es
+D: some builtins
+E: ambs@cpan.org
+E: albie@alfarrabio.di.uminho.pt
+W: http://alfarrabio.di.uminho.pt/~albie/
