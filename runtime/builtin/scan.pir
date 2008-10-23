@@ -16,7 +16,7 @@
   toInteger = get_root_global [ '_tcl' ], 'toInteger'
   toNumber = get_root_global [ '_tcl' ], 'toNumber'
   .local pmc decimal
-  decimal = get_root_global ['parrot'; 'TclExpr::Grammar'], 'decimal'
+  decimal = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'decimal'
 
   .local pmc rule, match
 
@@ -323,11 +323,11 @@ handle_decimal:
   goto do_integer
 
 handle_octal:
-  rule = get_root_global ['parrot'; 'TclExpr::Grammar'], 'octal'
+  rule = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'octal'
   goto do_integer
 
 handle_hex:
-  rule = get_root_global ['parrot'; 'TclExpr::Grammar'], 'raw_hex'
+  rule = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'raw_hex'
   match = rule(input, 'pos'=>input_pos, 'grammar'=>'TclExpr::Grammar')
   unless match goto bad_match
   $I0 = match.'to'()
@@ -346,7 +346,7 @@ hex_width:
   goto next
 
 handle_integer:
-  rule = get_root_global ['parrot'; 'TclExpr::Grammar'], 'integer'
+  rule = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'integer'
 do_integer:
   match = rule(input, 'pos'=>input_pos, 'grammar'=>'TclExpr::Grammar')
   unless match goto bad_match
@@ -366,7 +366,7 @@ integer_width:
   goto next
 
 handle_float:
-  rule = get_root_global ['parrot'; 'TclExpr::Grammar'], 'number'
+  rule = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'number'
   match = rule(input, 'pos'=>input_pos, 'grammar'=>'TclExpr::Grammar')
   unless match goto bad_match
   $I0 = match.'to'()

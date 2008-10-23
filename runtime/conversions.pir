@@ -84,7 +84,7 @@ Given a PMC, get a number from it.
   .local pmc parse
   .local pmc match
 
-  parse = get_root_global ['parrot'; 'TclExpr::Grammar'], 'number'
+  parse = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'number'
   $I0 = find_not_cclass .CCLASS_WHITESPACE, str, 0, len
   match = parse(str, 'pos'=>$I0, 'grammar'=>'TclExpr::Grammar')
 
@@ -96,7 +96,7 @@ Given a PMC, get a number from it.
   unless match goto NaN
 
   .local pmc astgrammar, astbuilder, ast
-  astgrammar = new 'TclExpr::PAST::Grammar'
+  astgrammar = new ['TclExpr'; 'PAST'; 'Grammar']
   astbuilder = astgrammar.apply(match)
   ast = astbuilder.get('past')
 
@@ -293,7 +293,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
 
     if expression == '' goto empty
 
-    parse = get_root_global ['parrot'; 'TclExpr::Grammar'], 'expression'
+    parse = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'expression'
     match = parse(expression, 'pos'=>0, 'grammar'=>'TclExpr::Grammar')
 
     unless match goto premature_end
@@ -304,7 +304,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
     unless $I0 == $I1 goto extra_tokens
 
     .local pmc astgrammar, astbuilder, ast
-    astgrammar = new 'TclExpr::PAST::Grammar'
+    astgrammar = new ['TclExpr'; 'PAST'; 'Grammar']
     astbuilder = astgrammar.apply(match)
     ast = astbuilder.get('past')
 
@@ -324,7 +324,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
   build_pir:
     .local pmc pirgrammar, pirbuilder
     .local string result
-    pirgrammar = new 'TclExpr::PIR::Grammar'
+    pirgrammar = new ['TclExpr'; 'PIR'; 'Grammar']
     pirbuilder = pirgrammar.'apply'(ast)
     result = pirbuilder.get('result')
 
@@ -385,7 +385,7 @@ Given a chunk of tcl code, return a subroutine.
     code = 'backslash_newline_subst'( code )
 
 end_preamble:
-    parse = get_root_global ['parrot'; 'TclExpr::Grammar'], 'program'
+    parse = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'program'
     match = parse(code, 'pos'=>0, 'grammar'=>'TclExpr::Grammar')
 
     unless match goto premature_end
@@ -396,7 +396,7 @@ end_preamble:
     unless $I0 == $I1 goto extra_tokens
 
     .local pmc astgrammar, astbuilder, ast
-    astgrammar = new 'TclExpr::PAST::Grammar'
+    astgrammar = new ['TclExpr'; 'PAST'; 'Grammar']
     astbuilder = astgrammar.apply(match)
     ast = astbuilder.get('past')
 
@@ -416,7 +416,7 @@ end_preamble:
   build_pir:
     .local pmc pirgrammar, pirbuilder
     .local string result
-    pirgrammar = new 'TclExpr::PIR::Grammar'
+    pirgrammar = new ['TclExpr'; 'PIR'; 'Grammar']
     pirbuilder = pirgrammar.'apply'(ast)
     result = pirbuilder.get('result')
 
@@ -481,7 +481,7 @@ Given a string namespace, return an array of names.
 depth_set:
   .local pmc colons, split
   colons = get_root_global ['_tcl'], 'colons'
-  split  = get_root_global ['parrot'; 'PGE::Util'], 'split'
+  split  = get_root_global ['parrot'; 'PGE'; 'Util'], 'split'
 
   .local pmc ns_name
   ns_name = split(colons, name)

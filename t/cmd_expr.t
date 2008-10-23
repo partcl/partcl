@@ -88,7 +88,7 @@ is [expr {!!"2"}]  1 {double unary !}
 # simple unary ops  - octal
 
 # simple binary ops - integer
-is [expr 2 ** 3]   8 {pow} {TODO RT#59704}
+is [expr 2 ** 3]   8 {pow}
 is [expr 0 ** 1]   0 {pow}
 is [expr 0 ** 0]   1 {pow}
 eval_is {expr 0 ** -1} {exponentiation of zero by negative power} \
@@ -127,8 +127,8 @@ set j 0001234
 is [expr {$j}] 668 {variable octal}
 
 # simple binary ops - stringified integers
-is [expr {2 ** "3"}]   8 {pow "} {TODO RT#59704}
-is [expr {"2" ** 3}]   8 {pow "} {TODO RT#59704}
+is [expr {2 ** "3"}]   8 {pow "}
+is [expr {"2" ** 3}]   8 {pow "}
 is [expr {2 * "3"}]    6 {mul "}
 is [expr {"2" * 3}]    6 {mul "}
 is [expr {6 / "2"}]    3 {times "}

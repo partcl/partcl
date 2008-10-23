@@ -29,8 +29,8 @@
     pos = 0
     len = length str
     .local pmc parse, match, astgrammar, pirgrammar
-    astgrammar = new 'TclExpr::PAST::Grammar'
-    pirgrammar = new 'TclExpr::PIR::Grammar'
+    astgrammar = new ['TclExpr'; 'PAST'; 'Grammar']
+    pirgrammar = new ['TclExpr'; 'PIR'; 'Grammar']
 
     .local pmc splitNamespace, ns
     .local string namespace
@@ -55,17 +55,17 @@ next:
 
 command:
     if nocommands goto next
-    parse = get_root_global ['parrot'; 'TclExpr::Grammar'], 'subst_command'
+    parse = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'subst_command'
     goto subst
 
 variable:
     if novariables goto next
-    parse = get_root_global ['parrot'; 'TclExpr::Grammar'], 'subst_variable'
+    parse = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'subst_variable'
     goto subst
 
 backslash:
     if nobackslashes goto next
-    parse = get_root_global ['parrot'; 'TclExpr::Grammar'], 'subst_backslash'
+    parse = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'subst_backslash'
     goto subst
 
 subst:

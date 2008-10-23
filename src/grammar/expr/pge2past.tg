@@ -3,20 +3,20 @@ grammar TclExpr::PAST::Grammar is TGE::Grammar;
 transform past (ROOT) {
     $P0 = node['expr']
     unless null $P0 goto expression
-    .return tree.get('dispatch', node, 'TclExpr::Grammar')
+    .return tree.get('dispatch', node, 'TclExpr;Grammar')
 
 expression:
     .return tree.get('expression', node)
 } 
 
-transform expression (TclExpr::Grammar) {
+transform expression (TclExpr;Grammar) {
     .local pmc past
     past = new 'PAST::Expr'
     
     node = node['expr']
     past['node'] = node
 
-    $P0 = tree.get('dispatch', node, 'TclExpr::Grammar')
+    $P0 = tree.get('dispatch', node, 'TclExpr;Grammar')
     past['value'] = $P0
 
     .return(past)
@@ -24,7 +24,7 @@ transform expression (TclExpr::Grammar) {
 
 # Handle generic dispatch (needed at ROOT, and for things with kids.)
 
-transform dispatch (TclExpr::Grammar) {
+transform dispatch (TclExpr;Grammar) {
     .local pmc child
 
     # Ask the child node for its past.
@@ -162,7 +162,7 @@ transform past (operator) {
     unless iterator goto iter_end
     $P0 = shift iterator
     $S0 = $P0
-    $P1 = tree.'get'('dispatch', $P0, 'TclExpr::Grammar')
+    $P1 = tree.'get'('dispatch', $P0, 'TclExpr;Grammar')
     past.'add_child'($P1)
     goto iter_loop
   iter_end:
@@ -182,7 +182,7 @@ transform past (expand) {
     past = new 'PAST::Expand'
 
     delete node['expand']
-    $P0 = tree.'get'('dispatch', node, 'TclExpr::Grammar')
+    $P0 = tree.'get'('dispatch', node, 'TclExpr;Grammar')
     past['value'] = $P0
 
     .return(past)
@@ -355,7 +355,7 @@ scientific:
 transform past (nested) :language('PIR') {
     .local pmc past
     $P0  = node['expression'; 'expr']
-    past = tree.'get'('dispatch', $P0, 'TclExpr::Grammar')
+    past = tree.'get'('dispatch', $P0, 'TclExpr;Grammar')
     .return(past)
 }
 
@@ -526,7 +526,7 @@ transform past (array) {
     $I0 = exists cnode['substitution']
     unless $I0 goto cpast_str
     cnode = cnode['substitution']
-    cpast = tree.'get'('dispatch', cnode, 'TclExpr::Grammar')
+    cpast = tree.'get'('dispatch', cnode, 'TclExpr;Grammar')
     goto cpast_add
   cpast_str:
     $S0 = cnode
@@ -562,7 +562,7 @@ transform past (command) {
 
     .local pmc command
     command = shift words
-    command = tree.'get'('dispatch', command, 'TclExpr::Grammar')
+    command = tree.'get'('dispatch', command, 'TclExpr;Grammar')
 
     node_type = typeof command
     if node_type == 'PAST::Val' goto static
@@ -581,7 +581,7 @@ create_node:
 loop2:
     unless iterator goto end2
     $P0 = shift iterator
-    $P1 = tree.'get'('dispatch', $P0, 'TclExpr::Grammar')
+    $P1 = tree.'get'('dispatch', $P0, 'TclExpr;Grammar')
     past.'add_child'($P1)
     goto loop2
 end2:
@@ -618,13 +618,13 @@ transform ternary (PAST::Op) {
     past.set_node(node)
 
     $P1 = node[0]
-    $P2 = tree.'get'('dispatch', $P1, 'TclExpr::Grammar')
+    $P2 = tree.'get'('dispatch', $P1, 'TclExpr;Grammar')
     past.'add_child'($P2)
     $P1 = node[1]
-    $P2 = tree.'get'('dispatch', $P1, 'TclExpr::Grammar')
+    $P2 = tree.'get'('dispatch', $P1, 'TclExpr;Grammar')
     past.'add_child'($P2)
     $P1 = node[2]
-    $P2 = tree.'get'('dispatch', $P1, 'TclExpr::Grammar')
+    $P2 = tree.'get'('dispatch', $P1, 'TclExpr;Grammar')
     past.'add_child'($P2)
  
     past['conditional'] = 1
@@ -649,9 +649,9 @@ transform logical_and (PAST::Op) {
 
     # Get our A & B trees..
     $P1 = node[0]
-    A = tree.'get'('dispatch', $P1, 'TclExpr::Grammar')
+    A = tree.'get'('dispatch', $P1, 'TclExpr;Grammar')
     $P1 = node[1]
-    B = tree.'get'('dispatch', $P1, 'TclExpr::Grammar')
+    B = tree.'get'('dispatch', $P1, 'TclExpr;Grammar')
 
     # Generate (B ? 1 : 0)
     inner = new 'PAST::Cond'
@@ -692,9 +692,9 @@ transform logical_or (PAST::Op) {
 
     # Get our A & B trees..
     $P1 = node[0]
-    A = tree.'get'('dispatch', $P1, 'TclExpr::Grammar')
+    A = tree.'get'('dispatch', $P1, 'TclExpr;Grammar')
     $P1 = node[1]
-    B = tree.'get'('dispatch', $P1, 'TclExpr::Grammar')
+    B = tree.'get'('dispatch', $P1, 'TclExpr;Grammar')
 
     # Generate (B ? 1 : 0)
     inner = new 'PAST::Cond'

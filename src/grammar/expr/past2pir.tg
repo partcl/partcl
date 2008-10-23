@@ -39,7 +39,7 @@ transform pir (PAST::Program) {
     pir.emit(<<'END_PIR')
     .local pmc colons, split
     colons = get_root_global ['_tcl'], 'colons'
-    split  = get_root_global ['parrot'; 'PGE::Util'], 'split'
+    split  = get_root_global ['parrot'; 'PGE'; 'Util'], 'split'
 END_PIR
 
     .local pmc iterator, child
@@ -243,7 +243,7 @@ transform pir (PAST::StaticCommand) {
     if $I0 == -1 goto no_ns
 
     .local pmc split, colons
-    split  = get_root_global ['parrot'; 'PGE::Util'], 'split'
+    split  = get_root_global ['parrot'; 'PGE'; 'Util'], 'split'
     colons = get_root_global ['_tcl'], 'colons'
     $P0    = split(colons, name)
     $S1    = pop $P0

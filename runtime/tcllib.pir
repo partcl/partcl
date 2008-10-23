@@ -14,10 +14,10 @@ providing a compreg-compatible method.
 .include 'languages/tcl/src/macros.pir'
 .include 'cclass.pasm'
 
-.namespace [ 'TclExpr::PAST::Grammar' ]
+.namespace [ 'TclExpr'; 'PAST'; 'Grammar' ]
 .include 'languages/tcl/src/grammar/expr/pge2past.pir'
 
-.namespace [ 'TclExpr::PIR::Grammar' ]
+.namespace [ 'TclExpr'; 'PIR'; 'Grammar' ]
 .include 'languages/tcl/src/grammar/expr/past2pir.pir'
 
 .include 'languages/tcl/src/grammar/expr/past.pir'
@@ -272,8 +272,8 @@ env_loop_done:
 
 .sub hack_grammar :load :anon
   # Override whitespace parsing in expression's optable
-  $P0 = get_hll_global ['TclExpr::Grammar'], '$optable'
-  $P1 = get_hll_global ['TclExpr::Grammar'], 'exprws'
+  $P0 = get_hll_global ['TclExpr'; 'Grammar'], '$optable'
+  $P1 = get_hll_global ['TclExpr'; 'Grammar'], 'exprws'
   setattribute $P0, '&!ws', $P1
 
   #  Override recursion limit
