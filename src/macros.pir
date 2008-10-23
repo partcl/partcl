@@ -5,8 +5,6 @@
 Exception creation can be fairly verbose. These macros provide an API
 of sorts to the exceptions.
 
-=cut
-
 =head2 catch ()
 
 Preamble for any tcl-related exception handler.
@@ -25,7 +23,7 @@ Re-throw the current exception
 =cut
 
 .macro rethrow ()
-  throw exception
+  rethrow exception
 .endm
 
 =head2 get_stacktrace (OUT string message)
