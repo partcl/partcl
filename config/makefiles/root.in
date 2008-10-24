@@ -111,7 +111,7 @@ all: tcl.pbc
 tcl.pbc: $(PARROT) pmcs ops runtime/tcllib.pbc src/tclsh.pir
 	$(PARROT) --output=tcl.pbc src/tclsh.pir
 
-.SUFFIXES : .pir .pg .tg .tcl
+.SUFFIXES : .pir .pg .tg
 
 .tg.pir :
 	$(PARROT) $(TGE_DIR)/tgc.pir --output=$@ $<
@@ -121,9 +121,6 @@ tcl.pbc: $(PARROT) pmcs ops runtime/tcllib.pbc src/tclsh.pir
 
 .pir.pbc :
 	$(PARROT) --output=$@ $<
-
-.tcl.pir :
-	$(PARROT) tcl.pbc $< --pir > $@
 
 CLASSES = \
   $(CLASSDIR)/tclconst.pir \

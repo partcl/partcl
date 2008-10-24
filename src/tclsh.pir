@@ -47,15 +47,13 @@
 
   .local pmc get_options
   get_options = new 'Getopt::Obj'
-  push get_options, 'pir'
   push get_options, 'e=s'
 
   .local pmc opt
   $S0 = shift argv   # drop "tcl.pbc"
   opt = get_options.'get_options'(argv)
 
-  .local int dump_only, execute
-  dump_only = defined opt['pir']
+  .local int execute
   execute   = defined opt['e']
 
   if execute goto oneliner
@@ -87,11 +85,7 @@ input_loop:
   $S0 = $P0
   $S0 .= "\n" # add back in the newline the prompt chomped
   input_line .= $S0
-  # could probably avoid calling compileTcl 2x here...
-  unless dump_only goto execute_line
-  .local string _pir
-  _pir = compileTcl(input_line, 'pir_only'=>1, 'bsnl'=>1)
-  say _pir
+
 execute_line:
   push_eh loop_error
     $P2 = compileTcl(input_line)
@@ -138,12 +132,6 @@ file:
   contents = $P99.'slurp'('')
 
   .set_tcl_argv()
-  unless dump_only goto run_file
-  push_eh file_error
-    ($S0,$I0) = compileTcl(contents, 'pir_only'=>1, 'bsnl'=>1, 'wrapper'=>1)
-  pop_eh
-  print $S0
-  goto done
 
 run_file:
   push_eh file_error
@@ -163,16 +151,10 @@ oneliner:
 
   .local string tcl_code
   tcl_code = opt['e']
-  if dump_only goto oneliner_dump
   $P3 = compileTcl(tcl_code)
   push_eh file_error
     $P3()
   pop_eh
-  goto done
-
-oneliner_dump:
-  ($S0,$I0) = compileTcl(tcl_code, 'pir_only'=>1, 'bsnl'=>1, 'wrapper'=>1)
-  print $S0
 
 done:
   end
