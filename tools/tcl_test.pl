@@ -95,7 +95,7 @@ sub run_tests {
     my $url = 'http://code.google.com/p/partcl/wiki/SpecTestStatus';
 
     foreach my $file (@files) {
-      $file =~ m{/(\w+).test$};
+      $file =~ m{/([^.]+).test$};
       my $basename = $1;
       if (grep {$_ eq $basename} @skipfiles) {
         print "Skipping $file: see $url\n";
