@@ -261,7 +261,11 @@ script_loop:
   setVar(keyVar,check_key)
   check_value = dictionary[check_key]
   setVar(valueVar,check_value)
-  push_eh body_handler
+  .local pmc eh
+  eh = new 'ExceptionHandler'
+  eh.'handle_types'(.CONTROL_CONTINUE,.CONTROL_BREAK)
+  set_addr eh, body_handler
+  push_eh eh
     $P1 = body_proc()
   pop_eh
   $P1 = toBoolean($P1)
@@ -275,8 +279,8 @@ body_handler:
   .catch()
   .get_return_code($I0)
   if $I0 == .CONTROL_CONTINUE goto script_loop
-  if $I0 == .CONTROL_BREAK goto end_script_loop
-  .rethrow()
+  # .CONTROL_BREAK fallthrough
+  goto end_script_loop
 
 bad_script_args:
   die 'wrong # args: should be "dict filter dictionary script {keyVar valueVar} filterScript"'
@@ -333,7 +337,11 @@ for_loop:
   $P2 = dictionary[$S1]
   setVar(valueVar, $P2)
 
-  push_eh loop_handler
+  .local pmc eh
+  eh = new 'ExceptionHandler'
+  eh.'handle_types'(.CONTROL_CONTINUE,.CONTROL_BREAK)
+  set_addr eh, loop_handler
+  push_eh eh
     code()
   pop_eh
 
@@ -343,8 +351,7 @@ loop_handler:
   .catch()
   .get_return_code($I0)
   if $I0 == .CONTROL_CONTINUE goto for_loop
-  if $I0 == .CONTROL_BREAK goto for_loop_done
-  .rethrow()
+  # .CONTROL_BREAK fallthrough
 
 for_loop_done:
 

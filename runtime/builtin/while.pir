@@ -29,7 +29,11 @@ temp = a_test()
   $I0 = toBoolean($P0)
   unless $I0 goto while_loop_done
 
-  push_eh while_loop_exception
+  .local pmc eh
+  eh = new 'ExceptionHandler'
+  eh.'handle_types'(.CONTROL_CONTINUE,.CONTROL_BREAK)
+  set_addr eh, while_loop_exception
+  push_eh eh
 temp = a_command()
   pop_eh
 
@@ -39,8 +43,7 @@ while_loop_exception:
   .catch()
   .get_return_code($I0)
   if $I0 == .CONTROL_CONTINUE goto while_loop
-  if $I0 == .CONTROL_BREAK    goto while_loop_done
-  .rethrow()
+  # .CONTROL_BREAK, fallthrough to done.
 
 while_loop_done:
   R = new 'TclString'

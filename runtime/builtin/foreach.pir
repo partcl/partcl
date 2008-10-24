@@ -99,7 +99,11 @@ empty_var:
   goto next_variable
 
 execute_command:
-  push_eh handle_continue
+  .local pmc eh
+  eh = new 'ExceptionHandler'
+  eh.'handle_types'(.CONTROL_BREAK,.CONTROL_CONTINUE)
+  set_addr eh, handle_continue
+  push_eh eh
     command()
   pop_eh
   goto next_iteration
@@ -108,9 +112,8 @@ handle_continue:
   .catch()
   .local int return_type
   .get_return_code(return_type)
-  if return_type == .CONTROL_BREAK goto done
   if return_type == .CONTROL_CONTINUE goto next_iteration
-  .rethrow()
+  # .CONTROL_BREAK fallthrough
 
 done:
   .return('')
