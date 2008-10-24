@@ -18,32 +18,6 @@ whether a particular '$a' is referring to a global or a lexical var. We
 keep track of the lexpads in the 'call_chain' variable and manually
 look up lexicals in the lexpads.
 
-=item subroutine meta information.
-
-Tcl provides the ability to query subroutines about their arguments
-and their code. For example:
-
- % proc sum {{a 2} {b 3}} {
-  return [expr $a + $b]
- }
- % sum
- 5
- % info args sum
- a b
- % info body sum
-
-  return [expr $a + $b]
-
- % info default sum a the_argument
- 1
- % puts $the_argument
- 2
- %
-
-Right now, partcl is using globals to store the argument list and the
-body information. It would seem that we'd want to have a builtin mechanism
-for querying the subs directly rather than storing this information separately.
-
 =item user defined subs; parameter handling.
 
 Tcl provides nice exceptions for dealing with argument handling - to continue
