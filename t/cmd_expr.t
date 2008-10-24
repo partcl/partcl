@@ -297,7 +297,7 @@ is [expr sqrt("64")]      8.0
 is [expr tan("1")]        1.5574077246549023 {} $TODO
 is [expr tanh("1")]       0.7615941559557649
 
-eval_is {expr exp(exp(50))} Inf Inf {TODO unimplemented}
+eval_is {expr exp(exp(50))} Inf Inf {SKIP unimplemented}
 
 # unary math functions, invalid string ops.
 set function_list \
@@ -314,7 +314,7 @@ eval_is {expr {~2.0}} {can't use floating-point value as operand of "~"} \
 is [namespace eval lib {if {+2} {}}] {} {[expr] in a namespace}
 
 # infinity tests
-set TODO {TODO "pending Inf implementation"}
+set TODO {SKIP "pending Inf implementation"}
 
 eval_is {expr inf} Inf {infinity lc} $TODO
 eval_is {expr iNf} Inf {infinity mixed case} $TODO
@@ -333,7 +333,7 @@ eval_is {expr 3/0} {divide by zero} {divide by zero}
 
 
 # not a number tests.
-set TODO {TODO "pending NaN implementation"}
+set TODO {SKIP "pending NaN implementation"}
 
 eval_is {expr nan} \
   {domain error: argument not in valid range} {NaN lc} \
@@ -387,7 +387,7 @@ is [set tcl_precision 7; expr 1/3.] 0.3333333 { precision 7}
 is [set tcl_precision 12; expr 1/3.] 0.333333333333 { precision 12}
 
 # blocker bugs for t_tcl/expr.t parsing.
-set TODO {TODO "awaiting real bigint support"}
+set TODO {SKIP "awaiting real bigint support"}
 eval_is {expr (1<<63)-1} 9223372036854775807 {expr-32.4} $TODO
 eval_is {expr -2147483648} -2147483648 {expr-46.17} $TODO
 eval_is {expr 9223372036854775808} 9223372036854775808 {expr-46.19} $TODO
