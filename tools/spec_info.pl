@@ -15,13 +15,21 @@ no local modifications.
 use strict;
 use warnings;
 
+use IO::Handle;
+
 my $svn_info  = `svn info .`;
 $svn_info =~ /Revision:\s+(\d+)/sm;
 my $revision = $1;
 
 $svn_info  = `svn info ..`;
-$svn_info =~ /Revision:\s+(\d+)/sm;
-my $parrot_revision = $1;
+my $parrot_revision;
+if ($svn_info =~ m{https://svn.perl.org/parrot/tags/RELEASE_([0-9_]+)}) {
+  $parrot_revision = "v$1";
+  $parrot_revision =~ s/_/./g;
+} else {
+  $svn_info =~ /Revision:\s+(\d+)/sm;
+  $parrot_revision = "r$1";
+}
 
 open my $fh, "$^X tools/tcl_test.pl|";
 
@@ -30,6 +38,7 @@ my $sum = "docs/spectest-current.txt";
 
 open my $csv_fh, '>>', $csv;
 open my $sum_fh, '>', $sum;
+$sum_fh->autoflush(1);
 
 my $epoch = time();
 my ($year,$mon,$day,$hour,$min) =(localtime($epoch))[5,4,3,2,1];
@@ -50,7 +59,7 @@ while (my $line = <$fh>) {
  }
 }
 
-printf {$csv_fh} '"%s",%i,%i,%i,%i,%i,%i,%i' . "\n",
+printf {$csv_fh} '"%s",%i,"%s",%i,%i,%i,%i,%i' . "\n",
   $time,$revision,$parrot_revision,$files,$total,$passed,$failed,$skipped;
 
 close $sum_fh;
