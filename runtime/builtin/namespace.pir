@@ -254,7 +254,6 @@ global_ns:
 .HLL 'tcl', ''
 .namespace %0
 # src/compiler.pir :: pir_compiler (2)
-.pragma n_operators 1
 .sub compiled_tcl_sub_%2
   .include 'languages/tcl/src/returncodes.pasm'
   %1
