@@ -1,9 +1,9 @@
 #
 # Analog to perl's Test::More
 #
-# We can't currently run tcltest.tcl, but this gives us a mock version that
-# lets us at least run tcl test files; it also gives us TAP output for our
-# parrot-focused tests.
+# Originally developed because running tcltest.tcl is daunting. Still in use
+# because it lets us generate TAP output to work with the perl-based
+# tests also at this level.
 
 proc skip_all {} {
     puts 1..0
@@ -32,14 +32,6 @@ proc is {value expected {description ""} {special {}}}  {
 
     if {[llength $special] == 2} {
         set type [string toupper [lindex $special 0]]
-        if {$type eq "TODO"} {
-            global env
-            set normal [array get env PARTCL_DEVTEST]
-            if {$normal ne {}} {
-                set type ""
-                set special ""
-            }
-        }
         set special_reason [concat {*}[lindex $special 1]]
         set description [regsub -all # $description {\#}]
         set description " - $description # $type $special_reason"
