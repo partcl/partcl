@@ -106,20 +106,17 @@ Given a PMC, get a number from it.
   className = ast['class']
   value     = ast['value']
 
-  # XXX We probably shouldn't have to invoke the PIR compiler here.
-
-  $P0 = new 'CodeString'
-  $P0.emit(".sub 'anon' :anon")
-  $P0.emit('$P0 = new "%0"', className)
-  $P0.emit("$P0 = %0", value)
-  $P0.emit(".return($P0)")
-  $P0.emit(".end")
-
-  $P1 = compreg 'PIR'
-  $P2 = $P1($P0)
-  number = $P2()
-
-  .return(number)
+  # Create a PMC of the appropriate type based on the string value.
+  number = new className
+  if className == 'TclInt' goto found_int
+  $N0 = value
+  number = $N0
+  .return (number)
+  
+found_int:
+  $I0 = value
+  number = $I0
+  .return (number)
 
 NaN:
   $S1 = 'expected floating-point number but got "'
