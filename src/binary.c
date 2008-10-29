@@ -72,7 +72,7 @@ binary_scan_number_field(PARROT_INTERP, char field, char *binstr, int *_pos, int
     int *n;
 
     int len;
-    PMC *value = NULL;
+    PMC *value = PMCNULL;
     int pos = *_pos;
     switch (field)
     {
@@ -139,7 +139,7 @@ binary_scan_number_slurpy(PARROT_INTERP, char field, char *binstr, int *_pos, in
     PMC *elem;
     PMC *values = pmc_new(interp, class_TclList);
 
-    while ((elem = binary_scan_number_field(interp, field, binstr, _pos, length)))
+    while ((elem = binary_scan_number_field(interp, field, binstr, _pos, length)) != PMCNULL)
         VTABLE_push_pmc(interp, values, elem);
 
     return values;
@@ -173,7 +173,10 @@ binary_scan_number(PARROT_INTERP, char field,
     else
         value = binary_scan_number_field(interp, field, binstr, binstrpos, binstrlen);
 
-    return value;
+    if (value)
+        return value;
+    else
+        return PMCNULL;
 }
 
 /*
@@ -201,20 +204,20 @@ binary_scan_string_field(PARROT_INTERP, char field,
     {
         case 'a':
             if (binstrpos + length > binstrlen)
-                return NULL;
+                return PMCNULL;
             c     = binstr + binstrpos;
             value = string_concat(interp, value, string_from_cstring(interp, c, length), 0);
             binstrpos += length;
             break;
         case 'A':
             if (binstrpos + length > binstrlen)
-                return NULL;
+                return PMCNULL;
             c     = binstr + binstrpos;
             value = string_concat(interp, value, string_from_cstring(interp, c, length), 0);
             binstrpos += length;
             break;
         default:
-            return NULL;
+            return PMCNULL;
     }
 
     *_binstrpos = binstrpos;
@@ -341,7 +344,7 @@ PMC *ParTcl_binary_scan(PARROT_INTERP, STRING *BINSTR, STRING *FORMAT)
                                            binstr, &binstrpos, binstrlen);
                 break;
             default:
-                value = NULL;
+                value = PMCNULL;
                 break;
         }
 
