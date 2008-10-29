@@ -25,7 +25,7 @@
   .return($S0)
 
 stream:
-  .return io.'readline'()
+  .tailcall io.'readline'()
 
 bad_args:
   die 'wrong # args: should be "gets channelId ?varName?"'

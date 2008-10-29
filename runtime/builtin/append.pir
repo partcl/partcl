@@ -43,10 +43,10 @@ loop:
 loop_done:
   .local pmc set
   set = get_root_global ['_tcl'], 'setVar'
-  .return set(name, value)
+  .tailcall set(name, value)
 
 getter:
-  .return read(name)
+  .tailcall read(name)
 
 badargs:
   die 'wrong # args: should be "append varName ?value value ...?"'

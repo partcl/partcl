@@ -40,7 +40,7 @@ loop:
 loop_done:
   .local pmc set
   set = get_root_global ['_tcl'], 'setVar'
-  .return set(listname, value)
+  .tailcall set(listname, value)
 
 error:
   die 'wrong # args: should be "lappend varName ?value value ...?"'

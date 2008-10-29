@@ -57,7 +57,7 @@ odd_args:
   .local pmc list
   $P0 = new 'TclString'
   list = $P0.'get_list'(str)
-  .return listToDict(list)
+  .tailcall listToDict(list)
 .end
 
 # Local Variables:

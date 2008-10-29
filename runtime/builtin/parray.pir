@@ -37,7 +37,7 @@
 
   # Now call the version that we just created.
   $P3 = find_name '&parray'
-  .return $P3( args :flat )
+  .tailcall $P3( args :flat )
 .end
 
 # Local Variables:

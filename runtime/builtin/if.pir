@@ -102,7 +102,7 @@ loop:
     $I1 = toBoolean($P1)
     unless $I1 goto next
     $P0 = compileTcl(code, 'ns'=>ns)
-    .return $P0()
+    .tailcall $P0()
 
 next:
     inc $I0
@@ -127,7 +127,7 @@ else:
     inc $I0
     code = argv[$I0]
     $P0  = compileTcl(code, 'ns'=>ns)
-    .return $P0()
+    .tailcall $P0()
 
 extra_words_after_else:
     die 'wrong # args: extra words after "else" clause in "if" command'

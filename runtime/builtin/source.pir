@@ -25,7 +25,7 @@
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
   code = compileTcl ( file_contents, 'ns' => ns, 'bsnl' => 1)
 
-  .return code()
+  .tailcall code()
 
 badfile:
   $S0 = "couldn't read file \""

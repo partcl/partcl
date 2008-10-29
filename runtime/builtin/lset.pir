@@ -77,7 +77,7 @@ wrong_args:
   die 'wrong # args: should be "lset listVar index ?index...? value"'
 
 replace:
-  .return setVar(name, value)
+  .tailcall setVar(name, value)
 .end
 
 # Local Variables:

@@ -140,7 +140,7 @@ is_string:
     .local pmc toBoolean
     toBoolean = get_root_global ['_tcl'], 'toBoolean'
 
-    .return toBoolean(a)
+    .tailcall toBoolean(a)
 .end
 
 .sub '&ceil'

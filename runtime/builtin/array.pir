@@ -56,7 +56,7 @@ array_no:
   is_array = 0
 
 scommand:
-  .return subcommand_proc(is_array,the_array,array_name,argv)
+  .tailcall subcommand_proc(is_array,the_array,array_name,argv)
 
 bad_args:
   .return ('') # once all commands are implemented, remove this...
@@ -329,7 +329,7 @@ skip_args:
 
   if is_array == 0 goto not_array
 
-  .return match_proc(the_array, pattern)
+  .tailcall match_proc(the_array, pattern)
 
 bad_args:
   die 'wrong # args: should be "array names arrayName ?mode? ?pattern?"'

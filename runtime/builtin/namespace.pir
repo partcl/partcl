@@ -39,7 +39,7 @@ real top level namespace.
   subcommand_proc = get_root_global ['_tcl';'helpers';'namespace'], canonical_subcommand
   if null subcommand_proc goto bad_args
 
-  .return subcommand_proc(argv)
+  .tailcall subcommand_proc(argv)
 
 bad_args:
   .return ('') # once all commands are implemented, remove this...

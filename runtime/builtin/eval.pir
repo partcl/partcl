@@ -18,7 +18,7 @@
   .local string code
   code = join ' ', argv
   $P2  = compileTcl(code, 'ns'=>ns)
-  .return $P2()
+  .tailcall $P2()
 
 bad_args:
   die 'wrong # args: should be "eval arg ?arg ...?"'

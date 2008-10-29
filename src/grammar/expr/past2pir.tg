@@ -2,7 +2,7 @@ grammar TclExpr::PIR::Grammar is TGE::Grammar;
 
 transform result (ROOT)  {
     $S0 = typeof node
-    .return tree.get('pir', node, $S0)
+    .tailcall tree.get('pir', node, $S0)
 }
 
 transform pir (PAST::Expr) {

@@ -26,7 +26,7 @@
   subcommand_proc = get_root_global ['_tcl';'helpers';'info'], canonical_subcommand
   if null subcommand_proc goto bad_subcommand
 
-  .return subcommand_proc(argv)
+  .tailcall subcommand_proc(argv)
 
 bad_subcommand:
   .return ('') # once all commands are implemented, remove this...
@@ -369,7 +369,7 @@ bad_args:
 
   .local pmc read
   read = get_root_global ['_tcl'], 'readVar'
-  .return read('tcl_patchLevel')
+  .tailcall read('tcl_patchLevel')
 
 bad_args:
   die 'wrong # args: should be "info patchlevel"'
@@ -432,7 +432,7 @@ bad_args:
   die 'wrong # args: should be "info vars ?pattern?"'
 
 get_globals:
-  .return 'globals'(argv)
+  .tailcall 'globals'(argv)
 .end
 
 .sub 'level'

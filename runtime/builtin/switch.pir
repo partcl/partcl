@@ -145,7 +145,7 @@ body_match:
   .local pmc compileTcl
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
   $P1 = compileTcl(code)
-  .return $P1()
+  .tailcall $P1()
 
 extra_pattern:
   die 'extra switch pattern with no body'
