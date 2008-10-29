@@ -1,4 +1,4 @@
-#! perl
+# ! perl
 # Copyright (C) 2005-2008, The Perl Foundation.
 # $Id: tcl_test.pl 31510 2008-09-30 14:17:49Z coke $
 
@@ -48,7 +48,7 @@ my @skipfiles = qw(
   macOSXFCmd macOSXLoad main mathop misc msgcat
   namespace notify
   obj opt
-  parse parseExpr pid pkg pkgMkIndex platform
+  parse pid pkg pkgMkIndex platform
   reg regexp regexpComp registry result
   safe socket source stack string stringObj subst
   tcltest thread timer tm trace
