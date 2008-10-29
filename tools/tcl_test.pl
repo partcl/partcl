@@ -1,4 +1,4 @@
-# ! perl
+#! perl
 # Copyright (C) 2005-2008, The Perl Foundation.
 # $Id: tcl_test.pl 31510 2008-09-30 14:17:49Z coke $
 
