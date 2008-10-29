@@ -13,7 +13,7 @@ event.test:	Total	64	Passed	3	Skipped	31	Failed	30
 for-old.test:	Total	9	Passed	9	Skipped	0	Failed	0
 for.test:	Total	50	Passed	42	Skipped	0	Failed	8
 foreach.test:	Total	40	Passed	39	Skipped	0	Failed	1
-format.test:	Total	256	Passed	187	Skipped	29	Failed	40
+format.test:	Total	256	Passed	184	Skipped	29	Failed	43
 get.test:	Total	20	Passed	3	Skipped	14	Failed	3
 if-old.test:	Total	33	Passed	33	Skipped	0	Failed	0
 if.test:	Total	73	Passed	64	Skipped	0	Failed	9
@@ -31,14 +31,15 @@ lrepeat.test:	Total	10	Passed	10	Skipped	0	Failed	0
 lreplace.test:	Total	34	Passed	34	Skipped	0	Failed	0
 lsearch.test:	Total	101	Passed	47	Skipped	0	Failed	54
 lsetComp.test:	Total	19	Passed	17	Skipped	0	Failed	2
-namespace-old.test:	Total	126	Passed	62	Skipped	0	Failed	64
+namespace-old.test:	Total	126	Passed	65	Skipped	0	Failed	61
 package.test:	Total	16	Passed	6	Skipped	0	Failed	10
+parseExpr.test:	Total	263	Passed	4	Skipped	196	Failed	63
 parseOld.test:	Total	179	Passed	146	Skipped	21	Failed	12
 proc-old.test:	Total	75	Passed	49	Skipped	0	Failed	26
 proc.test:	Total	31	Passed	8	Skipped	0	Failed	23
 pwd.test:	Total	3	Passed	3	Skipped	0	Failed	0
 rename.test:	Total	18	Passed	10	Skipped	7	Failed	1
-scan.test:	Total	171	Passed	94	Skipped	4	Failed	73
+scan.test:	Total	171	Passed	95	Skipped	4	Failed	72
 security.test:	Total	1	Passed	1	Skipped	0	Failed	0
 set-old.test:	Total	149	Passed	91	Skipped	0	Failed	58
 set.test:	Total	63	Passed	58	Skipped	1	Failed	4
