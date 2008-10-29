@@ -42,7 +42,7 @@ bad_args:
     .local pmc iterator, arg
     iterator = iter args
     .local pmc result
-    result = new TclInt
+    result = new 'TclInt'
     result = 0
 loop_begin:
     unless iterator goto loop_end
@@ -125,7 +125,7 @@ bad_args:
     .local pmc iterator, arg
     iterator = iter args
     .local pmc result
-    result = new TclInt
+    result = new 'TclInt'
     result = 0
 loop_begin:
     unless iterator goto loop_end
@@ -139,7 +139,7 @@ loop_end:
     .return (result)
 
 bad_arg:
-    die "can't use non-numeric string as operand of \"+\""
+    die "can't use non-numeric string as operand of \"*\""
 
  nullary:
     .return(1)
@@ -184,13 +184,13 @@ unary:
 
 bad_arg:
     if arg == '' goto empty_string
-    die "can't use non-numeric string as operand of \"-\""
+    die "can't use non-numeric string as operand of \"/\""
 
 empty_string:
-    die "can't use empty string as operand of \"-\""
+    die "can't use empty string as operand of \"/\""
 
 bad_args:
-    die "wrong # args: should be \"::tcl::mathop::- value ?value ...?\""
+    die "wrong # args: should be \"::tcl::mathop::/ value ?value ...?\""
 .end
 
 .sub '&%'
@@ -251,7 +251,7 @@ bad_args:
      toNumber = get_root_global ['_tcl'], 'toNumber'
 
     .local pmc result
-    result = new TclInt
+    result = new 'TclInt'
     result = shift args
     push_eh bad_arg
         result = toNumber(result)
@@ -274,10 +274,10 @@ loop_end:
 
 bad_arg:
     if arg == '' goto empty_string
-    die "can't use non-numeric string as operand of \"+\""
+    die "can't use non-numeric string as operand of \"**\""
 
 empty_string:
-    die "can't use empty string as operand of \"+\""
+    die "can't use empty string as operand of \"**\""
 
  nullary:
     .return(1)
@@ -288,22 +288,108 @@ unary:
 
 .sub '&=='
     .param pmc args :slurpy
-    .return(0)
+
+    .local int argc
+    argc = args
+    if argc < 2 goto true
+
+    .local pmc toNumber
+    toNumber = get_root_global ['_tcl'], 'toNumber'
+
+
+    .local pmc first,cur
+    first = shift args
+    push_eh NaN
+      first = toNumber(first)
+    pop_eh
+NaN:
+
+    $P1 = iter args
+loop:
+    unless $P1 goto true
+    cur = shift $P1 
+    push_eh NaN2
+      cur = toNumber(cur)
+    pop_eh
+NaN2:
+    if cur == first goto loop
+    .return (0)
+true: 
+
+    .return(1)
 .end
 
 .sub '&eq'
     .param pmc args :slurpy
-    .return(0)
+
+    .local int argc
+    argc = args
+    if argc < 2 goto true
+
+    .local string first,cur
+    first = shift args
+
+    $P1 = iter args
+loop:
+    unless $P1 goto true
+    cur = shift $P1 
+    if cur == first goto loop
+    .return (0)
+true: 
+
+    .return(1)
 .end
+
 
 .sub '&!='
     .param pmc args :slurpy
-    .return(0)
+
+    .local int argc
+    argc = args
+    if argc != 2 goto bad_args
+
+    .local pmc toNumber
+    toNumber = get_root_global ['_tcl'], 'toNumber'
+
+    .local pmc l,r
+    l = shift args
+    r = shift args
+    push_eh NaN
+      l = toNumber(l)
+    pop_eh
+NaN:
+    push_eh NaN2
+      r = toNumber(r)
+    pop_eh
+NaN2:
+
+    if l != r goto true
+    .return (0)
+true: 
+    .return(1)
+
+bad_args:
+    die 'wrong # args: should be "::tcl::mathop::!= value value"'
 .end
 
 .sub '&ne'
     .param pmc args :slurpy
-    .return(0)
+
+    .local int argc
+    argc = args
+    if argc != 2 goto bad_args
+
+    .local pmc l,r
+    l = shift args
+    r = shift args
+
+    if l != r goto true
+    .return (0)
+true: 
+    .return(1)
+
+bad_args:
+    die 'wrong # args: should be "::tcl::mathop::!= value value"'
 .end
 
 .sub '&<'
