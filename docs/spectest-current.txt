@@ -33,6 +33,7 @@ lsearch.test:	Total	101	Passed	47	Skipped	0	Failed	54
 lsetComp.test:	Total	19	Passed	17	Skipped	0	Failed	2
 namespace-old.test:	Total	126	Passed	65	Skipped	0	Failed	61
 package.test:	Total	16	Passed	6	Skipped	0	Failed	10
+parse.test:	Total	251	Passed	62	Skipped	156	Failed	33
 parseExpr.test:	Total	263	Passed	4	Skipped	196	Failed	63
 parseOld.test:	Total	179	Passed	146	Skipped	21	Failed	12
 proc-old.test:	Total	75	Passed	49	Skipped	0	Failed	26
