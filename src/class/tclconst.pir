@@ -253,21 +253,6 @@ done:
   $P0 = value
 .end
 
-=head2 compile
-
-Generate PIR code which can be used to generate our value
-
-=cut
-
-.sub compile :method
-   .param int argnum
-
-   .local pmc compiler
-  compiler = get_root_global ['_tcl'], 'compile_dispatch'
-
-   .tailcall compiler(argnum, self)
-.end
-
 =head2 __dump
 
 This method enables Data::Dumper to work on us; shouldn't need it, because
