@@ -12,20 +12,19 @@
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
   .local pmc compileExpr
   compileExpr = get_root_global ['_tcl'], 'compileExpr'
+  .local pmc toBoolean
+  toBoolean = get_root_global ['_tcl'], 'toBoolean'
+
   .local pmc a_test
   a_test = argv[0]
   a_test = compileExpr(a_test)
+
   .local pmc a_command
   a_command = argv[1]
   a_command = compileTcl(a_command)
-  .local pmc R
-  .local pmc temp
 
-  .local pmc toBoolean
-  toBoolean = get_root_global ['_tcl'], 'toBoolean'
 while_loop:
-temp = a_test()
-  $P0 = temp
+  $P0 = a_test()
   $I0 = toBoolean($P0)
   unless $I0 goto while_loop_done
 
@@ -33,8 +32,9 @@ temp = a_test()
   eh = new 'ExceptionHandler'
   eh.'handle_types'(.CONTROL_CONTINUE,.CONTROL_BREAK)
   set_addr eh, while_loop_exception
+
   push_eh eh
-temp = a_command()
+    a_command()
   pop_eh
 
   goto while_loop
@@ -46,9 +46,8 @@ while_loop_exception:
   # .CONTROL_BREAK, fallthrough to done.
 
 while_loop_done:
-  R = new 'TclString'
-  R = ''
-  .return(R)
+  .return('')
+
 bad_args:
   die 'wrong # args: should be "while test command"'
 .end
