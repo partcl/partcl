@@ -27,17 +27,17 @@ got_var:
   if argc < 2 goto default_increment
   a_increment = argv[1]
   a_increment = toInteger(a_increment)
+  a_varName += a_increment
   goto done_increment
 default_increment:
-  a_increment = new 'TclInt'
-  a_increment = 1
+  a_varName += 1
+
 done_increment:
   .local pmc R
-  .local pmc temp
 
-a_varName += a_increment
-R = clone a_varName
+   R = clone a_varName
   .return(R)
+
 bad_args:
   die 'wrong # args: should be "incr varName ?increment?"'
 .end
