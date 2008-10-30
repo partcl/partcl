@@ -20,12 +20,9 @@ Define the attributes required for the class.
   $P0 = get_class 'Sub'
   $P1 = subclass $P0, 'TclProc'
 
-  addattribute $P1, 'PIR_source'
   addattribute $P1, 'namespace'
-  addattribute $P1, 'HLL'         # In our case, Tcl...
   addattribute $P1, 'HLL_source'
   addattribute $P1, 'args'
-  # Should combine this with 'args' for P6-style args..
   addattribute $P1, 'defaults'
 .end
 

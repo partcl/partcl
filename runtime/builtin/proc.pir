@@ -159,14 +159,9 @@ END_PIR
 emit_args:
   code .= args_code
 
-  # Convert the remaining elements returned by foldup into a TclList
+  # save anything left into args.
   code.emit(<<'END_PIR')
-  .local pmc arg_list
-  arg_list = new 'TclList'
-  unless args goto NO_SLURPY_ARGS
-  assign arg_list, args
-NO_SLURPY_ARGS:
-  lexpad['args'] = arg_list
+  lexpad['args'] = args
 END_PIR
 
 done_args:
@@ -213,9 +208,6 @@ not_return_nor_ok:
 .end
 END_PIR
 
-  .local pmc pir_compiler
-  pir_compiler = compreg 'PIR'
-
   # (see note on trans_charset in lib/parser.pir) RT#40752:
   $S0 = code
   $I0 = find_charset 'ascii'
@@ -230,21 +222,16 @@ END_PIR
   $P1 = new 'TclProc'
   assign $P1, $P0
 
-  $P9 = new 'TclString'
-  $P9 = $S0
-  setattribute $P1, 'PIR_source', $P9
-
-  $P9 = new 'TclString'
-  $P9 = 'Tcl'
-  setattribute $P1, 'HLL',        $P9
-
   setattribute $P1, 'HLL_source', body
 
   $P9 = new 'TclString'
   $P9 = args_info
   setattribute $P1, 'args',       $P9
-
   setattribute $P1, 'defaults',   defaults_info
+
+# XXX save the original namespace in the 'namespace' attribute...
+
+
 
   # And now store it into the appropriate slot in the namespace
   .local pmc ns_target
