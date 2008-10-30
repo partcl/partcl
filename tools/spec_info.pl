@@ -31,6 +31,8 @@ if ($svn_info =~ m{https://svn.perl.org/parrot/tags/RELEASE_([0-9_]+)}) {
   $parrot_revision = "r$1";
 }
 
+my $start = time();
+
 open my $fh, "$^X tools/tcl_test.pl|";
 
 my $csv = "docs/spectest-progress.csv";
@@ -59,8 +61,12 @@ while (my $line = <$fh>) {
  }
 }
 
-printf {$csv_fh} '"%s",%i,"%s",%i,%i,%i,%i,%i' . "\n",
-  $time,$revision,$parrot_revision,$files,$total,$passed,$failed,$skipped;
+my $end = time();
+
+my $diff = $end - $start;
+
+printf {$csv_fh} '"%s",%i,"%s",%i,%i,%i,%i,%i,%i' . "\n",
+  $time,$revision,$parrot_revision,$files,$total,$passed,$failed,$skipped,$diff;
 
 close $sum_fh;
 close $csv_fh;
