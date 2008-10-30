@@ -48,7 +48,7 @@ my @skipfiles = qw(
   macOSXFCmd macOSXLoad main mathop misc msgcat
   namespace notify
   obj opt
-  parse pid pkg pkgMkIndex platform
+  pid pkg pkgMkIndex platform
   reg regexp regexpComp registry result
   safe socket source stack string stringObj subst
   tcltest thread timer tm trace

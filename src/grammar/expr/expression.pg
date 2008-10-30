@@ -60,7 +60,7 @@ token subcommand {
 }
 
 token variable_substitution {
-    '$' [ '{'  ( <-[}]>+ )  '}'
+    '$' [ '{'  ( <-[}]>+ )  [ '}' | <error: 'missing close-brace for variable name'> ]
         | ('::'?<.name>) [ '(' $<index>=( <substitution> | '$' | <-[[$\\)]>+ )+ ')' ]?
         ]
 }
