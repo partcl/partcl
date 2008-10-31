@@ -39,3 +39,6 @@ D: some builtins
 E: ambs@cpan.org
 E: albie@alfarrabio.di.uminho.pt
 W: http://alfarrabio.di.uminho.pt/~albie/
+
+N: NotFound
+D: build fixes for C++
