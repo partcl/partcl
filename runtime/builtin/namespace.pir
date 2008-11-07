@@ -235,7 +235,7 @@ bad_args:
   ns = splitNamespace(ns, 1)
 
   .local string namespace
-  namespace = ''
+  namespace = '[]'
   $I0 = elements ns
   if $I0 == 0 goto global_ns
 

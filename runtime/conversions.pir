@@ -306,7 +306,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
     ast = astbuilder.get('past')
 
     .local string namespace
-    namespace = ''
+    namespace = '[]'
     unless has_ns goto build_pir
 
     $P0 = ns.'get_name'()
@@ -398,7 +398,7 @@ end_preamble:
     ast = astbuilder.get('past')
 
     .local string namespace
-    namespace = ''
+    namespace = '[]'
     unless has_ns goto build_pir
 
     $P0 = ns.'get_name'()

@@ -26,7 +26,7 @@
   code      = new 'CodeString'
   args_code = new 'CodeString'
   defaults  = new 'CodeString'
-  namespace = ''
+  namespace = '[]'
 
   .local pmc ns
   .local string name

@@ -36,7 +36,7 @@
     .local string namespace
     splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
     ns          = splitNamespace('', 2)
-    namespace   = ''
+    namespace   = '[]'
     $I0 = elements ns
     if $I0 == 0 goto loop
 
