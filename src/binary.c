@@ -204,20 +204,20 @@ binary_scan_string_field(PARROT_INTERP, char field,
     {
         case 'a':
             if (binstrpos + length > binstrlen)
-                return PMCNULL;
+                return NULL;
             c     = binstr + binstrpos;
             value = string_concat(interp, value, string_from_cstring(interp, c, length), 0);
             binstrpos += length;
             break;
         case 'A':
             if (binstrpos + length > binstrlen)
-                return PMCNULL;
+                return NULL;
             c     = binstr + binstrpos;
             value = string_concat(interp, value, string_from_cstring(interp, c, length), 0);
             binstrpos += length;
             break;
         default:
-            return PMCNULL;
+            return NULL;
     }
 
     *_binstrpos = binstrpos;
