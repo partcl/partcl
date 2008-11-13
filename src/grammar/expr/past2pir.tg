@@ -2,7 +2,7 @@ grammar TclExpr::PIR::Grammar is TGE::Grammar;
 
 transform result (ROOT)  {
     $S0 = typeof node
-    .tailcall tree.get('pir', node, $S0)
+    .tailcall tree.'get'('pir', node, $S0)
 }
 
 transform pir (PAST::Expr) {
@@ -11,16 +11,16 @@ transform pir (PAST::Expr) {
 
     .local pmc value
     value = node['value']
-    $P0 = tree.get('pir', value)
+    $P0 = tree.'get'('pir', value)
     pir .= $P0
     $S0 = value['ret']
     node['ret'] = $S0
 
     .local pmc ret, label
     ret   = node['ret']
-    label = pir.unique('expr_is_string')
+    label = pir.'unique'('expr_is_string')
  
-    pir.emit(<<'END_PIR', ret, label)
+    pir.'emit'(<<'END_PIR', ret, label)
   .local pmc toNumber
   toNumber = get_root_global ['_tcl'], 'toNumber'
   push_eh %1
@@ -36,7 +36,7 @@ transform pir (PAST::Program) {
     .local pmc pir
     pir = new 'CodeString'
 
-    pir.emit(<<'END_PIR')
+    pir.'emit'(<<'END_PIR')
     .local pmc colons, split
     colons = get_root_global ['_tcl'], 'colons'
     split  = get_root_global ['parrot'; 'PGE'; 'Util'], 'split'
@@ -63,9 +63,9 @@ transform pir (PAST::Val) {
     .local pmc class
 
     pir = new 'CodeString'
-    ret = pir.unique('$P')
+    ret = pir.'unique'('$P')
     class = node['class']
-    pir.emit("    %0 = new '%1'", ret, class)
+    pir.'emit'("    %0 = new '%1'", ret, class)
     $S0 = node['value']
     if class == "TclFloat"  goto assign_float
     if class == "TclString" goto assign_string
@@ -80,9 +80,9 @@ transform pir (PAST::Val) {
     concat $S0, '.'
     goto assign_val
   assign_string:
-    $S0 = pir.escape($S0)
+    $S0 = pir.'escape'($S0)
   assign_val:
-    pir.emit('    assign %0, %1', ret, $S0)
+    pir.'emit'('    assign %0, %1', ret, $S0)
   end:
     node['ret'] = ret
     node['istemp'] = 1
@@ -92,7 +92,7 @@ transform pir (PAST::Val) {
 transform pir (PAST::Var) {
     .local pmc pir, ret
     pir = new 'CodeString'
-    ret = pir.unique('$P')
+    ret = pir.'unique'('$P')
     node['ret']    = ret
     node['istemp'] = 1
     
@@ -102,7 +102,7 @@ transform pir (PAST::Var) {
     $I0 = exists node['index']
     if $I0 goto array
 
-    pir.emit(<<'END_PIR', ret, name)
+    pir.'emit'(<<'END_PIR', ret, name)
   .local pmc readVar
   readVar = get_root_global ['_tcl'], 'readVar'
   %0 = readVar('%1')
@@ -113,10 +113,10 @@ array:
     .local pmc    index
     index = node['index']
     
-    $P0 = tree.get('pir', index)
+    $P0 = tree.'get'('pir', index)
     pir .= $P0
     $S0 = index['ret']
-    pir.emit(<<'END_PIR', ret, name, $S0)
+    pir.'emit'(<<'END_PIR', ret, name, $S0)
   .local pmc readVar
   readVar = get_root_global ['_tcl'], 'readVar'
   $S0 = %2
@@ -137,7 +137,7 @@ transform pir (PAST::Op) {
   iter_loop: 
     unless iterator goto iter_done
     $P1 = shift iterator
-    $P0 = tree.get('pir', $P1)
+    $P0 = tree.'get'('pir', $P1)
     return_register = $P1['ret']
     push args, return_register
     pir .= $P0
@@ -145,7 +145,7 @@ transform pir (PAST::Op) {
   iter_done:
     # get a result PMC
     .local pmc retval
-    retval = pir.unique('$P')
+    retval = pir.'unique'('$P')
     pir .= retval
     pir .= " = get_hll_global '"
     $S0 = node['opfunc']
@@ -172,7 +172,7 @@ transform pir (PAST::MathFunc) {
   iter_loop: 
     unless iterator goto iter_done
     $P1 = shift iterator
-    $P0 = tree.get('pir', $P1)
+    $P0 = tree.'get'('pir', $P1)
     return_register = $P1['ret']
     push args, return_register
     pir .= $P0
@@ -180,9 +180,9 @@ transform pir (PAST::MathFunc) {
   iter_done:
     # get a result PMC
     .local pmc retval
-    retval = pir.unique('$P')
+    retval = pir.'unique'('$P')
     $S0    = node['mathfunc']
-    pir.emit("%0 = get_hll_global ['tcl'; 'mathfunc'], '&%1'", retval, $S0)
+    pir.'emit'("%0 = get_hll_global ['tcl'; 'mathfunc'], '&%1'", retval, $S0)
     pir .= retval
     pir .= " = "
     pir .= retval
@@ -210,14 +210,14 @@ transform pir (PAST::StaticCommand) {
   iter_loop: 
     unless iterator goto iter_done
     $P1 = shift iterator
-    $P0 = tree.get('pir', $P1)
+    $P0 = tree.'get'('pir', $P1)
     reg = $P1['ret']
     push args, reg
     pir .= $P0
     $S0 = typeof $P1
     if $S0 == 'PAST::Expand' goto iter_expand
     unless $S0 == 'PAST::Var' goto iter_loop
-    pir.emit("    %0 = clone %0", reg)
+    pir.'emit'("    %0 = clone %0", reg)
     goto iter_loop
   iter_expand:
     $P0 = pop args
@@ -226,12 +226,12 @@ transform pir (PAST::StaticCommand) {
     goto iter_loop
   iter_done:
     .local string retval
-    retval = pir.unique('$P')
+    retval = pir.'unique'('$P')
 
     .local string invalid_, done_, exec_
-    invalid_ = pir.unique('invalid_')
-    done_    = pir.unique('done_')
-    exec_    = pir.unique('exec_')
+    invalid_ = pir.'unique'('invalid_')
+    done_    = pir.'unique'('done_')
+    exec_    = pir.'unique'('exec_')
 
     $P0 = shift children
     $S0 = $P0['value']
@@ -249,7 +249,7 @@ transform pir (PAST::StaticCommand) {
     $S1    = pop $P0
 
     $S1 = '&' . $S1
-    $S1 = pir.escape($S1)
+    $S1 = pir.'escape'($S1)
 
     $S2 = $P0[0]
     if $S2 == "" goto root_ns
@@ -259,8 +259,8 @@ transform pir (PAST::StaticCommand) {
     ns = ns . "'], "
 
     .local string root_
-    root_ = pir.unique('root_')
-    pir.emit(<<'END_PIR', retval, ns, $S1, root_, exec_)
+    root_ = pir.'unique'('root_')
+    pir.'emit'(<<'END_PIR', retval, ns, $S1, root_, exec_)
     %0 = get_global %1 %2
     if null %0 goto %3
     goto %4
@@ -278,7 +278,7 @@ END_PIR
     ns = ns . "'], "
 
   root_ns_emit:
-    pir.emit(<<'END_PIR', retval, ns, $S1, invalid_, exec_)
+    pir.'emit'(<<'END_PIR', retval, ns, $S1, invalid_, exec_)
     %0 = get_hll_global %1 %2
     if null %0 goto %3
 %4:
@@ -287,15 +287,15 @@ END_PIR
 
   no_ns:
     $S1 = '&' . name
-    $S1 = pir.escape($S1)
-    pir.emit(<<'END_PIR', retval, $S1, invalid_)
+    $S1 = pir.'escape'($S1)
+    pir.'emit'(<<'END_PIR', retval, $S1, invalid_)
     %0 = find_name %1
     if null %0 goto %2
 END_PIR
 
   emit:
-    $S3  = pir.escape(name)
-    pir.emit(<<'END_PIR', retval, $S3, $S0, invalid_, done_)
+    $S3  = pir.'escape'(name)
+    pir.'emit'(<<'END_PIR', retval, $S3, $S0, invalid_, done_)
     %0 = %0(%2)
     goto %4
 %3:
@@ -316,13 +316,13 @@ transform pir (PAST::DynamicCommand) {
   iter_loop: 
     unless iterator goto iter_done
     $P1 = shift iterator
-    $P0 = tree.get('pir', $P1)
+    $P0 = tree.'get'('pir', $P1)
     reg = $P1['ret']
     push args, reg
     pir .= $P0
     $S0 = typeof $P1
     if $S0 == 'PAST::Expand' goto iter_expand
-    pir.emit("%0 = clone %0", reg)
+    pir.'emit'("%0 = clone %0", reg)
     goto iter_loop
   iter_expand:
     $P0 = pop args
@@ -339,17 +339,17 @@ transform pir (PAST::DynamicCommand) {
     goto iter_loop
   iter_done:
     .local pmc retval, name
-    retval = pir.unique('$P')
+    retval = pir.'unique'('$P')
     name = shift args
     
-    $S1 = pir.unique('invalid_')
-    $S2 = pir.unique('done_')
+    $S1 = pir.'unique'('invalid_')
+    $S2 = pir.'unique'('done_')
 
     $P0 = shift children
     $S0 = join ", ", args
-    $S4 = pir.unique('curr_namespace')
-    $S5 = pir.unique('root_namespace')
-    pir.emit(<<'END_PIR', retval, name, $S0, $S1, $S2, $S4, $S5)
+    $S4 = pir.'unique'('curr_namespace')
+    $S5 = pir.'unique'('root_namespace')
+    pir.'emit'(<<'END_PIR', retval, name, $S0, $S1, $S2, $S4, $S5)
   $S0 = %1
   $P0 = split(colons, $S0)
   $S0 = ""
@@ -393,14 +393,14 @@ transform pir (PAST::Expand) {
     pir   = new 'CodeString'
     value = node['value']
 
-    $S0 = tree.get('pir', value)
+    $S0 = tree.'get'('pir', value)
     pir .= $S0
 
     $S0 = value['ret']
     $S1 = pir.'unique'('$P')
     $S2 = pir.'unique'('loop_')
     $S3 = pir.'unique'('end_')
-    pir.emit(<<'END_PIR', $S0)
+    pir.'emit'(<<'END_PIR', $S0)
   .local pmc toList
   toList = get_root_global ['_tcl'], 'toList'
   %0 = toList(%0)
@@ -416,52 +416,52 @@ transform pir (PAST::Cond) {
     .local string cond_result, then_result, else_result
 
     pir = new 'CodeString'
-    pir.emit('  .local pmc toBoolean')
-    pir.emit('  toBoolean = get_root_global ["_tcl"], "toBoolean"')
+    pir.'emit'('  .local pmc toBoolean')
+    pir.'emit'('  toBoolean = get_root_global ["_tcl"], "toBoolean"')
 
     # This node has 3 children. generate PIR so that:
     # if node1 then node2 else node3
 
     # pick a unique register to store our result in.
-    ret = pir.unique('$P')
+    ret = pir.'unique'('$P')
 
     #  pick a unique number for our labels..
-    label = pir.unique('label_')
+    label = pir.'unique'('label_')
 
     children = node.'get_children'()
 
     cond = children[0] 
-    $S0 = tree.get('pir', cond)
+    $S0 = tree.'get'('pir', cond)
     pir .= $S0
     cond_result = cond['ret']
 
-    pir.emit("  %0 = toBoolean(%0)",    cond_result)
-    pir.emit("  unless %0 goto else_%1", cond_result, label)
+    pir.'emit'("  %0 = toBoolean(%0)",    cond_result)
+    pir.'emit'("  unless %0 goto else_%1", cond_result, label)
 
     then = children[1] 
-    $S0 = tree.get('pir', then)
+    $S0 = tree.'get'('pir', then)
     pir .= $S0
     then_result = then['ret']
 
-    pir.emit('    %0 = %1', ret, then_result)
-    pir.emit("  goto end_if_%0", label)
+    pir.'emit'('    %0 = %1', ret, then_result)
+    pir.'emit'("  goto end_if_%0", label)
  
     #set the result register to the answer from this section  
  
    #then jump to custom end label..
 
-    pir.emit("  else_%0:",label)
+    pir.'emit'("  else_%0:",label)
 
     else = children[2] 
-    $S0 = tree.get('pir', else)
+    $S0 = tree.'get'('pir', else)
     pir .= $S0
     else_result = else['ret']
 
-    pir.emit('    %0 = %1', ret, else_result)
+    pir.'emit'('    %0 = %1', ret, else_result)
 
     #set the result register to the answer from this section  
 
-    pir.emit("  end_if_%0:",label)
+    pir.'emit'("  end_if_%0:",label)
 
     node['ret'] = ret
 

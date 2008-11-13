@@ -3,10 +3,10 @@ grammar TclExpr::PAST::Grammar is TGE::Grammar;
 transform past (ROOT) {
     $P0 = node['expr']
     unless null $P0 goto expression
-    .tailcall tree.get('dispatch', node, 'TclExpr;Grammar')
+    .tailcall tree.'get'('dispatch', node, 'TclExpr;Grammar')
 
 expression:
-    .tailcall tree.get('expression', node)
+    .tailcall tree.'get'('expression', node)
 } 
 
 transform expression (TclExpr;Grammar) {
@@ -16,7 +16,7 @@ transform expression (TclExpr;Grammar) {
     node = node['expr']
     past['node'] = node
 
-    $P0 = tree.get('dispatch', node, 'TclExpr;Grammar')
+    $P0 = tree.'get'('dispatch', node, 'TclExpr;Grammar')
     past['value'] = $P0
 
     .return(past)
@@ -73,7 +73,7 @@ dispatch:
     end
 
 program:
-    .tailcall tree.get('past', $P0, 'program')
+    .tailcall tree.'get'('past', $P0, 'program')
 
 empty:
     $P0 = new 'PAST::Val'
@@ -82,47 +82,47 @@ empty:
     .return($P0)
 
 expand:
-    .tailcall tree.get('past', node, 'expand')
+    .tailcall tree.'get'('past', node, 'expand')
 
 chunks:
-    .tailcall tree.get('past', $P0, 'array')
+    .tailcall tree.'get'('past', $P0, 'array')
 
 operator:
-    .tailcall tree.get('past', node, 'operator')
+    .tailcall tree.'get'('past', node, 'operator')
 
 mathfunc:
-    .tailcall tree.get('past', $P0, 'mathfunc')
+    .tailcall tree.'get'('past', $P0, 'mathfunc')
 
 quoted_word:
-    .tailcall tree.get('past', $P0, 'quoted_word')
+    .tailcall tree.'get'('past', $P0, 'quoted_word')
 
 braced_word:
-    .tailcall tree.get('past', $P0, 'braced_word')
+    .tailcall tree.'get'('past', $P0, 'braced_word')
 
 number:
-    .tailcall tree.get('past', $P0, 'number')
+    .tailcall tree.'get'('past', $P0, 'number')
 
 boolean:
-    .tailcall tree.get('past', $P0, 'boolean')
+    .tailcall tree.'get'('past', $P0, 'boolean')
 
 constant:
-    .tailcall tree.get('past', $P0, 'constant')
+    .tailcall tree.'get'('past', $P0, 'constant')
 
 integer:
-    .tailcall tree.get('past', $P0, 'integer')
+    .tailcall tree.'get'('past', $P0, 'integer')
 
 has_float:
-    .tailcall tree.get('past', $P0, 'float')
+    .tailcall tree.'get'('past', $P0, 'float')
 
 scientific:
-    .tailcall tree.get('past', $P0, 'scientific')
+    .tailcall tree.'get'('past', $P0, 'scientific')
 
 substitution:
     node = $P0
     goto dispatch
 
 variable_substitution:
-    .tailcall tree.get('past', $P0, 'variable_substitution')
+    .tailcall tree.'get'('past', $P0, 'variable_substitution')
 
 command_substitution:
     node = $P0
@@ -136,7 +136,7 @@ command_substitution:
     .return($P0)
 
 nested:
-    .tailcall tree.get('past', $P0, 'nested')
+    .tailcall tree.'get'('past', $P0, 'nested')
 }
 
 # Go through all the children of an operator and transform them.
@@ -170,11 +170,11 @@ transform past (operator) {
     .return (past)
 
   is_ternary:
-    .tailcall tree.get('ternary', node, 'PAST::Op')
+    .tailcall tree.'get'('ternary', node, 'PAST::Op')
   is_and:
-    .tailcall tree.get('logical_and', node, 'PAST::Op')
+    .tailcall tree.'get'('logical_and', node, 'PAST::Op')
   is_or:
-    .tailcall tree.get('logical_or', node, 'PAST::Op')
+    .tailcall tree.'get'('logical_or', node, 'PAST::Op')
 }
 
 transform past (expand) {
@@ -295,7 +295,7 @@ too_many:
 transform past (boolean) {
     .local pmc past
     past = new 'PAST::Val'
-    past.set_node(node)
+    past.'set_node'(node)
     
     $S0 = node
     $P0 = new 'TclConst'
@@ -309,7 +309,7 @@ transform past (boolean) {
 transform past (constant) {
     .local pmc past
     past = new 'PAST::Val'
-    past.set_node(node)
+    past.'set_node'(node)
     
     $S0 = node
     $P0 = new 'TclConst'
@@ -323,7 +323,7 @@ transform past (constant) {
 transform past (braced_word) {
     .local pmc past
     past = new 'PAST::Val'
-    past.set_node(node)
+    past.'set_node'(node)
 
     $P0 = node['PGE::Text::bracketed']
     $S0 = $P0[0]
@@ -342,13 +342,13 @@ transform past (number) {
     die 'invalid number type'
 
 integer:
-    .tailcall tree.get('past', $P0, 'integer')
+    .tailcall tree.'get'('past', $P0, 'integer')
 
 have_float:
-    .tailcall tree.get('past', $P0, 'float')
+    .tailcall tree.'get'('past', $P0, 'float')
 
 scientific:
-    .tailcall tree.get('past', $P0, 'scientific')
+    .tailcall tree.'get'('past', $P0, 'scientific')
 }
 
 
@@ -363,7 +363,7 @@ transform past (nested) :language('PIR') {
 transform past (scientific) {
     .local pmc past
     past = new 'PAST::Val'
-    past.set_node(node)
+    past.'set_node'(node)
     
     $S0 = node[0]
     $N0 = $S0
@@ -382,7 +382,7 @@ transform past (scientific) {
 transform past (integer) {
     .local pmc past
     past = new 'PAST::Val'
-    past.set_node(node)
+    past.'set_node'(node)
 
     $P0 = node['binary']
     unless null $P0 goto binary
@@ -490,7 +490,7 @@ transform past (integer) {
 transform past (float) {
     .local pmc past
     past = new 'PAST::Val'
-    past.set_node(node)
+    past.'set_node'(node)
 
     $S0 = node
     past['value'] = $S0
@@ -503,7 +503,7 @@ transform past (quoted_word) {
     $P0 = node['chunk']
     if null $P0 goto empty_string
 
-    .tailcall tree.get('past', $P0, 'array')
+    .tailcall tree.'get'('past', $P0, 'array')
 
 empty_string:
     past = new 'PAST::Val'
@@ -543,8 +543,8 @@ transform past (array) {
     goto iter_loop
   cpast_concat:
     $P0 = new 'PAST::Op'
-    $P0.add_child(past)
-    $P0.add_child(cpast)
+    $P0.'add_child'(past)
+    $P0.'add_child'(cpast)
     $P0['node'] = node
     $P0['opfunc'] = 'infix:concat'
     past = $P0
@@ -574,7 +574,7 @@ static:
     node_type = 'PAST::StaticCommand'
 create_node:
     past = new node_type
-    past.set_node(node)
+    past.'set_node'(node)
     past.'add_child'(command)
 
     iterator = iter words
@@ -595,7 +595,7 @@ empty:
 transform past (variable_substitution) {
     .local pmc past
     past = new 'PAST::Var'
-    past.set_node(node)
+    past.'set_node'(node)
     
     $S0 = node[0]
     past['name']  = $S0
@@ -615,7 +615,7 @@ transform ternary (PAST::Op) {
     .local pmc past
 
     past = new 'PAST::Cond'
-    past.set_node(node)
+    past.'set_node'(node)
 
     $P1 = node[0]
     $P2 = tree.'get'('dispatch', $P1, 'TclExpr;Grammar')
@@ -663,7 +663,7 @@ transform logical_and (PAST::Op) {
 
     # Generate (A ? (...) : 0)
     past = new 'PAST::Cond'
-    past.set_node(node)
+    past.'set_node'(node)
 
     past.'add_child' (A)
 
@@ -706,7 +706,7 @@ transform logical_or (PAST::Op) {
 
     # Generate (A ? 1 : (...))
     past = new 'PAST::Cond'
-    past.set_node(node)
+    past.'set_node'(node)
 
     past.'add_child' (A)
 

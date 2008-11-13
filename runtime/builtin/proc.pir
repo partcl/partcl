@@ -50,7 +50,7 @@
   goto create
 
 create:
-  code.emit(<<'END_PIR', name, namespace)
+  code.'emit'(<<'END_PIR', name, namespace)
 .namespace %1
 .sub 'xxx' :anon
   .param pmc args :slurpy
@@ -103,15 +103,15 @@ args_loop:
   if $I0 == 2 goto default_arg
 
   min = i + 1
-  args_code.emit('  $P1 = shift args')
-  args_code.emit("  lexpad['$%0'] = $P1", $S0)
+  args_code.'emit'('  $P1 = shift args')
+  args_code.'emit'("  lexpad['$%0'] = $P1", $S0)
 
   args_usage .= ' '
   args_usage .= $S0
   goto args_next
 
 default_arg:
-    args_code.emit(<<'END_PIR', i, $S0, $S1)
+    args_code.'emit'(<<'END_PIR', i, $S0, $S1)
   unless args goto default_%0
   $P1 = shift args
   lexpad['$%1'] = $P1
@@ -123,7 +123,7 @@ END_PIR
 
 got_default_key:
 
-    defaults.emit(<<'END_PIR', i, $S0, $S1)
+    defaults.'emit'(<<'END_PIR', i, $S0, $S1)
 default_%0:
   $P1 = new 'TclString'
   $P1 = '%2'
@@ -152,22 +152,22 @@ store_info:
   argc = elements args
 END_PIR
 
-  code.emit('  if argc < %0 goto BAD_ARGS', min)
+  code.'emit'('  if argc < %0 goto BAD_ARGS', min)
   if is_slurpy goto emit_args
-  code.emit('  if argc > %0 goto BAD_ARGS', max)
+  code.'emit'('  if argc > %0 goto BAD_ARGS', max)
 
 emit_args:
   code .= args_code
 
   # save anything left into args.
-  code.emit(<<'END_PIR')
+  code.'emit'(<<'END_PIR')
   lexpad['args'] = args
 END_PIR
 
 done_args:
-  code.emit('  goto ARGS_OK')
+  code.'emit'('  goto ARGS_OK')
   code .= defaults
-  code.emit(<<'END_PIR', name, args_usage)
+  code.'emit'(<<'END_PIR', name, args_usage)
   goto ARGS_OK
 BAD_ARGS:
   $P0 = pop call_chain
@@ -182,7 +182,7 @@ END_PIR
 
   code .= parsed_body
 
-  code.emit(<<'END_PIR', body_reg)
+  code.'emit'(<<'END_PIR', body_reg)
   pop_eh
 was_ok:
   $P0 = pop call_chain

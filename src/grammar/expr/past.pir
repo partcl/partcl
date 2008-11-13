@@ -99,7 +99,7 @@ of the parse tree).
     $S0 = match
     $P0 = $S0
     $P1 = getattribute self, '$.pos'
-    $I1 = match.from()
+    $I1 = match.'from'()
     $P1 = $I1
     .return ()
 .end
@@ -148,9 +148,9 @@ with C<Data::Dumper>.
 
     (subindent, indent) = dumper.'newIndent'()
     print '=> '
-    $S0 = self.source()
+    $S0 = self.'source'()
     dumper.'genericString'('', $S0)
-    $I0 = self.pos()
+    $I0 = self.'pos'()
     print ' @ '
     print $I0
     hascapts = 0

@@ -97,8 +97,8 @@ Given a PMC, get a number from it.
 
   .local pmc astgrammar, astbuilder, ast
   astgrammar = new ['TclExpr'; 'PAST'; 'Grammar']
-  astbuilder = astgrammar.apply(match)
-  ast = astbuilder.get('past')
+  astbuilder = astgrammar.'apply'(match)
+  ast = astbuilder.'get'('past')
 
   .local string className
   .local pmc    value
@@ -295,15 +295,15 @@ Given an expression, return a subroutine, or optionally, the raw PIR
 
     unless match goto premature_end
     $I0 = length expression
-    $I1 = match.to()
+    $I1 = match.'to'()
     .include 'cclass.pasm'
     $I1 = find_not_cclass .CCLASS_WHITESPACE, expression, $I1, $I0
     unless $I0 == $I1 goto extra_tokens
 
     .local pmc astgrammar, astbuilder, ast
     astgrammar = new ['TclExpr'; 'PAST'; 'Grammar']
-    astbuilder = astgrammar.apply(match)
-    ast = astbuilder.get('past')
+    astbuilder = astgrammar.'apply'(match)
+    ast = astbuilder.'get'('past')
 
     .local string namespace
     namespace = '[]'
@@ -323,7 +323,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
     .local string result
     pirgrammar = new ['TclExpr'; 'PIR'; 'Grammar']
     pirbuilder = pirgrammar.'apply'(ast)
-    result = pirbuilder.get('result')
+    result = pirbuilder.'get'('result')
 
     .local string ret
     ret = ast['ret']
@@ -331,12 +331,12 @@ Given an expression, return a subroutine, or optionally, the raw PIR
     .local pmc pir
     pir = new 'CodeString'
 
-    pir.emit(".HLL 'Tcl', ''")
-    pir.emit('.namespace %0', namespace)
-    pir.emit(".sub '_anon' :anon")
+    pir.'emit'(".HLL 'Tcl', ''")
+    pir.'emit'('.namespace %0', namespace)
+    pir.'emit'(".sub '_anon' :anon")
     pir .= result
-    pir.emit("  .return(%0)", ret)
-    pir.emit(".end")
+    pir.'emit'("  .return(%0)", ret)
+    pir.'emit'(".end")
 
     $P1 = compreg 'PIR'
     $P2 = $P1(pir)
@@ -387,15 +387,15 @@ end_preamble:
 
     unless match goto premature_end
     $I0 = length code
-    $I1 = match.to()
+    $I1 = match.'to'()
     .include 'cclass.pasm'
     $I1 = find_not_cclass .CCLASS_WHITESPACE, code, $I1, $I0
     unless $I0 == $I1 goto extra_tokens
 
     .local pmc astgrammar, astbuilder, ast
     astgrammar = new ['TclExpr'; 'PAST'; 'Grammar']
-    astbuilder = astgrammar.apply(match)
-    ast = astbuilder.get('past')
+    astbuilder = astgrammar.'apply'(match)
+    ast = astbuilder.'get'('past')
 
     .local string namespace
     namespace = '[]'
@@ -415,7 +415,7 @@ end_preamble:
     .local string result
     pirgrammar = new ['TclExpr'; 'PIR'; 'Grammar']
     pirbuilder = pirgrammar.'apply'(ast)
-    result = pirbuilder.get('result')
+    result = pirbuilder.'get'('result')
 
     .local string ret
     ret = ast['ret']
@@ -428,15 +428,15 @@ end_preamble:
     goto only_pir
 
 do_wrapper:
-    pir.emit(".HLL 'Tcl', ''")
-    pir.emit(".loadlib 'tcl_ops'")
-    pir.emit('.namespace %0', namespace)
-    pir.emit(".include 'languages/tcl/src/returncodes.pasm'")
-    pir.emit(".sub '_anon' :anon")
+    pir.'emit'(".HLL 'Tcl', ''")
+    pir.'emit'(".loadlib 'tcl_ops'")
+    pir.'emit'('.namespace %0', namespace)
+    pir.'emit'(".include 'languages/tcl/src/returncodes.pasm'")
+    pir.'emit'(".sub '_anon' :anon")
     pir .= result
-    pir.emit('  .return(%0)', ret)
-    pir.emit('.end')
-    pir.emit(<<"END_PIR")
+    pir.'emit'('  .return(%0)', ret)
+    pir.'emit'('.end')
+    pir.'emit'(<<"END_PIR")
 
 .sub '_init' :init
     load_bytecode 'languages/tcl/runtime/tcllib.pir'

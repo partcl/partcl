@@ -249,8 +249,8 @@ global_ns:
   code     = new 'CodeString'
   $S0 = join ' ', argv
   ($S0, $S1) = compileTcl($S0, 'pir_only'=>1)
-  $I0 = code.unique()
-  code.emit(<<'END_PIR', namespace, $S0, $I0, $S1)
+  $I0 = code.'unique'()
+  code.'emit'(<<'END_PIR', namespace, $S0, $I0, $S1)
 .HLL 'tcl', ''
 .namespace %0
 # src/compiler.pir :: pir_compiler (2)
@@ -341,7 +341,7 @@ is_namespace:
 end:
 
   $P0 = find_name 'children_cmp'
-  list.sort($P0)
+  list.'sort'($P0)
   .return(list)
 
 bad_args:
