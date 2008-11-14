@@ -92,7 +92,7 @@ matches_ind:
   matchList[1] = $I1
   setVar(matchVar, matchList)
 
-  matches = match.'get_array'()
+  matches = match.'list'()
 
 subMatches_ind:
   .local pmc subMatchList
