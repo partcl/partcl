@@ -41,7 +41,7 @@ ready:
   match_len = to - from
 
   .local pmc matches
-  matches = match.'get_array'()
+  matches = match.'list'()
 
   # replace any special characters with the results of the match
   .local int pos

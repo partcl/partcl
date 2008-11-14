@@ -55,7 +55,7 @@ ready:
 
    setVar(matchVar, matchStr)
 
-   matches = match.'get_array'()
+   matches = match.'list'()
    .local string subMatchStr, subMatchVar
 
 subMatches:

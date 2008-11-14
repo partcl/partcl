@@ -155,7 +155,7 @@ transform past (operator) {
     past = new 'PAST::Op'
 
     past['opfunc'] = name
-    $P0 = node.'get_array'()
+    $P0 = node.'list'()
     if null $P0 goto iter_end
     iterator = iter $P0
   iter_loop:
