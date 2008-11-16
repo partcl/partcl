@@ -1,4 +1,4 @@
-.HLL '_Tcl', ''
+.HLL '_Tcl'
 .namespace []
 
 .sub listToDict

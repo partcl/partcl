@@ -1,4 +1,4 @@
-.HLL 'Tcl', ''
+.HLL 'Tcl'
 .namespace []
 
 .sub '&dict'
@@ -37,7 +37,7 @@ no_args:
 
 .end
 
-.HLL '_Tcl', ''
+.HLL '_Tcl'
 
 .namespace [ 'helpers'; 'dict' ]
 

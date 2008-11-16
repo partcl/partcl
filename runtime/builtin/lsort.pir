@@ -1,4 +1,4 @@
-.HLL 'Tcl', ''
+.HLL 'Tcl'
 .namespace []
 
 .sub '&lsort'
@@ -104,7 +104,7 @@ wrong_args:
   die 'wrong # args: should be "lsort ?options? list"'
 .end
 
-.HLL '_Tcl', ''
+.HLL '_Tcl'
 .namespace [ 'helpers'; 'lsort' ]
 
 .sub 'ascii'

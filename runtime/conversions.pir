@@ -1,4 +1,4 @@
-.HLL '_Tcl', ''
+.HLL '_Tcl'
 .namespace []
 
 =head2 _Tcl::toList
@@ -331,7 +331,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
     .local pmc pir
     pir = new 'CodeString'
 
-    pir.'emit'(".HLL 'Tcl', ''")
+    pir.'emit'(".HLL 'Tcl'")
     pir.'emit'('.namespace %0', namespace)
     pir.'emit'(".sub '_anon' :anon")
     pir .= result
@@ -428,7 +428,7 @@ end_preamble:
     goto only_pir
 
 do_wrapper:
-    pir.'emit'(".HLL 'Tcl', ''")
+    pir.'emit'(".HLL 'Tcl'")
     pir.'emit'(".loadlib 'tcl_ops'")
     pir.'emit'('.namespace %0', namespace)
     pir.'emit'(".include 'languages/tcl/src/returncodes.pasm'")

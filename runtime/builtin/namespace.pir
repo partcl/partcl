@@ -9,7 +9,7 @@ real top level namespace.
 
 =cut
 
-.HLL 'Tcl', ''
+.HLL 'Tcl'
 .namespace []
 
 .sub '&namespace'
@@ -49,7 +49,7 @@ no_args:
 
 .end
 
-.HLL '_Tcl', ''
+.HLL '_Tcl'
 .namespace [ 'helpers'; 'namespace' ]
 
 .sub 'current'
@@ -251,7 +251,7 @@ global_ns:
   ($S0, $S1) = compileTcl($S0, 'pir_only'=>1)
   $I0 = code.'unique'()
   code.'emit'(<<'END_PIR', namespace, $S0, $I0, $S1)
-.HLL 'tcl', ''
+.HLL 'tcl'
 .namespace %0
 # src/compiler.pir :: pir_compiler (2)
 .sub compiled_tcl_sub_%2

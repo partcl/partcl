@@ -8,7 +8,7 @@ providing a compreg-compatible method.
 
 =cut
 
-.HLL 'parrot', ''
+.HLL 'parrot'
 
 .loadlib 'tcl_ops'
 .include 'languages/tcl/src/macros.pir'
@@ -37,13 +37,13 @@ providing a compreg-compatible method.
 
 # create the 'tcl' namespace -- see RT #39852
 # https://rt.perl.org/rt3/Ticket/Display.html?id=39852
-.HLL 'Tcl', ''
+.HLL 'Tcl'
 .namespace ['tcl']
 .sub foo
   .return()
 .end
 
-.HLL '_Tcl', ''
+.HLL '_Tcl'
 .namespace []
 
 .sub load_macros :load :anon
@@ -241,18 +241,18 @@ env_loop_done:
   store_global 'compiled_num', $P1
 .end
 
-.HLL 'parrot', ''
+.HLL 'parrot'
 .include 'languages/tcl/src/grammar/expr/expression.pir'
 .include 'languages/tcl/src/grammar/expr/parse.pir'
 .include 'languages/tcl/src/grammar/expr/functions.pir'
 .include 'languages/tcl/src/grammar/expr/operators.pir'
 
-.HLL 'tcl', ''
+.HLL 'tcl'
 .namespace [ 'tcl'; 'mathop' ]
 .include 'languages/tcl/src/mathops.pir'
 
 # Load the standard library
-.HLL 'Tcl', ''
+.HLL 'Tcl'
 .namespace []
 
 .sub load_stdlib :load :anon
@@ -267,7 +267,7 @@ env_loop_done:
   set_root_global ['_tcl'], 'slash', $P2
 .end
 
-.HLL 'parrot', ''
+.HLL 'parrot'
 .namespace []
 
 .sub hack_grammar :load :anon

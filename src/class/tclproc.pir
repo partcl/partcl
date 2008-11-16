@@ -4,7 +4,7 @@ A .Sub with attributes
 
 =cut
 
-.HLL 'parrot', ''
+.HLL 'parrot'
 .namespace [ 'TclProc' ]
 
 .cloneable()

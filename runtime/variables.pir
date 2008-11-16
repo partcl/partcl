@@ -1,4 +1,4 @@
-.HLL '_Tcl', ''
+.HLL '_Tcl'
 .namespace []
 
 =head2 _Tcl::readVar

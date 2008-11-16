@@ -1,4 +1,4 @@
-.HLL 'Tcl', ''
+.HLL 'Tcl'
 .namespace []
 
 #
@@ -66,7 +66,7 @@ few_args:
 
 .end
 
-.HLL '_Tcl', ''
+.HLL '_Tcl'
 
 .namespace [ 'helpers' ; 'array' ]
 

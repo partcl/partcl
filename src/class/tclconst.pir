@@ -1,4 +1,4 @@
-.HLL 'parrot', ''
+.HLL 'parrot'
 .namespace [ 'TclConst' ]
 
 .cloneable()
