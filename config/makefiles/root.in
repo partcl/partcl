@@ -167,9 +167,6 @@ test: tcl.pbc
 spectest: tcl.pbc
 	$(PERL) tools/tcl_test.pl
 
-devtest:
-	cd t && $(PERL) -e 'use Test::Harness qw($$verbose runtests) ; $$Test::Harness::verbose=1;runtests(glob("*.t"))' && cd ..
-
 CLEANERS = \
 tcl.c \
 tcl$(O) \
