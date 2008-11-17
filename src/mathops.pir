@@ -56,8 +56,15 @@ loop_end:
     .return (result)
 
 bad_arg:
+    .catch()
     if arg == '' goto empty_string
+    $S0 = exception
+    $I0 = index $S0, 'invalid octal'
+    if $I0 != -1 goto bad_octal_arg
     die "can't use non-numeric string as operand of \"+\""
+
+bad_octal_arg:    
+    die "can't use invalid octal number as operand of \"+\""
 
 empty_string:
     die "can't use empty string as operand of \"+\""
@@ -126,20 +133,27 @@ bad_args:
     iterator = iter args
     .local pmc result
     result = new 'TclInt'
-    result = 0
+    result = 1
 loop_begin:
     unless iterator goto loop_end
     arg = shift iterator
     push_eh bad_arg
         arg = toNumber(arg)
     pop_eh
-    result += arg
+    result *= arg
     goto loop_begin
 loop_end:
     .return (result)
 
 bad_arg:
+    .catch()
+    $S0 = exception
+    $I0 = index $S0, 'invalid octal'
+    if $I0 != -1 goto bad_octal_arg
     die "can't use non-numeric string as operand of \"*\""
+
+bad_octal_arg:
+    die "can't use invalid octal number as operand of \"*\""
 
  nullary:
     .return(1)
