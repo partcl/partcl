@@ -45,7 +45,7 @@ my @skipfiles = qw(
   history http httpold
   indexObj info init interp io iocmd iogt
   link list lset
-  macOSXFCmd macOSXLoad main mathop misc msgcat
+  macOSXFCmd macOSXLoad main misc msgcat
   namespace notify
   obj opt
   pid pkg pkgMkIndex platform
