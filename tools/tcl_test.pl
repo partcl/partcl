@@ -74,7 +74,7 @@ sub main {
 sub checkout_tests {
     print "Checking out tests from CVS\n";
 
-    my $tag = 'core-8-5-4';    # For the version we're targeting.
+    my $tag = 'core-8-5-5';    # For the version we're targeting.
 
     my $command =
         'cvs -z3 -d :pserver:anonymous:\@tcl.cvs.sourceforge.net:'
