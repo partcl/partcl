@@ -16,10 +16,8 @@
   .local pmc R
   .local pmc temp
 
-$I0 = elements a_list
-R  = new 'TclInt'
-R  = $I0
-  .return(R)
+  $I0 = elements a_list
+  .return($I0)
 bad_args:
   die 'wrong # args: should be "llength list"'
 .end

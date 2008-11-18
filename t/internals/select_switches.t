@@ -293,8 +293,7 @@ check_30:
       $P1 = select_switches(options, argv, 0, 1)
     pop_eh
 
-    $P2 = new 'TclString'
-    $P2 = ''
+    $P2 = box ''
     goto check_31 
 
 eh_31: 
@@ -316,8 +315,7 @@ check_31:
       $P1 = select_switches(options, argv, 0, 1)
     pop_eh
 
-    $P2 = new 'TclString'
-    $P2 = ''
+    $P2 = box ''
     goto check_32 
 
 eh_32: 

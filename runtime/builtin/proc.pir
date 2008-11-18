@@ -125,8 +125,7 @@ got_default_key:
 
     defaults.'emit'(<<'END_PIR', i, $S0, $S1)
 default_%0:
-  $P1 = new 'TclString'
-  $P1 = '%2'
+  $P1 = box '%2'
   lexpad['$%1'] = $P1
 END_PIR
 
@@ -224,8 +223,7 @@ END_PIR
 
   setattribute $P1, 'HLL_source', body
 
-  $P9 = new 'TclString'
-  $P9 = args_info
+  $P9 = box args_info
   setattribute $P1, 'args',       $P9
   setattribute $P1, 'defaults',   defaults_info
 

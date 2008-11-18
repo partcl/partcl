@@ -257,8 +257,7 @@ neg_do_loop:
 done_loop:
   $I2 = $I1 - input_pos
   $S0 = substr input, input_pos, $I2
-  $P0 = new 'TclString'
-  $P0 = $S0
+  $P0 = box $S0 
   bsr set_val
   goto next
 
@@ -302,8 +301,7 @@ handle_character:
   $S1 = substr input, input_pos, 1
   inc input_pos
   $I0 = ord $S1
-  $P0 = new 'TclInt'
-  $P0 = $I0
+  $P0 = box $I0
   bsr set_val
   goto next
 
@@ -313,8 +311,7 @@ bad_character_width:
   die 'field width may not be specified in %c conversion'
 
 handle_numchars:
-  $P0 = new 'TclInt'
-  $P0 = input_pos
+  $P0 = box input_pos
   bsr set_val
   goto next
 
@@ -395,14 +392,12 @@ handle_string:
 string_width:
   $S1 = substr input, input_pos, $I2
   input_pos = $I1
-  $P0 = new 'TclString'
-  $P0 = $S1
+  $P0 = box $S1
   bsr set_val
   goto next
 
 bad_match:
-  $P0 = new 'TclString'
-  $P0 = ''
+  $P0 = box ''
   bsr set_val
   goto next
 

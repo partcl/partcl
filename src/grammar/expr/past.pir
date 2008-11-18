@@ -54,7 +54,7 @@ Creates the C<PAST::*> classes.
     $P0 = subclass base, 'PAST::Val'
     $P0 = subclass base, 'PAST::Var'
 
-    $P0 = new 'TclInt'
+    $P0 = box 0
     store_global 'TclExpr::PAST', '$!serno', $P0
 .end
 

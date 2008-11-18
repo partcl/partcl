@@ -389,9 +389,6 @@ check_end:
 
   iterator = iter the_array
 
-  retval = new 'TclString'
-  retval = ''
-
 check_loop:
   unless iterator goto check_end
   name = shift iterator
@@ -399,11 +396,10 @@ check_loop:
   if name == match goto found_match
   branch check_loop
 check_end:
-  .return (retval)
+  .return ('')
 
 found_match:
-  retval = name
-  .return (retval)
+  .return (name)
 .end
 
 .sub '-regexp'

@@ -242,10 +242,8 @@ is_string:
       n = toNumber(n)
     pop_eh
 
-    .local pmc ret
-    ret = new 'TclInt'
-    assign ret, n
-    .return(ret)
+    $I0 = n
+    .return($I0)
 
 is_string:
     $S0 = n
@@ -326,10 +324,7 @@ is_string:
     pop_eh
 
     $I0 = a
-    $P0 = new 'TclInt'
-    $P0 = $I0
-
-    .return ($P0)
+    .return ($I0)
 
 is_string:
     die "argument to math function didn't have numeric value"
@@ -608,10 +603,7 @@ is_string:
     pop_eh
 
     $I0 = a
-    $P0 = new 'TclInt'
-    $P0 = $I0
-
-    .return ($P0)
+    .return ($I0)
 
 is_string:
     die "argument to math function didn't have numeric value"

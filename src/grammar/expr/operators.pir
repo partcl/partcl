@@ -152,16 +152,12 @@ empty_string:
 # this is used to make double-quoted strings work
 # (they're a series of captures that need to be concatenated)
 .sub 'infix:concat'
-    .param pmc a
-    .param pmc b
+    .param string a
+    .param string b
 
-    $S0 = a
-    $S1 = b
-    $S0 = $S0 . $S1
+    a .= b
 
-    $P0 = new 'TclString'
-    $P0 = $S0
-    .return($P0)
+    .return(a)
 .end
 
 .sub 'infix:**'

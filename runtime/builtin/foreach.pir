@@ -93,9 +93,7 @@ next_variable:
   goto next_variable
 
 empty_var:
-  value = new 'TclString'
-  value = ''
-  setVar(varname, value)
+  setVar(varname, '')
   goto next_variable
 
 execute_command:

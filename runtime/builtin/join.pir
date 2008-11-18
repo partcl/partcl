@@ -14,22 +14,18 @@
   .local pmc a_list
   a_list = argv[0]
   a_list = toList(a_list)
-  .local pmc a_joinString
+  .local string a_joinString
   if argc < 2 goto default_joinString
   a_joinString = argv[1]
   goto done_joinString
 default_joinString:
-  a_joinString = new 'TclString'
   a_joinString = ' '
 done_joinString:
   .local pmc R
   .local pmc temp
 
-$S0 = a_joinString
-$S0 = join $S0, a_list
-R  = new 'TclString'
-R  = $S0
-  .return(R)
+$S0 = join a_joinString, a_list
+.return ($S0)
 bad_args:
   die 'wrong # args: should be "join list ?joinString?"'
 .end

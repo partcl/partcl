@@ -39,7 +39,7 @@
   .local int argc,retcode
 
   .local pmc tcl_interactive
-  tcl_interactive = new 'TclInt'
+  tcl_interactive = box 0
   store_global '$tcl_interactive', tcl_interactive
 
   .local pmc compileTcl

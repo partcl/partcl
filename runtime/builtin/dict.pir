@@ -75,8 +75,7 @@ got_dict:
 
   $I0 = exists dictionary[key]
   if $I0 goto vivified
-  value = new 'TclString'
-  value = ''
+  value = box ''
   goto loop
 
 vivified:
@@ -89,8 +88,7 @@ loop:
   $S2 = value
   $S2 .= $S1
   .local pmc stringy
-  stringy = new 'TclString'
-  stringy = $S2
+  stringy = box $S2
   copy value, stringy
   goto loop
 loop_done:
@@ -437,8 +435,7 @@ got_dict:
   key = shift argv
 
   .local pmc increment
-  increment = new 'TclInt'
-  increment = 1
+  increment = box 1
 
   if argc == 2 goto got_increment
   increment = shift argv

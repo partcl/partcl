@@ -8,6 +8,11 @@ providing a compreg-compatible method.
 
 =cut
 
+.HLL '_tcl'
+.HLL_map 'String'  = 'TclString'
+.HLL_map 'Float'   = 'TclFloat'
+.HLL_map 'Integer' = 'TclInt'
+
 .HLL 'parrot'
 
 .loadlib 'tcl_ops'
@@ -88,8 +93,7 @@ env_loop_done:
   pop_eh
   goto set_tcl_library
  non_interactive:
-  $P1 = new 'TclInt'
-  $P1 = 0
+  $P1 = box 0
   set_root_global ['tcl'], '$tcl_interactive', $P1
 
  set_tcl_library:
@@ -109,8 +113,7 @@ env_loop_done:
   $S0 .= slash
   $S0 .= 'library'
   .local pmc tcl_library
-  tcl_library = new 'TclString'
-  tcl_library = $S0
+  tcl_library = box $S0
   set_root_global ['tcl'], '$tcl_library', tcl_library
 
   # get the name of the executable
@@ -139,8 +142,7 @@ env_loop_done:
   $P1['machine'] = $S1
 
   # Set default precision.
-  $P1 = new 'TclInt'
-  $P1 = 0
+  $P1 = box 0
   set_root_global ['tcl'], '$tcl_precision', $P1
 
   # keep track of names of file types.
@@ -191,19 +193,15 @@ env_loop_done:
   # Global variable initialization
 
    #version info
-  $P0 = new 'TclString'
-  $P0 = '0.1'
+  $P0 = box '0.1'
   set_root_global ['tcl'], '$tcl_patchLevel', $P0
-  $P0 = new 'TclString'
-  $P0 = '0.1'
+  $P0 = box '0.1'
   set_root_global ['tcl'], '$tcl_version', $P0
 
   #error information
-  $P0 = new 'TclString'
-  $P0 = 'NONE'
+  $P0 = box 'NONE'
   set_root_global ['tcl'], '$errorCode', $P0
-  $P0 = new 'TclString'
-  $P0 = ''
+  $P0 = box ''
   set_root_global ['tcl'], '$errorInfo', $P0
 
   # Setup the default channelIds
@@ -217,8 +215,7 @@ env_loop_done:
   store_global 'channels', $P1
 
   # Setup the id # for channels..
-  $P1 = new 'TclInt'
-  $P1 = 1
+  $P1 = box 1
   store_global 'next_channel_id', $P1
 
   # call chain of lex pads (for upvar and uplevel)
@@ -236,8 +233,7 @@ env_loop_done:
   compreg 'TCL', $P1
 
   # Setup a global to keep a unique id for compiled subs.
-  $P1 = new 'TclInt'
-  $P1 = 0
+  $P1 = box 0
   store_global 'compiled_num', $P1
 .end
 

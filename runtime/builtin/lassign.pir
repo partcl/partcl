@@ -16,8 +16,8 @@
   toList = get_root_global ['_tcl'], 'toList'
   list   = toList(list)
 
-  .local string varname
-  .local pmc set, value
+  .local string varname, value
+  .local pmc set
   set = get_root_global ['_tcl'], 'setVar'
 
 var_loop:
@@ -29,7 +29,6 @@ var_loop:
   if argv goto var_loop
 
 list_empty:
-  value = new 'TclString'
   value = ''
 null_loop:
   unless argv goto var_end

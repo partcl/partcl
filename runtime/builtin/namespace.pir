@@ -330,8 +330,7 @@ loop:
   $S0 = shift $P0 # get rid of 'tcl'
   $S0 = join '::', $P0
   $S0 = '::' . $S0
-  $P0 = new 'TclString'
-  $P0 = $S0
+  $P0 = box $S0
   unless has_pattern goto is_namespace
   $P1 = pattern($P0)
   unless $P1 goto loop
