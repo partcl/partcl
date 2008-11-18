@@ -433,11 +433,157 @@ bad_args:
 
 .sub '&&'
     .param pmc args :slurpy
-    .return(0)
+
+     .local int argc
+     argc = args
+     if argc == 0 goto nullary
+
+     .local pmc toInt
+     toInt = get_root_global ['_tcl'], 'toInteger'
+
+    .local pmc iterator, arg
+    iterator = iter args
+    .local int result
+    result = -1
+loop_begin:
+    unless iterator goto loop_end
+    arg = shift iterator
+    push_eh bad_arg
+        arg = toInt(arg)
+    pop_eh
+    $I0 = arg
+    result = band result, $I0
+    goto loop_begin
+loop_end:
+    .return (result)
+
+bad_arg:
+    .catch()
+    if arg == '' goto empty_string
+    $S0 = exception
+    $I0 = index $S0, 'invalid octal'
+    if $I0 != -1 goto bad_octal_arg
+     .local pmc toNumber
+     toNumber = get_root_global ['_tcl'], 'toNumber'
+    push_eh bad_string_arg
+      toNumber(arg)       
+    pop_eh 
+    die "can't use floating-point value as operand of \"&\""
+
+bad_string_arg:
+    die "can't use non-numeric string as operand of \"&\""
+
+bad_octal_arg:    
+    die "can't use invalid octal number as operand of \"&\""
+
+empty_string:
+    die "can't use empty string as operand of \"&\""
+
+ nullary:
+    .return(-1)
 .end
 
 .sub '&|'
     .param pmc args :slurpy
+
+     .local int argc
+     argc = args
+     if argc == 0 goto nullary
+
+     .local pmc toInt
+     toInt = get_root_global ['_tcl'], 'toInteger'
+
+    .local pmc iterator, arg
+    iterator = iter args
+    .local int result
+    result = 0
+loop_begin:
+    unless iterator goto loop_end
+    arg = shift iterator
+    push_eh bad_arg
+        arg = toInt(arg)
+    pop_eh
+    $I0 = arg
+    result = bor result, $I0
+    goto loop_begin
+loop_end:
+    .return (result)
+
+bad_arg:
+    .catch()
+    if arg == '' goto empty_string
+    $S0 = exception
+    $I0 = index $S0, 'invalid octal'
+    if $I0 != -1 goto bad_octal_arg
+     .local pmc toNumber
+     toNumber = get_root_global ['_tcl'], 'toNumber'
+    push_eh bad_string_arg
+      toNumber(arg)       
+    pop_eh 
+    die "can't use floating-point value as operand of \"|\""
+
+bad_string_arg:
+    die "can't use non-numeric string as operand of \"|\""
+
+bad_octal_arg:    
+    die "can't use invalid octal number as operand of \"|\""
+
+empty_string:
+    die "can't use empty string as operand of \"|\""
+
+ nullary:
+    .return(0)
+.end
+
+.sub '&^'
+    .param pmc args :slurpy
+
+     .local int argc
+     argc = args
+     if argc == 0 goto nullary
+
+     .local pmc toInt
+     toInt = get_root_global ['_tcl'], 'toInteger'
+
+    .local pmc iterator, arg
+    iterator = iter args
+    .local int result
+    result = 0
+loop_begin:
+    unless iterator goto loop_end
+    arg = shift iterator
+    push_eh bad_arg
+        arg = toInt(arg)
+    pop_eh
+    $I0 = arg
+    result = bxor result, $I0
+    goto loop_begin
+loop_end:
+    .return (result)
+
+bad_arg:
+    .catch()
+    if arg == '' goto empty_string
+    $S0 = exception
+    $I0 = index $S0, 'invalid octal'
+    if $I0 != -1 goto bad_octal_arg
+     .local pmc toNumber
+     toNumber = get_root_global ['_tcl'], 'toNumber'
+    push_eh bad_string_arg
+      toNumber(arg)       
+    pop_eh 
+    die "can't use floating-point value as operand of \"^\""
+
+bad_string_arg:
+    die "can't use non-numeric string as operand of \"^\""
+
+bad_octal_arg:    
+    die "can't use invalid octal number as operand of \"^\""
+
+empty_string:
+    die "can't use empty string as operand of \"^\""
+
+ nullary:
     .return(0)
 .end
 
