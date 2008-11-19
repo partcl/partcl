@@ -25,13 +25,13 @@ lindex.test:	Total	80	Passed	40	Skipped	37	Failed	3
 linsert.test:	Total	26	Passed	26	Skipped	0	Failed	0
 listObj.test:	Total	43	Passed	42	Skipped	1	Failed	0
 llength.test:	Total	6	Passed	6	Skipped	0	Failed	0
-load.test:	Total	26	Passed	1	Skipped	10	Failed	15
+load.test:	Total	26	Passed	2	Skipped	10	Failed	14
 lrange.test:	Total	22	Passed	22	Skipped	0	Failed	0
 lrepeat.test:	Total	10	Passed	10	Skipped	0	Failed	0
 lreplace.test:	Total	34	Passed	34	Skipped	0	Failed	0
 lsearch.test:	Total	101	Passed	47	Skipped	0	Failed	54
 lsetComp.test:	Total	19	Passed	17	Skipped	0	Failed	2
-mathop.test:	Total	329	Passed	98	Skipped	0	Failed	231
+mathop.test:	Total	329	Passed	158	Skipped	0	Failed	171
 namespace-old.test:	Total	126	Passed	65	Skipped	0	Failed	61
 package.test:	Total	16	Passed	6	Skipped	0	Failed	10
 parse.test:	Total	251	Passed	62	Skipped	156	Failed	33
