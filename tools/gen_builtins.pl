@@ -17,7 +17,10 @@ EOH
 # commands that are in Tcl's :: namespace directly
 my @static_cmds = pir_cmds_in_dir($static_dir);
 
-print " .HLL 'tcl', 'tcl_group'\n";
+print <<'END_PIR';
+.HLL 'tcl'
+.loadlib 'tcl_group'
+END_PIR
 
 print "  .include 'languages/tcl/$static_dir/$_.pir'\n" for @static_cmds;
 

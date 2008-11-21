@@ -26,7 +26,8 @@ ok 2
 OUTPUT
 
 pir_output_is( <<'CODE', <<'OUTPUT', "test tcl compiler global variable interop" );
-.HLL 'Tcl', 'tcl_group'
+.HLL 'Tcl'
+.loadlib 'tcl_group'
   .sub main :main
      load_bytecode 'languages/tcl/runtime/tcllib.pbc'
      .local pmc tcl_compiler,compiled_sub
@@ -41,7 +42,8 @@ ok 1
 OUTPUT
 
 pir_output_is( <<'CODE', <<'OUTPUT', "pass arguments to a tcl proc from PIR" );
-.HLL 'Tcl', 'tcl_group'
+.HLL 'Tcl'
+.loadlib 'tcl_group'
 .sub main :main
 
   load_bytecode 'languages/tcl/runtime/tcllib.pbc'
@@ -71,7 +73,8 @@ CODE
 OUTPUT
 
 pir_output_is( <<'CODE', <<'OUTPUT', "Verify HLL autoboxing: Int" );
-.HLL 'Tcl', 'tcl_group'
+.HLL 'Tcl'
+.loadlib 'tcl_group'
 .sub _main :main
   $P1 = test()
   $S1 = typeof $P1
@@ -85,7 +88,8 @@ TclInt
 OUTPUT
 
 pir_output_is( <<'CODE', <<'OUTPUT', "Verify HLL autoboxing: String" );
-.HLL 'Tcl', 'tcl_group'
+.HLL 'Tcl'
+.loadlib 'tcl_group'
 .sub _main :main
   $P1 = test()
   $S1 = typeof $P1

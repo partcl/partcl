@@ -6,7 +6,8 @@
 
 .loadlib 'tcl_ops'
 
-.HLL 'Tcl', 'tcl_group'
+.HLL 'Tcl'
+.loadlib 'tcl_group'
 
 .include 'languages/tcl/src/returncodes.pasm'
 .include 'languages/tcl/src/macros.pir'
