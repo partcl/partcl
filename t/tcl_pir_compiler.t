@@ -103,7 +103,8 @@ TclString
 OUTPUT
 
 pir_output_is( <<'CODE', <<'OUTPUT', "Verify HLL autoboxing: Float" );
-.HLL 'Tcl', 'tcl_group'
+.HLL 'Tcl'
+.loadlib 'tcl_group'
 .sub _main :main
   $P1 = test()
   $S1 = typeof $P1
