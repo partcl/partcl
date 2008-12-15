@@ -129,8 +129,8 @@ file:
   $P0 = filename
   set_root_global ['_tcl'], '$script', $P0
   .local string contents
-  $P99 = open filename, '<'
-  contents = $P99.'slurp'('')
+  $P99 = open filename, 'r'
+  contents = $P99.'readall'()
 
   .set_tcl_argv()
 

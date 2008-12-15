@@ -12,9 +12,9 @@
   filename = shift argv
 
   .local string file_contents
-  $P99 = open filename, '<'
+  $P99 = open filename, 'r'
   push_eh badfile
-    file_contents = $P99.'slurp'('')
+    file_contents = $P99.'readall'()
   pop_eh
 
   .local pmc ns, interp

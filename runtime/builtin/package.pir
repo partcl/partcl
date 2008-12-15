@@ -34,8 +34,8 @@
     $S0 .= 'tcltest.tcl'
 
     .local pmc script
-    $P99 = open $S0, '<'
-    $S0 = $P99.'slurp'('')
+    $P99 = open $S0, 'r'
+    $S0 = $P99.'readall'()
 
     script = get_root_global ['_tcl'], 'compileTcl'
 

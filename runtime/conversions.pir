@@ -257,7 +257,7 @@ Given a string, return the appropriate channel.
   if null io_obj goto bad_channel
 
   $S0 = typeof io_obj
-  if $S0 == 'ParrotIO' goto done
+  if $S0 == 'FileHandle' goto done
   if $S0 == 'TCPStream' goto done
 
   # should never happen

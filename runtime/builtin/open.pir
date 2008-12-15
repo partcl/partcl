@@ -14,11 +14,11 @@
 
   fileName = argv[0]
   access   = argv[1]
-  pir_access = '<'
+  pir_access = 'r'
   if access == '' goto done_access
   if access == 'r' goto done_access
   # RT#40780: assume r & w are the only options for now.
-  pir_access = '>'
+  pir_access = 'w'
 
 done_access:
   .local pmc channel
