@@ -186,6 +186,7 @@ loop:
   pop_eh
   goto loop_done # was a number
 not_num:
+  .catch()
   unless endswitch goto loop_2
   if arg == '-' goto handle_endswitch # already ate one -
 loop_2:

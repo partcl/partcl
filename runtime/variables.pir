@@ -342,7 +342,11 @@ root_global_var:
 
 notfound:
   unless absolute goto root_global_var
+  null value
+  .return(value)
+
 lexical_notfound:
+  .catch()
   null value
 found:
   .return(value)

@@ -727,7 +727,7 @@ digit_check:
   goto cclass_check
 double_check:
   toNumber = get_root_global ['_tcl'], 'toNumber'
-  push_eh nope
+  push_eh nope_eh
     $P2 = toNumber(the_string)
   pop_eh
 
@@ -749,7 +749,7 @@ graph_check:
   goto cclass_check
 integer_check:
   toNumber = get_root_global ['_tcl'], 'toNumber'
-  push_eh nope
+  push_eh nope_eh
     $P2 = toNumber(the_string)
   pop_eh
 
@@ -759,7 +759,7 @@ integer_check:
 list_check:
   .local pmc toList
   toList = get_root_global ['_tcl'], 'toList'
-  push_eh nope
+  push_eh nope_eh
     toList(the_string)
   pop_eh
   goto yep
@@ -809,8 +809,11 @@ loop:
 yep:
   .return(1)
 
+nope_eh:
+  .catch()
 nope:
   .return(0)
+
 
 bad_args:
   die 'wrong # args: should be "string is class ?-strict? ?-failindex var? str"'

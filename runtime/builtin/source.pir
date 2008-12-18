@@ -12,8 +12,8 @@
   filename = shift argv
 
   .local string file_contents
-  $P99 = open filename, 'r'
   push_eh badfile
+    $P99 = open filename, 'r'
     file_contents = $P99.'readall'()
   pop_eh
 
@@ -28,6 +28,7 @@
   .tailcall code()
 
 badfile:
+  .catch()
   $S0 = "couldn't read file \""
   $S0 .= filename
   $S0 .= '": no such file or directory'

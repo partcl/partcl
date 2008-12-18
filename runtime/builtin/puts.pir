@@ -50,7 +50,8 @@ two_arg_nonewline:
 two_arg_channel:
   io = getChannel($S2)
 
-  io.'say'($S3)
+  io.'print'($S3)
+  io.'print'("\n")
   goto done
 
 one_arg:

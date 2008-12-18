@@ -561,8 +561,6 @@ error:
     $S0 = $S0 . '"'
     die $S0
 
-number:
-
 true:
     .return(1)
 
