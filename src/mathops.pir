@@ -19,6 +19,7 @@
     .return($I0)
 
 bad_arg:
+    .catch()
     if $P1 == '' goto empty_string
     die "can't use non-numeric string as operand of \"!\""
 
@@ -109,6 +110,7 @@ unary:
     .return (result)
 
 bad_arg:
+    .catch()
     if arg == '' goto empty_string
     die "can't use non-numeric string as operand of \"-\""
 
@@ -197,6 +199,7 @@ unary:
     .return ($P1)
 
 bad_arg:
+    .catch()
     if arg == '' goto empty_string
     die "can't use non-numeric string as operand of \"/\""
 
@@ -237,6 +240,7 @@ bad_args:
     .return($P0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"%\""
@@ -287,6 +291,7 @@ loop_end:
     .return (result)
 
 bad_arg:
+    .catch()
     if arg == '' goto empty_string
     die "can't use non-numeric string as operand of \"**\""
 
@@ -315,8 +320,8 @@ unary:
     first = shift args
     push_eh NaN
       first = toNumber(first)
-    pop_eh
 NaN:
+    pop_eh
 
     $P1 = iter args
 loop:
@@ -324,8 +329,8 @@ loop:
     cur = shift $P1 
     push_eh NaN2
       cur = toNumber(cur)
-    pop_eh
 NaN2:
+    pop_eh
     if cur == first goto loop
     .return (0)
 true: 
@@ -370,12 +375,12 @@ true:
     r = shift args
     push_eh NaN
       l = toNumber(l)
-    pop_eh
 NaN:
+    pop_eh
     push_eh NaN2
       r = toNumber(r)
-    pop_eh
 NaN2:
+    pop_eh
 
     if l != r goto true
     .return (0)
@@ -471,6 +476,7 @@ bad_arg:
     die "can't use floating-point value as operand of \"&\""
 
 bad_string_arg:
+    .catch()
     die "can't use non-numeric string as operand of \"&\""
 
 bad_octal_arg:    
@@ -523,6 +529,7 @@ bad_arg:
     die "can't use floating-point value as operand of \"|\""
 
 bad_string_arg:
+    .catch()
     die "can't use non-numeric string as operand of \"|\""
 
 bad_octal_arg:    
@@ -575,6 +582,7 @@ bad_arg:
     die "can't use floating-point value as operand of \"^\""
 
 bad_string_arg:
+    .catch()
     die "can't use non-numeric string as operand of \"^\""
 
 bad_octal_arg:    
