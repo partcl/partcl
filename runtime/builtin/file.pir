@@ -146,6 +146,7 @@ bad_args:
 
 # RT#40731: should be more discriminating about the error messages .OS generates
 no_file:
+  .catch()
   $S0  = 'could not read "'
   $S0 .= file
   $S0 .= '": no such file or directory'
@@ -182,6 +183,7 @@ true:
 
 # RT#40732: should be more discriminating about the error messages .OS generates
 no_file:
+  .catch()
   $S0  = 'could not read "'
   $S0 .= file
   $S0 .= '": no such file or directory'
@@ -219,6 +221,7 @@ true:
 
 # RT#40733: should be more discriminating about the error messages .OS generates
 no_file:
+  .catch()
   $S0  = 'could not read "'
   $S0 .= file
   $S0 .= '": no such file or directory'
@@ -254,6 +257,7 @@ bad_args:
 
 # RT#40734: should be more discriminating about the error messages .OS generates
 no_file:
+  .catch()
   $S0  = 'could not read "'
   $S0 .= file
   $S0 .= '": no such file or directory'
@@ -282,6 +286,7 @@ bad_args:
 
 # RT#40735: should be more discriminating about the error messages .OS generates
 no_file:
+  .catch()
   $S0  = 'could not read "'
   $S0 .= file
   $S0 .= '": no such file or directory'
@@ -310,6 +315,7 @@ bad_args:
 
 # RT#40736: should be more discriminating about the error messages .OS generates
 no_file:
+  .catch()
   $S0  = 'could not read "'
   $S0 .= file
   $S0 .= '": no such file or directory'
@@ -338,6 +344,7 @@ bad_args:
 
 # RT#40737: should be more discriminating about the error messages .OS generates
 no_file:
+  .catch()
   $S0  = 'could not read "'
   $S0 .= file
   $S0 .= '": no such file or directory'
@@ -464,6 +471,7 @@ bad_args:
     .return(1)
 
 false:
+    .catch()
     .return(0)
 
 badargs:
