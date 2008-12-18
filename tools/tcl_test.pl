@@ -40,7 +40,7 @@ my @skipfiles = qw(
   basic binary
   case chanio clock cmdAH cmdMZ cmdInfo config
   dcall dict dstring
-  encoding expr env exec execute
+  encoding expr expr-old env exec execute
   fCmd fileName fileSystem
   history http httpold
   indexObj info init interp io iocmd iogt
