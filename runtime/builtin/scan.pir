@@ -89,6 +89,7 @@ var_loop_done:
   .return(num_matches)
 
 bad_var:
+  .catch()
   $S1 = "couldn't set variable \""
   $S1 .= $S0
   $S1 .= '"'
