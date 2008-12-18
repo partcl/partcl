@@ -54,7 +54,7 @@ my @skipfiles = qw(
   tcltest thread timer tm trace
   unixFCmd unixFile unixInit unixNotfy unload util
   winConsole winDde winFCmd winFile winNotify winPipe winTime
-  ioUtil load mathop scan
+  ioUtil mathop scan
 );
 
 main();

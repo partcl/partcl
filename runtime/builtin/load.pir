@@ -30,6 +30,7 @@ got_pbc_name:
   .return('')
 
 failed:
+  .catch()
   die 'image not found'
 .end
 
