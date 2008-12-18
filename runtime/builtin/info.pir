@@ -134,7 +134,7 @@ nope:
   if $S0 == 'missing close-brace'   goto fail
   if $S0 == 'missing close-bracket' goto fail
   if $S0 == 'missing "'             goto fail
-  rethrow $P0
+  .rethrow()
 
 fail:
   .return(0)
