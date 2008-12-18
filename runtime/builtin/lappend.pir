@@ -28,6 +28,7 @@
   goto loop
 
 new_variable:
+  .catch()
   value = new 'TclList'
   # goto loop
 

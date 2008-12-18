@@ -211,6 +211,7 @@ no_default:
   .return (0)
 
 error_on_set:
+  .catch()
   $S0 = "couldn't store default value in variable \""
   $S0 .= varname
   $S0 .= '"'
@@ -337,6 +338,7 @@ bad_args:
   .return (1)
 
 not_found:
+  .catch()
   .return (0)
 
 bad_args:

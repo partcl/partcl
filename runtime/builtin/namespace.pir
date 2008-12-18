@@ -516,6 +516,7 @@ no_pop:
   .return($S0)
 
 current_in_root:
+  .catch()
   .return('')
 
 bad_args:
