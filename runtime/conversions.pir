@@ -168,11 +168,11 @@ not_integer:
   die $S0
 
 not_integer_eh:
-  get_results '0', $P99
-  $S99 = $P99
+  .catch()
+  $S99 = exception
   $I0 = index $S99, 'expected integer'
   if $I0 == -1 goto not_integer # got some other exception, rewrap it.
-  rethrow $P99 # preserves the invalid octal message.
+  .rethrow()
 .end
 
 =head2 _Tcl::getIndex
@@ -225,8 +225,8 @@ end:
   .return($I0)
 
 bad_index:
-  get_results '0', $P99
-  $S99 = $P99
+  .catch()
+  $S99 = exception
   $S0 = 'bad index "'
   $S0 .= idx
   $S0 .= '": must be integer?[+-]integer? or end?[+-]integer?'
@@ -555,6 +555,7 @@ throw an exception.
     goto false
 
 error:
+    .catch()
     $S0 = value
     $S0 = 'expected boolean value but got "' . $S0
     $S0 = $S0 . '"'
@@ -607,11 +608,13 @@ get_integer:
     parrot_level = toNumber(tcl_level)
   pop_eh
 
-  if parrot_level < 0 goto default
+  if parrot_level < 0 goto default_no_eh
   parrot_level = orig_level - parrot_level
   goto bounds_check
 
 default:
+  .catch()
+default_no_eh:
   defaulted = 1
   parrot_level = new 'TclInt'
   parrot_level = orig_level - 1

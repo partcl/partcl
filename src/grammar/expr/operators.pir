@@ -25,6 +25,7 @@ src/grammar/expr/operators.pir - [expr] operator definitions.
     .return(a)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     die "can't use non-numeric string as operand of \"+\""
 
@@ -60,6 +61,7 @@ is_int:
     .return($I0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     die "can't use non-numeric string as operand of \"-\""
 
@@ -97,6 +99,7 @@ cant_use_float:
     die "can't use floating-point value as operand of \"~\""
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     die "can't use non-numeric string as operand of \"~\""
 
@@ -130,6 +133,7 @@ empty_string:
     .return($I0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     die "can't use non-numeric string as operand of \"!\""
 
@@ -179,6 +183,7 @@ empty_string:
     .return ($P0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"**\""
@@ -213,6 +218,7 @@ zero_with_neg:
     .return ($P0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"*\""
@@ -248,6 +254,7 @@ divide_by_zero:
     tcl_error $S0,  $P0
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"/\""
@@ -278,6 +285,7 @@ empty_string:
     .return($P0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"%\""
@@ -305,6 +313,7 @@ is_float:
     .return($P0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"+\""
@@ -329,6 +338,7 @@ empty_string:
     .return($P0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"-\""
@@ -377,6 +387,7 @@ empty_string:
     .return ($I0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"<<\""
@@ -427,6 +438,7 @@ is_float:
     .return ($I0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \">>\""
@@ -453,6 +465,7 @@ is_float:
     .return ($I0)
 
 is_string:
+    .catch()
     $I0 = islt a, b
     .return($I0)
 .end
@@ -472,6 +485,7 @@ is_string:
     .return($I0)
 
 is_string:
+    .catch()
     $I0 = isgt a, b
     .return ($I0)
 .end
@@ -492,6 +506,7 @@ is_string:
     .return($I0)
 
 is_string:
+    .catch()
     $I0 = isle a, b
     .return ($I0)
 .end
@@ -513,6 +528,7 @@ is_string:
     .return($I0)
 
 is_string:
+    .catch()
     $I0 = isge a, b
     .return ($I0)
 .end
@@ -534,6 +550,7 @@ is_string:
     .return($I0)
 
 is_string:
+    .catch()
     $S0 = a
     $S1 = b
     $I0 = iseq $S0, $S1
@@ -557,6 +574,7 @@ is_string:
     .return($I0)
 
 is_string:
+    .catch()
     $S0 = a
     $S1 = b
     $I0 = isne $S0, $S1
@@ -600,6 +618,7 @@ is_string:
   .return($I0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"&\""
@@ -624,6 +643,7 @@ empty_string:
   .return($I0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     die "can't use non-numeric string as operand of \"&\""
 
@@ -647,6 +667,7 @@ empty_string:
   .return($I0)
 
 is_string:
+    .catch()
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"&\""
 
@@ -667,6 +688,7 @@ empty_string:
     die "can't use floating-point value as operand of \"&\""
 
 is_string:
+    .catch()
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"&\""
 
@@ -687,6 +709,7 @@ empty_string:
     die "can't use floating-point value as operand of \"&\""
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     die "can't use non-numeric string as operand of \"&\""
 
@@ -729,6 +752,7 @@ empty_string:
   .return($I0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"^\""
@@ -753,6 +777,7 @@ empty_string:
   .return($I0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     die "can't use non-numeric string as operand of \"^\""
 
@@ -776,6 +801,7 @@ empty_string:
   .return($I0)
 
 is_string:
+    .catch()
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"^\""
 
@@ -796,6 +822,7 @@ empty_string:
     die "can't use floating-point value as operand of \"^\""
 
 is_string:
+    .catch()
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"^\""
 
@@ -816,6 +843,7 @@ empty_string:
     die "can't use floating-point value as operand of \"^\""
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     die "can't use non-numeric string as operand of \"^\""
 
@@ -858,6 +886,7 @@ empty_string:
   .return($I0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"|\""
@@ -882,6 +911,7 @@ empty_string:
   .return($I0)
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     die "can't use non-numeric string as operand of \"|\""
 
@@ -905,6 +935,7 @@ empty_string:
   .return($I0)
 
 is_string:
+    .catch()
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"|\""
 
@@ -925,6 +956,7 @@ empty_string:
     die "can't use floating-point value as operand of \"|\""
 
 is_string:
+    .catch()
     if b == '' goto empty_string
     die "can't use non-numeric string as operand of \"|\""
 
@@ -945,6 +977,7 @@ empty_string:
     die "can't use floating-point value as operand of \"|\""
 
 is_string:
+    .catch()
     if a == '' goto empty_string
     die "can't use non-numeric string as operand of \"|\""
 

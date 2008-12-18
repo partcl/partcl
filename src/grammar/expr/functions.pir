@@ -37,6 +37,7 @@ Functions are very similar to ops, so handle them similarly here.
     .return(b)
 
 is_string:
+    .catch()
     die "argument to math function didn't have numeric value"
 .end
 
@@ -61,6 +62,7 @@ is_string:
     .return (ret)
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -96,6 +98,7 @@ domain_error:
     .return (ret)
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -128,6 +131,7 @@ domain_error:
     .return (ret)
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -140,7 +144,7 @@ is_string:
     .local pmc toBoolean
     toBoolean = get_root_global ['_tcl'], 'toBoolean'
 
-    .tailcall toBoolean(a)
+     .tailcall toBoolean(a)
 .end
 
 .sub '&ceil'
@@ -161,6 +165,7 @@ is_string:
     .return (ret)
 
 is_string:
+    .catch()
     die "argument to math function didn't have numeric value"
 .end
 
@@ -182,6 +187,7 @@ is_string:
     .return (ret)
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -206,6 +212,7 @@ is_string:
     .return (ret)
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -229,6 +236,7 @@ is_string:
     .return (ret)
 
 is_string:
+    .catch()
     die "argument to math function didn't have numeric value"
 .end
 
@@ -246,6 +254,7 @@ is_string:
     .return($I0)
 
 is_string:
+    .catch()
     $S0 = n
     $S0 = 'expected number but got "' . $S0
     $S0 .= '"'
@@ -270,6 +279,7 @@ is_string:
     .return (ret)
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -306,6 +316,7 @@ positive:
     .return ($P0)
 
 is_string:
+    .catch()
     $S0 = 'expected floating-point number but got "'
     $S1 = a
     $S0 .= $S1
@@ -327,6 +338,7 @@ is_string:
     .return ($I0)
 
 is_string:
+    .catch()
     die "argument to math function didn't have numeric value"
 .end
 
@@ -361,6 +373,7 @@ domain_error:
     tcl_error $S0, $P0
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -395,6 +408,7 @@ domain_error:
     tcl_error $S0, $P0
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -456,6 +470,7 @@ neg:
     .return ($I0)
 
 is_string:
+    .catch()
     die "argument to math function didn't have numeric value"
 .end
 
@@ -477,6 +492,7 @@ is_string:
     .return (ret)
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -501,6 +517,7 @@ is_string:
     .return (ret)
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -534,6 +551,7 @@ domain_error:
     tcl_error $S0, $P0
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -561,6 +579,7 @@ is_string:
     .return (ret)
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -585,6 +604,7 @@ is_string:
     .return (ret)
 
 is_string:
+    .catch()
     $S0 = a
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
@@ -606,6 +626,7 @@ is_string:
     .return ($I0)
 
 is_string:
+    .catch()
     die "argument to math function didn't have numeric value"
 .end
 
@@ -634,6 +655,7 @@ is_string:
     .return(ret)
 
 is_string:
+    .catch()
     die "argument to math function didn't have numeric value"
 .end
 
@@ -667,6 +689,7 @@ is_string:
     tcl_error $S0, $P0
 
 is_string:
+    .catch()
     die "argument to math function didn't have numeric value"
 .end
 
@@ -696,6 +719,7 @@ is_string:
     .return(ret)
 
 is_string:
+    .catch()
     die "argument to math function didn't have numeric value"
 .end
 
@@ -719,6 +743,7 @@ is_string:
     .return($P0)
 
 is_string:
+    .catch()
     die "argument to math function didn't have numeric value"
 .end
 

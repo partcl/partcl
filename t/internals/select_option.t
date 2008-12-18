@@ -69,6 +69,7 @@ done_1:
     goto check_3
 eh_3:
     get_results '0', $P2
+    pop_eh
     $S2 = $P2
 check_3:
     $S3 = 'bad option "punk": must be dank, dark, or dunk'
@@ -83,6 +84,7 @@ check_3:
     goto check_4
 eh_4:
     get_results '0', $P2
+    pop_eh
     $S2 = $P2
 check_4:
     $S3 = 'ambiguous option "da": must be dank, dark, or dunk'
@@ -97,6 +99,7 @@ check_4:
     goto check_5
 eh_5:
     get_results '0', $P2
+    pop_eh
     $S2 = $P2
 check_5:
     $S3 = 'bad coke "punk": must be dank, dark, or dunk'
@@ -111,6 +114,7 @@ check_5:
     goto check_6
 eh_6:
     get_results '0', $P2
+    pop_eh
     $S2 = $P2
 check_6:
     $S3 = 'ambiguous particle "da": must be dank, dark, or dunk'
@@ -128,6 +132,7 @@ check_6:
     goto check_7
 eh_7:
     get_results '0', $P2
+    pop_eh
     $S2 = $P2
 check_7:
     $S3 = 'bad option "frank": must be bill or bob'
@@ -145,6 +150,7 @@ check_7:
     goto check_8
 eh_8:
     get_results '0', $P2
+    pop_eh
     $S2 = $P2
 check_8:
     $S3 = 'ambiguous option "b": must be bill or bob'

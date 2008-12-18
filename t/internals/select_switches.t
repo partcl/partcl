@@ -189,6 +189,7 @@ done_1:
     goto check_23 
 
 eh_23: 
+    pop_eh
     get_results '0', $P2
     $S2 = $P2
 check_23:
@@ -209,6 +210,7 @@ check_23:
 
 eh_24: 
     get_results '0', $P2
+    pop_eh
     $S2 = $P2
 check_24:
     is($S2, 'bad switch "-joke": must be -baz, -bob, -joe, or --', message)
@@ -228,6 +230,7 @@ check_24:
 
 eh_25: 
     get_results '0', $P2
+    pop_eh
     $S2 = $P2
 check_25:
     is($S2, 'bad frob "-joke": must be -baz, -bob, -joe, or --', message)
@@ -277,6 +280,7 @@ check_25:
 
 eh_30: 
     get_results '0', $P2
+    pop_eh
 check_30:
     is($P2, 'bad switch "-fail": must be -good0 or -good1', message)
 
@@ -299,6 +303,7 @@ check_30:
 
 eh_31: 
     get_results '0', $P2
+    pop_eh
 check_31:
     is($P2, '', message)
 
@@ -321,6 +326,7 @@ check_31:
 
 eh_32: 
     get_results '0', $P2
+    pop_eh
 check_32:
     is($P2, '', message)
 
