@@ -25,8 +25,8 @@ transform pir (PAST::Expr) {
   toNumber = get_root_global ['_tcl'], 'toNumber'
   push_eh %1
     %0 = toNumber(%0)
-  pop_eh
 %1:
+  pop_eh
 END_PIR
 
     .return(pir)

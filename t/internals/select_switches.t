@@ -189,8 +189,8 @@ done_1:
     goto check_23 
 
 eh_23: 
-    pop_eh
     get_results '0', $P2
+    pop_eh
     $S2 = $P2
 check_23:
     is($S2, 'bad switch "-joke": must be -baz, -bob, or -joe', message)
