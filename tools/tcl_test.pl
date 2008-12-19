@@ -39,7 +39,7 @@ my @skipfiles = qw(
   assocd async autoMkindex
   basic binary
   case chanio clock cmdAH cmdMZ cmdInfo config
-  dcall dict dstring
+  dcall dstring
   encoding expr expr-old env exec execute
   fCmd fileName fileSystem
   history http httpold

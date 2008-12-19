@@ -52,7 +52,9 @@ present in TclList.
                 key = VTABLE_shift_string(INTERP, iterator);
                 VTABLE_push_string(INTERP, list, key);
                 value = VTABLE_get_pmc_keyed_str(INTERP, SELF, key);
-                VTABLE_push_string(INTERP, list, VTABLE_get_string(INTERP, value));
+                /* XXX avoid recursing. */
+                if (SELF != value)
+                    VTABLE_push_string(INTERP, list, VTABLE_get_string(INTERP, value));
         }
         return VTABLE_get_string(INTERP, list);
     }
