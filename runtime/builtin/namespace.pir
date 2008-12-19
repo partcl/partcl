@@ -505,12 +505,11 @@ get_parent:
   .local pmc ns, splitNamespace
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
   ns  = splitNamespace(name)
-  if $S0 != '' goto no_pop
-  # for when someone calls [namespace current] from ::
+
   push_eh current_in_root
     $S0 = pop ns
   pop_eh
-no_pop:
+
   $S0 = join '::', ns
   $S0 = '::' . $S0
   .return($S0)
