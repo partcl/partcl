@@ -13,11 +13,6 @@ A convenience: we need these return codes in many different bytecode files.
  .macro_const TCL_BREAK    3
  .macro_const TCL_CONTINUE 4
 
- # values for accessing exception information
- .macro_const VALUE_SLOT    0 # _message
- .macro_const CODE_SLOT     1 # _type
- .macro_const SEVERITY_SLOT 2 # _severity
-
 # Local Variables:
 #   mode: pir
 #   fill-column: 100
