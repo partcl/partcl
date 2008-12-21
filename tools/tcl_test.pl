@@ -43,7 +43,7 @@ my @skipfiles = qw(
   encoding expr expr-old env exec execute
   fCmd fileName fileSystem
   history http httpold
-  indexObj info init interp io iocmd iogt
+  indexObj init interp io iocmd iogt
   link list lset
   macOSXFCmd macOSXLoad main misc msgcat
   namespace notify
