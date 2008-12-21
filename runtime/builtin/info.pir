@@ -345,6 +345,9 @@ bad_args:
   die 'wrong # args: should be "info exists varName"'
 .end
 
+#
+# Should probably just write this help sub /in tcl/
+#
 .sub 'tclversion'
   .param pmc argv
 
@@ -354,7 +357,12 @@ bad_args:
   if argc != 0 goto bad_args
 
   $P1 = get_root_global ['tcl'], '$tcl_version'
+  $I0 = isa $P1, 'Undef'
+  if $I0 goto no_var
   .return($P1)
+
+no_var:
+  die "can't read \"tcl_version\": no such variable"
 
 bad_args:
   die 'wrong # args: should be "info tclversion"'
