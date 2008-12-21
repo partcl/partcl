@@ -11,7 +11,7 @@ __DATA__
 
 source lib/test_more.tcl
 
-plan 18
+plan 19
 
 is [list]     {}    {no elements}
 is [list a]   {a}   {one element}
@@ -36,3 +36,6 @@ is [list \]]    {\]}   {close bracket}
 is [list #]     {{#}}    {comment hash}
 is [list #foo]  {{#foo}} {comment hash}
 is [list #foo #bar]  {{#foo} #bar} {comment hash}
+
+# hairy one that catches us on subst.test
+is [list "\x\$x\[foo bar]\\"] {x\$x\[foo\ bar\]\\} {trailing backslash}
