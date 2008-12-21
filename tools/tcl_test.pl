@@ -51,7 +51,7 @@ my @skipfiles = qw(
   pid pkg pkgMkIndex platform
   reg regexp regexpComp registry result
   safe socket source stack string stringObj subst
-  tcltest thread timer tm trace
+  tcltest thread tm trace
   unixFCmd unixFile unixInit unixNotfy unload util
   winConsole winDde winFCmd winFile winNotify winPipe winTime
 );
