@@ -79,6 +79,11 @@ Returns the list as a string
 
             if (count != 0) goto escape;
 
+            /* trailing slash */
+            if (str_len-1 == string_str_index(INTERP, str, string_from_literal(INTERP, "\\"), str_len-1))
+                goto escape;
+
+
             if (-1 != string_str_index(INTERP,  str, string_from_literal(INTERP, "["), 0))
                  goto quote;
 
