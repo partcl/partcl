@@ -37,7 +37,7 @@ each individual C<.test> file.
 # When testing, avoid these files for now.
 my @skipfiles = qw(
   assocd async autoMkindex
-  basic binary
+  binary
   case chanio clock cmdAH cmdMZ cmdInfo config
   dcall dstring
   encoding expr expr-old env exec execute
