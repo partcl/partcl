@@ -141,6 +141,8 @@ env_loop_done:
   $S1 = config['cpuarch'] # XXX first approximation
   $P1['machine'] = $S1
 
+  $P1['osVersion'] = 8    # XXX extract from parrot
+
   # Set default precision.
   $P1 = box 0
   set_root_global ['tcl'], '$tcl_precision', $P1
