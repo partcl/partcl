@@ -84,6 +84,9 @@ Returns the list as a string
                 goto escape;
 
 
+            if (-1 != string_str_index(INTERP,  str, string_from_literal(INTERP, "\""), 0))
+                 goto quote;
+
             if (-1 != string_str_index(INTERP,  str, string_from_literal(INTERP, "["), 0))
                  goto quote;
 
