@@ -44,7 +44,7 @@ my @skipfiles = qw(
   fCmd fileName fileSystem
   history http httpold
   indexObj init interp io iocmd iogt
-  link lset
+  link list lset
   macOSXFCmd macOSXLoad main misc msgcat
   namespace notify
   obj opt
