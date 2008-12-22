@@ -38,7 +38,7 @@ each individual C<.test> file.
 my @skipfiles = qw(
   assocd async autoMkindex
   binary
-  case chanio clock cmdAH cmdMZ cmdInfo config
+  case chanio clock cmdAH cmdMZ cmdInfo compile config
   dcall dstring
   encoding expr expr-old env exec execute
   fCmd fileName fileSystem
