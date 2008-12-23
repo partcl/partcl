@@ -27,26 +27,12 @@ create:
 
 alias:
   # XXX : /very/ simplistic alias to get us through basic.test
-  argc = argv
   .local string src,dest
-  .local pmc ns
-  if argc < 4 goto done # can't handle short versions
-  if argc > 4 goto alias_with_args
-  dest = argv[1]
-  src  = argv[3] 
-  dest = "&" . dest
-  src  = "&" . src
-  ns = get_namespace
-  $P2 = ns[src]
-  ns[dest]=$P2
-  .return ('')
-
-alias_with_args:
   # XXX this stub provides (something like?) currying
   $P1 = shift argv
-  dest = shift argv
+  dest =  shift argv
   $P1 = shift argv
-  src = join " ", argv
+  src = join ' ', argv
   .local string code
   code = "proc "
   code .= dest
