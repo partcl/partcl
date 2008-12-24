@@ -3381,4 +3381,7 @@ namespace eval tcltest {
 
 proc ::tcltest::outputChannel {} { return stdout }
 proc ::tcltest::errorChannel  {} { return stderr }
+
+# Since I keep inadvertently committing them, leaving in the always-on
+# modifications for PASSED and SKIPPED; we can revert when we're faster.
 ################################################################################
