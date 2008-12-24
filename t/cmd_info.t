@@ -10,7 +10,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 52
+plan 53
 
 eval_is {info} \
   {wrong # args: should be "info subcommand ?argument ...?"}
@@ -186,6 +186,16 @@ eval_is {
 eval_is {namespace eval test {info level 0}} \
   {namespace eval test {info level 0}} \
   {info level 0 - namespace eval}
+
+proc bar {args} {
+  return [info level 0]
+}
+
+proc foo {args} {
+  return [list [bar d e f] [info level 0]]
+}
+
+eval_is {foo a b c} {{bar d e f} {foo a b c}} {nested info level calls.}
 
 # [info defaults] tests...
 proc defaults1 {a {b c} d} {}
