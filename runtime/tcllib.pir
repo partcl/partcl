@@ -39,6 +39,7 @@ providing a compreg-compatible method.
 # class files (HLL: _Tcl)
 .include 'languages/tcl/src/class/tclconst.pir'
 .include 'languages/tcl/src/class/tclproc.pir'
+.include 'languages/tcl/src/class/tracearray.pir'
 
 # create the 'tcl' namespace -- see RT #39852
 # https://rt.perl.org/rt3/Ticket/Display.html?id=39852

@@ -123,7 +123,8 @@ tcl.pbc: $(PARROT) pmcs ops runtime/tcllib.pbc src/tclsh.pir
 
 CLASSES = \
   $(CLASSDIR)/tclconst.pir \
-  $(CLASSDIR)/tclproc.pir
+  $(CLASSDIR)/tclproc.pir \
+  $(CLASSDIR)/tracearray.pir
 
 pmcs:
 	@cd $(PMCDIR) && $(PMCBUILD) generate $(PMCS)

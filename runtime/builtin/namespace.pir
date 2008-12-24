@@ -393,7 +393,21 @@ b_first:
 .end
 
 .sub 'code'
-  .return ('')
+  .param pmc argv
+
+  .local string script, current_ns, retval
+  script = shift argv
+
+  .local string current_ns
+  $P1 = new 'TclList'
+  current_ns = 'current'($P1)
+
+  retval = "namespace inscope "
+  retval .= current_ns
+  retval .= " {" 
+  retval .= script
+  retval .= "}"
+  .return (script)
 .end
 
 .sub 'export'
@@ -476,7 +490,8 @@ done:
 .end
 
 .sub 'inscope'
-  .return ('')
+  .param pmc argv
+  .tailcall eval(argv)
 .end
 
 #XXX complete hack to get tcltest working...

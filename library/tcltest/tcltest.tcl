@@ -2069,9 +2069,9 @@ proc tcltest::test {name description args} {
 	    || $scriptFailure)} {
 	if {$testLevel == 1} {
 	    incr numTests(Passed)
-	    if {[IsVerbose pass]} {
+	    #if {[IsVerbose pass]} {
 		puts [outputChannel] "++++ $name PASSED"
-	    }
+	    #}
 	}
 	incr testLevel -1
 	return
@@ -2265,9 +2265,9 @@ proc tcltest::Skipped {name constraints} {
 	}
 	
 	if {!$doTest} {
-	    if {[IsVerbose skip]} {
+	    #if {[IsVerbose skip]} {
 		puts [outputChannel] "++++ $name SKIPPED: $constraints"
-	    }
+	    #}
 
 	    if {$testLevel == 1} {
 		incr numTests(Skipped)
