@@ -123,7 +123,15 @@ env_loop_done:
 
   # set tcl_platform
   $P1 = new 'TclArray'
-  $P1['platform'] = 'parrot'
+  $P1['platform'] = 'unix'
+  .local string slash
+  slash = config['slash']
+  if slash == "\\" goto win
+  $P1['platform'] = 'unix'
+  goto got_platform 
+win:
+  $P1['platform'] = 'windows'
+got_platform:
   set_root_global ['tcl'], '$tcl_platform', $P1
   $I1 = config['bigendian']
   if $I1 goto big_endian
