@@ -170,6 +170,7 @@ done_args:
   goto ARGS_OK
 BAD_ARGS:
   $P0 = pop call_chain
+  $P0 = shift info_level
   die 'wrong # args: should be "%0%1"'
 ARGS_OK:
   push_eh is_return
@@ -185,6 +186,7 @@ END_PIR
   pop_eh
 was_ok:
   $P0 = pop call_chain
+  $P0 = shift info_level
   .return(%0)
 END_PIR
 
@@ -193,6 +195,7 @@ is_return:
   .catch()
   .get_return_code($I0)
   $P0 = pop call_chain
+  $P0 = shift info_level
   if $I0 == .CONTROL_CONTINUE goto bad_continue
   if $I0 == .CONTROL_BREAK    goto bad_break
   if $I0 != .CONTROL_RETURN   goto not_return_nor_ok
