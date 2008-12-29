@@ -106,7 +106,7 @@ bad_args:
   pop_eh
 
   .local pmc setVar
-  setVar = find_global 'setVar'
+  setVar = get_global 'setVar'
 
   $P3 = new 'TclArray'
   $P1 = $P2[8]
@@ -132,7 +132,7 @@ bad_args:
   $I2 = 0o170000   #S_IFMT
   $I3 = $I1 & $I2
 
-  $P4 = find_global 'filetypes'
+  $P4 = get_global 'filetypes'
   $S1 = $P4[$I3]
   $P3['type'] = $S1
 
@@ -251,7 +251,7 @@ bad_args:
   $I2 = 0o170000   #S_IFMT
   $I3 = $I1 & $I2
 
-  $P4 = find_global 'filetypes'
+  $P4 = get_global 'filetypes'
   $S1 = $P4[$I3]
   .return ($S1)
 

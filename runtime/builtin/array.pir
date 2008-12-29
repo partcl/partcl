@@ -66,7 +66,7 @@ few_args:
 
 .end
 
-.HLL '_Tcl'
+.HLL '_tcl'
 
 .namespace [ 'helpers' ; 'array' ]
 
@@ -121,7 +121,7 @@ bad_args:
   elems = argv[0]
 
   .local pmc toList
-  toList = get_root_global ['_tcl'], 'toList'
+  toList = get_hll_global 'toList'
   elems  = toList(elems)
 
 pre_loop:
@@ -137,7 +137,7 @@ pre_loop:
   .local pmc    val
 
   .local pmc set
-  set = get_root_global ['_tcl'], 'setVar'
+  set = get_hll_global 'setVar'
 
   if_null the_array, new_array # create a new array if no var
   goto set_loop

@@ -54,7 +54,7 @@ c_command:
   .local string compareName
   compareName = shift argv
   $S0 = '&' . compareName
-  compare = find_global $S0
+  compare = get_global $S0
   branch chew_flag
 
 got_list:

@@ -250,7 +250,7 @@ Given a string, return the appropriate channel.
   .param string channelID
 
   .local pmc channels
-  channels = find_global 'channels'
+  channels = get_global 'channels'
 
   .local pmc io_obj
   io_obj = channels[channelID]

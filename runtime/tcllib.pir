@@ -167,7 +167,7 @@ got_platform:
   filetypes[0o120000] = 'link'
   filetypes[0o140000] = 'socket'
 
-   store_global 'filetypes', filetypes
+   set_global 'filetypes', filetypes
 
    .local pmc binary_types
    binary_types = new 'TclArray'
@@ -190,16 +190,16 @@ got_platform:
    binary_types['X'] = 1
    binary_types['@'] = 1
 
-   store_global 'binary_types', binary_types
+   set_global 'binary_types', binary_types
 
   # Eventually, we'll need to register MMD for the various Tcl PMCs
   # (Presuming we don't do this from the .pmc definitions.)
 
   $P1 = new 'TclList'
-  store_global 'info_level', $P1
+  set_global 'info_level', $P1
 
   $P1 = new 'TclList'
-  store_global 'events', $P1
+  set_global 'events', $P1
 
   # Global variable initialization
 
@@ -223,15 +223,15 @@ got_platform:
   $P1['stdout'] = $P2
   $P2 = getstderr
   $P1['stderr'] = $P2
-  store_global 'channels', $P1
+  set_global 'channels', $P1
 
   # Setup the id # for channels..
   $P1 = box 1
-  store_global 'next_channel_id', $P1
+  set_global 'next_channel_id', $P1
 
   # call chain of lex pads (for upvar and uplevel)
   $P1 = new 'TclList'
-  store_global 'call_chain', $P1
+  set_global 'call_chain', $P1
 
   # the regex used for namespaces
   .local pmc p6rule, colons
@@ -245,7 +245,7 @@ got_platform:
 
   # Setup a global to keep a unique id for compiled subs.
   $P1 = box 0
-  store_global 'compiled_num', $P1
+  set_global 'compiled_num', $P1
 .end
 
 .HLL 'parrot'

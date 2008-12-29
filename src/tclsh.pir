@@ -27,7 +27,7 @@
   inc jj
   goto .$argv_loop
 .label $argv_loop_done:
-  store_global '$argv', tcl_argv
+  set_global '$argv', tcl_argv
 .endm
 
 .sub _main :main
@@ -41,7 +41,7 @@
 
   .local pmc tcl_interactive
   tcl_interactive = box 0
-  store_global '$tcl_interactive', tcl_interactive
+  set_global '$tcl_interactive', tcl_interactive
 
   .local pmc compileTcl
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
@@ -212,7 +212,7 @@ got_prompt:
   # it using the readilne prompt, like everything else.
   # XXX Should be testing this
   push_eh no_prompt
-    $P0 = find_global varname
+    $P0 = get_global varname
     $P2 = compileTcl($P0)
     $P2()
   pop_eh
