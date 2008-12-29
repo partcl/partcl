@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# given a list of named tcl spec tests, run them with timings.
+
+for spec in $@; do
+  echo $spec.test
+  time ../../parrot tcl.pbc t_tcl/$spec.test 2>&1 | tee $spec.results
+done
