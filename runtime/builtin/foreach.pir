@@ -59,6 +59,11 @@ arg_loop:
   goto arg_loop
 arg_done:
 
+  .local pmc eh
+  eh = new 'ExceptionHandler'
+  eh.'handle_types'(.CONTROL_BREAK,.CONTROL_CONTINUE)
+  set_addr eh, handle_continue
+
  .local int iteration
   iteration = -1
 next_iteration:
@@ -97,10 +102,6 @@ empty_var:
   goto next_variable
 
 execute_command:
-  .local pmc eh
-  eh = new 'ExceptionHandler'
-  eh.'handle_types'(.CONTROL_BREAK,.CONTROL_CONTINUE)
-  set_addr eh, handle_continue
   push_eh eh
     command()
   pop_eh

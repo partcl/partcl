@@ -253,16 +253,16 @@ do_script_prelude:
   body_proc = compileTcl(body)
 
   .local pmc check_key,check_value
+  .local pmc eh
+  eh = new 'ExceptionHandler'
+  eh.'handle_types'(.CONTROL_CONTINUE,.CONTROL_BREAK)
+  set_addr eh, body_handler
 script_loop:
   unless iterator goto end_script_loop
   check_key = shift iterator
   setVar(keyVar,check_key)
   check_value = dictionary[check_key]
   setVar(valueVar,check_value)
-  .local pmc eh
-  eh = new 'ExceptionHandler'
-  eh.'handle_types'(.CONTROL_CONTINUE,.CONTROL_BREAK)
-  set_addr eh, body_handler
   push_eh eh
     $P1 = body_proc()
   pop_eh

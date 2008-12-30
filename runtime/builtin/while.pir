@@ -23,15 +23,15 @@
   a_command = argv[1]
   a_command = compileTcl(a_command)
 
-while_loop:
-  $P0 = a_test()
-  $I0 = toBoolean($P0)
-  unless $I0 goto while_loop_done
-
   .local pmc eh
   eh = new 'ExceptionHandler'
   eh.'handle_types'(.CONTROL_CONTINUE,.CONTROL_BREAK)
   set_addr eh, while_loop_exception
+
+while_loop:
+  $P0 = a_test()
+  $I0 = toBoolean($P0)
+  unless $I0 goto while_loop_done
 
   push_eh eh
     a_command()

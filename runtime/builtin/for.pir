@@ -27,7 +27,15 @@
   a_command = compileTcl(a_command)
   .local pmc temp
 
-  .local pmc eh
+  .local pmc eh_continue
+  eh_continue = new 'ExceptionHandler'
+  eh_continue.'handle_types'(.CONTROL_BREAK,.CONTROL_CONTINUE)
+  set_addr eh_continue, command_exception
+
+  .local pmc eh_done
+  eh_done = new 'ExceptionHandler'
+  eh_done.'handle_types'(.CONTROL_BREAK)
+  set_addr eh_done, done
 
   .local pmc toBoolean
   toBoolean = get_root_global ['_tcl'], 'toBoolean'
@@ -37,17 +45,11 @@ loop:
   temp = a_test()
   $I0 = toBoolean(temp)
   unless $I0 goto done
-  eh = new 'ExceptionHandler'
-  eh.'handle_types'(.CONTROL_BREAK,.CONTROL_CONTINUE)
-  set_addr eh, command_exception
-  push_eh eh
+  push_eh eh_continue
     a_command()
   pop_eh
 continue:
-  eh = new 'ExceptionHandler'
-  eh.'handle_types'(.CONTROL_BREAK)
-  set_addr eh, done
-  push_eh eh
+  push_eh eh_done
     a_next()
   pop_eh
   goto loop
