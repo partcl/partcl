@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&lreverse'
+.sub 'lreverse'
   .param pmc argv :slurpy
 
   .local int argc

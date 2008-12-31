@@ -3,7 +3,7 @@
 
 # XXX contains only enough for [package require tcltest]
 
-.sub '&package'
+.sub 'package'
     .param pmc args :slurpy
 
     .local int argc

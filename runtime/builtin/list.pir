@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&list'
+.sub 'list'
   .param pmc argv :slurpy
   .return(argv)
 .end

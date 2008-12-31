@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&binary'
+.sub 'binary'
     .param pmc argv :slurpy
 
     .local int argc

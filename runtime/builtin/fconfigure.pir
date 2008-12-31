@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&fconfigure'
+.sub 'fconfigure'
   .param pmc argv :slurpy
   .return('')
 .end

@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&puts'
+.sub 'puts'
   .param pmc argv :slurpy
 
   .local int argc

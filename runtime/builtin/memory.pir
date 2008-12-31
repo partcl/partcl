@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&memory'
+.sub 'memory'
   .param pmc argv :slurpy
   .return('')
 .end

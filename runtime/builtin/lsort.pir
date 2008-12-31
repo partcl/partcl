@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&lsort'
+.sub 'lsort'
   .param pmc argv :slurpy
 
   .local int return_type, argc
@@ -53,8 +53,7 @@ c_int:
 c_command:
   .local string compareName
   compareName = shift argv
-  $S0 = '&' . compareName
-  compare = get_global $S0
+  compare = get_global compareName
   branch chew_flag
 
 got_list:

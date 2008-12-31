@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&history'
+.sub 'history'
   .param pmc argv :slurpy
   .return('')
 .end

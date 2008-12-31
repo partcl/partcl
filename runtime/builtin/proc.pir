@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&proc'
+.sub 'proc'
   .param pmc argv :slurpy
 
   .local int argc
@@ -247,7 +247,6 @@ walk_ns:
   goto walk_ns
 done_walk:
 
-  name = '&' . name
   ns_target[name] = $P1
 
   .return ('')

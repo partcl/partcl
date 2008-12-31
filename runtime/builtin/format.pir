@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&format'
+.sub 'format'
   .param pmc argv :slurpy
 
   .local int argc

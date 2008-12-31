@@ -6,7 +6,7 @@
 #   - we pass in a boolean (array or not), the array itself, and the name
 #   - we know we need an array name for *all* args, so we test for it here.
 
-.sub '&array'
+.sub 'array'
   .param pmc argv :slurpy
 
   .local int argc

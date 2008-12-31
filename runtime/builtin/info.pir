@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&info'
+.sub 'info'
   .param pmc argv :slurpy
 
   .local int argc
@@ -57,7 +57,6 @@ bad_subcommand:
   .local string name
   ns   = splitNamespace(procname)
   name = pop ns
-  name = '&' . name
 
   unshift ns, 'tcl'
   $P1 = get_root_global ns, name
@@ -65,8 +64,6 @@ bad_subcommand:
 
   $P2 = getattribute $P1, 'args'
   if null $P2 goto no_args
-  .return($P2)
-
   .return($P2)
 
 no_args:
@@ -96,7 +93,6 @@ bad_args:
   .local string name
   ns   = splitNamespace(procname)
   name = pop ns
-  name = '&' . name
 
   unshift ns, 'tcl'
   $P1 = get_root_global ns, name
@@ -167,7 +163,6 @@ bad_args:
   .local string name
   ns   = splitNamespace(procname)
   name = pop ns
-  name = '&' . name
 
   unshift ns, 'tcl'
   $P1 = get_root_global ns, name
@@ -245,11 +240,10 @@ bad_args:
   .local pmc globber,rule,match
   globber = compreg 'Tcl::Glob'
   if argc == 1 goto got_glob
-  $S1 = '&*'
+  $S1 = '*'
   goto compile
 got_glob:
   $S1 = argv[0]
-  $S1 = '&' . $S1
 compile:
   rule = globber.'compile'($S1)
 loop:
@@ -258,8 +252,7 @@ loop:
   $P0 = mathfunc[$S0]
   match = rule($S0)
   unless match goto loop
-  $S1 = substr $S0, 1
-  push retval, $S1
+  push retval, $S0
   goto loop
 end:
   .return(retval)
@@ -302,9 +295,9 @@ bad_args:
   iter_loop:
      unless iterator goto iter_loop_end
      $S1 = shift iterator
-     $S2 = substr $S1, 0, 1
-     unless $S2 == '&' goto iter_loop
-     $S1 = substr $S1, 1
+     $P0 = ns[$S1]
+     $I0 = isa $P0, 'Sub'
+     unless $I0 goto iter_loop
      if_null matching, add_result
      $P2 = matching($S1)
      unless $P2 goto iter_loop

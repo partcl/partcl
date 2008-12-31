@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&flush'
+.sub 'flush'
     .param pmc argv :slurpy
 
     .local int argc

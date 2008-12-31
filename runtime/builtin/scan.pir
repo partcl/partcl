@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&scan'
+.sub 'scan'
   .param pmc argv :slurpy
 
   .local int argc

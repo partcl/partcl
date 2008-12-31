@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&gets'
+.sub 'gets'
   .param pmc argv :slurpy
 
   .local int argc

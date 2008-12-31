@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&file'
+.sub 'file'
   .param pmc argv :slurpy
 
   .local int argc

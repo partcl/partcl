@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&interp'
+.sub 'interp'
   .param pmc argv :slurpy
 
   # XXX just enough to get us through some spec tests.

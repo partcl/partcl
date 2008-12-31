@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&open'
+.sub 'open'
   .param pmc argv :slurpy
 
   .local string fileName, channel_id, access, pir_access

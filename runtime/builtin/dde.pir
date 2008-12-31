@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&dde'
+.sub 'dde'
   .param pmc argv :slurpy
   .return('')
 .end

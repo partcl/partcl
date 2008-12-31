@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&glob'
+.sub 'glob'
   .param pmc argv :slurpy
   .return('')
 .end

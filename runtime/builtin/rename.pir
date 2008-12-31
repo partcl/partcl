@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&rename'
+.sub 'rename'
   .param pmc argv :slurpy
 
   .local int argc
@@ -17,39 +17,27 @@
   $P1 = getinterp
   ns = $P1['namespace'; 1]
 
-  $S0 = '&' . oldName
-  sub = ns[$S0]
+  sub = ns[oldName]
   if null sub goto doesnt_exist
 
   # if the newName is '', just delete the sub
-  .local int delete_only
-  delete_only = 0
-  if newName != '' goto delete_sub
-  delete_only = 1
+  if newName != '' goto add_sub
 
-delete_sub:
-  delete ns[$S0]
-
-  if delete_only goto return
+delete_only:
+  delete ns[oldName]
+  .return('') 
 
 add_sub:
-  # Create the new sub
-  $S0 = '&' . newName
-  # first check to make sure it doesn't already exist
-  $P0 = ns[$S0]
-  if null $P0 goto set_new_sub
+  $P0 = ns[newName]
+  unless null $P0 goto already_exists
+  ns[newName] = sub
+  .return('')
 
+already_exists:
   $S0 = "can't rename to \""
   $S0 .= newName
   $S0 .= '": command already exists'
   die $S0
-
-set_new_sub:
-  ns[$S0] = sub
-  if delete_only goto return
-
-return:
-  .return('')
 
 doesnt_exist:
   if newName == '' goto cant_delete

@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&auto_execok'
+.sub 'auto_execok'
   .param pmc argv :slurpy
   .return('')
 .end

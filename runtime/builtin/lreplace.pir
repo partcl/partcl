@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&lreplace'
+.sub 'lreplace'
     .param pmc argv :slurpy
 
     .local int argc

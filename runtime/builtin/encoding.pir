@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&encoding'
+.sub 'encoding'
   .param pmc argv :slurpy
 
   .local pmc retval

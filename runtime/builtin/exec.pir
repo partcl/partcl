@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&exec'
+.sub 'exec'
   .param pmc argv :slurpy
   .return('')
 .end

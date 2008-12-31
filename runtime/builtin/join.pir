@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&join'
+.sub 'join'
   .param pmc argv :slurpy
 
   .local int argc

@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub '&tell'
+.sub 'tell'
   .param pmc argv :slurpy
   .return('')
 .end
