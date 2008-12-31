@@ -109,6 +109,101 @@ Utility macro to simplify generating output during debug cycles.
   _dumper(.dingus)
 .endm
 
+=head2 parrot_debug
+
+Add this macro to PIR code to dump some verbose parrot
+interpreter information.
+
+=cut
+
+.macro parrot_debug(location)
+
+  printerr "@ "
+  printerr .location
+  printerr "\n"
+
+  .include 'runtime/parrot/include/interpinfo.pasm'
+
+  $I1234 = interpinfo .INTERPINFO_TOTAL_MEM_ALLOC
+  printerr "    TOTAL_MEM_ALLOC............: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_DOD_RUNS
+  printerr "    DOD_RUNS...................: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_COLLECT_RUNS
+  printerr "    COLLECT_RUNS...............: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_ACTIVE_PMCS
+  printerr "    ACTIVE_PMCS................: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_ACTIVE_BUFFERS
+  printerr "    ACTIVE_BUFFERS.............: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_TOTAL_PMCS
+  printerr "    TOTAL_PMCS.................: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_TOTAL_BUFFERS
+  printerr "    TOTAL_BUFFERS..............: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_HEADER_ALLOCS_SINCE_COLLECT
+  printerr "    HEADER_ALLOCS_SINCE_COLLECT: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_MEM_ALLOCS_SINCE_COLLECT
+  printerr "    MEM_ALLOCS_SINCE_COLLECT...: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_TOTAL_COPIED
+  printerr "    TOTAL_COPIED...............: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_IMPATIENT_PMCS
+  printerr "    IMPATIENT_PMCS.............: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_LAZY_DOD_RUNS
+  printerr "    LAZY_DOD_RUNS..............: "
+  printerr $I1234
+  printerr "\n"
+
+  $I1234 = interpinfo .INTERPINFO_EXTENDED_PMCS
+  printerr "    EXTENDED_PMCS..............: "
+  printerr $I1234
+  printerr "\n"
+
+=for skipping these.
+
+.macro_const INTERPINFO_CURRENT_RUNCORE 14
+.macro_const INTERPINFO_CURRENT_SUB     15
+.macro_const INTERPINFO_CURRENT_CONT    16
+.macro_const INTERPINFO_CURRENT_OBJECT  17
+.macro_const INTERPINFO_CURRENT_LEXPAD  18
+.macro_const INTERPINFO_EXECUTABLE_FULLNAME     19
+.macro_const INTERPINFO_EXECUTABLE_BASENAME     20
+.macro_const INTERPINFO_RUNTIME_PREFIX  21
+
+=cut
+
+.endm
+
 # Local Variables:
 #   mode: pir
 #   fill-column: 100
