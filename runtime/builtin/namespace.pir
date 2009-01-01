@@ -255,7 +255,6 @@ global_ns:
 .namespace %0
 # src/compiler.pir :: pir_compiler (2)
 .sub compiled_tcl_sub_%2
-  .include 'languages/tcl/src/returncodes.pasm'
   %1
   .return(%3)
 .end

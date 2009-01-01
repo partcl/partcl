@@ -54,7 +54,6 @@ create:
 .namespace %1
 .sub 'xxx' :anon
   .param pmc args :slurpy
-  .include 'languages/tcl/src/returncodes.pasm'
 
   .local pmc call_chain, lexpad
   call_chain = get_root_global ['_tcl'], 'call_chain'
