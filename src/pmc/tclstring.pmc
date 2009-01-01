@@ -17,7 +17,7 @@ pmclass TclString
 {
 
     METHOD get_list(STRING* str :optional) {
-        PMC*    retval = pmc_new(INTERP, pmc_type(INTERP, string_from_literal(INTERP, "TclList")));
+        PMC*    retval = pmc_new(INTERP, pmc_type(INTERP, CONST_STRING(INTERP, "TclList")));
         INTVAL  pos = -1;       /* we increment before we use it */
         INTVAL  len;            /* length of the string */
         INTVAL  character;      /* which character we're testing */
@@ -133,7 +133,7 @@ pmclass TclString
         element_string = string_substr(INTERP, str, pos, element_length, &element_string, 0);
 
         /* add it to the list*/
-        element_pmc = pmc_new(INTERP, pmc_type(INTERP, string_from_literal(INTERP, "TclConst")));
+        element_pmc = pmc_new(INTERP, pmc_type(INTERP, CONST_STRING(INTERP, "TclConst")));
         VTABLE_set_string_native(INTERP, element_pmc, element_string);
         VTABLE_push_pmc(INTERP, retval, element_pmc);
 
@@ -164,7 +164,7 @@ pmclass TclString
         element_length = peek_pos - pos;
         element_string = string_substr(INTERP, str, pos, element_length, &element_string, 0);
 
-        element_pmc = pmc_new(INTERP, pmc_type(INTERP, string_from_literal(INTERP, "TclConst")));
+        element_pmc = pmc_new(INTERP, pmc_type(INTERP, CONST_STRING(INTERP, "TclConst")));
         VTABLE_set_string_native(INTERP, element_pmc, element_string);
         VTABLE_push_pmc(INTERP, retval, element_pmc);
 

@@ -30,8 +30,8 @@ pmclass TclFloat
         STRING *dot;
         STRING *e;
         STRING *dot_zero;
-        STRING *_precision = string_from_cstring(INTERP, "$tcl_precision", 14);
-        STRING *_tcl = string_from_cstring(INTERP, "tcl", 3);
+        STRING *_precision = CONST_STRING(INTERP, "$tcl_precision");
+        STRING *_tcl = CONST_STRING(INTERP, "tcl");
 
         PMC * const root_ns = INTERP->root_namespace;
         PMC * const hll_ns  = VTABLE_get_pmc_keyed_str(INTERP, root_ns, _tcl);
@@ -49,12 +49,12 @@ pmclass TclFloat
          * an int if it can : if we have no decimal point then tack on
          * on and return
          */
-        dot = string_from_cstring(INTERP, ".", 1);
-        e   = string_from_cstring(INTERP, "e", 1);
+        dot = CONST_STRING(INTERP, ".");
+        e   = CONST_STRING(INTERP, "e");
 
         if (string_str_index(INTERP, buff, dot, 0) == -1
          && string_str_index(INTERP, buff, e, 0) == -1) {
-            dot_zero = string_from_cstring(INTERP, ".0", 2);
+            dot_zero = CONST_STRING(INTERP, ".0");
             buff = string_append(INTERP, buff, dot_zero);
             return buff;
         }
