@@ -30,10 +30,7 @@ pmclass TclString
         if (! str)
              str = SELF.get_string();
 
-        /*
-         * RT#48166 This prevents a segfault; retval gets claimed before it
-         * it is used below without this register. This shouldn't happen
-         */
+        /* make sure our return value isn't GC'd out from under us! */
         Parrot_register_pmc(INTERP, retval);
 
         len = string_length(INTERP, str);
