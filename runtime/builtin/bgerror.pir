@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'bgerror'
+.sub '&bgerror'
   .param pmc argv :slurpy
   .return('')
 .end

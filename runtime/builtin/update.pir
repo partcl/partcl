@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'update'
+.sub '&update'
   .param pmc argv :slurpy
   .return('')
 .end

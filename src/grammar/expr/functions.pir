@@ -13,14 +13,14 @@ Functions are very similar to ops, so handle them similarly here.
 .HLL 'Tcl'
 .namespace ['tcl'; 'mathfunc']
 
-.sub 'rand'
+.sub '&rand'
 .end
 
 =head2 Unary Functions
 
 =cut
 
-.sub 'abs'
+.sub '&abs'
     .param pmc a
 
     .local pmc toNumber
@@ -41,7 +41,7 @@ is_string:
     die "argument to math function didn't have numeric value"
 .end
 
-.sub 'acos'
+.sub '&acos'
     .param pmc a
 
     .local pmc toNumber
@@ -77,7 +77,7 @@ domain_error:
     tcl_error $S0, $P0
 .end
 
-.sub 'asin'
+.sub '&asin'
     .param pmc a
 
     .local pmc toNumber
@@ -113,7 +113,7 @@ domain_error:
     tcl_error $S0, $P0
 .end
 
-.sub 'atan'
+.sub '&atan'
     .param pmc a
 
     .local pmc toNumber
@@ -138,7 +138,7 @@ is_string:
     die $S0
 .end
 
-.sub 'bool'
+.sub '&bool'
     .param pmc a
 
     .local pmc toBoolean
@@ -147,7 +147,7 @@ is_string:
      .tailcall toBoolean(a)
 .end
 
-.sub 'ceil'
+.sub '&ceil'
     .param pmc a
 
     .local pmc toNumber
@@ -169,7 +169,7 @@ is_string:
     die "argument to math function didn't have numeric value"
 .end
 
-.sub 'cos'
+.sub '&cos'
     .param pmc a
 
     .local pmc toNumber
@@ -194,7 +194,7 @@ is_string:
     die $S0
 .end
 
-.sub 'cosh'
+.sub '&cosh'
     .param pmc a
 
     .local pmc toNumber
@@ -219,7 +219,7 @@ is_string:
     die $S0
 .end
 
-.sub 'double'
+.sub '&double'
     .param pmc a
 
     .local pmc toNumber
@@ -240,7 +240,7 @@ is_string:
     die "argument to math function didn't have numeric value"
 .end
 
-.sub 'entier'
+.sub '&entier'
     .param pmc n
 
     .local pmc toNumber
@@ -261,7 +261,7 @@ is_string:
     die $S0
 .end
 
-.sub 'exp'
+.sub '&exp'
     .param pmc a
 
     .local pmc toNumber
@@ -286,7 +286,7 @@ is_string:
     die $S0
 .end
 
-.sub 'floor'
+.sub '&floor'
     .param pmc a
 
     .local pmc result
@@ -324,7 +324,7 @@ is_string:
     die $S0
 .end
 
-.sub 'int'
+.sub '&int'
     .param pmc a
 
     .local pmc toNumber
@@ -342,10 +342,10 @@ is_string:
     die "argument to math function didn't have numeric value"
 .end
 
-.sub 'isqrt'
+.sub '&isqrt'
 .end
 
-.sub 'log'
+.sub '&log'
     .param pmc a
 
     .local pmc toNumber
@@ -380,7 +380,7 @@ is_string:
     die $S0
 .end
 
-.sub 'log10'
+.sub '&log10'
     .param pmc a
 
     .local pmc toNumber
@@ -415,7 +415,7 @@ is_string:
     die $S0
 .end
 
-.sub 'max'
+.sub '&max'
     .param pmc args :slurpy
 
     .local pmc iterator, max
@@ -431,7 +431,7 @@ done:
     .return(max)
 .end
 
-.sub 'min'
+.sub '&min'
     .param pmc args :slurpy
 
     .local pmc iterator, min
@@ -447,7 +447,7 @@ done:
     .return(min)
 .end
 
-.sub 'round'
+.sub '&round'
     .param pmc a
 
     .local pmc toNumber
@@ -474,7 +474,7 @@ is_string:
     die "argument to math function didn't have numeric value"
 .end
 
-.sub 'sin'
+.sub '&sin'
     .param pmc a
 
     .local pmc toNumber
@@ -499,7 +499,7 @@ is_string:
     die $S0
 .end
 
-.sub 'sinh'
+.sub '&sinh'
     .param pmc a
 
     .local pmc toNumber
@@ -524,7 +524,7 @@ is_string:
     die $S0
 .end
 
-.sub 'sqrt'
+.sub '&sqrt'
     .param pmc a
 
     .local pmc toNumber
@@ -558,10 +558,10 @@ is_string:
     die $S0
 .end
 
-.sub 'srand'
+.sub '&srand'
 .end
 
-.sub 'tan'
+.sub '&tan'
     .param pmc a
 
     .local pmc toNumber
@@ -586,7 +586,7 @@ is_string:
     die $S0
 .end
 
-.sub 'tanh'
+.sub '&tanh'
     .param pmc a
 
     .local pmc toNumber
@@ -612,7 +612,7 @@ is_string:
 .end
 
 # RT#40689: implement wide() - this is just int()
-.sub 'wide'
+.sub '&wide'
     .param pmc a
 
     .local pmc toNumber
@@ -634,7 +634,7 @@ is_string:
 
 =cut
 
-.sub 'atan2'
+.sub '&atan2'
     .param pmc a
     .param pmc b
 
@@ -659,7 +659,7 @@ is_string:
     die "argument to math function didn't have numeric value"
 .end
 
-.sub 'fmod'
+.sub '&fmod'
     .param pmc a
     .param pmc b
 
@@ -693,7 +693,7 @@ is_string:
     die "argument to math function didn't have numeric value"
 .end
 
-.sub 'hypot'
+.sub '&hypot'
     .param pmc a
     .param pmc b
 
@@ -723,7 +723,7 @@ is_string:
     die "argument to math function didn't have numeric value"
 .end
 
-.sub 'pow'
+.sub '&pow'
     .param pmc a
     .param pmc b
 

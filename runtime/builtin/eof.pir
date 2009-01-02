@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'eof'
+.sub '&eof'
     .param pmc argv :slurpy
 
     .local int argc

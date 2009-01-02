@@ -2,7 +2,7 @@
 .namespace []
 
 # XXX This is just a stub to get spec tests working.
-.sub 'trace'
+.sub '&trace'
   .param pmc argv :slurpy
 
   #$S0 = join ' ', argv

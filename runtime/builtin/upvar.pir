@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'upvar'
+.sub '&upvar'
   .param pmc argv :slurpy
 
   .local int argc

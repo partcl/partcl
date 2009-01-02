@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'pwd'
+.sub '&pwd'
   .param pmc argv :slurpy
 
   .local int argc

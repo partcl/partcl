@@ -12,7 +12,7 @@ real top level namespace.
 .HLL 'Tcl'
 .namespace []
 
-.sub 'namespace'
+.sub '&namespace'
    .param pmc argv :slurpy
 
   .local pmc retval
@@ -447,6 +447,7 @@ begin_argv:
 
   .local string pattern
   pattern = pop ns
+  pattern = '&' . pattern # all our public procs are prefixed with &
 
   .local pmc namespace
   namespace = ns_root

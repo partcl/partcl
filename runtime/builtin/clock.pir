@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'clock'
+.sub '&clock'
   .param pmc argv :slurpy
 
   .local int argc

@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'unload'
+.sub '&unload'
   .param pmc argv :slurpy
   .return('')
 .end

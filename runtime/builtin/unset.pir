@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'unset'
+.sub '&unset'
   .param pmc argv :slurpy
 
   .local int argc

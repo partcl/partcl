@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'fileevent'
+.sub '&fileevent'
     .param pmc args :slurpy
 
     .local int argc

@@ -10,7 +10,7 @@
 #
 # XXX Perhaps replace most of the guts here with a call to auto_load?
 #
-.sub 'parray'
+.sub '&parray'
   .param pmc args :slurpy
 
   .include 'iglobals.pasm'
@@ -36,8 +36,8 @@
   $P1()
 
   # Now call the version that we just created.
-  $P1 = find_global 'parray'
-  .tailcall $P1( args :flat )
+  $P3 = find_name '&parray'
+  .tailcall $P3( args :flat )
 .end
 
 # Local Variables:

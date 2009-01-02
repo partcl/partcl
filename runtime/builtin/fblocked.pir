@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'fblocked'
+.sub '&fblocked'
   .param pmc argv :slurpy
   .return('')
 .end

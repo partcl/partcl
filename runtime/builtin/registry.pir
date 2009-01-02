@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'registry'
+.sub '&registry'
   .param pmc argv :slurpy
   .return('')
 .end

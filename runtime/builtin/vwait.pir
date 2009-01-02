@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'vwait'
+.sub '&vwait'
     .param pmc args :slurpy
 
     .local int argc

@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'break'
+.sub '&break'
     .param pmc argv :slurpy
 
     .local int argc

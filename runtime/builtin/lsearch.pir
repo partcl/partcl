@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'lsearch'
+.sub '&lsearch'
   .param pmc argv :slurpy
 
   .local pmc options

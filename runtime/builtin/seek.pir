@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'seek'
+.sub '&seek'
   .param pmc argv :slurpy
   .return('')
 .end

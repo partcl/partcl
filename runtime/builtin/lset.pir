@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'lset'
+.sub '&lset'
   .param pmc argv :slurpy
 
   .local int argc

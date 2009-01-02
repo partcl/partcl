@@ -7,7 +7,7 @@
 # When loading a pbc file, we don't try to invoke anything; we assume the
 # library is configured with appropriate :load-marked subroutines.
 
-.sub 'load'
+.sub '&load'
   .param pmc argv :slurpy
 
   .local string fileName

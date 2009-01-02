@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'subst'
+.sub '&subst'
     .param pmc argv :slurpy
 
     .local pmc options

@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'auto_load'
+.sub '&auto_load'
   .param string cmd
 
   .include 'iglobals.pasm'

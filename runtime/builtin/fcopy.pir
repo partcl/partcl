@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'fcopy'
+.sub '&fcopy'
   .param pmc argv :slurpy
   .return('')
 .end

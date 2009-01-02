@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'foreach'
+.sub '&foreach'
   .param pmc argv :slurpy
   # Requires multiple of 3 args.
 

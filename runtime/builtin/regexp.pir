@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'regexp'
+.sub '&regexp'
   .param pmc argv :slurpy
 
   .local int argc

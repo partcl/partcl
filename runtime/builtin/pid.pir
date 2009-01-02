@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'pid'
+.sub '&pid'
   .param pmc argv :slurpy
   .return('')
 .end

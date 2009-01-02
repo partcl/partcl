@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'read'
+.sub '&read'
   .param pmc argv :slurpy
   .return('')
 .end

@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'chan'
+.sub '&chan'
   .param pmc argv :slurpy
   .return('')
 .end

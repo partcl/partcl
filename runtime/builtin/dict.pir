@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'dict'
+.sub '&dict'
   .param pmc argv :slurpy
 
   .local pmc retval

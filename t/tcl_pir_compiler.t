@@ -52,7 +52,7 @@ pir_output_is( <<'CODE', <<'OUTPUT', "pass arguments to a tcl proc from PIR" );
   $P1 = $P0('proc _tmp {a} {puts $a}')
   $P1()
 
-  $P2 = find_global '_tmp'
+  $P2 = find_global '&_tmp'
 
   $P2('hello')
 .end

@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'lassign'
+.sub '&lassign'
   .param pmc argv :slurpy
 
   .local int argc

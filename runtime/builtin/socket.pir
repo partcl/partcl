@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'socket'
+.sub '&socket'
     .param pmc argv :slurpy
 
     .local int argc

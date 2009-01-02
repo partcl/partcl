@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'switch'
+.sub '&switch'
   .param pmc argv :slurpy
   .local int argc
   argc = elements argv

@@ -1,7 +1,7 @@
 .HLL 'Tcl'
 .namespace []
 
-.sub 'string'
+.sub '&string'
   .param pmc argv :slurpy
 
   .local pmc retval
