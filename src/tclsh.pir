@@ -69,19 +69,13 @@
   .local string input_line
   .local pmc STDIN
   STDIN = getstdin
-  .local int readlineInd
-  readlineInd = 1
-  $I0 = STDIN.'set_readline_interactive'(1)
-  if $I0 >=0  goto got_readline_status
-  readlineInd = 0
-got_readline_status:
 
   input_line = ''
 
   .local int level
   level = 1
 input_loop:
-  $P0 = prompt(level, readlineInd)
+  $P0 = prompt(level)
   if null $P0 goto done
   $S0 = $P0
   $S0 .= "\n" # add back in the newline the prompt chomped
@@ -186,7 +180,6 @@ exit_exception:
 
 .sub prompt
   .param int level
-  .param int readlineInd
 
   .local pmc STDOUT
   STDOUT = getstdout
@@ -217,27 +210,26 @@ got_prompt:
     $P2()
   pop_eh
 
-  STDOUT.'flush'()
-  $P0 = STDIN.'readline'('')
-  .return ($P0)
-
-no_prompt:
-  # XXX Why does readline() behave differently on prompting depending on
-  #     the presence of readline? Shouldn't it *always* print the prompt?
-  if readlineInd == 1 goto has_readline
-  print default_prompt
-  STDOUT.'flush'()
-  $S0 = readline STDIN
-  unless STDIN goto eof
+  STDOUT.'flush'() 
+  # tailcall fails here.
+  push_eh eof
+    $S0 = STDIN.'readline'()
+  pop_eh
   .return($S0)
 
+no_prompt:
+  .catch()
+  STDOUT.'flush'()
+  # tailcall fails here.
+  push_eh eof
+    $S0 = STDIN.'readline_interactive'(default_prompt)
+  pop_eh
+  .return ($S0)
+
 eof:
+  .catch()
   null $P0
   .return($P0)
-
-has_readline:
-  $P0 = STDIN.'readline'(default_prompt)
-  .return ($P0)
 .end
 
 
