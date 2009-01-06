@@ -5,11 +5,6 @@
 .sub '&trace'
   .param pmc argv :slurpy
 
-  #$S0 = join ' ', argv
-  #print "[trace "
-  #print $S0
-  #say "]\n"
-
   .local string subcommand
   subcommand = shift argv
   if subcommand != 'variable' goto unimplemented
