@@ -32,7 +32,7 @@ pir_output_is( <<'CODE', <<'OUTPUT', "test tcl compiler global variable interop"
      load_bytecode 'languages/tcl/runtime/tcllib.pbc'
      .local pmc tcl_compiler,compiled_sub
      $P1 = box 'ok 1' 
-     store_global '$a', $P1
+     set_global '$a', $P1
      tcl_compiler = compreg 'TCL'
      compiled_sub = tcl_compiler("puts $a")
      compiled_sub()
@@ -52,7 +52,7 @@ pir_output_is( <<'CODE', <<'OUTPUT', "pass arguments to a tcl proc from PIR" );
   $P1 = $P0('proc _tmp {a} {puts $a}')
   $P1()
 
-  $P2 = find_global '&_tmp'
+  $P2 = get_global '&_tmp'
 
   $P2('hello')
 .end

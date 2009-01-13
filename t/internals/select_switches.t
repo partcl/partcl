@@ -27,9 +27,9 @@ builtins.
     # get the testing functions
     .local pmc plan, ok, is
 
-    plan      = find_global ['Test'; 'More'], 'plan'
-    ok        = find_global ['Test'; 'More'], 'ok'
-    is        = find_global ['Test'; 'More'], 'is'
+    plan      = get_hll_global ['Test'; 'More'], 'plan'
+    ok        = get_hll_global ['Test'; 'More'], 'ok'
+    is        = get_hll_global ['Test'; 'More'], 'is'
 
     load_bytecode 'languages/tcl/runtime/tcllib.pir'
 
