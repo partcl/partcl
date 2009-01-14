@@ -163,7 +163,7 @@ $(PBC_TO_EXE):
 	$(MAKE) $(BUILD_DIR) ./pbc_to_exe@exe@
 
 test: tcl.pbc
-	prove -r t
+	$(PERL) t/harness
 
 spectest: tcl.pbc
 	$(PERL) tools/tcl_test.pl
