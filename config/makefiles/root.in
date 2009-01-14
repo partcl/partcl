@@ -150,7 +150,7 @@ ops: src/binary$(O)
 runtime/builtins.pir: $(DEPS) tools/gen_builtins.pl
 	$(PERL) tools/gen_builtins.pl > runtime/builtins.pir
 
-runtime/tcllib.pbc: $(PARROT) runtime/tcllib.pir runtime/builtins.pir $(CLASSES)
+runtime/tcllib.pbc: $(PARROT) runtime/tcllib.pir runtime/builtins.pir $(CLASSES) ops
 	$(PARROT) --output=runtime/tcllib.pbc runtime/tcllib.pir
 
 # targets for building a standalone tclsh
