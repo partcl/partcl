@@ -46,27 +46,27 @@
 
 .sub '&tcl_wordBreakAfter'
   .param pmc args :slurpy
-  .faux_load('&tcl_wordBreakAfter','parray.tcl')
+  .faux_load('&tcl_wordBreakAfter','word.tcl')
 .end
 
 .sub '&tcl_wordBreakBefore'
   .param pmc args :slurpy
-  .faux_load('&tcl_wordBreakBefore','parray.tcl')
+  .faux_load('&tcl_wordBreakBefore','word.tcl')
 .end
 
 .sub '&tcl_endOfWord'
   .param pmc args :slurpy
-  .faux_load('&tcl_endOfWord','parray.tcl')
+  .faux_load('&tcl_endOfWord','word.tcl')
 .end
 
 .sub '&tcl_startOfNextWord'
   .param pmc args :slurpy
-  .faux_load('&tcl_startOfNextWord','parray.tcl')
+  .faux_load('&tcl_startOfNextWord','word.tcl')
 .end
 
 .sub '&tcl_startOfPreviousWord'
   .param pmc args :slurpy
-  .faux_load('&tcl_startOfPreviousWord','parray.tcl')
+  .faux_load('&tcl_startOfPreviousWord','word.tcl')
 .end
 
 # Local Variables:
