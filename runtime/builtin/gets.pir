@@ -21,10 +21,22 @@
   $S0 = typeof io
   if $S0 == 'TCPStream' goto stream
 
-  $S0 = readline io
-  .return($S0)
+  .local string tmps, lastchar
+  tmps = readline io
+
+  # simplistic newline chomp
+  lastchar = substr tmps,-1
+  if lastchar != "\n" goto done
+  chopn tmps, 1
+  lastchar = substr tmps,-1
+  if lastchar != "\r" goto done
+  chopn tmps, 1
+
+done:
+  .return(tmps)
 
 stream:
+  # eliminate this newline too?
   .tailcall io.'readline'()
 
 bad_args:
