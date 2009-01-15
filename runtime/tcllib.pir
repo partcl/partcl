@@ -32,7 +32,6 @@ providing a compreg-compatible method.
 
 # library files (HLL: _Tcl)
 .include 'languages/tcl/runtime/conversions.pir'
-.include 'languages/tcl/runtime/library.pir'
 .include 'languages/tcl/runtime/string_to_list.pir'
 .include 'languages/tcl/runtime/variables.pir'
 .include 'languages/tcl/runtime/options.pir'

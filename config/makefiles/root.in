@@ -93,7 +93,6 @@ runtime/conversions.pir \
 runtime/string_to_list.pir \
 runtime/variables.pir \
 runtime/options.pir \
-runtime/library.pir \
 src/macros.pir \
 src/mathops.pir \
 src/returncodes.pasm \
