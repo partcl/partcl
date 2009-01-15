@@ -11,6 +11,7 @@
   .local string subcommand
   subcommand = shift argv
   if subcommand == 'alias'  goto alias 
+  if subcommand == 'issafe' goto issafe
   if subcommand != 'create' goto done
 create:
   .local string childName
@@ -46,6 +47,9 @@ alias:
 
 done: 
   .return('')
+
+issafe:
+  .return(0)
 .end
 
 # Local Variables:
