@@ -39,11 +39,6 @@
   .tailcall $P3( args :flat )
 .endm
 
-.sub '&parray'
-  .param pmc args :slurpy
-  .faux_load('&parray','parray.tcl')
-.end
-
 .sub '&tcl_wordBreakAfter'
   .param pmc args :slurpy
   .faux_load('&tcl_wordBreakAfter','word.tcl')
