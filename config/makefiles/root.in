@@ -44,8 +44,8 @@ RUNTIME_PIR = runtime/builtin/after.pir        runtime/builtin/linsert.pir \
 runtime/builtin/append.pir       runtime/builtin/list.pir \
 runtime/builtin/apply.pir        runtime/builtin/llength.pir \
 runtime/builtin/array.pir        runtime/builtin/load.pir \
-runtime/builtin/auto_execok.pir  runtime/builtin/lrange.pir \
-runtime/builtin/auto_load.pir    runtime/builtin/lrepeat.pir \
+ runtime/builtin/lrange.pir \
+ runtime/builtin/lrepeat.pir \
 runtime/builtin/bgerror.pir      runtime/builtin/lreplace.pir \
 runtime/builtin/binary.pir       runtime/builtin/lreverse.pir \
 runtime/builtin/break.pir        runtime/builtin/lsearch.pir \
@@ -78,7 +78,7 @@ runtime/builtin/gets.pir         runtime/builtin/switch.pir \
 runtime/builtin/glob.pir         runtime/builtin/tell.pir \
 runtime/builtin/global.pir       runtime/builtin/time.pir \
 runtime/builtin/history.pir      runtime/builtin/trace.pir \
-runtime/builtin/if.pir           runtime/builtin/unknown.pir \
+runtime/builtin/if.pir           \
 runtime/builtin/incr.pir         runtime/builtin/unload.pir \
 runtime/builtin/info.pir         runtime/builtin/unset.pir \
 runtime/builtin/inline.pir       runtime/builtin/update.pir \

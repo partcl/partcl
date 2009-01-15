@@ -65,6 +65,7 @@
   tcl_interactive = 1
 
   # If no file was specified, read from stdin.
+  load_init_tcl()
 
   .local string input_line
   .local pmc STDIN
@@ -130,6 +131,7 @@ file:
 
 run_file:
   push_eh file_error
+    load_init_tcl()
     $P2 = compileTcl(contents, 'bsnl' => 1)
     $P2()
   pop_eh
@@ -143,6 +145,8 @@ badfile:
 
 oneliner:
   .set_tcl_argv()
+
+  load_init_tcl()
 
   .local string tcl_code
   tcl_code = opt['e']
@@ -230,6 +234,32 @@ eof:
   .catch()
   null $P0
   .return($P0)
+.end
+
+# load and run init.tcl
+
+.sub load_init_tcl
+    .include 'iglobals.pasm'
+    .local pmc tcl_library, config, interp
+    tcl_library = get_global '$tcl_library'
+    interp = getinterp
+    config = interp[.IGLOBALS_CONFIG_HASH]
+    .local string slash
+    slash = config['slash']
+
+    $S0 = tcl_library
+    $S0 .= slash
+    $S0 .= 'init.tcl'
+
+    .local pmc script
+    $P99 = open $S0, 'r'
+    $S0 = $P99.'readall'()
+
+    script = get_root_global ['_tcl'], 'compileTcl'
+
+    # compile to PIR and put the sub(s) in place...
+    $P1 = script($S0, 'bsnl'=>1)
+    $P1()
 .end
 
 
