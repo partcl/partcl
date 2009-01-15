@@ -55,7 +55,7 @@ runtime/builtin/chan.pir         runtime/builtin/memory.pir \
 runtime/builtin/clock.pir        runtime/builtin/namespace.pir \
 runtime/builtin/close.pir        runtime/builtin/open.pir \
 runtime/builtin/concat.pir       runtime/builtin/package.pir \
-runtime/builtin/continue.pir     runtime/builtin/parray.pir \
+runtime/builtin/continue.pir     \
 runtime/builtin/dde.pir          runtime/builtin/pid.pir \
 runtime/builtin/dict.pir         runtime/builtin/proc.pir \
 runtime/builtin/encoding.pir     runtime/builtin/puts.pir \
@@ -93,6 +93,7 @@ runtime/conversions.pir \
 runtime/string_to_list.pir \
 runtime/variables.pir \
 runtime/options.pir \
+runtime/library.pir \
 src/macros.pir \
 src/mathops.pir \
 src/returncodes.pasm \
