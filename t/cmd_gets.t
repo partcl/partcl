@@ -23,5 +23,3 @@ eval_is {gets a b c} \
 eval_is {gets #parrot} \
   {can not find channel named "#parrot"} \
   {bad channel}
-
-# RT#40628: Need to test actually reading something in.
