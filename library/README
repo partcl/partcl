@@ -1,8 +1,10 @@
 The files in this directory (except for this one) come from the tcl
 repository at: http://tcl.cvs.sourceforge.net/tcl/tcl/library/
 
+# to get a local copy to compare our checked in versions with, try:
+
  cvs -z3 -d :pserver:anonymous:@tcl.cvs.sourceforge.net:/cvsroot/tcl \
-  export -r core-8-5-5 tcl/library/foo.tcl foo.tcl
+  export -r core-8-5-6 tcl/library
 
 They are included here under the terms in license.terms
 
