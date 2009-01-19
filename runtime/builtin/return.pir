@@ -21,7 +21,9 @@
     die $S2
 
 bad_call:
-    die 'XXX: bad call to return'
+    $S0 = join " ", argv
+    $S0 = 'TODO: return does not yet allow: ' . $S0
+    die $S0
 
 onearg:
     $P0 = argv[0]
