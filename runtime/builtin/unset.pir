@@ -15,6 +15,7 @@
   nocomplain = 0
 
   $S0 = argv[0]
+  if $S0 == '--' goto no_flags
   if $S0 != '-nocomplain' goto flags_done
   nocomplain = 1
   i = 1
@@ -23,6 +24,10 @@
   $S0 = argv[1]
   if $S0 != '--' goto flags_done
   i = 2
+  goto flags_done
+
+no_flags:
+  i = 1
 
 flags_done:
   .local pmc find_var, var

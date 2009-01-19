@@ -10,7 +10,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 21
+plan 22
 
 eval_is {unset a} \
   {can't unset "a": no such variable} \
@@ -59,6 +59,12 @@ eval_is {
  unset -nocomplain
  set -nocomplain
 } 2 {unset -nocomplain}
+
+eval_is {
+ set -nocomplain 2
+ unset -- -nocomplain
+ info exists -nocomplain
+} 0 {unset -- -nocomplain}
 
 eval_is {
  set -nocomplain 2
