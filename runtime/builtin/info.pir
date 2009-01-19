@@ -523,7 +523,10 @@ bad_args:
 .sub 'script'
   .param pmc argv
   $P0 = get_root_global ['_tcl'], '$script'
+  if null $P0 goto empty
   .return($P0)
+empty:
+  .return('')
 .end
 
 # RT#40740: stub
