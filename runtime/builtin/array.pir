@@ -341,7 +341,7 @@ bad_mode:
   die $S0
 
 not_array:
-  die '' # is this right? -Coke
+  .return('')
 .end
 
 .namespace [ 'helpers' ; 'array'; 'names_helper' ]
