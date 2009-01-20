@@ -37,6 +37,7 @@ providing a compreg-compatible method.
 .include 'languages/tcl/runtime/options.pir'
 
 # class files (HLL: _Tcl)
+.include 'languages/tcl/src/class/tclarray.pir'
 .include 'languages/tcl/src/class/tclconst.pir'
 .include 'languages/tcl/src/class/tclproc.pir'
 .include 'languages/tcl/src/class/tracearray.pir'

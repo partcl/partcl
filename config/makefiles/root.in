@@ -37,7 +37,6 @@ PMCS = \
  tclint \
  tclfloat \
  tcllist \
- tclarray \
  tcldict
 
 RUNTIME_PIR = runtime/builtin/after.pir        runtime/builtin/linsert.pir \
@@ -122,6 +121,7 @@ tcl.pbc: $(PARROT) pmcs ops runtime/tcllib.pbc src/tclsh.pir
 	$(PARROT) --output=$@ $<
 
 CLASSES = \
+  $(CLASSDIR)/tclarray.pir \
   $(CLASSDIR)/tclconst.pir \
   $(CLASSDIR)/tclproc.pir \
   $(CLASSDIR)/tracearray.pir
