@@ -25,6 +25,7 @@ static INTVAL dynpmc_TclFloat;
 static INTVAL dynpmc_TclInt;
 
 pmclass TclObject dynpmc group tcl_group {
+    ATTR FLOATVAL fv;
 
     void class_init() {
         if (pass) {
@@ -63,7 +64,7 @@ pmclass TclObject dynpmc group tcl_group {
 
     void set_number_native(FLOATVAL value) {
         SELF.morph(dynpmc_TclFloat);
-        PMC_num_val(SELF) = value;
+        SET_ATTR_fv(INTERP, SELF, value);
     }
 
     void set_string_native(STRING *value) {

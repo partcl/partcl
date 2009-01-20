@@ -22,6 +22,7 @@ pmclass TclFloat
     hll     Tcl
     maps    Float
 {
+    ATTR FLOATVAL fv;
 
     STRING* get_string() {
         UINTVAL buflen;
@@ -42,7 +43,7 @@ pmclass TclFloat
         if (precision == 0)
             precision = 16; /* RT#40639: hack to approximate right output.*/
 
-        buff  = Parrot_sprintf_c(INTERP, "%.*vg", precision, PMC_num_val(SELF));
+        buff  = Parrot_sprintf_c(INTERP, "%.*vg", precision, SELF.get_number());
 
         /*
          * this sprintf variant will return something that looks like
