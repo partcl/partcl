@@ -22,14 +22,7 @@ builtins.
 .namespace []
 
 .sub main :main
-    load_bytecode 'library/Test/More.pir'
-
-    # get the testing functions
-    .local pmc plan, ok, is
-
-    plan      = get_hll_global ['Test'; 'More'], 'plan'
-    ok        = get_hll_global ['Test'; 'More'], 'ok'
-    is        = get_hll_global ['Test'; 'More'], 'is'
+    .include 'test_more.pir'
 
     load_bytecode 'languages/tcl/runtime/tcllib.pir'
 
