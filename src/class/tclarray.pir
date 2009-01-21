@@ -16,7 +16,7 @@ Define the attributes required for the class.
 =cut
 
 .sub class_init :anon :load
-  $P0 = get_class 'ResizablePMCArray'
+  $P0 = get_class 'Hash'
   $P1 = subclass $P0, 'TclArray'
 
   addattribute $P1, 'searches'
