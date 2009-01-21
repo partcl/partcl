@@ -87,7 +87,7 @@ scalar:
   if null var goto no_such_var
 
   $P1 = new 'Undef'
-  assign var, $P1
+  copy var, $P1
   # goto next
 
 next:
