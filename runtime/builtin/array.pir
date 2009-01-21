@@ -44,16 +44,10 @@
   findVar = get_root_global ['_tcl'], 'findVar'
   the_array  = findVar(array_name)
 
-  if_null the_array, array_no
-
-  $I99 = does the_array, 'associative_array'
-  unless $I99 goto array_no
-
-  is_array = 1
-  goto scommand
-
-array_no:
   is_array = 0
+  if null the_array goto scommand
+
+  is_array = does the_array, 'associative_array'
 
 scommand:
   .tailcall subcommand_proc(is_array,the_array,array_name,argv)
