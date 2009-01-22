@@ -338,6 +338,122 @@ not_array:
   .return('')
 .end
 
+.sub 'startsearch'
+  .param int is_array
+  .param pmc the_array
+  .param string array_name
+  .param pmc argv
+
+  .local int argc
+  argc = elements argv
+  if argc != 0 goto bad_args
+
+  unless is_array goto not_array
+
+  .tailcall the_array.'new_iter'(array_name)
+
+bad_args:
+  die 'wrong # args: should be "array startsearch arrayName"'
+
+not_array:
+  $S0 = '"'
+  $S0 .= array_name
+  $S0 .= "\" isn't an array"
+  die $S0
+.end
+
+.sub 'anymore'
+  .param int is_array
+  .param pmc the_array
+  .param string array_name
+  .param pmc argv
+
+  .local int argc
+  argc = elements argv
+  if argc != 1 goto bad_args
+
+  unless is_array goto not_array
+
+  .local string named
+  named = argv[0]
+
+  .local pmc iterator
+  iterator = the_array.'get_iter'(named)
+
+  $I0 = istrue iterator
+  .return($I0)
+ 
+bad_args:
+  die 'wrong # args: should be "array anymore arrayName searchId"'
+
+not_array:
+  $S0 = '"'
+  $S0 .= array_name
+  $S0 .= "\" isn't an array"
+  die $S0
+.end
+
+.sub 'nextelement'
+  .param int is_array
+  .param pmc the_array
+  .param string array_name
+  .param pmc argv
+
+  .local int argc
+  argc = elements argv
+  if argc != 1 goto bad_args
+
+  unless is_array goto not_array
+
+  .local string named
+  named = argv[0]
+
+  .local pmc iterator
+  iterator = the_array.'get_iter'(named)
+
+  $P0 = shift iterator
+  .return($P0)
+ 
+bad_args:
+  die 'wrong # args: should be "array nextelement arrayName searchId"'
+
+not_array:
+  $S0 = '"'
+  $S0 .= array_name
+  $S0 .= "\" isn't an array"
+  die $S0
+.end
+
+.sub 'donesearch'
+  .param int is_array
+  .param pmc the_array
+  .param string array_name
+  .param pmc argv
+
+  .local int argc
+  argc = elements argv
+  if argc != 1 goto bad_args
+
+  unless is_array goto not_array
+
+  .local string named
+  named = argv[0]
+
+  the_array.'rm_iter'(named)
+
+  .return('')
+ 
+bad_args:
+  die 'wrong # args: should be "array donesearch arrayName searchId"'
+
+not_array:
+  $S0 = '"'
+  $S0 .= array_name
+  $S0 .= "\" isn't an array"
+  die $S0
+.end
+
+
 .namespace [ 'helpers' ; 'array'; 'names_helper' ]
 
 .sub '-glob'
@@ -429,6 +545,7 @@ check_end:
 
   .return (retval)
 .end
+
 
 .sub 'anon' :load :anon
   .local pmc options

@@ -2,6 +2,11 @@
 
 A Tcl associative array.
 
+Note that our iterators ([array startsearch]) do not exactly follow the
+usage of the core tcl ones. We reuse numbers a little more aggressively
+due to the underlying workings of the ResizablePMCArray type. Tcl tests
+for this numbering scheme so this is failign a few tests in set-old.test
+
 =cut
 
 .HLL 'parrot'
@@ -20,11 +25,14 @@ Define the attributes required for the class.
   $P1 = subclass $P0, 'TclArray'
 
   addattribute $P1, 'searches'
+  addattribute $P1, 'ids'
 .end
 
 .sub init :vtable
-  $P1 = new 'TclDict'
+  $P1 = new 'Hash'
   setattribute self, 'searches', $P1
+  $P1 = new 'ResizablePMCArray'
+  setattribute self, 'ids', $P1
 .end
 
 .sub does :vtable
@@ -40,18 +48,99 @@ yes:
   .return(1)
 .end
 
-=for comment
+=head2 new_iter
 
-- The searches are named s-<number>-<array name>
-- The next number used is the highest given number +1. (so if s-1-a and s-2-3 are in use, s-4-a will be next. if all searches are deleted, numbering begins again at 1)
-
-error messages:
-
- % array donesearch a asdf
-illegal search identifier "asdf"
-
+Create a new iterator and track it.
 
 =cut
+
+.sub new_iter :method
+  .param string array_name
+
+  .local pmc ids, searches
+  ids = getattribute self, 'ids'
+  searches = getattribute self, 'searches'
+
+  .local int next_id
+  next_id = elements searches
+  inc next_id
+
+  .local string named
+  named = 's-'
+  $S0 = next_id
+  named .= $S0
+  named .= '-'
+  named .= array_name
+  ids[next_id] = named
+
+  .local pmc iterator
+  iterator = iter self
+  searches[named] = iterator
+
+  .return (named)
+.end
+
+=head2 rm_iter
+
+Remove iterator from our list.
+
+=cut
+
+.sub rm_iter :method
+  .param string named
+
+  .local pmc ids, searches
+  ids = getattribute self, 'ids'
+  searches = getattribute self, 'searches'
+  
+  $P0 = searches[named]
+  if null $P0 goto bad_search
+  delete searches[named]
+
+  .local int count, length
+  count = 0 
+  length = elements ids
+ 
+loop:
+   if count >= length goto done
+  $S0 = ids[count]
+  if $S0 != named goto loop_cont
+  delete ids[count]
+  goto done
+loop_cont:
+  inc count
+done: 
+  .return()
+
+bad_search:
+  $S0 = 'illegal search identifier "'
+  $S0 .= named
+  $S0 .= '"'
+  die $S0
+.end
+
+=head2 get_iter
+
+Return the named iterator
+
+=cut
+
+.sub get_iter :method
+  .param string named
+
+  .local pmc searches
+  searches = getattribute self, 'searches'
+
+  $P0 = searches[named]
+  if null $P0 goto bad_search
+  .return ($P0)
+
+bad_search:
+  $S0 = 'illegal search identifier "'
+  $S0 .= named
+  $S0 .= '"'
+  die $S0
+.end
 
 # Local Variables:
 #   mode: pir
