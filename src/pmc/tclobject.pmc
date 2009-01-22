@@ -38,25 +38,6 @@ pmclass TclObject dynpmc group tcl_group {
         }
     }
 
-    void morph(INTVAL type) {
-        if (SELF->vtable->base_type == type)
-            return;
-        switch (type) {
-            case enum_class_String:
-                type = dynpmc_TclString;
-                break;
-            case enum_class_Integer:
-                type = dynpmc_TclInt;
-                break;
-            case enum_class_Float:
-                type = dynpmc_TclFloat;
-                break;
-            default:
-                break;
-        }
-        pmc_reuse(INTERP, SELF, type, 0);
-    }
-
     void set_integer_native(INTVAL value) {
         SELF.morph(dynpmc_TclInt);
         PMC_int_val(SELF) = value;
