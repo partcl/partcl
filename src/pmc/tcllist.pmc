@@ -250,20 +250,6 @@ Copy the contents of other to self.
 
 /*
 
-=item METHOD get_list
-
-Return a list version of ourself
-
-=cut
-
-*/
-
-    METHOD get_list() {
-        RETURN(PMC *SELF);
-    }
-
-/*
-
 =item METHOD reverse
 
 Reverse ourselves.
