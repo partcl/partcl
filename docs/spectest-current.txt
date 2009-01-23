@@ -2,15 +2,14 @@ append.test:	Total	37	Passed	33	Skipped	0	Failed	4
 appendComp.test:	Total	40	Passed	32	Skipped	0	Failed	8
 apply.test:	Total	41	Passed	3	Skipped	0	Failed	38
 basic.test:	Total	140	Passed	40	Skipped	74	Failed	26
-chan.test:	Total	35	Passed	2	Skipped	0	Failed	33
 cmdIL.test:	Total	122	Passed	76	Skipped	3	Failed	43
 compExpr-old.test:	Total	190	Passed	171	Skipped	4	Failed	15
 compExpr.test:	Total	80	Passed	75	Skipped	0	Failed	5
 concat.test:	Total	9	Passed	9	Skipped	0	Failed	0
-dict.test:	Total	225	Passed	203	Skipped	0	Failed	22
+dict.test:	Total	226	Passed	200	Skipped	0	Failed	26
 error.test:	Total	34	Passed	20	Skipped	0	Failed	14
 eval.test:	Total	12	Passed	11	Skipped	0	Failed	1
-event.test:	Total	64	Passed	3	Skipped	31	Failed	30
+event.test:	Total	64	Passed	4	Skipped	31	Failed	29
 for-old.test:	Total	9	Passed	9	Skipped	0	Failed	0
 for.test:	Total	50	Passed	42	Skipped	0	Failed	8
 foreach.test:	Total	40	Passed	39	Skipped	0	Failed	1
@@ -21,7 +20,6 @@ if.test:	Total	73	Passed	64	Skipped	0	Failed	9
 incr-old.test:	Total	14	Passed	11	Skipped	0	Failed	3
 incr.test:	Total	65	Passed	55	Skipped	0	Failed	10
 info.test:	Total	177	Passed	71	Skipped	16	Failed	90
-ioUtil.test:	Total	25	Passed	2	Skipped	22	Failed	1
 join.test:	Total	9	Passed	9	Skipped	0	Failed	0
 lindex.test:	Total	80	Passed	40	Skipped	37	Failed	3
 linsert.test:	Total	26	Passed	26	Skipped	0	Failed	0
@@ -45,7 +43,7 @@ pwd.test:	Total	3	Passed	3	Skipped	0	Failed	0
 rename.test:	Total	18	Passed	10	Skipped	7	Failed	1
 scan.test:	Total	171	Passed	95	Skipped	4	Failed	72
 security.test:	Total	1	Passed	1	Skipped	0	Failed	0
-set-old.test:	Total	149	Passed	91	Skipped	0	Failed	58
+set-old.test:	Total	149	Passed	129	Skipped	0	Failed	20
 set.test:	Total	63	Passed	58	Skipped	1	Failed	4
 split.test:	Total	16	Passed	16	Skipped	0	Failed	0
 stringComp.test:	Total	143	Passed	131	Skipped	0	Failed	12
