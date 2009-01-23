@@ -30,6 +30,7 @@
   if from < 0 goto set_first
 have_first:
   $I0 = elements a_list
+  dec $I0
   if $I0 < to goto set_last
 
   goto have_indices
@@ -39,7 +40,7 @@ set_first:
   goto have_first
 
 set_last:
-  to = $I0 - 1
+  to = $I0
 
 have_indices:
   $I0 = from
