@@ -37,10 +37,13 @@ open my $fh, "$^X tools/tcl_test.pl|";
 
 my $csv = "docs/spectest-progress.csv";
 my $sum = "docs/spectest-current.txt";
+my $results = "spectest_results.log";
 
 open my $csv_fh, '>>', $csv;
 open my $sum_fh, '>', $sum;
+open my $res_fh, '>', $results;
 $sum_fh->autoflush(1);
+$res_fh->autoflush(1);
 
 my $epoch = time();
 my ($year,$mon,$day,$hour,$min) =(localtime($epoch))[5,4,3,2,1];
@@ -51,6 +54,7 @@ my ($total,$passed,$skipped,$failed,$files) = (0,0,0,0,0);
 
 while (my $line = <$fh>) {
  print $line;
+ print {$res_fh} $line;
  if ($line =~ /:\tTotal\t(\d+)\tPassed\t(\d+)\tSkipped\t(\d+)\tFailed\t(\d+)/smg) {
   print {$sum_fh} $line;
   $files++;
