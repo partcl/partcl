@@ -25,8 +25,6 @@ static INTVAL dynpmc_TclFloat;
 static INTVAL dynpmc_TclInt;
 
 pmclass TclObject dynpmc group tcl_group {
-    ATTR FLOATVAL fv;
-
     void class_init() {
         if (pass) {
             dynpmc_TclString = pmc_type(INTERP,
@@ -41,11 +39,6 @@ pmclass TclObject dynpmc group tcl_group {
     void set_integer_native(INTVAL value) {
         SELF.morph(dynpmc_TclInt);
         PMC_int_val(SELF) = value;
-    }
-
-    void set_number_native(FLOATVAL value) {
-        SELF.morph(dynpmc_TclFloat);
-        SET_ATTR_fv(INTERP, SELF, value);
     }
 
     void set_string_native(STRING *value) {

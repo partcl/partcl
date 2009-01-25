@@ -22,8 +22,6 @@ pmclass TclFloat
     hll     Tcl
     maps    Float
 {
-    ATTR FLOATVAL fv;
-
     STRING* get_string() {
         UINTVAL buflen;
         int check_flag;
@@ -77,7 +75,6 @@ pmclass TclFloat
         buff->bufused = buflen;
         return buff;
     }
-
 }
 
 /*
