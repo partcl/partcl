@@ -23,6 +23,7 @@ info.test:	Total	177	Passed	71	Skipped	16	Failed	90
 join.test:	Total	9	Passed	9	Skipped	0	Failed	0
 lindex.test:	Total	80	Passed	40	Skipped	37	Failed	3
 linsert.test:	Total	26	Passed	26	Skipped	0	Failed	0
+list.test:	Total	69	Passed	64	Skipped	0	Failed	5
 listObj.test:	Total	43	Passed	42	Skipped	1	Failed	0
 llength.test:	Total	6	Passed	6	Skipped	0	Failed	0
 load.test:	Total	26	Passed	2	Skipped	10	Failed	14
@@ -31,7 +32,7 @@ lrepeat.test:	Total	10	Passed	10	Skipped	0	Failed	0
 lreplace.test:	Total	34	Passed	34	Skipped	0	Failed	0
 lsearch.test:	Total	101	Passed	47	Skipped	0	Failed	54
 lsetComp.test:	Total	19	Passed	17	Skipped	0	Failed	2
-mathop.test:	Total	329	Passed	158	Skipped	0	Failed	171
+mathop.test:	Total	329	Passed	150	Skipped	0	Failed	179
 namespace-old.test:	Total	126	Passed	65	Skipped	0	Failed	61
 package.test:	Total	16	Passed	6	Skipped	0	Failed	10
 parse.test:	Total	251	Passed	63	Skipped	156	Failed	32
@@ -45,6 +46,7 @@ scan.test:	Total	171	Passed	95	Skipped	4	Failed	72
 security.test:	Total	1	Passed	1	Skipped	0	Failed	0
 set-old.test:	Total	149	Passed	129	Skipped	0	Failed	20
 set.test:	Total	63	Passed	58	Skipped	1	Failed	4
+source.test:	Total	20	Passed	6	Skipped	0	Failed	14
 split.test:	Total	16	Passed	16	Skipped	0	Failed	0
 stringComp.test:	Total	143	Passed	131	Skipped	0	Failed	12
 subst.test:	Total	59	Passed	35	Skipped	0	Failed	24
@@ -54,6 +56,7 @@ unknown.test:	Total	7	Passed	1	Skipped	0	Failed	6
 uplevel.test:	Total	19	Passed	17	Skipped	0	Failed	2
 upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
 utf.test:	Total	114	Passed	68	Skipped	12	Failed	34
+util.test:	Total	290	Passed	124	Skipped	128	Failed	38
 var.test:	Total	84	Passed	33	Skipped	17	Failed	34
 while-old.test:	Total	15	Passed	14	Skipped	0	Failed	1
 while.test:	Total	46	Passed	42	Skipped	0	Failed	4
