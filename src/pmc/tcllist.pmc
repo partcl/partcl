@@ -50,7 +50,7 @@ Returns the list as a string
         INTVAL  i;
         STRING *orig, *repl;
         PMC    *P0;
-        INTVAL  count, pos;
+        INTVAL  count, pos, brace_check_pos, has_braces;
 
         for (i = 0; i < elems; i++) {
             STRING *str    = VTABLE_get_string_keyed_int(INTERP, SELF, i);
@@ -62,14 +62,16 @@ Returns the list as a string
                 goto append_elem;
             }
 
-            count = pos = 0;
+            count = pos = brace_check_pos = has_braces = 0;
             while (pos < str_len) {
                 switch (string_ord(INTERP, str, pos)) {
                     case '{':
                         count++;
+                        has_braces = 1;
                         break;
                     case '}':
                         if (--count < 0) goto escape;
+                        brace_check_pos = pos;
                         break;
                     default:
                         break;
@@ -78,7 +80,16 @@ Returns the list as a string
             }
 
             if (count != 0) goto escape;
+            if (has_braces && count == 0 && brace_check_pos != str_len -1) {
 
+                /* escape {ab}\, but brace-wrap anything else. */
+                if (brace_check_pos == str_len - 2 && 
+                    string_ord(INTERP, str, str_len-1) == '\\')
+                    goto escape;
+                else
+                    goto quote;
+            }
+       
             /* trailing slash */
             if (str_len-1 == string_str_index(INTERP, str, CONST_STRING(INTERP, "\\"), str_len-1))
                 goto escape;

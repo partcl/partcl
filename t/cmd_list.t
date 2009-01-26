@@ -11,7 +11,7 @@ __DATA__
 
 source lib/test_more.tcl
 
-plan 20
+plan 22
 
 is [list]     {}    {no elements}
 is [list a]   {a}   {one element}
@@ -42,3 +42,5 @@ is [list "\x\$x\[foo bar]\\"] {x\$x\[foo\ bar\]\\} {trailing backslash}
 
 # from list.test
 is [list {"}] {{"}} {single quote}
+is [list "{ab}xy"] "{{ab}xy}" {braces that don't wrap exactly}
+is [list "{ab}\\"] "\\{ab\\}\\\\" {braces that don't wrap exactly, trailing backslash}
