@@ -35,26 +35,37 @@ each individual C<.test> file.
 =cut
 
 # When testing, avoid these files for now.
+
+# these files are mostly skips...
 my @skipfiles = qw(
-  assocd async autoMkindex
-  binary
-  case chanio clock cmdAH cmdMZ cmdInfo compile config
-  dcall dstring
-  encoding expr expr-old env exec execute
-  fCmd fileName fileSystem
-  history http httpold
-  indexObj init interp io iocmd iogt
-  link lset
-  macOSXFCmd macOSXLoad main misc msgcat
-  namespace notify
-  obj opt
-  pid pkg pkgMkIndex platform
-  reg regexp regexpComp registry result
-  safe socket stack string stringObj
-  tcltest thread tm trace
-  unixFCmd unixFile unixInit unixNotfy unload util
-  winConsole winDde winFCmd winFile winNotify winPipe winTime
-  chan ioUtil ioCmd
+  assocd     cmdInfo   dcall      dstring
+  indexObj   link      lset       macOSXFCmd
+  macOSXLoad misc      notify     obj
+  registry   stringObj thread     unixFCmd
+  unixInit   unixNotfy winConsole winDde
+  winFCmd    winFile   winNotify  winPipe
+  winTime    
+);
+
+# tests that hang or explode
+push @skipfiles, qw(
+  async      autoMkindex binary   chan
+  chanio     cmdAH       cmdMZ    compile
+  encoding   env         exec     expr
+  expr-old   fCmd        fileName fileSystem
+  history    interp      io       ioCmd
+  iogt       ioUtil      msgcat   namespace
+  opt        pkgMkIndex  reg      regexp
+  regexpComp safe        socket   string
+  tcltest    trace       unixFile
+);
+
+# not implemented, all fail, other.
+push @skipfiles, qw(
+  case  clock   config   execute
+  http  httpold init     main
+  pid   pkg     platform result
+  stack tm      unload
 );
 
 main();
