@@ -50,7 +50,7 @@ my @skipfiles = qw(
   obj opt
   pid pkg pkgMkIndex platform
   reg regexp regexpComp registry result
-  safe socket source stack string stringObj
+  safe socket stack string stringObj
   tcltest thread tm trace
   unixFCmd unixFile unixInit unixNotfy unload util
   winConsole winDde winFCmd winFile winNotify winPipe winTime
