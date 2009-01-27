@@ -246,16 +246,12 @@ not_array:
   argc = elements argv
   if argc > 1 goto bad_args
 
-
   .local string match_str
-  # ?pattern? defaults to matching everything.
-  match_str = '*'
 
   # if it's there, get it from the arglist
   if argc == 0 goto no_args
   match_str = shift argv
 
-no_args:
   if is_array == 0 goto not_array
 
   .local pmc retval
@@ -290,6 +286,12 @@ bad_args:
 
 not_array:
    .return ('')
+
+no_args:
+   # unset the entire array.
+   $P1 = new 'Undef'
+   copy the_array, $P1 
+  .return('')
 .end
 
 .sub 'names'
