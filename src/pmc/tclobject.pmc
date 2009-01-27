@@ -36,6 +36,11 @@ pmclass TclObject dynpmc group tcl_group {
         }
     }
 
+    void set_number_native(FLOATVAL value) {
+        SELF.morph(dynpmc_TclFloat);
+        VTABLE_set_number_native(INTERP, SELF, value);
+    }
+
     void set_integer_native(INTVAL value) {
         SELF.morph(dynpmc_TclInt);
         PMC_int_val(SELF) = value;
