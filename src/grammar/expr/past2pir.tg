@@ -60,14 +60,10 @@ transform pir (PAST::Val) {
     ret = pir.'unique'('$P')
     class = node['class']
     $S0 = node['value']
-    if class == "TclFloat"  goto assign_float
-    if class == "TclString" goto assign_string
-    
-    # What other classes are there? 
-    pir.'emit'("    %0 = new '%1'", ret, class)
-    pir.'emit'('    assign %0, %1', ret, $S0)
-    goto end
-
+    if class == 'TclString' goto assign_string
+    if class == 'TclInt' goto assign_val
+    if class == 'TclFloat'  goto assign_float
+   
   assign_float:                                    
     $I0 = index $S0, '.'                     # RT#40690: '.' hack due to
     if $I0 >= 0 goto assign_val              # parrotbug #38896
