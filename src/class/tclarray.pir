@@ -38,10 +38,6 @@ Define the attributes required for the class.
 .sub does :vtable
   .param string provides
 
-  # XXX workaround a parrot bug - would get arg mismatch error without this,
-  # even though we don't actually use self anywhere.
-  $P0 = self
-
   if provides == 'associative_array' goto yes
   .return(0)
 yes:
