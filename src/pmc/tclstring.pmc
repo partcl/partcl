@@ -33,7 +33,7 @@ pmclass TclString
         /* make sure our return value isn't GC'd out from under us! */
         Parrot_register_pmc(INTERP, retval);
 
-        len = string_length(INTERP, str);
+        len = Parrot_str_length(INTERP, str);
 
       eat_space:
         while (Parrot_string_is_cclass(INTERP, enum_cclass_whitespace, str, ++pos));

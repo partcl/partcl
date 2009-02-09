@@ -240,7 +240,7 @@ static STRING *
 binary_scan_string_slurpy(PARROT_INTERP, char field,
                           char *binstr, int *_binstrpos, int binstrlen, STRING *value)
 {
-    int length = string_length(interp, value);
+    int length = Parrot_str_length(interp, value);
     value      = binary_scan_string_field(interp, field,
                                           binstr, _binstrpos, binstrlen,
                                           value, length);
@@ -304,10 +304,10 @@ String and number field code has been separated in an effort to reduce code.
 PMC *ParTcl_binary_scan(PARROT_INTERP, STRING *BINSTR, STRING *FORMAT)
 {
     char *binstr  = string_to_cstring(interp, BINSTR);
-    int binstrlen = (int)string_length(interp, BINSTR);
+    int binstrlen = (int)Parrot_str_length(interp, BINSTR);
     int binstrpos = 0;
     char *format  = string_to_cstring(interp, FORMAT);
-    int formatlen = string_length(interp, FORMAT);
+    int formatlen = Parrot_str_length(interp, FORMAT);
     int formatpos = 0;
     PMC *values;
 
@@ -448,7 +448,7 @@ static STRING *
 binary_format_string_field(PARROT_INTERP, char field, STRING *binstr,
                            STRING *strval, int length)
 {
-    int strlen = string_length(interp, strval);
+    int strlen = Parrot_str_length(interp, strval);
 
     switch (field)
     {
@@ -495,7 +495,7 @@ binary_format_string(PARROT_INTERP, char field, STRING *binstr, PMC *value,
 
     if ((*formatpos) < formatlen && format[*formatpos] == '*')
     {
-        int len = string_length(interp, strval);
+        int len = Parrot_str_length(interp, strval);
         binstr  = binary_format_string_field(interp, field, binstr, strval, len);
         (*formatpos)++;
     }
@@ -521,7 +521,7 @@ RT#48164: Not yet documented!!!
 STRING *ParTcl_binary_format(PARROT_INTERP, STRING *FORMAT, PMC *values)
 {
     char *format   = string_to_cstring(interp, FORMAT);
-    int formatlen  = string_length(interp, FORMAT);
+    int formatlen  = Parrot_str_length(interp, FORMAT);
     int formatpos  = 0;
     int valueidx   = 0;
     STRING *binstr = string_make_empty(interp, enum_stringrep_one, 128);

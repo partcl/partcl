@@ -54,7 +54,7 @@ Returns the list as a string
 
         for (i = 0; i < elems; i++) {
             STRING *str    = VTABLE_get_string_keyed_int(INTERP, SELF, i);
-            INTVAL str_len = string_length(INTERP, str);
+            INTVAL str_len = Parrot_str_length(INTERP, str);
 
             if (str_len == 0) {
                 /* empty element */
@@ -197,7 +197,7 @@ Returns the list as a string
         }
 
         /* remove the extra space at the end, if necessary*/
-        if (string_length(INTERP, retval))
+        if (Parrot_str_length(INTERP, retval))
             string_chopn_inplace(INTERP, retval, 1);
 
         return retval;
