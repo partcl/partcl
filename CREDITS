@@ -17,6 +17,10 @@ D: IMCC Optimizer patches
 D: implement some partcl builtins
 E: amos@coscom.net
 
+N: Allison Randal
+E: allison@parrot.org
+D: Track function renames in parrot
+
 N: Jerry Gay a.k.a. particle
 E: Jerry.Gay@gmail.com
 D: twiddles random bits

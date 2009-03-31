@@ -91,31 +91,31 @@ Returns the list as a string
             }
        
             /* trailing slash */
-            if (str_len-1 == string_str_index(INTERP, str, CONST_STRING(INTERP, "\\"), str_len-1))
+            if (str_len-1 == Parrot_str_find_index(INTERP, str, CONST_STRING(INTERP, "\\"), str_len-1))
                 goto escape;
 
 
-            if (-1 != string_str_index(INTERP,  str, CONST_STRING(INTERP, "\""), 0))
+            if (-1 != Parrot_str_find_index(INTERP,  str, CONST_STRING(INTERP, "\""), 0))
                  goto quote;
 
-            if (-1 != string_str_index(INTERP,  str, CONST_STRING(INTERP, "["), 0))
+            if (-1 != Parrot_str_find_index(INTERP,  str, CONST_STRING(INTERP, "["), 0))
                  goto quote;
 
             /* only check hashes on first elem.*/
-            if (i == 0 && -1 != string_str_index(INTERP, str, CONST_STRING(INTERP, "#"), 0))
+            if (i == 0 && -1 != Parrot_str_find_index(INTERP, str, CONST_STRING(INTERP, "#"), 0))
                 goto quote;
 
-            if (-1 != string_str_index(INTERP, str, CONST_STRING(INTERP, "$"), 0))
+            if (-1 != Parrot_str_find_index(INTERP, str, CONST_STRING(INTERP, "$"), 0))
                 goto quote;
 
-            if (-1 != string_str_index(INTERP, str, CONST_STRING(INTERP, ";"), 0))
+            if (-1 != Parrot_str_find_index(INTERP, str, CONST_STRING(INTERP, ";"), 0))
                 goto quote;
 
             /* \'d constructs */
-            if (-1 != string_str_index(INTERP, str, CONST_STRING(INTERP, "]"), 0))
+            if (-1 != Parrot_str_find_index(INTERP, str, CONST_STRING(INTERP, "]"), 0))
                 goto escape;
 
-            if (-1 != string_str_index(INTERP, str, CONST_STRING(INTERP, "\\"), 0))
+            if (-1 != Parrot_str_find_index(INTERP, str, CONST_STRING(INTERP, "\\"), 0))
                 goto escape;
 
             /* {}'d constructs */
@@ -188,17 +188,17 @@ Returns the list as a string
             goto append_elem;
 
           quote:
-            str = string_append(INTERP, CONST_STRING(INTERP, "{"), str);
-            str = string_append(INTERP, str, CONST_STRING(INTERP, "}"));
+            str = Parrot_str_append(INTERP, CONST_STRING(INTERP, "{"), str);
+            str = Parrot_str_append(INTERP, str, CONST_STRING(INTERP, "}"));
 
           append_elem:
-            retval = string_append(INTERP, retval, str);
-            retval = string_append(INTERP, retval, CONST_STRING(INTERP, " "));
+            retval = Parrot_str_append(INTERP, retval, str);
+            retval = Parrot_str_append(INTERP, retval, CONST_STRING(INTERP, " "));
         }
 
         /* remove the extra space at the end, if necessary*/
         if (Parrot_str_length(INTERP, retval))
-            string_chopn_inplace(INTERP, retval, 1);
+            Parrot_str_chopn_inplace(INTERP, retval, 1);
 
         return retval;
     }

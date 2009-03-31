@@ -50,11 +50,11 @@ pmclass TclObject dynpmc group tcl_group {
         SELF.morph(dynpmc_TclString);
         /* Only allow constant PMCs to embed constant strings */
         if (PObj_constant_TEST(SELF) && !PObj_constant_TEST(value)) {
-            const char *copy  = string_to_cstring(INTERP, value);
-            PMC_str_val(SELF) = const_string(INTERP, copy);
+            const char *copy  = Parrot_str_to_cstring(INTERP, value);
+            PMC_str_val(SELF) = Parrot_str_new_constant(INTERP, copy);
         }
         else
-            PMC_str_val(SELF) = string_copy(INTERP, value);
+            PMC_str_val(SELF) = Parrot_str_copy(INTERP, value);
     }
 }
 

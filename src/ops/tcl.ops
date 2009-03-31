@@ -119,7 +119,7 @@ Generate a TCL_BREAK
 =cut
 
 inline op tcl_break() :flow {
-    STRING   *empty     = string_make_empty(interp, enum_stringrep_one, 0);
+    STRING   *empty     = Parrot_str_new_noinit(interp, enum_stringrep_one, 0);
     PMC *exception = Parrot_ex_build_exception(interp, EXCEPT_error,
             CONTROL_BREAK, empty);
     opcode_t * const ret  = expr NEXT();
@@ -134,7 +134,7 @@ Generate a TCL_CONTINUE
 =cut
 
 inline op tcl_continue() :flow {
-    STRING   *empty     = string_make_empty(interp, enum_stringrep_one, 0);
+    STRING   *empty     = Parrot_str_new_noinit(interp, enum_stringrep_one, 0);
     PMC *exception = Parrot_ex_build_exception(interp, EXCEPT_error,
             CONTROL_CONTINUE, empty);
     opcode_t * const ret  = expr NEXT();

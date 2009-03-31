@@ -36,7 +36,7 @@ pmclass TclString
         len = Parrot_str_length(INTERP, str);
 
       eat_space:
-        while (Parrot_string_is_cclass(INTERP, enum_cclass_whitespace, str, ++pos));
+        while (Parrot_str_is_cclass(INTERP, enum_cclass_whitespace, str, ++pos));
 
       loop:
         if (pos >= len) goto done;
@@ -62,7 +62,7 @@ pmclass TclString
                 if (--depth) goto find_close_bracket;
 
                 if (peek_pos + 1 >= len) goto found_close_bracket;
-                if (!Parrot_string_is_cclass(INTERP, enum_cclass_whitespace, str, peek_pos + 1)) {
+                if (!Parrot_str_is_cclass(INTERP, enum_cclass_whitespace, str, peek_pos + 1)) {
                     STRING* follows_brace;
                     INTVAL  chunk_length;
                     INTVAL  ws_pos;
@@ -70,18 +70,18 @@ pmclass TclString
                     ws_pos = CHARSET_FIND_CCLASS(INTERP,
                         enum_cclass_whitespace, str, peek_pos, len-peek_pos);
                     chunk_length = ws_pos - peek_pos;
-                    follows_brace = string_substr(INTERP, str, peek_pos,
+                    follows_brace = Parrot_str_substr(INTERP, str, peek_pos,
                         chunk_length, &follows_brace, 0);
 
                     Parrot_unregister_pmc(INTERP, retval);
                     Parrot_ex_throw_from_c_args(INTERP, NULL, CONTROL_ERROR,
                             "list element in braces followed by \"%s\" instead of space",
-                            string_to_cstring(INTERP, follows_brace));
+                            Parrot_str_to_cstring(INTERP, follows_brace));
                 }
 
               found_close_bracket:
                 element_length = peek_pos - pos++ - 1;
-                element_string = string_substr(INTERP, str, pos,
+                element_string = Parrot_str_substr(INTERP, str, pos,
                     element_length, &element_string, 0);
                 pos = pos + element_length + 1;
 
@@ -121,7 +121,7 @@ pmclass TclString
                 peek_pos += 2;
                 continue;
             }
-            if (Parrot_string_is_cclass(INTERP, enum_cclass_whitespace, str, peek_pos))
+            if (Parrot_str_is_cclass(INTERP, enum_cclass_whitespace, str, peek_pos))
                 break;
 
             peek_pos++;
@@ -130,7 +130,7 @@ pmclass TclString
       extract:
         /*  extract the element */
         element_length = peek_pos - pos;
-        element_string = string_substr(INTERP, str, pos, element_length, &element_string, 0);
+        element_string = Parrot_str_substr(INTERP, str, pos, element_length, &element_string, 0);
 
         /* add it to the list*/
         element_pmc = pmc_new(INTERP, pmc_type(INTERP, CONST_STRING(INTERP, "TclConst")));
@@ -145,7 +145,7 @@ pmclass TclString
         if (peek_pos + 1 >= len)
             goto found_close_quote;
 
-        if (!Parrot_string_is_cclass(INTERP, enum_cclass_whitespace, str, peek_pos+1)) {
+        if (!Parrot_str_is_cclass(INTERP, enum_cclass_whitespace, str, peek_pos+1)) {
             STRING* follows_quote;
             INTVAL  chunk_length;
             INTVAL  ws_pos;
@@ -153,16 +153,16 @@ pmclass TclString
             ws_pos = CHARSET_FIND_CCLASS(INTERP, enum_cclass_whitespace, str,
                 peek_pos, len - peek_pos);
             chunk_length = ws_pos - peek_pos;
-            follows_quote = string_substr(INTERP, str, peek_pos, chunk_length, &follows_quote, 0);
+            follows_quote = Parrot_str_substr(INTERP, str, peek_pos, chunk_length, &follows_quote, 0);
             Parrot_unregister_pmc(INTERP, retval);
             Parrot_ex_throw_from_c_args(INTERP, NULL, CONTROL_ERROR,
                     "list element in quotes followed by \"%s\" instead of space",
-                    string_to_cstring(INTERP, follows_quote));
+                    Parrot_str_to_cstring(INTERP, follows_quote));
         }
 
      found_close_quote:
         element_length = peek_pos - pos;
-        element_string = string_substr(INTERP, str, pos, element_length, &element_string, 0);
+        element_string = Parrot_str_substr(INTERP, str, pos, element_length, &element_string, 0);
 
         element_pmc = pmc_new(INTERP, pmc_type(INTERP, CONST_STRING(INTERP, "TclConst")));
         VTABLE_set_string_native(INTERP, element_pmc, element_string);

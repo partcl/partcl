@@ -51,17 +51,17 @@ pmclass TclFloat
         dot = CONST_STRING(INTERP, ".");
         e   = CONST_STRING(INTERP, "e");
 
-        if (string_str_index(INTERP, buff, dot, 0) == -1
-         && string_str_index(INTERP, buff, e, 0) == -1) {
+        if (Parrot_str_find_index(INTERP, buff, dot, 0) == -1
+         && Parrot_str_find_index(INTERP, buff, e, 0) == -1) {
             dot_zero = CONST_STRING(INTERP, ".0");
-            buff = string_append(INTERP, buff, dot_zero);
+            buff = Parrot_str_append(INTERP, buff, dot_zero);
             return buff;
         }
 
         check_flag = 0;
         buflen = Parrot_str_length(INTERP, buff);
         while (buflen) {
-               if (string_index(INTERP, buff, buflen-1) == '0') {
+               if (Parrot_str_indexed(INTERP, buff, buflen-1) == '0') {
                        buflen--;
                        check_flag = 1;
                }

@@ -206,14 +206,14 @@ binary_scan_string_field(PARROT_INTERP, char field,
             if (binstrpos + length > binstrlen)
                 return NULL;
             c     = binstr + binstrpos;
-            value = string_concat(interp, value, string_from_cstring(interp, c, length), 0);
+            value = Parrot_str_concat(interp, value, Parrot_str_new(interp, c, length), 0);
             binstrpos += length;
             break;
         case 'A':
             if (binstrpos + length > binstrlen)
                 return NULL;
             c     = binstr + binstrpos;
-            value = string_concat(interp, value, string_from_cstring(interp, c, length), 0);
+            value = Parrot_str_concat(interp, value, Parrot_str_new(interp, c, length), 0);
             binstrpos += length;
             break;
         default:
@@ -266,7 +266,7 @@ binary_scan_string(PARROT_INTERP, char field,
                    char *format, int *formatpos, int formatlen,
                    char *binstr, int *binstrpos, int binstrlen)
 {
-    STRING *value = string_make_empty(interp, enum_stringrep_one, 128);
+    STRING *value = Parrot_str_new_noinit(interp, enum_stringrep_one, 128);
     PMC *pmcval   = pmc_new(interp, class_TclString);
 
     if ((*formatpos) < formatlen && format[*formatpos] == '*')
@@ -303,10 +303,10 @@ String and number field code has been separated in an effort to reduce code.
  */
 PMC *ParTcl_binary_scan(PARROT_INTERP, STRING *BINSTR, STRING *FORMAT)
 {
-    char *binstr  = string_to_cstring(interp, BINSTR);
+    char *binstr  = Parrot_str_to_cstring(interp, BINSTR);
     int binstrlen = (int)Parrot_str_length(interp, BINSTR);
     int binstrpos = 0;
-    char *format  = string_to_cstring(interp, FORMAT);
+    char *format  = Parrot_str_to_cstring(interp, FORMAT);
     int formatlen = Parrot_str_length(interp, FORMAT);
     int formatpos = 0;
     PMC *values;
@@ -352,8 +352,8 @@ PMC *ParTcl_binary_scan(PARROT_INTERP, STRING *BINSTR, STRING *FORMAT)
     }
 
     /* don't forget to free the strings we allocated */
-    string_cstring_free(binstr);
-    string_cstring_free(format);
+    Parrot_str_free_cstring(binstr);
+    Parrot_str_free_cstring(format);
 
     return values;
 }
@@ -384,25 +384,25 @@ binary_format_number_field(PARROT_INTERP, char field, STRING *binstr, PMC *value
         /* a char */
         case 'c':
             c      = (char)VTABLE_get_integer(interp, value);
-            binstr = string_concat(interp, binstr, string_from_cstring(interp, &c, 1), 0);
+            binstr = Parrot_str_concat(interp, binstr, Parrot_str_new(interp, &c, 1), 0);
             break;
         /* a double */
         case 'd':
             d      = (double)VTABLE_get_number(interp, value);
             len    = sizeof (double)/sizeof (char);
-            binstr = string_concat(interp, binstr, string_from_num(interp, (float)d), 0);
+            binstr = Parrot_str_concat(interp, binstr, Parrot_str_from_num(interp, (float)d), 0);
             break;
         /* a float */
         case 'f':
             f      = (float)VTABLE_get_number(interp, value);
             len    = sizeof (float)/sizeof (char);
-            binstr = string_concat(interp, binstr, string_from_num(interp, f), 0);
+            binstr = Parrot_str_concat(interp, binstr, Parrot_str_from_num(interp, f), 0);
             break;
         /* a native integer */
         case 'n':
             n      = (int)VTABLE_get_integer(interp, value);
             len    = sizeof (int)/sizeof (char);
-            binstr = string_concat(interp, binstr, string_from_int(interp, n), 0);
+            binstr = Parrot_str_concat(interp, binstr, Parrot_str_from_int(interp, n), 0);
             break;
         default:
             break;
@@ -454,19 +454,19 @@ binary_format_string_field(PARROT_INTERP, char field, STRING *binstr,
     {
         case 'a':
             if (strlen > length)
-                string_chopn_inplace(interp, strval, strlen - length);
-            binstr = string_concat(interp, binstr, strval, 0);
+                Parrot_str_chopn_inplace(interp, strval, strlen - length);
+            binstr = Parrot_str_concat(interp, binstr, strval, 0);
             /* pad with nulls if necessary */
             while (length-- > strlen)
-                binstr = string_concat(interp, binstr, string_from_cstring(interp, "", 1), 0);
+                binstr = Parrot_str_concat(interp, binstr, Parrot_str_new(interp, "", 1), 0);
             break;
         case 'A':
             if (strlen > length)
-                string_chopn_inplace(interp, strval, strlen - length);
-            binstr = string_concat(interp, binstr, strval, 0);
+                Parrot_str_chopn_inplace(interp, strval, strlen - length);
+            binstr = Parrot_str_concat(interp, binstr, strval, 0);
             /* pad with spaces if necessary */
             while (length-- > strlen)
-                binstr = string_concat(interp, binstr, string_from_cstring(interp, " ", 1), 0);
+                binstr = Parrot_str_concat(interp, binstr, Parrot_str_new(interp, " ", 1), 0);
             break;
         default:
             break;
@@ -520,11 +520,11 @@ RT#48164: Not yet documented!!!
 
 STRING *ParTcl_binary_format(PARROT_INTERP, STRING *FORMAT, PMC *values)
 {
-    char *format   = string_to_cstring(interp, FORMAT);
+    char *format   = Parrot_str_to_cstring(interp, FORMAT);
     int formatlen  = Parrot_str_length(interp, FORMAT);
     int formatpos  = 0;
     int valueidx   = 0;
-    STRING *binstr = string_make_empty(interp, enum_stringrep_one, 128);
+    STRING *binstr = Parrot_str_new_noinit(interp, enum_stringrep_one, 128);
 
     while (formatpos < formatlen)
     {
@@ -551,7 +551,7 @@ STRING *ParTcl_binary_format(PARROT_INTERP, STRING *FORMAT, PMC *values)
         }
     }
 
-    string_cstring_free(format);
+    Parrot_str_free_cstring(format);
 
     return binstr;
 }
