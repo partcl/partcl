@@ -40,7 +40,7 @@ foreach my $template (keys %makefiles) {
 
 print <<"END";
 
-You can now use '$make' to build Partcl.
+You can now use '$make' to build partcl.
 END
 
 exit;
