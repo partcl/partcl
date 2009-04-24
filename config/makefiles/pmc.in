@@ -1,0 +1,109 @@
+PERL          = @perl@
+RM_F          = @rm_f@
+CHMOD         = @chmod@
+CP            = @cp@
+VERSION_DIR   = @versiondir@
+INCLUDE_DIR   = @includedir@$(VERSION_DIR)
+LIB_DIR       = @libdir@$(VERSION_DIR)
+SRC_DIR       = @srcdir@$(VERSION_DIR)
+INSTALL_DIR   = ../../dynext
+O             = @o@
+LOAD_EXT      = @load_ext@
+CC            = @cc@ -c
+LD            = @ld@
+LDFLAGS       = @ldflags@ @ld_debug@
+LD_LOAD_FLAGS = @ld_load_flags@
+CFLAGS        = @ccflags@ @cc_shared@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@
+CC_OUT        = @cc_o_out@
+LD_OUT        = @ld_out@
+#IF(parrot_is_shared):LIBPARROT = @libparrot_ldflags@
+#ELSE:LIBPARROT =
+
+BUILD_TOOLS_DIR = $(LIB_DIR)@slash@tools@slash@build
+PMC2C_INCLUDES  = --include $(SRC_DIR) --include $(SRC_DIR)@slash@pmc
+PMC2C           = $(PERL) $(BUILD_TOOLS_DIR)@slash@pmc2c.pl
+PMC2CD = $(PMC2C) --dump $(PMC2C_INCLUDES)
+PMC2CC = $(PMC2C) --c $(PMC2C_INCLUDES)
+
+INCLUDES        = -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)@slash@pmc
+LINKARGS        = $(LDFLAGS) $(LD_LOAD_FLAGS) $(LIBPARROT)
+
+PMC_SOURCES = \
+  tclobject.pmc \
+  tclstring.pmc \
+  tclint.pmc \
+  tclfloat.pmc \
+  tcllist.pmc \
+  tcldict.pmc
+
+
+TCL_GROUP = tcl_group
+
+all : $(TCL_GROUP)$(LOAD_EXT)
+#IF(cygwin or hpux):	CHMOD 0775 "*$(LOAD_EXT)"
+	$(CP) "*$(LOAD_EXT)" $(INSTALL_DIR)
+
+
+$(TCL_GROUP)$(LOAD_EXT): tclobject$(O) tclstring$(O) tclint$(O) tclfloat$(O) tcllist$(O) tcldict$(O) lib-$(TCL_GROUP)$(O)
+	$(LD) $(LD_OUT) $(TCL_GROUP)$(LOAD_EXT) lib-$(TCL_GROUP)$(O) tclobject$(O) tclstring$(O) tclint$(O) tclfloat$(O) tcllist$(O) tcldict$(O) $(LINKARGS)
+
+lib-$(TCL_GROUP)$(O): $(TCL_GROUP).c
+	$(CC) $(CC_OUT) lib-$(TCL_GROUP)$(O) $(INCLUDES) $(CFLAGS) $(TCL_GROUP).c
+
+$(TCL_GROUP).c: $(PMC_SOURCES)
+	$(PMC2C) --library $(TCL_GROUP) --c $(PMC_SOURCES)
+
+tclobject.dump: tclobject.pmc
+	$(PMC2CD) tclobject.pmc
+
+tclobject.c: tclobject.dump
+	$(PMC2CC) tclobject.pmc
+
+tclobject$(O): tclobject.c
+	$(CC) $(CC_OUT) tclobject$(O) $(INCLUDES) $(CFLAGS) tclobject.c
+
+tclstring.dump: tclstring.pmc
+	$(PMC2CD) tclstring.pmc
+
+tclstring.c: tclstring.dump
+	$(PMC2CC) tclstring.pmc
+
+tclstring$(O): tclstring.c
+	$(CC) $(CC_OUT) tclstring$(O) $(INCLUDES) $(CFLAGS) tclstring.c
+
+tclint.dump: tclint.pmc
+	$(PMC2CD) tclint.pmc
+
+tclint.c: tclint.dump
+	$(PMC2CC) tclint.pmc
+
+tclint$(O): tclint.c
+	$(CC) $(CC_OUT) tclint$(O) $(INCLUDES) $(CFLAGS) tclint.c
+
+tclfloat.dump: tclfloat.pmc
+	$(PMC2CD) tclfloat.pmc
+
+tclfloat.c: tclfloat.dump
+	$(PMC2CC) tclfloat.pmc
+
+tclfloat$(O): tclfloat.c
+	$(CC) $(CC_OUT) tclfloat$(O) $(INCLUDES) $(CFLAGS) tclfloat.c
+
+tcllist.dump: tcllist.pmc
+	$(PMC2CD) tcllist.pmc
+
+tcllist.c: tcllist.dump
+	$(PMC2CC) tcllist.pmc
+
+tcllist$(O): tcllist.c
+	$(CC) $(CC_OUT) tcllist$(O) $(INCLUDES) $(CFLAGS) tcllist.c
+
+tcldict.dump: tcldict.pmc
+	$(PMC2CD) tcldict.pmc
+
+tcldict.c: tcldict.dump
+	$(PMC2CC) tcldict.pmc
+
+tcldict$(O): tcldict.c
+	$(CC) $(CC_OUT) tcldict$(O) $(INCLUDES) $(CFLAGS) tcldict.c
+

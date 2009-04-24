@@ -16,31 +16,31 @@ providing a compreg-compatible method.
 .HLL 'parrot'
 
 .loadlib 'tcl_ops'
-.include 'languages/tcl/src/macros.pir'
+.include 'src/macros.pir'
 .include 'cclass.pasm'
 
 .namespace [ 'TclExpr'; 'PAST'; 'Grammar' ]
-.include 'languages/tcl/src/grammar/expr/pge2past.pir'
+.include 'src/grammar/expr/pge2past.pir'
 
 .namespace [ 'TclExpr'; 'PIR'; 'Grammar' ]
-.include 'languages/tcl/src/grammar/expr/past2pir.pir'
+.include 'src/grammar/expr/past2pir.pir'
 
-.include 'languages/tcl/src/grammar/expr/past.pir'
+.include 'src/grammar/expr/past.pir'
 
 # all the builtin commands (HLL: Tcl - loads 'tcl_group')
-.include 'languages/tcl/runtime/builtins.pir'
+.include 'runtime/builtins.pir'
 
 # library files (HLL: _Tcl)
-.include 'languages/tcl/runtime/conversions.pir'
-.include 'languages/tcl/runtime/string_to_list.pir'
-.include 'languages/tcl/runtime/variables.pir'
-.include 'languages/tcl/runtime/options.pir'
+.include 'runtime/conversions.pir'
+.include 'runtime/string_to_list.pir'
+.include 'runtime/variables.pir'
+.include 'runtime/options.pir'
 
 # class files (HLL: _Tcl)
-.include 'languages/tcl/src/class/tclarray.pir'
-.include 'languages/tcl/src/class/tclconst.pir'
-.include 'languages/tcl/src/class/tclproc.pir'
-.include 'languages/tcl/src/class/tracearray.pir'
+.include 'src/class/tclarray.pir'
+.include 'src/class/tclconst.pir'
+.include 'src/class/tclproc.pir'
+.include 'src/class/tracearray.pir'
 
 # create the 'tcl' namespace -- see RT #39852
 # https://rt.perl.org/rt3/Ticket/Display.html?id=39852
@@ -55,7 +55,7 @@ providing a compreg-compatible method.
 
 .sub load_macros :load :anon
   $P0 = compreg 'PIR'
-  $P0 = $P0(".sub main\n.include 'languages/tcl/src/macros.pir'\n.end")
+  $P0 = $P0(".sub main\n.include 'src/macros.pir'\n.end")
   $P0()
 .end
 
@@ -250,14 +250,14 @@ got_platform:
 .end
 
 .HLL 'parrot'
-.include 'languages/tcl/src/grammar/expr/expression.pir'
-.include 'languages/tcl/src/grammar/expr/parse.pir'
-.include 'languages/tcl/src/grammar/expr/functions.pir'
-.include 'languages/tcl/src/grammar/expr/operators.pir'
+.include 'src/grammar/expr/expression.pir'
+.include 'src/grammar/expr/parse.pir'
+.include 'src/grammar/expr/functions.pir'
+.include 'src/grammar/expr/operators.pir'
 
 .HLL 'tcl'
 .namespace [ 'tcl'; 'mathop' ]
-.include 'languages/tcl/src/mathops.pir'
+.include 'src/mathops.pir'
 
 # Load the standard library
 .HLL 'Tcl'

@@ -9,8 +9,8 @@
 .HLL 'Tcl'
 .loadlib 'tcl_group'
 
-.include 'languages/tcl/src/returncodes.pasm'
-.include 'languages/tcl/src/macros.pir'
+.include 'src/returncodes.pasm'
+.include 'src/macros.pir'
 
 .macro set_tcl_argv()
   argc = argv # update

@@ -22,7 +22,7 @@ print <<'END_PIR';
 .loadlib 'tcl_group'
 END_PIR
 
-print "  .include 'languages/tcl/$static_dir/$_.pir'\n" for @static_cmds;
+print "  .include '$static_dir/$_.pir'\n" for @static_cmds;
 
 sub pir_cmds_in_dir {
     my ($dir) = @_;

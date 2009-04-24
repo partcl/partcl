@@ -1,18 +1,19 @@
 RM_F    = @rm_f@
 PERL    = @perl@
-PARROT  = ../../parrot@exe@
 
-BUILD_DIR   = @build_dir@
-RECONFIGURE = $(PERL) $(BUILD_DIR)/tools/dev/reconfigure.pl
-PBC_TO_EXE    = $(BUILD_DIR)/pbc_to_exe@exe@
+VERSION_DIR = @versiondir@
+INCLUDE_DIR = @includedir@$(VERSION_DIR)
+LIB_DIR = @libdir@$(VERSION_DIR)
+BIN_DIR = @bindir@
+PARROT  = $(BIN_DIR)/parrot@exe@
+TOOLS_DIR = @libdir@$(VERSION_DIR)@slash@tools
+RECONFIGURE = $(PERL) $(LIB_DIR)/tools/dev/gen_makefile.pl
+PBC_TO_EXE    = $(BIN_DIR)/pbc_to_exe@exe@
 #CONDITIONED_LINE(darwin):
 #CONDITIONED_LINE(darwin):# MACOSX_DEPLOYMENT_TARGET must be defined for OS X compilation/linking
 #CONDITIONED_LINE(darwin):export MACOSX_DEPLOYMENT_TARGET := @osx_version@
 
 TCL_LIB   = library
-PMCBUILD  = $(PERL) @build_dir@/tools/build/dynpmc.pl
-OPSBUILD  = $(PERL) @build_dir@/tools/build/dynoplibs.pl
-DESTDIR   = @build_dir@/runtime/parrot/dynext
 O         = @o@
 PMCDIR    = src/pmc
 OPSDIR    = src/ops
@@ -25,19 +26,8 @@ CC_SHARED  = @cc_shared@
 CFLAGS     = @ccflags@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@ $(CC_SHARED)
 CC         = @cc@
 
-
-TGE_DIR  = ../../compilers/tge
-PERL6GRAMMAR = ../../runtime/parrot/library/PGE/Perl6Grammar.pbc
-
-# can't use $(wildcard) and friends for PMCS, as these have to be in 
-# dependency order; with no duplicates. 
-PMCS = \
- tclobject \
- tclstring \
- tclint \
- tclfloat \
- tcllist \
- tcldict
+TGE_DIR  = $(LIB_DIR)/languages/tge
+PERL6GRAMMAR = $(LIB_DIR)/library/PGE/Perl6Grammar.pbc
 
 RUNTIME_PIR = runtime/builtin/after.pir        runtime/builtin/linsert.pir \
 runtime/builtin/append.pir       runtime/builtin/list.pir \
@@ -127,25 +117,13 @@ CLASSES = \
   $(CLASSDIR)/tracearray.pir
 
 pmcs:
-	@cd $(PMCDIR) && $(PMCBUILD) generate $(PMCS)
-	@cd $(PMCDIR) && $(PMCBUILD) compile $(PMCS)
-	@cd $(PMCDIR) && $(PMCBUILD) linklibs $(PMCS)
-	@cd $(PMCDIR) && $(PMCBUILD) copy "--destination=$(DESTDIR)" $(PMCS)
+	$(MAKE) $(PMCDIR)
 
-# THIS WAS COPIED FROM THE ROOT MAKEFILE
-# Passing an empty argument in @ARGV to cc_flags.pl to indicate where extra -Is
-# (etc) should go. Otherwise it will insert them after the first space, which
-# makes life go horribly wrong if $(CC) contains spaces but can't have -I
-# arguments (etc) injected in the middle.
-# There is probably a better way to do this, but I can't work it out right now.
 .c$(O) :   
-	@$(PERL) ../../tools/dev/cc_flags.pl ../../CFLAGS $(CC) "" $(CFLAGS) -I@build_dir@@slash@include @cc_o_out@$@ -c $<
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) @cc_o_out@$@ -c $<
 
 ops: src/binary$(O)
-	@cd $(OPSDIR) && $(OPSBUILD) generate tcl
-	@cd $(OPSDIR) && $(OPSBUILD) compile  tcl
-	@cd $(OPSDIR) && $(OPSBUILD) linklibs tcl ../binary$(O)
-	@cd $(OPSDIR) && $(OPSBUILD) copy "--destination=$(DESTDIR)" tcl
+	$(MAKE) $(OPSDIR)
 
 runtime/builtins.pir: $(DEPS) tools/gen_builtins.pl
 	$(PERL) tools/gen_builtins.pl > runtime/builtins.pir
@@ -159,11 +137,8 @@ tclsh@exe@: tcl.pbc $(PBC_TO_EXE)
 	$(PBC_TO_EXE) tcl.pbc
 	$(RENAME) tcl@exe@ tclsh@exe@
 
-$(PBC_TO_EXE):
-	$(MAKE) $(BUILD_DIR) ./pbc_to_exe@exe@
-
 test: tcl.pbc
-	$(PERL) t/harness
+	$(PERL) -I$(TOOLS_DIR)/lib t/harness
 
 spectest: tcl.pbc
 	$(PERL) tools/tcl_test.pl
@@ -215,7 +190,9 @@ realclean: clean
 
 distclean: realclean
 
-# regenerate the Makefile
-Makefile: config/makefiles/root.in
-	cd $(BUILD_DIR) && $(RECONFIGURE) --step=gen::languages --languages=tcl
+# regenerate the Makefiles
+Makefile: config/makefiles/root.in config/makefiles/pmc.in config/makefiles/ops.in
+	$(RECONFIGURE) config/makefiles/root.in Makefile
+	$(RECONFIGURE) config/makefiles/pmc.in $(PMCDIR)/Makefile
+	$(RECONFIGURE) config/makefiles/ops.in $(OPSDIR)/Makefile
 

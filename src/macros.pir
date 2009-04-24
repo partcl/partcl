@@ -1,4 +1,4 @@
-.include 'languages/tcl/src/returncodes.pasm'
+.include 'src/returncodes.pasm'
 
 =head1 exception handling macros
 

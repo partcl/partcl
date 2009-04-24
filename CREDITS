@@ -20,6 +20,7 @@ E: amos@coscom.net
 N: Allison Randal
 E: allison@parrot.org
 D: Track function renames in parrot
+D: Build partcl against installed parrot
 
 N: Jerry Gay a.k.a. particle
 E: Jerry.Gay@gmail.com
