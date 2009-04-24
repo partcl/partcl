@@ -3,7 +3,8 @@
 use strict;
 use warnings;
 
-my $perlbin = `parrot_config perl`;
+my $perlbin = `parrot_config perl`
+  or die "You must have parrot available in your PATH to build partcl.\n";
 my $libdir = `parrot_config libdir`;
 my $versiondir = `parrot_config versiondir`;
 my $slash = `parrot_config slash`;
