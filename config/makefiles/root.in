@@ -1,5 +1,6 @@
 RM_F    = @rm_f@
 PERL    = @perl@
+MAKE    = @make_c@
 
 VERSION_DIR = @versiondir@
 INCLUDE_DIR = @includedir@$(VERSION_DIR)
