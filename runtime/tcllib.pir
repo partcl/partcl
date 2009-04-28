@@ -9,9 +9,27 @@ providing a compreg-compatible method.
 =cut
 
 .HLL '_tcl'
-.HLL_map 'String'  = 'TclString'
-.HLL_map 'Float'   = 'TclFloat'
-.HLL_map 'Integer' = 'TclInt'
+
+.sub 'mappings' :anon :init
+  .local pmc interp
+  .local pmc core_int, tclint
+  .local pmc core_num, tclfloat
+  .local pmc core_string, tclstring
+
+  interp = getinterp
+
+  core_int = get_class 'Integer'
+  core_num = get_class 'Float'
+  core_string = get_class 'Float'
+
+  tclint    = get_class 'TclInt'
+  tclfloat  = get_class 'TclFloat'
+  tclstring = get_class 'TclString'
+
+  interp.'hll_map'(core_int, tclint)
+  interp.'hll_map'(core_num, tclfloat)
+  interp.'hll_map'(core_string, tclstring)
+.end
 
 .HLL 'parrot'
 
