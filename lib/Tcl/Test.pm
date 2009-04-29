@@ -11,11 +11,9 @@ use Parrot::Config;
 use File::Spec;
 
 sub import {
-    my $parrot = File::Spec->catfile( $PConfig{build_dir}, 'parrot' );
-    my $tcl = File::Spec->catdir( $PConfig{build_dir}, qw(languages tcl) );
-    my $test = File::Spec->abs2rel( File::Spec->rel2abs($0), $tcl );
+    my $parrot = File::Spec->catfile( $PConfig{bin_dir}, 'parrot' );
+    my $test = File::Spec->rel2abs($0);
 
-    chdir $tcl;
     if ( exists $ENV{TEST_PROG_ARGS} ) {
         exec $parrot, $ENV{TEST_PROG_ARGS}, 'tcl.pbc', $test;
     }

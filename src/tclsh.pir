@@ -33,7 +33,7 @@
 .sub _main :main
   .param pmc argv
 
-  load_bytecode 'languages/tcl/runtime/tcllib.pbc'
+  load_bytecode 'runtime/tcllib.pbc'
 
   .local pmc retval
   .local string mode,contents,filename
