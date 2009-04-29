@@ -179,6 +179,7 @@ src/grammar/expr/pge2past.pir \
 "$(OPSDIR)/*.lib" \
 "$(OPSDIR)/*.pdb" \
 "$(TCL_LIB)/*.pir" \
+dynext/*.bundle \
 lib/*.pre_c
 
 # that last line should be cleaned up for x-platform.
@@ -187,7 +188,8 @@ clean:
 	$(RM_F) $(CLEANERS)
 
 realclean: clean
-	$(RM_F) examples/Makefile Makefile t_tcl
+	$(RM_F) examples/Makefile Makefile t_tcl \
+		$(PMCDIR)/Makefile $(OPSDIR)/Makefile
 
 distclean: realclean
 
