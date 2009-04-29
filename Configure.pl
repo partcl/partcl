@@ -2,13 +2,20 @@
 
 use strict;
 use warnings;
+use Getopt::Long;
 
-my $perlbin = `parrot_config perl`
-  or die "You must have parrot available in your PATH to build partcl.\n";
-my $libdir = `parrot_config libdir`;
-my $versiondir = `parrot_config versiondir`;
-my $slash = `parrot_config slash`;
-my $make = `parrot_config make`;
+my %options;
+GetOptions(\%options, 'parrot-config=s', 'help|?') or usage();
+usage() if $options{'help'};
+
+my $config =  $options{'parrot-config'} || "parrot_config";
+
+my $perlbin = `$config perl`
+        or die "Unable to find parrot_config, $config";
+my $libdir = `$config libdir`;
+my $versiondir = `$config versiondir`;
+my $slash = `$config slash`;
+my $make = `$config make`;
 
 chomp($perlbin);
 chomp($libdir);
@@ -44,3 +51,9 @@ You can now use '$make' to build partcl.
 END
 
 exit;
+
+sub usage {
+    die <<"EOM"
+Usage: $0 [--parrot-config=/path/to/parrot_config]
+EOM
+}
