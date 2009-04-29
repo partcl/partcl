@@ -22,7 +22,7 @@ BUILD_TOOLS_DIR = $(LIB_DIR)@slash@tools@slash@build
 OPS2C           = $(PERL) $(BUILD_TOOLS_DIR)@slash@ops2c.pl
 
 INCLUDES        = -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)@slash@pmc
-LINKARGS        = $(LDFLAGS) $(LD_LOAD_FLAGS) $(LIBPARROT)
+LINKARGS        = $(LDFLAGS) $(LD_LOAD_FLAGS)  ../binary$(O) $(LIBPARROT)
 
 OPS_FILE = tcl.ops
 
