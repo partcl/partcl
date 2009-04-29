@@ -19,6 +19,9 @@
  */
 
 #include "parrot/embed.h"
+#include "pmc/pmc_string.h"
+#include "pmc/pmc_integer.h"
+#include "pmc/pmc_float.h"
 
 static INTVAL dynpmc_TclString;
 static INTVAL dynpmc_TclFloat;
@@ -37,24 +40,25 @@ pmclass TclObject dynpmc group tcl_group {
     }
 
     void set_number_native(FLOATVAL value) {
-        SELF.morph(dynpmc_TclFloat);
-        VTABLE_set_number_native(INTERP, SELF, value);
+        pmc_reuse(INTERP, SELF, dynpmc_TclFloat, 0);
+        SETATTR_Float_fv(INTERP, SELF, value);
     }
 
     void set_integer_native(INTVAL value) {
-        SELF.morph(dynpmc_TclInt);
-        PMC_int_val(SELF) = value;
+        pmc_reuse(INTERP, SELF, dynpmc_TclInt, 0);
+        SETATTR_Integer_iv(INTERP, SELF, value);
     }
 
     void set_string_native(STRING *value) {
-        SELF.morph(dynpmc_TclString);
+        pmc_reuse(INTERP, SELF, dynpmc_TclString, 0);
         /* Only allow constant PMCs to embed constant strings */
         if (PObj_constant_TEST(SELF) && !PObj_constant_TEST(value)) {
             const char *copy  = Parrot_str_to_cstring(INTERP, value);
-            PMC_str_val(SELF) = Parrot_str_new_constant(INTERP, copy);
+            SETATTR_String_str_val(INTERP, SELF, Parrot_str_new_constant(INTERP, copy));
         }
-        else
-            PMC_str_val(SELF) = Parrot_str_copy(INTERP, value);
+        else {
+            SETATTR_String_str_val(INTERP, SELF, Parrot_str_copy(INTERP, value));
+        }
     }
 }
 
