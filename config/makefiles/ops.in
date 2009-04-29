@@ -15,7 +15,7 @@ LD_LOAD_FLAGS = @ld_load_flags@
 CFLAGS        = @ccflags@ @cc_shared@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@
 CC_OUT        = @cc_o_out@
 LD_OUT        = @ld_out@
-#IF(parrot_is_shared):LIBPARROT = @libparrot_ldflags@
+#IF(parrot_is_shared):LIBPARROT = @inst_libparrot_ldflags@
 #ELSE:LIBPARROT =
 
 BUILD_TOOLS_DIR = $(LIB_DIR)@slash@tools@slash@build
