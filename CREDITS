@@ -12,15 +12,26 @@
     PPS: This file is encoded in UTF-8
 
 ----------
-N: Amos Robinson
-D: IMCC Optimizer patches
-D: implement some partcl builtins
-E: amos@coscom.net
+N: Alberto Sim��es
+D: some builtins
+E: ambs@cpan.org
+E: albie@alfarrabio.di.uminho.pt
+W: http://alfarrabio.di.uminho.pt/~albie/
 
 N: Allison Randal
 E: allison@parrot.org
 D: Track function renames in parrot
 D: Build partcl against installed parrot
+
+N: Amos Robinson
+D: IMCC Optimizer patches
+D: implement some partcl builtins
+E: amos@coscom.net
+
+N: Christoph Otto a.k.a. cotto
+U: cotto
+D: Fix PMCs to work with Parrot 1.1
+E: christoph@mksig.org
 
 N: Jerry Gay a.k.a. particle
 E: Jerry.Gay@gmail.com
@@ -31,19 +42,12 @@ N: Matt Diephouse
 E: matt at diephouse dot com
 D: Initial run of Tcl's spec test in partcl, namespaces, lots more.
 
+N: NotFound
+D: build fixes for C++
+
 N: Thilo Planz
 D: partcl tests and inspiration
 
 N: Will "Coke" Coleda
 E: will@coleda.com
 D: ringleader
-S: NY, US
-
-N: Alberto Sim��es
-D: some builtins
-E: ambs@cpan.org
-E: albie@alfarrabio.di.uminho.pt
-W: http://alfarrabio.di.uminho.pt/~albie/
-
-N: NotFound
-D: build fixes for C++
