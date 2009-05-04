@@ -1,3 +1,7 @@
+NOTE:
+
+trunk is intended to build against an installed parrot, but does not yet.
+
 See the googlecode project site
 
   http://code.google.com/p/partcl
