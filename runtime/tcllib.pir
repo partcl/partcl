@@ -124,13 +124,7 @@ env_loop_done:
   .include 'iglobals.pasm'
 
   config = interp[.IGLOBALS_CONFIG_HASH]
-  $S0 = config['build_dir']
-  slash = config['slash']
-  $S0 .= slash
-  $S0 .= 'languages'
-  $S0 .= slash
-  $S0 .= 'tcl'
-  $S0 .= slash
+  # Find it out of partcl's build dir.
   $S0 .= 'library'
   .local pmc tcl_library
   tcl_library = box $S0
