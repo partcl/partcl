@@ -86,7 +86,7 @@ providing a compreg-compatible method.
   load_bytecode 'PGE/Util.pbc'
   load_bytecode 'TGE.pbc'
 
-  load_bytecode 'Tcl/Glob.pbc'
+  load_bytecode 'Tcl/Glob.pir'
 
   # Expose Environment variables.
   .local pmc env,tcl_env,iterator
