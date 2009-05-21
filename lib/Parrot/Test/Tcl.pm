@@ -1,124 +1,93 @@
-package Parrot::Test::Tcl;
-
-# Copyright (C) 2004-2007, The Perl Foundation.
+# Copyright (C) 2009, The Perl Foundation.
 # $Id: Tcl.pm 29434 2008-07-14 15:42:24Z coke $
+
+package Parrot::Test::Tcl;
 
 use strict;
 use warnings;
-use vars qw($language);
-no strict qw(refs);
+our $VERSION = '1.0';
 
-use File::Basename;
+require Exporter;
+our @ISA = qw(Exporter);
+our @EXPORT = qw(tcl_output_is pir_output_is);
 
-require Parrot::Test;
+use File::Temp qw(tempfile);
+use Test::More;
+use Parrot::Installed;
+use Parrot::Config;
 
-=head1 Parrot::Test::Tcl
-
-Provide language specific testing routines here...
-
-This is currently alarmingly similar to the generated subs in Parrot::Test.
-Perhaps someone can do a better job of delegation here.
-
-=cut
-
-sub new {
-    return bless {};
+sub tcl_output_is {
+    _output_is( 'tcl', 'tcl.pbc', @_);
 }
 
-my %language_test_map = (
-    output_is   => 'is_eq',
-    output_like => 'like',
-    output_isnt => 'isnt_eq'
-);
+sub pir_output_is {
+    _output_is( 'pir', '', @_);
+}
 
-foreach my $func ( keys %language_test_map ) {
+sub _output_is {
+    my $type        = shift;
+    my $parrot_args = shift;
+    my $code        = shift;
+    my $expected    = shift;
+    my $description = shift;
+    my %options     = @_;
 
-    *{"Parrot::Test::Tcl::$func"} = sub ($$;$) {
+    # Generate a temp file for the code.
+    my ($code_fh,$code_tempfile) = tempfile(
+        SUFFIX => ".$type",
+        UNLINK => 1
+    );
+    print {$code_fh} $code;
+    close $code_fh;
 
-        my ( $self, $code, $output, $desc ) = @_;
+    # Generate a temp file for the code.
+    my (undef, $out_tempfile) = tempfile(
+        SUFFIX => '.out',
+        UNLINK => 1
+    );
+    close $code_fh;
 
-        my $count = $self->{builder}->current_test + 1;
+    my $cmd = $PConfig{bindir} ."/parrot $parrot_args $code_tempfile > $out_tempfile";
 
-        $desc = $language unless $desc;
+    TODO: {
 
-        # Figure out how many levels we have to go back to get to parrot.
-        # And, conversely, how many levels we have to go down to get to
-        # the tcl binary.
+        local $TODO = $options{todo} if exists $options{todo};
 
-        # There are basically 3 choices: run in one of:
-        #  languages
-        #  languages/tcl
-        #  languages/tcl/t
+        if (system($cmd) != 0) {
+            fail("$description\n$cmd");
+            return;
+        } 
 
-        my $path_to_parrot = $INC{'Parrot/Config.pm'};
-        $path_to_parrot =~ s:/lib/Parrot/Config.pm$::;
-        my $dir_count = scalar( File::Spec->splitdir($path_to_parrot) );
-        my $path_to_tcl;
-        if ( $dir_count == 0 ) {
-            $path_to_tcl = File::Spec->join( 'languages', 'tcl' );
+        my $actual;
+        {
+            local undef $/;
+            open my $out_fh, '<', $out_tempfile;
+            $actual = <$out_fh>;
         }
-        elsif ( $dir_count == 1 ) {
-            $path_to_tcl = 'tcl';
-        }
-        elsif ( $dir_count == 2 ) {
-            $path_to_tcl = '.';
-        }
-        elsif ( $dir_count > 2 ) {
-            $path_to_tcl = File::Spec->join( File::Spec->updir() x ( $dir_count - 2 ) );
-        }
+    
+        is ($actual, $expected, $description);
 
-        my $lang_f = Parrot::Test::per_test( '.tcl', $count );
-        my $out_f  = Parrot::Test::per_test( '.out', $count );
+    }
 
-        my $args = $ENV{TEST_PROG_ARGS} || '';
-
-        Parrot::Test::write_code_to_file( $code, $lang_f );
-
-        my $cmd;
-        my $exit_code = 0;
-        my $pass      = 0;
-
-        my $executable =
-            File::Spec->join( $path_to_parrot, $self->{parrot} )
-            . " $args "
-            . File::Spec->join( $path_to_tcl, 'tcl.pbc' );
-        if ( defined( $ENV{PARROT_TCLSH} ) ) {
-            $executable = $ENV{PARROT_TCLSH};
-        }
-        $cmd = "$executable $lang_f";
-
-        $exit_code = Parrot::Test::run_command(
-            $cmd,
-            STDOUT => $out_f,
-            STDERR => $out_f,
-
-            #CD => $self->{relpath},
-        );
-
-        unless ($pass) {
-            my $file         = Parrot::Test::slurp_file($out_f);
-            my $builder_func = $language_test_map{$func};
-
-            {
-                no strict 'refs';
-
-                $pass =
-                    $self->{builder}
-                    ->$builder_func( Parrot::Test::slurp_file($out_f), $output, $desc );
-            }
-            $self->{builder}->diag("'$cmd' failed with exit code $exit_code")
-                if $exit_code and not $pass;
-        }
-
-        unless ( $ENV{POSTMORTEM} ) {
-            unlink $out_f;
-        }
-
-        return $pass;
-        }
+    return;
 }
 
 1;
+
+__END__
+
+=head1 Parrot::Test::Tcl
+
+Test tcl code from perl.
+
+Until we can self-host all of testing, we have a need for some of our 
+egression tests to run in perl.
+
+=head1 BUGS
+
+We used to rely on parrot's testing infrastructure and may again.
+
+=cut
 
 # Local Variables:
 #   mode: cperl

@@ -7,9 +7,8 @@ use strict;
 use warnings;
 use lib qw(lib);
 
-use Parrot::Installed;
-use Parrot::Test tests => 7;
-use Test::More;
+use Parrot::Test::Tcl;
+use Test::More tests => 7;
 
 pir_output_is( <<'CODE', <<'OUTPUT', "test tcl compiler, verify double call works" );
   .sub main :main

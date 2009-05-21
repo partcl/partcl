@@ -7,9 +7,8 @@ use strict;
 use warnings;
 use lib qw(lib);
 
-use Parrot::Installed;
-use Parrot::Test tests => 2;
-use Test::More;
+use Parrot::Test::Tcl;
+use Test::More tests => 2;
 
 # prolly not portable, patches welcome.
 my $source_filename = 'tmp.tcl';
@@ -20,7 +19,7 @@ print {$tmpfile} <<'EOF';
 EOF
 close $tmpfile;
 
-language_output_is( "tcl", <<TCL, <<OUT, "simple source" );
+tcl_output_is( <<TCL, <<OUT, "simple source" );
  set b 20
  source "$source_filename"
  puts \$a
@@ -32,7 +31,7 @@ OUT
 # clean up temp file.
 unlink($source_filename);
 
-language_output_is( "tcl", <<'TCL', <<'OUT', "invalid file" );
+tcl_output_is( <<'TCL', <<'OUT', "invalid file" );
  source "hopefullynonexistantfile.tcl"
 TCL
 couldn't read file "hopefullynonexistantfile.tcl": no such file or directory

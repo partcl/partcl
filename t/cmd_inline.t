@@ -7,11 +7,10 @@ use strict;
 use warnings;
 use lib qw(lib);
 
-use Parrot::Installed;
-use Parrot::Test tests => 4;
-use Test::More;
+use Parrot::Test::Tcl;
+use Test::More tests => 4;
 
-language_output_is( "tcl", <<'TCL', <<'OUT', "PIR compiler" );
+tcl_output_is( <<'TCL', <<'OUT', "PIR compiler" );
  inline PIR {
    .sub test
      print "ok\n"
@@ -21,7 +20,7 @@ TCL
 ok
 OUT
 
-language_output_is( "tcl", <<'TCL', <<'OUT', "PASM compiler" );
+tcl_output_is( <<'TCL', <<'OUT', "PASM compiler" );
  inline PASM {
    print "ok\n"
    end
@@ -30,7 +29,7 @@ TCL
 ok
 OUT
 
-language_output_is( "tcl", <<'TCL', <<'OUT', "invalid compiler" );
+tcl_output_is( <<'TCL', <<'OUT', "invalid compiler" );
  inline JAVA {
    System.out.println("mmm, coffee");
  }
@@ -38,7 +37,7 @@ TCL
 invalid language "JAVA" specified
 OUT
 
-language_output_is( "tcl", <<'TCL', <<'OUT', "invalid PIR code" );
+tcl_output_is( <<'TCL', <<'OUT', "invalid PIR code" );
 catch {
  inline PIR {
    .sub test

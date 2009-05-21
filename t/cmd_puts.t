@@ -7,37 +7,36 @@ use strict;
 use warnings;
 use lib qw(lib);
 
-use Parrot::Installed;
-use Parrot::Test tests => 5;
-use Test::More;
+use Parrot::Test::Tcl;
+use Test::More tests => 5;
 
 # RT#40618:  Missing channelId tests.
 
-language_output_is( "tcl", <<'TCL', <<OUT, "no args" );
+tcl_output_is( <<'TCL', <<OUT, "no args" );
  puts
 TCL
 wrong # args: should be "puts ?-nonewline? ?channelId? string"
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "too many args" );
+tcl_output_is( <<'TCL', <<OUT, "too many args" );
  puts a b c d
 TCL
 wrong # args: should be "puts ?-nonewline? ?channelId? string"
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "-nonewline" );
+tcl_output_is( <<'TCL', <<OUT, "-nonewline" );
   puts -nonewline whee\n
 TCL
 whee
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "normal" );
+tcl_output_is( <<'TCL', <<OUT, "normal" );
  puts whee
 TCL
 whee
 OUT
 
-language_output_is( "tcl", <<'TCL', <<'OUT', "puts stdout ok" );
+tcl_output_is( <<'TCL', <<'OUT', "puts stdout ok" );
   puts stdout ok
 TCL
 ok

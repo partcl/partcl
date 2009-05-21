@@ -7,11 +7,10 @@ use strict;
 use warnings;
 use lib qw(lib);
 
-use Parrot::Installed;
-use Parrot::Test tests => 3;
-use Test::More;
+use Parrot::Test::Tcl;
+use Test::More tests => 3;
 
-language_output_is( "tcl", <<'TCL', <<OUT, "noarg" );
+tcl_output_is( <<'TCL', <<OUT, "noarg" );
  puts here
  exit
  puts nothere
@@ -19,13 +18,13 @@ TCL
 here
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "bad arg" );
+tcl_output_is( <<'TCL', <<OUT, "bad arg" );
  exit bork
 TCL
 expected integer but got "bork"
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "too many args" );
+tcl_output_is( <<'TCL', <<OUT, "too many args" );
  exit bork me
 TCL
 wrong # args: should be "exit ?returnCode?"

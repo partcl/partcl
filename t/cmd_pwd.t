@@ -7,13 +7,12 @@ use strict;
 use warnings;
 use lib qw(lib);
 
-use Parrot::Installed;
-use Parrot::Test tests => 2;
-use Test::More;
+use Parrot::Test::Tcl;
+use Test::More tests=>2;
 use File::Spec;
 use Cwd;
 
-language_output_is( "tcl", <<'TCL', <<OUT, "pwd too many args" );
+tcl_output_is( <<'TCL', <<OUT, "pwd too many args" );
  pwd fish
 TCL
 wrong # args: should be "pwd"
@@ -22,16 +21,13 @@ OUT
 ## tclsh on windows shows unix slashies, so use unix canonpath to get them
 my $dir = File::Spec::Unix->canonpath( getcwd );
 
-TODO: {
-    local $TODO;
-    $TODO = 'pwd is broken on windows' if $^O eq 'MSWin32';
+my $todo = 'pwd is broken on windows' if $^O eq 'MSWin32';
 
-    language_output_is( "tcl", <<'TCL', <<"OUT", "pwd simple" );
+tcl_output_is( <<'TCL', <<"OUT", "pwd simple", todo => $todo );
  puts [pwd]
 TCL
 $dir
 OUT
-}
 
 # Local Variables:
 #   mode: cperl

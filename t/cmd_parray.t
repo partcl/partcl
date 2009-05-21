@@ -7,18 +7,17 @@ use strict;
 use warnings;
 use lib qw(lib);
 
-use Parrot::Installed;
-use Parrot::Test tests => 9;
-use Test::More;
+use Parrot::Test::Tcl;
+use Test::More tests=>9;
 
 # verify interaction with auto_load...
-language_output_is( "tcl", <<'TCL', <<OUT, "body not loaded by default" );
+tcl_output_is( <<'TCL', <<OUT, "body not loaded by default" );
  info body ::parray
 TCL
 "::parray" isn't a procedure
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "body available after auto_load" );
+tcl_output_is( <<'TCL', <<OUT, "body available after auto_load" );
  auto_load parray
  info body ::parray
  puts ok
@@ -26,7 +25,7 @@ TCL
 ok
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "body available after auto_load of FQ name" );
+tcl_output_is( <<'TCL', <<OUT, "body available after auto_load of FQ name" );
  auto_load ::parray
  info body ::parray
  puts ok
@@ -38,38 +37,38 @@ TODO: {
     local $TODO;
     $TODO = 'without unknown, these need an explicit auto_load now';
 
-language_output_is( "tcl", <<'TCL', <<OUT, "no args" );
+tcl_output_is( <<'TCL', <<OUT, "no args" );
  parray
 TCL
 wrong # args: should be "parray a ?pattern?"
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "too many args" );
+tcl_output_is( <<'TCL', <<OUT, "too many args" );
  parray a b c d
 TCL
 wrong # args: should be "parray a ?pattern?"
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "bad array" );
+tcl_output_is( <<'TCL', <<OUT, "bad array" );
   parray bad_array
 TCL
 "bad_array" isn't an array
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "bad array, with pattern" );
+tcl_output_is( <<'TCL', <<OUT, "bad array, with pattern" );
   parray bad_array bork?
 TCL
 "bad_array" isn't an array
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "with pattern" );
+tcl_output_is( <<'TCL', <<OUT, "with pattern" );
   array set a [list z always ab first coco last]
   parray a a*
 TCL
 a(ab) = first
 OUT
 
-language_output_is( "tcl", <<'TCL', <<OUT, "normal usage" );
+tcl_output_is( <<'TCL', <<OUT, "normal usage" );
   array set a [list z always ab first coco last]
   parray a
 TCL

@@ -7,11 +7,10 @@ use strict;
 use warnings;
 use lib qw(lib);
 
-use Parrot::Installed;
-use Parrot::Test tests => 10;
-use Test::More;
+use Parrot::Test::Tcl;
+use Test::More tests => 10;
 
-language_output_is( "tcl", <<'TCL', <<'OUT', 'upvar $command' );
+tcl_output_is( <<'TCL', <<'OUT', 'upvar $command' );
   proc test {} {uplevel {set a 42}}
   test
   puts $a
@@ -19,32 +18,32 @@ TCL
 42
 OUT
 
-language_output_is( "tcl", <<'TCL', <<'OUT', "uplevel - bad args" );
+tcl_output_is( <<'TCL', <<'OUT', "uplevel - bad args" );
   uplevel
 TCL
 wrong # args: should be "uplevel ?level? command ?arg ...?"
 OUT
 
-language_output_is( 'tcl', <<'TCL', <<'OUT', 'uplevel - bad args' );
+tcl_output_is( <<'TCL', <<'OUT', 'uplevel - bad args' );
   uplevel 0
 TCL
 wrong # args: should be "uplevel ?level? command ?arg ...?"
 OUT
 
-language_output_is( "tcl", <<'TCL', <<'OUT', "uplevel - bad level" );
+tcl_output_is( <<'TCL', <<'OUT', "uplevel - bad level" );
   uplevel a b
 TCL
 bad level "a"
 OUT
 
-language_output_is( "tcl", <<'TCL', <<'OUT', "uplevel 0" );
+tcl_output_is( <<'TCL', <<'OUT', "uplevel 0" );
   proc test {} {uplevel 0 {set a 42}; puts $a}
   test
 TCL
 42
 OUT
 
-language_output_is( "tcl", <<'TCL', <<'OUT', "uplevel #0" );
+tcl_output_is( <<'TCL', <<'OUT', "uplevel #0" );
   proc a {} {uplevel #0 {set a 42}}
   proc b {} {a}
   a
@@ -53,7 +52,7 @@ TCL
 42
 OUT
 
-language_output_is( "tcl", <<'TCL', <<'OUT', "uplevel - from one lexical to another" );
+tcl_output_is( <<'TCL', <<'OUT', "uplevel - from one lexical to another" );
   proc add2to_a {} {uplevel {set a [expr {$a+2}]}}
   proc test {} { set a 1; add2to_a; puts $a }
   test
@@ -61,8 +60,7 @@ TCL
 3
 OUT
 
-language_output_is( 'tcl',
-    <<'TCL', <<'OUT', 'uplevel - from one lexical in an uplevel to another' );
+tcl_output_is( <<'TCL', <<'OUT', 'uplevel - from one lexical in an uplevel to another' );
 proc test {} {
     set ok 0
     level1
@@ -85,7 +83,7 @@ TCL
 0
 OUT
 
-language_output_is( 'tcl', <<'TCL', <<'OUT', 'uplevel - reset environent on execption' );
+tcl_output_is( <<'TCL', <<'OUT', 'uplevel - reset environent on execption' );
   proc test {} {catch {uplevel #0 {error "foo"}}}
   set a 4
   test
@@ -94,7 +92,7 @@ TCL
 4
 OUT
 
-language_output_is( 'tcl', <<'TCL', <<'OUT', 'uplevel - info level interaction' );
+tcl_output_is( <<'TCL', <<'OUT', 'uplevel - info level interaction' );
   proc test {} {uplevel {info level}}
   puts [test]
 TCL
