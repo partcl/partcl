@@ -190,7 +190,8 @@ clean:
 
 realclean: clean
 	$(RM_F) examples/Makefile Makefile t_tcl \
-		$(PMCDIR)/Makefile $(OPSDIR)/Makefile
+		$(PMCDIR)/Makefile $(OPSDIR)/Makefile \
+		lib/Parrot/Installed.pm
 
 distclean: realclean
 

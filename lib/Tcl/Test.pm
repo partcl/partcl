@@ -6,12 +6,14 @@ package Tcl::Test;
 use warnings;
 use strict;
 
-use lib qw(../lib ../../lib ../../../lib ../../../../lib);
+use lib qw(lib);
+
+use Parrot::Installed;
 use Parrot::Config;
 use File::Spec;
 
 sub import {
-    my $parrot = File::Spec->catfile( $PConfig{bin_dir}, 'parrot' );
+    my $parrot = $PConfig{test_prog} . $PConfig{exe};
     my $test = File::Spec->rel2abs($0);
 
     if ( exists $ENV{TEST_PROG_ARGS} ) {

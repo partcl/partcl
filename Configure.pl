@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use Getopt::Long;
 
+use Fatal qw(open);
+
 my %options;
 GetOptions(\%options, 'parrot-config=s', 'help|?') or usage();
 usage() if $options{'help'};
@@ -44,6 +46,15 @@ foreach my $template (keys %makefiles) {
     print "Creating $makefile\n";
     system("$build_tool $template $makefile");
 }
+
+
+print "Creating Parrot::Installed\n";
+
+open my $fh, '>', 'lib/Parrot/Installed.pm';
+
+print {$fh} "package Parrot::Installed;\n";
+print {$fh} "use lib qw(${libdir}${versiondir}/tools/lib);\n";
+print {$fh} "1;\n";
 
 print <<"END";
 
