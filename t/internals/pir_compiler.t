@@ -5,14 +5,15 @@
 
 use strict;
 use warnings;
-use lib qw(tcl/lib ./lib ../lib ../../lib ../../../lib);
+use lib qw(lib);
 
+use Parrot::Installed;
 use Parrot::Test tests => 7;
 use Test::More;
 
 pir_output_is( <<'CODE', <<'OUTPUT', "test tcl compiler, verify double call works" );
   .sub main :main
-     load_bytecode "languages/tcl/runtime/tcllib.pbc"
+     load_bytecode "runtime/tcllib.pbc"
      .local pmc tcl_compiler,compiled_sub
      tcl_compiler = compreg "TCL"
      compiled_sub = tcl_compiler("puts {ok 1}")
@@ -29,7 +30,7 @@ pir_output_is( <<'CODE', <<'OUTPUT', "test tcl compiler global variable interop"
 .HLL 'Tcl'
 .loadlib 'tcl_group'
   .sub main :main
-     load_bytecode 'languages/tcl/runtime/tcllib.pbc'
+     load_bytecode 'runtime/tcllib.pbc'
      .local pmc tcl_compiler,compiled_sub
      $P1 = box 'ok 1' 
      set_global '$a', $P1
@@ -46,7 +47,7 @@ pir_output_is( <<'CODE', <<'OUTPUT', "pass arguments to a tcl proc from PIR" );
 .loadlib 'tcl_group'
 .sub main :main
 
-  load_bytecode 'languages/tcl/runtime/tcllib.pbc'
+  load_bytecode 'runtime/tcllib.pbc'
 
   $P0 = compreg 'TCL'
   $P1 = $P0('proc _tmp {a} {puts $a}')
@@ -62,7 +63,7 @@ OUTPUT
 
 pir_output_is( <<'CODE', <<'OUTPUT', "invoke argless tcl proc from PIR" );
 .sub _main :main
-  load_bytecode "languages/tcl/runtime/tcllib.pbc"
+  load_bytecode "runtime/tcllib.pbc"
   $S1 = 'proc hey {} { puts 11 }; hey; '
   $P1 = compreg 'TCL'
   $P0 = $P1($S1)

@@ -1,10 +1,10 @@
-#!../../parrot
+#! parrot
 # Copyright (C) 2001-2008, The Perl Foundation.
 # $Id: select_switches.t 31511 2008-09-30 14:18:56Z coke $
 
 =head1 NAME
 
-languages/tcl/t/internal/select_switches.t
+t/internal/select_switches.t
 
 =head1 DESCRIPTION
 
@@ -24,7 +24,7 @@ builtins.
 .sub main :main
     .include 'test_more.pir'
 
-    load_bytecode 'languages/tcl/runtime/tcllib.pir'
+    load_bytecode 'runtime/tcllib.pir'
 
     plan(32)
     .local string message
