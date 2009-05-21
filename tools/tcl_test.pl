@@ -113,7 +113,7 @@ sub run_tests {
         print "Skipping $file: see $url\n";
         next;
       }
-      my $cmd = "../../parrot tcl.pbc $file";
+      my $cmd = "parrot tcl.pbc $file";
       print "$cmd\n";
       system $cmd;
     }
