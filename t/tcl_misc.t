@@ -5,8 +5,9 @@
 
 use strict;
 use warnings;
-use lib qw(tcl/lib ./lib ../lib ../../lib ../../../lib);
+use lib qw(lib);
 
+use Parrot::Installed;
 use Parrot::Test tests => 34;
 use Test::More;
 
