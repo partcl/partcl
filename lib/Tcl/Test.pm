@@ -13,7 +13,7 @@ use Parrot::Config;
 use File::Spec;
 
 sub import {
-    my $parrot = $PConfig{test_prog} . $PConfig{exe};
+    my $parrot = $PConfig{bindir} . "/" . $PConfig{test_prog} . $PConfig{exe};
     my $test = File::Spec->rel2abs($0);
 
     if ( exists $ENV{TEST_PROG_ARGS} ) {
