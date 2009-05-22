@@ -33,6 +33,13 @@ U: cotto
 D: Fix PMCs to work with Parrot 1.1
 E: christoph@mksig.org
 
+N: François Perrad
+A: Francois Perrad
+E: francois.perrad@gadz.org
+W: http://fperrad.googlepages.com/home
+U: fperrad
+D: build fixes for OS X
+
 N: Jerry Gay a.k.a. particle
 E: Jerry.Gay@gmail.com
 D: twiddles random bits

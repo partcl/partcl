@@ -10,9 +10,9 @@ PARROT  = $(BIN_DIR)/parrot@exe@
 TOOLS_DIR = @libdir@$(VERSION_DIR)@slash@tools
 RECONFIGURE = $(PERL) $(LIB_DIR)/tools/dev/gen_makefile.pl
 PBC_TO_EXE    = $(BIN_DIR)/pbc_to_exe@exe@
-#CONDITIONED_LINE(darwin):
-#CONDITIONED_LINE(darwin):# MACOSX_DEPLOYMENT_TARGET must be defined for OS X compilation/linking
-#CONDITIONED_LINE(darwin):export MACOSX_DEPLOYMENT_TARGET := @osx_version@
+#IF(darwin):
+#IF(darwin):# MACOSX_DEPLOYMENT_TARGET must be defined for OS X compilation/linking
+#IF(darwin):export MACOSX_DEPLOYMENT_TARGET := @osx_version@
 
 TCL_LIB   = library
 O         = @o@
@@ -121,7 +121,7 @@ CLASSES = \
 pmcs:
 	$(MAKE) $(PMCDIR)
 
-.c$(O) :   
+.c$(O) :
 	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) @cc_o_out@$@ -c $<
 
 ops: src/binary$(O)
@@ -157,7 +157,7 @@ runtime/builtins.pir \
 "$(PMCDIR)/*_group.h" \
 "$(PMCDIR)/*$(LOAD_EXT)" \
 "$(PMCDIR)/*.dump" \
-#CONDITIONED_LINE(ld_parrot_exe_def):"$(PMCDIR)/*.def" \
+#IF(ld_parrot_exe_def):"$(PMCDIR)/*.def" \
 "$(PMCDIR)/*.c" \
 "$(PMCDIR)/*$(O)" \
 "$(PMCDIR)/*.exp" \
