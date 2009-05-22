@@ -191,7 +191,9 @@ clean:
 realclean: clean
 	$(RM_F) examples/Makefile Makefile t_tcl \
 		$(PMCDIR)/Makefile $(OPSDIR)/Makefile \
-		lib/Parrot/Installed.pm
+		lib/Parrot/Installed.pm \
+                t/internals/select_option.t \
+                t/internals/select_switches.t
 
 distclean: realclean
 
