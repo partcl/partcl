@@ -3,7 +3,7 @@
 
 =head1 NAME
 
-languages/tcl/t/internal/select_option.t
+t/internal/select_option.t
 
 =head1 DESCRIPTION
 
@@ -23,7 +23,7 @@ Excercise select_options() - the feature that lets us specify, for example
 .sub main :main
     .include 'test_more.pir'
 
-    load_bytecode 'languages/tcl/runtime/tcllib.pir'
+    load_bytecode 'runtime/tcllib.pir'
  
     plan(8)
     .local string message

@@ -18,7 +18,7 @@ static int class_TclString = 0;
 
 =head1 NAME
 
-languages/tcl/src/binary.c
+src/binary.c
 
 =head1 DESCRIPTION
 
