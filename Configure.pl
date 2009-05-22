@@ -22,6 +22,7 @@ my $make = `$config make`;
 
 chomp($perlbin);
 chomp($libdir);
+chomp($bindir);
 chomp($versiondir);
 chomp($slash);
 chomp($make);
