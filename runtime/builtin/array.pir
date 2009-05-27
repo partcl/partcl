@@ -288,7 +288,9 @@ not_array:
    .return ('')
 
 no_args:
-   # unset the entire array.
+   # unset the entire array, if it is one.
+   if is_array == 0 goto not_array
+
    $P1 = new 'Undef'
    copy the_array, $P1 
   .return('')
