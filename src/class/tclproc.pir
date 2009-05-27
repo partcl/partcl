@@ -7,8 +7,6 @@ A .Sub with attributes
 .HLL 'parrot'
 .namespace [ 'TclProc' ]
 
-.cloneable()
-
 =head2 class_init
 
 Define the attributes required for the class.

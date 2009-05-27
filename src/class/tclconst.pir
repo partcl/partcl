@@ -1,8 +1,6 @@
 .HLL 'parrot'
 .namespace [ 'TclConst' ]
 
-.cloneable()
-
 =head1 TclConst
 
 =head2 class_init

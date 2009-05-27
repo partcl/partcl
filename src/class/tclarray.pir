@@ -12,8 +12,6 @@ for this numbering scheme so this is failign a few tests in set-old.test
 .HLL 'parrot'
 .namespace [ 'TclArray' ]
 
-.cloneable()
-
 =head2 class_init
 
 Define the attributes required for the class.

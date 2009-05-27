@@ -80,23 +80,6 @@ normal parrot C<.return>
 the implementation of these never change:
 define them once and just include them.
 
-=head2 cloneable ()
-
-Simplistic implementation of C<clone> vtable
-
-=cut
-
-.macro cloneable ()
-
-.sub clone :vtable
-  .local pmc obj
-  obj = new 'Undef'
-  assign obj, self
-  .return(obj)
-.end
-
-.endm
-
 =head2 dumper
 
 Utility macro to simplify generating output during debug cycles.

@@ -7,8 +7,6 @@ A [trace]able Tcl Array
 .HLL 'parrot'
 .namespace [ 'TraceArray' ]
 
-.cloneable()
-
 =head2 class_init
 
 Define the attributes required for the class.
