@@ -46,7 +46,9 @@ my %makefiles = (
 foreach my $template (keys %makefiles) {
     my $makefile = $makefiles{$template};
     print "Creating $makefile\n";
-    system("$build_tool $template $makefile");
+    if (system("$build_tool $template $makefile") != 0) {
+        die "Unable to create makefile; You may have forgotten to run 'make install-dev'\n";
+    } 
 }
 
 
