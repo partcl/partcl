@@ -205,7 +205,7 @@ no_args:
 
   iterator = iter the_array
 
-  retval = new 'TclList'
+  retval = root_new ['parrot'; 'TclList']
 
   .local int count
   count = 0
@@ -291,7 +291,7 @@ no_args:
    # unset the entire array, if it is one.
    if is_array == 0 goto not_array
 
-   $P1 = new 'Undef'
+   $P1 = root_new ['parrot'; 'Undef']
    copy the_array, $P1 
   .return('')
 .end
@@ -474,7 +474,7 @@ not_array:
 
   iterator = iter the_array
 
-  retval = new 'TclList'
+  retval = root_new ['parrot'; 'TclList']
 
   .local int count
   count = 0
@@ -530,7 +530,7 @@ found_match:
 
   iterator = iter the_array
 
-  retval = new 'TclList'
+  retval = root_new ['parrot'; 'TclList']
 
   .local int count
   count = 0
@@ -553,7 +553,7 @@ check_end:
 
 .sub 'anon' :load :anon
   .local pmc options
-  options = new 'TclList'
+  options = root_new ['parrot'; 'TclList']
   options[0] = 'anymore'
   options[1] = 'donesearch'
   options[2] = 'exists'

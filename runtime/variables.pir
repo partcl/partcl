@@ -138,7 +138,7 @@ check_is_hash:
   .return($P0)
 
 create_elem:
-  $P0 = new 'Undef'
+  $P0 = root_new ['parrot'; 'Undef']
   variable[key] = $P0
   .return($P0)
 
@@ -154,7 +154,7 @@ scalar:
   .return(variable)
 
 make_variable:
-    variable = new 'Undef'
+    variable = root_new ['parrot'; 'Undef']
     variable = storeVar(name, variable, 'depth' => depth)
     .return(variable)
 .end
@@ -179,7 +179,7 @@ other than the default, and multiple interpreters.
   # Some cases in the code allow a NULL pmc to show up here.
   # This defensively converts them to an empty string.
   unless_null value, got_value
-  value = new 'TclString'
+  value = root_new ['parrot'; 'TclString']
   value = ''
 
  got_value:

@@ -44,7 +44,7 @@ set_last:
 
 have_indices:
   $I0 = from
-  R  = new 'TclList'
+  R  = root_new ['parrot'; 'TclList']
 loop:
   if $I0 > to goto end
   $P0 = a_list[$I0]

@@ -28,12 +28,12 @@
   .local pmc temp
 
   .local pmc eh_continue
-  eh_continue = new 'ExceptionHandler'
+  eh_continue = root_new ['parrot'; 'ExceptionHandler']
   eh_continue.'handle_types'(.CONTROL_BREAK,.CONTROL_CONTINUE)
   set_addr eh_continue, command_exception
 
   .local pmc eh_done
-  eh_done = new 'ExceptionHandler'
+  eh_done = root_new ['parrot'; 'ExceptionHandler']
   eh_done.'handle_types'(.CONTROL_BREAK)
   set_addr eh_done, done
 

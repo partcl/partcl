@@ -84,7 +84,7 @@ subst:
     ret = ast['ret']
 
     .local pmc pir
-    pir = new 'CodeString'
+    pir = root_new ['parrot'; 'CodeString']
 
     pir.'emit'(".HLL 'Tcl'")
     pir.'emit'('.namespace %0', namespace)
@@ -124,7 +124,7 @@ badswitch:
 
 .sub 'anon' :anon :load
     .local pmc options
-    options = new 'TclList'
+    options = root_new ['parrot'; 'TclList']
     options[0] = 'nobackslashes'
     options[1] = 'nocommands'
     options[2] = 'novariables'

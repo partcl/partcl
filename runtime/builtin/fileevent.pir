@@ -36,7 +36,7 @@ readable:
 
     .local pmc events
     events = get_root_global ['_tcl'], 'events'
-    $P0    = new 'TclList'
+    $P0    = root_new ['parrot'; 'TclList']
     push events, $P0
     push $P0, channel
     push $P0, script

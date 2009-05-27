@@ -246,7 +246,7 @@ empty_string:
     .return($P0)
 
 divide_by_zero:
-    $P0 = new 'TclList'
+    $P0 = root_new ['parrot'; 'TclList']
     $P0[0] = 'ARITH'
     $P0[1] = 'DIVZERO'
     $S0 = 'divide by zero'

@@ -16,7 +16,7 @@ this is as simple as returning the list.
 .sub toList :multi(_)
   .param pmc value
 
-  $P0 = new 'TclString'
+  $P0 = root_new ['parrot'; 'TclString']
   $S0 = value
 
   $P0 = $P0.'get_list'($S0)

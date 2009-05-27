@@ -73,9 +73,9 @@ Initializes a new C<PAST::Node> object.
 =cut
 
 .sub init :vtable
-    $P0 = new 'TclString'
+    $P0 = root_new ['parrot'; 'TclString']
     $P1 = new 'TclInt'
-    $P2 = new 'TclList'
+    $P2 = root_new ['parrot'; 'TclList']
 
     setattribute self, '$.source',   $P0
     setattribute self, '$.pos',      $P1

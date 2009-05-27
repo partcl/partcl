@@ -50,7 +50,7 @@ E: matt at diephouse dot com
 D: Initial run of Tcl's spec test in partcl, namespaces, lots more.
 
 N: NotFound
-D: build fixes for C++
+D: build fixes for C++, update to root_new opcode
 
 N: Thilo Planz
 D: partcl tests and inspiration

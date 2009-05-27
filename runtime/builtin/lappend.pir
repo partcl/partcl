@@ -29,7 +29,7 @@
 
 new_variable:
   .catch()
-  value = new 'TclList'
+  value = root_new ['parrot'; 'TclList']
   # goto loop
 
 loop:

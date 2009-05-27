@@ -34,7 +34,7 @@ has_global:
   goto loop
 
 create_global:
-  $P1 = new 'Undef'
+  $P1 = root_new ['parrot'; 'Undef']
   set_hll_global sigil_varname, $P1
   goto has_global
 

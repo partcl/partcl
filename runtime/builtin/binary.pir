@@ -92,7 +92,7 @@ bad_args:
 
 .sub 'anon' :anon :load
     .local pmc options
-    options = new 'TclList'
+    options = root_new ['parrot'; 'TclList']
     push options, 'format'
     push options, 'scan'
 

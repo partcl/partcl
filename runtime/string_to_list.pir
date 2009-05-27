@@ -11,7 +11,7 @@
   if $I0 == 1 goto odd_args
 
   .local pmc result
-  result = new 'TclDict'
+  result = root_new ['parrot'; 'TclDict']
 
   .local int pos
   pos = 0
@@ -55,7 +55,7 @@ odd_args:
   .param string str
 
   .local pmc list
-  $P0 = new 'TclString'
+  $P0 = root_new ['parrot'; 'TclString']
   list = $P0.'get_list'(str)
   .tailcall listToDict(list)
 .end

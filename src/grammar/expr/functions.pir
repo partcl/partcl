@@ -69,7 +69,7 @@ is_string:
     die $S0
 
 domain_error:
-    $P0 = new 'TclList'
+    $P0 = root_new ['parrot'; 'TclList']
     $P0[0] = 'ARITH'
     $P0[1] = 'DOMAIN'
     $S0 = 'domain error: argument not in valid range'
@@ -105,7 +105,7 @@ is_string:
     die $S0
 
 domain_error:
-    $P0 = new 'TclList'
+    $P0 = root_new ['parrot'; 'TclList']
     $P0[0] = 'ARITH'
     $P0[1] = 'DOMAIN'
     $S0 = 'domain error: argument not in valid range'
@@ -365,7 +365,7 @@ is_string:
     .return (ret)
 
 domain_error:
-    $P0 = new 'TclList'
+    $P0 = root_new ['parrot'; 'TclList']
     $P0[0] = 'ARITH'
     $P0[1] = 'DOMAIN'
     $S0 = 'domain error: argument not in valid range'
@@ -400,7 +400,7 @@ is_string:
     .return (ret)
 
 domain_error:
-    $P0 = new 'TclList'
+    $P0 = root_new ['parrot'; 'TclList']
     $P0[0] = 'ARITH'
     $P0[1] = 'DOMAIN'
     $S0 = 'domain error: argument not in valid range'
@@ -543,7 +543,7 @@ is_string:
     .return (ret)
 
 domain_error:
-    $P0 = new 'TclList'
+    $P0 = root_new ['parrot'; 'TclList']
     $P0[0] = 'ARITH'
     $P0[1] = 'DOMAIN'
     $S0 = 'domain error: argument not in valid range'
@@ -681,7 +681,7 @@ is_string:
     .return (ret)
 
  domain_error:
-    $P0 = new 'TclList'
+    $P0 = root_new ['parrot'; 'TclList']
     $P0[0] = 'ARITH'
     $P0[1] = 'DOMAIN'
     $S0 = 'domain error: argument not in valid range'

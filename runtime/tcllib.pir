@@ -208,10 +208,10 @@ got_platform:
   # Eventually, we'll need to register MMD for the various Tcl PMCs
   # (Presuming we don't do this from the .pmc definitions.)
 
-  $P1 = new 'TclList'
+  $P1 = root_new ['parrot'; 'TclList']
   set_global 'info_level', $P1
 
-  $P1 = new 'TclList'
+  $P1 = root_new ['parrot'; 'TclList']
   set_global 'events', $P1
 
   # Global variable initialization
@@ -243,7 +243,7 @@ got_platform:
   set_global 'next_channel_id', $P1
 
   # call chain of lex pads (for upvar and uplevel)
-  $P1 = new 'TclList'
+  $P1 = root_new ['parrot'; 'TclList']
   set_global 'call_chain', $P1
 
   # the regex used for namespaces

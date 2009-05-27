@@ -15,7 +15,7 @@
 .macro set_tcl_argv()
   argc = argv # update
   .local pmc tcl_argv
-  tcl_argv = new 'TclList'
+  tcl_argv = root_new ['parrot'; 'TclList']
   .local int ii,jj
   ii = 1
   jj = 0
@@ -47,7 +47,7 @@
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
 
   .local pmc get_options
-  get_options = new 'Getopt::Obj'
+  get_options = root_new ['parrot'; 'Getopt::Obj']
   push get_options, 'e=s'
 
   .local pmc opt
@@ -120,7 +120,7 @@ open_file:
 
 file:
   filename = shift argv
-  $P0 = new 'TclString'
+  $P0 = root_new ['parrot'; 'TclString']
   $P0 = filename
   set_root_global ['_tcl'], '$script', $P0
   .local string contents

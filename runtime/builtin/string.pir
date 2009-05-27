@@ -623,7 +623,7 @@ bad_args:
   class = shift argv
 
   .local pmc classes
-  classes = new 'TclList'
+  classes = root_new ['parrot'; 'TclList']
   push classes, 'alnum'
   push classes, 'alpha'
   push classes, 'ascii'
@@ -656,7 +656,7 @@ bad_args:
   if argc == 1 goto no_opts
 
   .local pmc options
-  options = new  'TclList'
+  options = root_new ['parrot'; 'TclList']
   push options, 'strict'
   push options, 'failindex'
 
@@ -1073,7 +1073,7 @@ bad_args:
   if argc != 1 goto bad_args
 
   $S0 = shift argv
-  $P0 = new 'TclString'
+  $P0 = root_new ['parrot'; 'TclString']
   $S0 = $P0.'reverse'($S0)
   .return ($S0)
 
@@ -1161,7 +1161,7 @@ bad_args:
 
 .sub 'anon' :anon :load
   .local pmc options
-  options = new 'TclList'
+  options = root_new ['parrot'; 'TclList']
   push options, 'bytelength'
   push options, 'compare'
   push options, 'equal'

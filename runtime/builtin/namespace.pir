@@ -217,12 +217,12 @@ bad_args:
 
   .local pmc call_chain, temp_call_chain
   call_chain      = get_root_global ['_tcl'], 'call_chain'
-  temp_call_chain = new 'TclList'
+  temp_call_chain = root_new ['parrot'; 'TclList']
   set_root_global ['_tcl'], 'call_chain', temp_call_chain
 
   .local pmc info_level
   info_level = get_root_global ['_tcl'], 'info_level'
-  $P0 = new 'TclList'
+  $P0 = root_new ['parrot'; 'TclList']
   assign $P0, argv
   unshift $P0, 'eval'
   unshift $P0, 'namespace'
@@ -246,7 +246,7 @@ bad_args:
 global_ns:
   .local pmc compileTcl, code
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
-  code     = new 'CodeString'
+  code     = root_new ['parrot'; 'CodeString']
   $S0 = join ' ', argv
   ($S0, $S1) = compileTcl($S0, 'pir_only'=>1)
   $I0 = code.'unique'()
@@ -301,7 +301,7 @@ bad_args:
 
 iterate:
   .local pmc list
-  list = new 'TclList'
+  list = root_new ['parrot'; 'TclList']
 
   .local pmc splitNamespace, ns, ns_name
   .local string name
@@ -398,7 +398,7 @@ b_first:
   script = shift argv
 
   .local string current_ns
-  $P1 = new 'TclList'
+  $P1 = root_new ['parrot'; 'TclList']
   current_ns = 'current'($P1)
 
   retval = "namespace inscope "
@@ -543,7 +543,7 @@ bad_args:
 
 .sub 'anon' :anon :load
   .local pmc options
-  options = new 'TclList'
+  options = root_new ['parrot'; 'TclList']
   options[0] = 'children'
   options[1] = 'code'
   options[2] = 'current'

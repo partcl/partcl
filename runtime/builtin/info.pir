@@ -240,7 +240,7 @@ bad_args:
 
   mathfunc = get_root_namespace ['tcl'; 'tcl'; 'mathfunc']
   iterator = iter mathfunc
-  retval = new 'TclList'
+  retval = root_new ['parrot'; 'TclList']
 
   .local pmc globber,rule,match
   globber = compreg 'Tcl::Glob'
@@ -292,7 +292,7 @@ bad_args:
 
   done_setup:
     .local pmc result
-    result = new 'TclList'
+    result = root_new ['parrot'; 'TclList']
 
     .local pmc ns
     ns = get_root_global 'tcl'
@@ -427,7 +427,7 @@ iterate:
   .local pmc    iterator, retval
   .local string elem
   iterator = iter lexpad
-  retval = new 'TclList'
+  retval = root_new ['parrot'; 'TclList']
 loop:
   unless iterator goto end
   elem = shift iterator
@@ -492,7 +492,7 @@ find_info_level:
 
   ns = get_root_namespace ['tcl']
   iterator = iter ns
-  retval = new 'TclList'
+  retval = root_new ['parrot'; 'TclList']
 
   .local pmc globber,rule,match
   globber = compreg 'Tcl::Glob'
@@ -562,7 +562,7 @@ bad_args:
 
 .sub 'anon' :anon :load
   .local pmc options
-  options = new 'TclList'
+  options = root_new ['parrot'; 'TclList']
   push options, 'args'
   push options, 'body'
   push options, 'cmdcount'

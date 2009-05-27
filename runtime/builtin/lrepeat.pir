@@ -19,7 +19,7 @@
 
   # convert the Array ireturned by foldup into a TclList.
   .local pmc retval
-  retval = new 'TclList'
+  retval = root_new ['parrot'; 'TclList']
 
   .local int i_cnt
   .local int o_cnt
