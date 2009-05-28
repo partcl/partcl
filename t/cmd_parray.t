@@ -33,42 +33,40 @@ TCL
 ok
 OUT
 
-TODO: {
-    local $TODO;
-    $TODO = 'without unknown, these need an explicit auto_load now';
+my @todo = (todo => 'without unknown, these need an explicit auto_load now');
 
-tcl_output_is( <<'TCL', <<OUT, "no args" );
+tcl_output_is( <<'TCL', <<OUT, "no args", @todo);
  parray
 TCL
 wrong # args: should be "parray a ?pattern?"
 OUT
 
-tcl_output_is( <<'TCL', <<OUT, "too many args" );
+tcl_output_is( <<'TCL', <<OUT, "too many args", @todo );
  parray a b c d
 TCL
 wrong # args: should be "parray a ?pattern?"
 OUT
 
-tcl_output_is( <<'TCL', <<OUT, "bad array" );
+tcl_output_is( <<'TCL', <<OUT, "bad array", @todo );
   parray bad_array
 TCL
 "bad_array" isn't an array
 OUT
 
-tcl_output_is( <<'TCL', <<OUT, "bad array, with pattern" );
+tcl_output_is( <<'TCL', <<OUT, "bad array, with pattern", @todo );
   parray bad_array bork?
 TCL
 "bad_array" isn't an array
 OUT
 
-tcl_output_is( <<'TCL', <<OUT, "with pattern" );
+tcl_output_is( <<'TCL', <<OUT, "with pattern", @todo );
   array set a [list z always ab first coco last]
   parray a a*
 TCL
 a(ab) = first
 OUT
 
-tcl_output_is( <<'TCL', <<OUT, "normal usage" );
+tcl_output_is( <<'TCL', <<OUT, "normal usage", @todo );
   array set a [list z always ab first coco last]
   parray a
 TCL
@@ -76,8 +74,6 @@ a(ab)   = first
 a(coco) = last
 a(z)    = always
 OUT
-
-}
 
 # Local Variables:
 #   mode: cperl
