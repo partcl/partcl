@@ -4,14 +4,17 @@
 .sub '&return'
     .param pmc argv :slurpy
 
+do_over:
     .local int argc
     argc = elements argv
 
     if argc == 0 goto empty
     if argc == 1 goto onearg
 
-    if argc != 3 goto bad_call
     $S0 = argv[0]
+    if $S0 == "-options" goto handle_opts
+
+    if argc != 3 goto bad_call
     $S1 = argv[1]
     $S2 = argv[2]
 
@@ -31,6 +34,21 @@ onearg:
 
 empty:
     tcl_return ''
+
+handle_opts:
+    $P1 = shift argv       # remove literal -options
+    $P1 = shift argv # get dictionary.
+    $P2 = get_root_global ['_tcl'], 'toDict'
+    .local pmc options, iterator, key, value
+    options = $P2($P1)
+    iterator = iter options
+o_loop:
+    unless iterator goto do_over
+    key = shift iterator
+    value = options[key]
+    unshift argv, value
+    unshift argv, key
+    goto o_loop
 .end
 
 # Local Variables:
