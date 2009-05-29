@@ -59,14 +59,14 @@ TCL
 "bad_array" isn't an array
 OUT
 
-tcl_output_is( <<'TCL', <<OUT, "with pattern", @todo );
+tcl_output_is( <<'TCL', <<OUT, "with pattern" );
   array set a [list z always ab first coco last]
   parray a a*
 TCL
 a(ab) = first
 OUT
 
-tcl_output_is( <<'TCL', <<OUT, "normal usage", @todo );
+tcl_output_is( <<'TCL', <<OUT, "normal usage" );
   array set a [list z always ab first coco last]
   parray a
 TCL

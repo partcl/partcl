@@ -290,11 +290,27 @@ END_PIR
 
   emit:
     $S3  = pir.'escape'(name)
+    if $S0 == "" goto no_args
     pir.'emit'(<<'END_PIR', retval, $S3, $S0, invalid_, done_)
     %0 = %0(%2)
     goto %4
 %3:
-    die 'invalid command name %1'
+    .local pmc unk
+    unk = get_hll_global '&unknown'
+    unk(%1, %2)
+%4:
+END_PIR
+    node['ret'] = retval
+    .return(pir)
+
+no_args:
+    pir.'emit'(<<'END_PIR', retval, $S3, $S0, invalid_, done_)
+    %0 = %0()
+    goto %4
+%3:
+    .local pmc unk
+    unk = get_hll_global '&unknown'
+    unk(%1)
 %4:
 END_PIR
     node['ret'] = retval
