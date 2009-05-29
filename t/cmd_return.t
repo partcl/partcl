@@ -31,5 +31,13 @@ eval_is {
 eval_is {
   proc joe {} { return -code error "bad args" }
   joe
-  puts foo
 } {bad args} {-code error}
+
+eval_is {
+  proc foo {} {
+    return -options {-code error} "bad args"
+  }
+  set a [catch {foo} bar]
+  list $a $bar
+} {1 {bad args}} {-options handling} {TODO {needed for unknown handling}}
+
