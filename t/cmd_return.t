@@ -10,7 +10,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 4
+plan 5
 
 eval_is {
  proc joe {} {
@@ -32,6 +32,11 @@ eval_is {
   proc joe {} { return -code error "bad args" }
   joe
 } {bad args} {-code error}
+
+eval_is {
+  proc joe {} { return -level 1 "same as nothing" }
+  joe
+} {same as nothing} {-level 1 support}
 
 eval_is {
   proc foo {} {
