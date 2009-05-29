@@ -87,7 +87,7 @@ Utility macro to simplify generating output during debug cycles.
 =cut
 
 .macro dumper(dingus)
-  load_bytecode 'library/dumper.pbc'
+  load_bytecode 'dumper.pbc'
   load_bytecode 'PGE/Dumper.pbc'
   $P9999 = get_root_global ['parrot'], '_dumper'
   $P9999(.dingus)
