@@ -536,8 +536,22 @@ bad_args:
   die 'wrong # args: should be "namespace parent ?name?"'
 .end
 
-# RT#40753: Stub
 .sub 'which'
+  .param pmc argv
+
+  .local string cmd
+do_over:
+  cmd = shift argv
+  if cmd == '-command' goto do_over
+
+  # This should use the same logic as our command dispatch. 
+  $S1 = "&" . cmd 
+  $P1 = get_root_global ['tcl'], $S1
+  if null $P1 goto nothing
+  $S0 = '::' . cmd
+  .return($S0)
+
+nothing:
   .return ('')
 .end
 

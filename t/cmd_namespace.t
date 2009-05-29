@@ -10,7 +10,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 41
+plan 42
 
 eval_is {namespace} \
   {wrong # args: should be "namespace subcommand ?arg ...?"} \
@@ -142,6 +142,10 @@ namespace eval perl6 {
 }
 namespace import perl6::pi
 eval_is {pi} 3 {simple import test}
+
+eval_is {
+  namespace which -command incr
+} {::incr} {simple namespace which}
 
 # we can't do this test until all the file commands work
 # ([file delete] in particular)
