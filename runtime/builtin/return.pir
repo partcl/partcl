@@ -34,6 +34,8 @@ next_arg:
     opt_val = shift argv
     if opt == '-code'  goto handle_code
     if opt == '-level' goto handle_level
+    if opt == '-errorinfo' goto skip_option
+    if opt == '-errorcode' goto skip_option
     goto bad_call # we can't deal with other options yet.
 
 handle_code:
@@ -45,6 +47,9 @@ handle_level:
     if opt_val != '1' goto bad_call
     # level == 1 is a no op.
     goto process_args
+
+skip_option:
+    goto process_args # skip this for now.
 
 ready:
     if type == .TCL_RETURN goto return
