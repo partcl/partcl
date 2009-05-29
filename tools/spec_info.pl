@@ -15,21 +15,18 @@ no local modifications.
 use strict;
 use warnings;
 
+use lib qw(lib);
+
+use Parrot::Installed;
+use Parrot::Config;
+
 use IO::Handle;
 
 my $svn_info  = `svn info .`;
 $svn_info =~ /Revision:\s+(\d+)/sm;
 my $revision = $1;
 
-$svn_info  = `svn info ..`;
-my $parrot_revision;
-if ($svn_info =~ m{https://svn.perl.org/parrot/tags/RELEASE_([0-9_]+)}) {
-  $parrot_revision = "v$1";
-  $parrot_revision =~ s/_/./g;
-} else {
-  $svn_info =~ /Revision:\s+(\d+)/sm;
-  $parrot_revision = "r$1";
-}
+my $parrot_revision = 'r' . $PConfig{revision};
 
 my $start = time();
 

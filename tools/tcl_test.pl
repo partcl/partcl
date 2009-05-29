@@ -4,7 +4,14 @@
 
 use strict;
 use warnings;
+
 use vars qw($DIR);
+use lib qw(lib);
+
+use Parrot::Installed;
+use Parrot::Config;
+
+my $parrot = $PConfig{bindir} . '/parrot';
 
 # the directory to put the tests in
 $DIR = 't_tcl';
@@ -113,7 +120,7 @@ sub run_tests {
         print "Skipping $file: see $url\n";
         next;
       }
-      my $cmd = "parrot tcl.pbc $file";
+      my $cmd = "$parrot tcl.pbc $file";
       print "$cmd\n";
       system $cmd;
     }
