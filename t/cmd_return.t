@@ -10,7 +10,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 3
+plan 4
 
 eval_is {
  proc joe {} {
