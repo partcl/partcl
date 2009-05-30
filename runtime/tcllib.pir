@@ -1,7 +1,7 @@
 =head1 tcllib
 
-This file contains all the PIR necessary to setup the basic C<Tcl>,
-C<_Tcl>, and C<_TclWord> namespaces. These namespaces can then be used
+This file contains all the PIR necessary to setup the C<tcl> and
+C<_tcl> namespaces. These namespaces can then be used
 by our own C<tcl.pir> to setup a tclsh-like interpreter, or to allow
 other PIR programs to access procedures in our own namespaces, also
 providing a compreg-compatible method.
