@@ -179,8 +179,7 @@ other than the default, and multiple interpreters.
   # Some cases in the code allow a NULL pmc to show up here.
   # This defensively converts them to an empty string.
   unless_null value, got_value
-  value = root_new ['parrot'; 'TclString']
-  value = ''
+  value = box ''
 
  got_value:
   # is this an array?
