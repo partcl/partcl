@@ -217,9 +217,9 @@ got_platform:
   # Global variable initialization
 
    #version info
-  $P0 = box '0.1'
+  $P0 = box '8.5.6'
   set_root_global ['tcl'], '$tcl_patchLevel', $P0
-  $P0 = box '0.1'
+  $P0 = box '8.5'
   set_root_global ['tcl'], '$tcl_version', $P0
 
   #error information
