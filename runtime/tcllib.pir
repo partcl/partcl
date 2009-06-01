@@ -319,14 +319,32 @@ got_platform:
     $P2 = ct(contents, 'bsnl' => 1)
     $P2()
 
-    .local pmc library, sourcens
+    .local pmc library, sourcens, symns, nsiter
+    .local string item, titem
     library = root_new ['parrot';'Hash']
     sourcens = get_hll_namespace name
     library['name'] = name
     library['namespace'] = sourcens
+    symns = root_new ['parrot';'NameSpace']
+    nsiter = root_new ['parrot';'Iterator'], sourcens
+  loop:
+    unless nsiter goto loop_end
+    item = shift nsiter
+    $S0 = substr item, 0, 1
+    titem = concat item, ''
+    eq $S0, '&', trim
+    eq $S0, '$', trim
+    goto no_trim
+  trim:
+    substr titem, 0, 1, ''
+  no_trim:
+    $P0 = sourcens[item]
+    symns[titem] = $P0
+    goto loop
+  loop_end:
     $P0 = root_new ['parrot';'Hash']
-    $P0['ALL'] = sourcens
-    $P0['DEFAULT'] = sourcens
+    $P0['ALL'] = symns
+    $P0['DEFAULT'] = symns
     library['symbols'] = $P0
     .return (library)
 .end
