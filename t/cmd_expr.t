@@ -331,19 +331,17 @@ eval_is {expr 0 < inf} 1 {infinite comparison} $TODO
 
 eval_is {expr 3/0} {divide by zero} {divide by zero}
 
+eval_is {expr nan} \
+  {domain error: argument not in valid range} {NaN lc}
+eval_is {expr nAn} \
+  {domain error: argument not in valid range} {NaN mixed case}
+eval_is {expr nan/0} \
+  {can't use non-numeric floating-point value as operand of "/"} \
+  {nan trumps div by 0}
 
 # not a number tests.
 set TODO {TODO "pending NaN implementation"}
 
-eval_is {expr nan} \
-  {domain error: argument not in valid range} {NaN lc} \
-  $TODO
-eval_is {expr nAn} \
-  {domain error: argument not in valid range} {NaN mixed case} \
-  $TODO
-eval_is {expr nan/0} \
-  {can't use non-numeric floating-point value as operand of "/"} \
-  {nan trumps div by 0}
 foreach function $function_list {
   eval_is "expr ${function}(nan)" \
     {floating point value is Not a Number} \

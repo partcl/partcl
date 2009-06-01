@@ -331,12 +331,17 @@ Given an expression, return a subroutine, or optionally, the raw PIR
     .local pmc pir
     pir = new 'CodeString'
 
-    pir.'emit'(".HLL 'Tcl'")
-    pir.'emit'('.namespace %0', namespace)
-    pir.'emit'(".sub '_anon' :anon")
-    pir .= result
-    pir.'emit'("  .return(%0)", ret)
-    pir.'emit'(".end")
+    pir.'emit'(<<"END_PIR", namespace, result, ret)
+.HLL 'Tcl'
+.namespace %0
+.sub '_anon' :anon
+%1
+.if_nan(%2,nan)
+.return(%2)
+nan:
+  die "domain error: argument not in valid range"
+.end
+END_PIR
 
     $P1 = compreg 'PIR'
     $P2 = $P1(pir)
