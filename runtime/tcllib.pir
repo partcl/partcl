@@ -287,6 +287,7 @@ got_platform:
   set_root_global ['_tcl'], 'slash', $P2
 .end
 
+.HLL 'parrot'
 .namespace ['Tcl';'Compiler']
 
 .sub '' :anon :load :init
