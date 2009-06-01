@@ -1,5 +1,20 @@
 .include 'src/returncodes.pasm'
 
+=head1 math macros
+
+=head2 if_nan(reg,target)
+
+If the specified register contains a NaN, goto the specified label.
+
+=cut
+
+.macro if_nan(reg,target)
+  # XXX this should use .macro_local
+  $N9999 = .reg
+  $S9999 = $N9999
+  if $S9999 == 'NaN' goto .target
+.endm
+
 =head1 exception handling macros
 
 Exception creation can be fairly verbose. These macros provide an API

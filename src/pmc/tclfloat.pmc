@@ -52,7 +52,8 @@ pmclass TclFloat
         e   = CONST_STRING(INTERP, "e");
 
         if (Parrot_str_find_index(INTERP, buff, dot, 0) == -1
-         && Parrot_str_find_index(INTERP, buff, e, 0) == -1) {
+         && Parrot_str_find_index(INTERP, buff, e, 0) == -1
+	 && ! Parrot_str_equal(INTERP, CONST_STRING(INTERP, "NaN"),buff)) {
             dot_zero = CONST_STRING(INTERP, ".0");
             buff = Parrot_str_append(INTERP, buff, dot_zero);
             return buff;

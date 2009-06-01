@@ -333,7 +333,7 @@ eval_is {expr 3/0} {divide by zero} {divide by zero}
 
 
 # not a number tests.
-set TODO {SKIP "pending NaN implementation"}
+set TODO {TODO "pending NaN implementation"}
 
 eval_is {expr nan} \
   {domain error: argument not in valid range} {NaN lc} \
@@ -343,21 +343,19 @@ eval_is {expr nAn} \
   $TODO
 eval_is {expr nan/0} \
   {can't use non-numeric floating-point value as operand of "/"} \
-  {nan trumps div by 0} \
-  $TODO
+  {nan trumps div by 0}
 foreach function $function_list {
   eval_is "expr ${function}(nan)" \
     {floating point value is Not a Number} \
     "${function}(nan)" \
     $TODO
 }
+
 foreach operator $ops_list {
   eval_is "expr nan $operator nan" \
     "can't use non-numeric floating-point value as operand of \"$operator\"" \
-    "nan $operator nan" \
-    $TODO
+    "nan $operator nan"
 }
-
 
 # variable expansions..
 is [

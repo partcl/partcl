@@ -168,6 +168,9 @@ empty_string:
     .param pmc a
     .param pmc b
 
+    .if_nan(a, nan)
+    .if_nan(b, nan)
+
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
 
@@ -200,11 +203,16 @@ zero_with_zero:
     .return(1)
 zero_with_neg:
      die 'exponentiation of zero by negative power'
+nan:
+    die "can't use non-numeric floating-point value as operand of \"**\""
 .end
 
 .sub 'infix:*'
     .param pmc a
     .param pmc b
+
+    .if_nan(a,nan)
+    .if_nan(b,nan)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -225,11 +233,16 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"*\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"*\""
 .end
 
 .sub 'infix:/'
     .param pmc a
     .param pmc b
+
+    .if_nan(a, nan)
+    .if_nan(b, nan)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -261,11 +274,16 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"/\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"/\""
 .end
 
 .sub 'infix:%'
     .param pmc a
     .param pmc b
+
+    .if_nan(a,nan)
+    .if_nan(b,nan)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -295,6 +313,8 @@ empty_string:
 
 is_float:
     die "can't use floating-point value as operand of \"%\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"%\""
 .end
 
 .sub 'infix:+'
@@ -303,6 +323,9 @@ is_float:
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
+
+    .if_nan(a, nan)
+    .if_nan(b, nan)
 
     push_eh is_string
       a = toNumber(a)
@@ -320,11 +343,16 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"+\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"+\""
 .end
 
 .sub 'infix:-'
     .param pmc a
     .param pmc b
+
+    .if_nan(a,nan)
+    .if_nan(b,nan)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -345,15 +373,29 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"-\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"-\""
 .end
 
 # left shift
 .sub 'infix:<<'     :multi(Float, pmc)
+    .param pmc a
+    .param pmc b
+    .if_nan(a,nan)
+    .if_nan(b,nan)
   die "can't use floating-point value as operand of \"<<\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"<<\""
 .end
 
 .sub 'infix:<<'     :multi(pmc, Float)
+    .param pmc a
+    .param pmc b
+    .if_nan(a,nan)
+    .if_nan(b,nan)
   die "can't use floating-point value as operand of \"<<\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"<<\""
 .end
 
 .sub 'infix:<<'     :multi(Integer, Integer)
@@ -367,6 +409,8 @@ empty_string:
 .sub 'infix:<<'     :multi(pmc, pmc)
     .param pmc a
     .param pmc b
+    .if_nan(a,nan)
+    .if_nan(b,nan)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -397,15 +441,31 @@ empty_string:
 
 is_float:
   die "can't use floating-point value as operand of \"<<\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"<<\""
 .end
 
 # right shift
 .sub 'infix:>>'     :multi(Float, pmc)
+    .param pmc a
+    .param pmc b
+    .if_nan(a,nan)
+    .if_nan(b,nan)
+
   die "can't use floating-point value as operand of \">>\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \">>\""
 .end
 
 .sub 'infix:>>'     :multi(pmc, Float)
+    .param pmc a
+    .param pmc b
+    .if_nan(a,nan)
+    .if_nan(b,nan)
+
   die "can't use floating-point value as operand of \">>\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \">>\""
 .end
 
 .sub 'infix:>>'     :multi(Integer, Integer)
@@ -418,6 +478,8 @@ is_float:
 .sub 'infix:>>'     :multi(pmc, pmc)
     .param pmc a
     .param pmc b
+    .if_nan(a,nan)
+    .if_nan(b,nan)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -427,8 +489,8 @@ is_float:
       b = toNumber(b)
     pop_eh
 
-    $I0 = isa a, 'Float'
-    if $I0 goto is_float
+    $I1 = isa a, 'Float'
+    if $I1 goto is_float
     $I0 = isa b, 'Float'
     if $I0 goto is_float
 
@@ -448,6 +510,8 @@ empty_string:
 
 is_float:
     die "can't use floating-point value as operand of \">>\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \">>\""
 .end
 
 # *ALL* operands
@@ -603,7 +667,9 @@ is_string:
 .sub 'infix:&'     :multi(String, String)
   .param pmc a
   .param pmc b
-
+  .if_nan(a,nan)
+  .if_nan(b,nan)
+   
   .local pmc toInteger
   toInteger = get_root_global ['_tcl'], 'toInteger'
 
@@ -625,6 +691,8 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"&\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"&\""
 .end
 
 .sub 'infix:&'     :multi(String, Integer)
@@ -679,6 +747,8 @@ empty_string:
     .param pmc a
     .param pmc b
 
+    .if_nan(a,nan)
+
     .local pmc toInteger
     toInteger = get_root_global ['_tcl'], 'toInteger'
 
@@ -694,11 +764,15 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"&\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"&\""
 .end
 
 .sub 'infix:&'     :multi(String, Float)
     .param pmc a
     .param pmc b
+
+    .if_nan(b,nan)
 
     .local pmc toInteger
     toInteger = get_root_global ['_tcl'], 'toInteger'
@@ -715,14 +789,30 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"&\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"&\""
 .end
 
 .sub 'infix:&'     :multi(Float, pmc)
+  .param pmc a
+  .param pmc b
+  .if_nan(a,nan)
+  .if_nan(b,nan)
+
   die "can't use floating-point value as operand of \"&\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"&\""
 .end
 
 .sub 'infix:&'     :multi(pmc, Float)
+  .param pmc a
+  .param pmc b
+  .if_nan(a,nan)
+  .if_nan(b,nan)
+
   die "can't use floating-point value as operand of \"&\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"&\""
 .end
 
 .sub 'infix:&'     :multi(Integer, Integer)
@@ -737,6 +827,8 @@ empty_string:
 .sub 'infix:^'     :multi(String, String)
   .param pmc a
   .param pmc b
+  .if_nan(a,nan)
+  .if_nan(b,nan)
 
   .local pmc toInteger
   toInteger = get_root_global ['_tcl'], 'toInteger'
@@ -759,6 +851,8 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"^\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"^\""
 .end
 
 .sub 'infix:^'     :multi(String, Integer)
@@ -813,6 +907,8 @@ empty_string:
     .param pmc a
     .param pmc b
 
+    .if_nan(a,nan)
+
     .local pmc toInteger
     toInteger = get_root_global ['_tcl'], 'toInteger'
 
@@ -828,11 +924,15 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"^\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"^\""
 .end
 
 .sub 'infix:^'     :multi(String, Float)
     .param pmc a
     .param pmc b
+
+    .if_nan(b, nan)
 
     .local pmc toInteger
     toInteger = get_root_global ['_tcl'], 'toInteger'
@@ -849,14 +949,29 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"^\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"^\""
 .end
 
 .sub 'infix:^'     :multi(Float, pmc)
+  .param pmc a
+  .param pmc b
+  .if_nan(a, nan)
+  .if_nan(b, nan)
+
   die "can't use floating-point value as operand of \"^\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"^\""
 .end
 
 .sub 'infix:^'     :multi(pmc, Float)
+  .param pmc a
+  .param pmc b
+  .if_nan(a, nan)
+  .if_nan(b, nan)
   die "can't use floating-point value as operand of \"^\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"^\""
 .end
 
 .sub 'infix:^'     :multi(Integer, Integer)
@@ -871,7 +986,12 @@ empty_string:
 .sub 'infix:|'     :multi(String, String)
   .param pmc a
   .param pmc b
+  .if_nan(a,nan)
+  .if_nan(b,nan)
 
+  .if_nan(a,nan) 
+  .if_nan(b,nan) 
+  
   .local pmc toInteger
   toInteger = get_root_global ['_tcl'], 'toInteger'
 
@@ -893,6 +1013,8 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"|\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"|\""
 .end
 
 .sub 'infix:|'     :multi(String, Integer)
@@ -947,6 +1069,8 @@ empty_string:
     .param pmc a
     .param pmc b
 
+    .if_nan(a,nan)
+
     .local pmc toInteger
     toInteger = get_root_global ['_tcl'], 'toInteger'
 
@@ -962,11 +1086,15 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"|\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"|\""
 .end
 
 .sub 'infix:|'     :multi(String, Float)
     .param pmc a
     .param pmc b
+
+    .if_nan(b, nan)
 
     .local pmc toInteger
     toInteger = get_root_global ['_tcl'], 'toInteger'
@@ -983,14 +1111,30 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"|\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"|\""
 .end
 
 .sub 'infix:|'     :multi(Float, pmc)
+  .param pmc a
+  .param pmc b
+  .if_nan(a, nan)
+  .if_nan(b, nan)
+
   die "can't use floating-point value as operand of \"|\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"|\""
 .end
 
 .sub 'infix:|'     :multi(pmc, Float)
+  .param pmc a
+  .param pmc b
+  .if_nan(a, nan)
+  .if_nan(b, nan)
+
   die "can't use floating-point value as operand of \"|\""
+nan:
+    die "can't use non-numeric floating-point value as operand of \"|\""
 .end
 
 .sub 'infix:|'     :multi(Integer, Integer)

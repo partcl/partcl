@@ -113,7 +113,9 @@ rule nested { '(' <expression> ')' }
 
 token number { <scientific> | <float> | <integer> }
 
-token float  { (<[+\-]>)? [ <[0..9]>+\.<[0..9]>* | \.<[0..9]>+ ] }
+token float  { (<[+\-]>)? [ <[0..9]>+\.<[0..9]>* | \.<[0..9]>+ | <nan> ] }
+
+token nan { <[Nn]><[Aa]><[Nn]> }
 
 token scientific { (<float> | <integer>) <[Ee]> (<[+\-]>? <[0..9]>+) }
 

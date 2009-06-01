@@ -65,15 +65,19 @@ transform pir (PAST::Val) {
     if class == 'TclFloat'  goto assign_float
    
   assign_float:                                    
+    $S0 = downcase $S0
+    if $S0 == 'nan' goto assign_nan
     $I0 = index $S0, '.'                     # RT#40690: '.' hack due to
     if $I0 >= 0 goto assign_val              # parrotbug #38896
-    $I0 = index $S0, 'E'
-    if $I0 >= 0 goto assign_val
     $I0 = index $S0, 'e'
     if $I0 >= 0 goto assign_val
     concat $S0, '.'
   assign_val:
     pir.'emit'(' box %0, %1', ret, $S0)
+    goto end
+  assign_nan:
+    pir.'emit'(' box %0, 0', ret)
+    pir.'emit'(' %0 = "nan"', ret)
     goto end
   assign_string:
     $S0 = pir.'escape'($S0)
