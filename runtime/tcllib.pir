@@ -299,6 +299,7 @@ got_platform:
 
 .sub 'load_library' :method
     .param pmc name
+    .param pmc extra :named :slurpy
     .local pmc ct, lit, contents
     .local string filename
 
@@ -318,7 +319,16 @@ got_platform:
     $P2 = ct(contents, 'bsnl' => 1)
     $P2()
 
-
+    .local pmc library, sourcens
+    library = root_new ['parrot';'Hash']
+    sourcens = get_hll_namespace name
+    library['name'] = name
+    library['namespace'] = sourcens
+    $P0 = root_new ['parrot';'Hash']
+    $P0['ALL'] = sourcens
+    $P0['DEFAULT'] = sourcens
+    library['symbols'] = $P0
+    .return (library)
 .end
 
 .HLL 'parrot'
