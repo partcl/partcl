@@ -52,6 +52,11 @@ D: Initial run of Tcl's spec test in partcl, namespaces, lots more.
 N: NotFound
 D: build fixes for C++, update to root_new opcode
 
+N: Stephen Weeks aka Tene
+E: tene@allalone.org
+D: HLL stuff
+S: Salt Lake City, UT
+
 N: Thilo Planz
 D: partcl tests and inspiration
 

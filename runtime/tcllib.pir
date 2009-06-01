@@ -287,6 +287,40 @@ got_platform:
   set_root_global ['_tcl'], 'slash', $P2
 .end
 
+.namespace ['Tcl';'Compiler']
+
+.sub '' :anon :load :init
+    .local pmc ns, tclass, compiler
+    ns = get_hll_namespace ['Tcl';'Compiler']
+    tclass = newclass ns
+    compiler = new tclass
+    compreg 'tcl', compiler
+.end
+
+.sub 'load_library' :method
+    .param pmc name
+    .local pmc ct, lit, contents
+    .local string filename
+
+    filename = join '/', name
+    filename = concat filename, '.tcl'
+    ct = get_root_global ['_tcl'], 'compileTcl'
+    $P0 = get_hll_namespace
+    lit = $P0['load_init_tcl']
+    $P0 = root_new ['parrot';'TclString']
+    $P0 = filename
+    set_root_global ['_tcl'], '$script', $P0
+   .local string contents
+   $P99 = open filename, 'r'
+   contents = $P99.'readall'()
+
+    lit()
+    $P2 = ct(contents, 'bsnl' => 1)
+    $P2()
+
+
+.end
+
 .HLL 'parrot'
 .namespace []
 

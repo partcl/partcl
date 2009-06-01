@@ -30,6 +30,10 @@
   set_global '$argv', tcl_argv
 .endm
 
+.sub '' :load :init :anon
+  load_bytecode 'runtime/tcllib.pbc'
+.end
+
 .sub _main :main
   .param pmc argv
 
