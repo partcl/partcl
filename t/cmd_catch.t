@@ -10,7 +10,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 12
+plan 13
 
 eval_is {
   catch {
@@ -87,3 +87,12 @@ eval_is {
   set a
 } 2 {execute code as soon as possible, don't wait until the end of the block} \
 {TODO {Still trying to compile the whole block first.}}
+
+eval_is {
+  catch { return -errorcode 1 -errorinfo boo -code error -level 1 "eek" } msg opts
+  list $msg \
+    [dict get $opts -errorcode] \
+    [dict get $opts -errorinfo] \
+    [dict get $opts -code] \
+    [dict get $opts -level]
+} {eek 1 boo 1 1} {basic opts handling}

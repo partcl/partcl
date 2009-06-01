@@ -19,6 +19,9 @@
   if argc == 0 goto bad_args
   if argc  > 3 goto bad_args
 
+  .local pmc opts
+  opts = root_new ['parrot'; 'TclDict']
+
   code = argv[0]
   push_eh non_ok
     $P2 = compileTcl(code, 'ns' => ns)
@@ -38,11 +41,17 @@ got_retval:
 
   varname = argv[1]
 
+  .local pmc opts
+  opts = root_new ['parrot'; 'TclDict']
+
   # Store the caught value in a
 
   .local pmc setVar
   setVar = get_root_global ['_tcl'], 'setVar'
   setVar(varname,code_retval)
+
+  .local pmc readVar
+  readVar = get_root_global ['_tcl'], 'readVar'
 
 handle_retval:
   # We need to convert the code
@@ -65,6 +74,24 @@ handle_continue:
   retval = .TCL_CONTINUE
 
 done:
+  if argc != 3 goto return_val
+
+  .local string optionsVarName
+  optionsVarName = argv[2]
+
+  opts['-level']     = 1  # XXX hardcoded
+  opts['-code']      = retval
+  .local pmc ec,ei
+  ec = readVar('::errorCode')
+  opts['-errorcode'] = ec
+  ei = readVar('::errorInfo')
+  opts['-errorinfo'] = ei
+
+  .local pmc setVar
+  setVar = get_root_global ['_tcl'], 'setVar'
+  setVar(optionsVarName,opts)
+
+return_val:
   .return(retval)
 
 bad_args:

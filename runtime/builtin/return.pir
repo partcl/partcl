@@ -13,15 +13,20 @@ do_over:
 
     .local pmc message
     message = box ''
-    if argc == 0 goto return
-    if argc == 1 goto onearg
-
-    .local string opt, opt_val
     .local int type
     type = .TCL_RETURN
 
+    if argc == 0 goto ready
+    if argc == 1 goto onearg
+
+    .local string opt, opt_val
+    .local pmc ec,ei
+    ec = box 'NONE'
+    ei = box ''
+
     opt = argv[0]
-    if opt == "-options" goto handle_opts
+
+    if opt == '-options' goto handle_opts
 
 process_args:
     argc = elements argv
@@ -34,24 +39,55 @@ next_arg:
     opt_val = shift argv
     if opt == '-code'  goto handle_code
     if opt == '-level' goto handle_level
-    if opt == '-errorinfo' goto skip_option
-    if opt == '-errorcode' goto skip_option
+    if opt == '-errorinfo' goto handle_ei
+    if opt == '-errorcode' goto handle_ec
     goto bad_call # we can't deal with other options yet.
 
 handle_code:
-    if opt_val != 'error' goto bad_call
+    if opt_val == 'ok' goto type_ok
+    if opt_val == 'error' goto type_error
+    if opt_val == 'return' goto type_return
+    if opt_val == 'break' goto type_break
+    if opt_val == 'continue' goto type_continue
+    type = opt_val
+    goto process_args
+
+type_ok:
+    type = .TCL_OK
+    goto process_args
+type_error:
     type = .TCL_ERROR
+    goto process_args
+type_return:
+    type = .TCL_RETURN
+    goto process_args
+type_break:
+    type = .TCL_BREAK
+    goto process_args
+type_continue:
+    type = .TCL_CONTINUE
     goto process_args
 
 handle_level:
-    if opt_val != '1' goto bad_call
-    # level == 1 is a no op.
+    # XXX anything other than 1 doesn't really do anything yet...
+    goto process_args
+
+handle_ei:
+    ei = opt_val
+    goto process_args
+
+handle_ec:
+    ec = opt_val
     goto process_args
 
 skip_option:
     goto process_args # skip this for now.
 
 ready:
+    .local pmc setVar
+    setVar = get_root_global ['_tcl'], 'setVar'
+    setVar('::errorCode', ec)
+    setVar('::errorInfo', ei)
     if type == .TCL_RETURN goto return
 
 error:
@@ -62,7 +98,7 @@ return:
 
 onearg:
     message = argv[0]
-    goto return
+    goto ready
 
 handle_opts:
     $P1 = shift argv # discard -options
@@ -80,7 +116,7 @@ o_loop:
     goto o_loop
 
 bad_call:
-    $S0 = join " ", argv_bkp
+    $S0 = join ' ', argv_bkp
     $S0 = 'TODO: return does not yet allow: ' . $S0
     die $S0
 .end
