@@ -44,6 +44,8 @@ is_string:
 .sub '&acos'
     .param pmc a
 
+    .if_nan(a,domain_error)
+
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
 
@@ -68,17 +70,13 @@ is_string:
     $S0 = $S0 . '"'
     die $S0
 
-domain_error:
-    $P0 = root_new ['parrot'; 'TclList']
-    $P0[0] = 'ARITH'
-    $P0[1] = 'DOMAIN'
-    $S0 = 'domain error: argument not in valid range'
-    $P0[2] = $S0
-    tcl_error $S0, $P0
+    .domain_error()
 .end
 
 .sub '&asin'
     .param pmc a
+
+    .if_nan(a, domain_error)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -104,17 +102,13 @@ is_string:
     $S0 = $S0 . '"'
     die $S0
 
-domain_error:
-    $P0 = root_new ['parrot'; 'TclList']
-    $P0[0] = 'ARITH'
-    $P0[1] = 'DOMAIN'
-    $S0 = 'domain error: argument not in valid range'
-    $P0[2] = $S0
-    tcl_error $S0, $P0
+    .domain_error()
 .end
 
 .sub '&atan'
     .param pmc a
+
+    .if_nan(a,domain_error)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -136,6 +130,8 @@ is_string:
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
     die $S0
+
+    .domain_error()
 .end
 
 .sub '&bool'
@@ -172,6 +168,8 @@ is_string:
 .sub '&cos'
     .param pmc a
 
+    .if_nan(a,domain_error)
+
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
 
@@ -192,10 +190,14 @@ is_string:
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
     die $S0
+
+    .domain_error()
 .end
 
 .sub '&cosh'
     .param pmc a
+
+    .if_nan(a,domain_error)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -217,6 +219,8 @@ is_string:
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
     die $S0
+
+    .domain_error()
 .end
 
 .sub '&double'
@@ -264,6 +268,8 @@ is_string:
 .sub '&exp'
     .param pmc a
 
+    .if_nan(a,domain_error)
+
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
 
@@ -284,11 +290,14 @@ is_string:
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
     die $S0
+
+    .domain_error()
 .end
 
 .sub '&floor'
     .param pmc a
 
+    .if_nan(a,domain_error)
     .local pmc result
 
     .local pmc toNumber
@@ -322,6 +331,8 @@ is_string:
     $S0 .= $S1
     $S0 .= '"'
     die $S0
+
+    .domain_error()
 .end
 
 .sub '&int'
@@ -348,6 +359,8 @@ is_string:
 .sub '&log'
     .param pmc a
 
+    .if_nan(a,domain_error)
+
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
 
@@ -364,13 +377,7 @@ is_string:
     ret = $N0
     .return (ret)
 
-domain_error:
-    $P0 = root_new ['parrot'; 'TclList']
-    $P0[0] = 'ARITH'
-    $P0[1] = 'DOMAIN'
-    $S0 = 'domain error: argument not in valid range'
-    $P0[2] = $S0
-    tcl_error $S0, $P0
+    .domain_error()
 
 is_string:
     .catch()
@@ -382,6 +389,8 @@ is_string:
 
 .sub '&log10'
     .param pmc a
+
+    .if_nan(a,domain_error)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -399,13 +408,7 @@ is_string:
     ret = $N0
     .return (ret)
 
-domain_error:
-    $P0 = root_new ['parrot'; 'TclList']
-    $P0[0] = 'ARITH'
-    $P0[1] = 'DOMAIN'
-    $S0 = 'domain error: argument not in valid range'
-    $P0[2] = $S0
-    tcl_error $S0, $P0
+    .domain_error()
 
 is_string:
     .catch()
@@ -477,6 +480,8 @@ is_string:
 .sub '&sin'
     .param pmc a
 
+    .if_nan(a,domain_error)
+
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
 
@@ -497,10 +502,14 @@ is_string:
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
     die $S0
+
+    .domain_error()
 .end
 
 .sub '&sinh'
     .param pmc a
+
+    .if_nan(a, domain_error)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -522,11 +531,14 @@ is_string:
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
     die $S0
+
+    .domain_error()
 .end
 
 .sub '&sqrt'
     .param pmc a
 
+    .if_nan(a,domain_error)
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
 
@@ -542,13 +554,7 @@ is_string:
     ret = $N0
     .return (ret)
 
-domain_error:
-    $P0 = root_new ['parrot'; 'TclList']
-    $P0[0] = 'ARITH'
-    $P0[1] = 'DOMAIN'
-    $S0 = 'domain error: argument not in valid range'
-    $P0[2] = $S0
-    tcl_error $S0, $P0
+    .domain_error()
 
 is_string:
     .catch()
@@ -563,6 +569,8 @@ is_string:
 
 .sub '&tan'
     .param pmc a
+
+    .if_nan(a,domain_error)
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -584,11 +592,14 @@ is_string:
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
     die $S0
+    
+    .domain_error()
 .end
 
 .sub '&tanh'
     .param pmc a
 
+    .if_nan(a, domain_error)
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
 
@@ -609,6 +620,8 @@ is_string:
     $S0 = 'expected floating-point number but got "' . $S0
     $S0 = $S0 . '"'
     die $S0
+
+    .domain_error()
 .end
 
 # RT#40689: implement wide() - this is just int()
@@ -680,13 +693,7 @@ is_string:
     ret = $N0
     .return (ret)
 
- domain_error:
-    $P0 = root_new ['parrot'; 'TclList']
-    $P0[0] = 'ARITH'
-    $P0[1] = 'DOMAIN'
-    $S0 = 'domain error: argument not in valid range'
-    $P0[2] = $S0
-    tcl_error $S0, $P0
+    .domain_error()
 
 is_string:
     .catch()

@@ -15,6 +15,22 @@ If the specified register contains a NaN, goto the specified label.
   if $S9999 == 'NaN' goto .target
 .endm
 
+=head2 domain_error()
+
+Generate an arithmetic domain error
+
+=cut
+
+.macro domain_error()
+domain_error:
+  $P9999 = root_new ['parrot'; 'TclList']
+  $P9999[0] = 'ARITH'
+  $P9999[1] = 'DOMAIN'
+  $S9999 = 'domain error: argument not in valid range'
+  $P9999[2] = $S9999
+  tcl_error $S9999, $P9999
+.endm
+
 =head1 exception handling macros
 
 Exception creation can be fairly verbose. These macros provide an API

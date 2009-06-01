@@ -336,10 +336,9 @@ Given an expression, return a subroutine, or optionally, the raw PIR
 .namespace %0
 .sub '_anon' :anon
 %1
-.if_nan(%2,nan)
+.if_nan(%2,domain_error)
 .return(%2)
-nan:
-  die "domain error: argument not in valid range"
+.domain_error()
 .end
 END_PIR
 
