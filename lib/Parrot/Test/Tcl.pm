@@ -41,11 +41,11 @@ sub _output_is {
     close $code_fh;
 
     # Generate a temp file for the code.
-    my (undef, $out_tempfile) = tempfile(
+    my ($out_fh, $out_tempfile) = tempfile(
         SUFFIX => '.out',
         UNLINK => 1
     );
-    close $code_fh;
+    close $out_fh;
 
     my $cmd = $PConfig{bindir} ."/parrot $parrot_args $code_tempfile > $out_tempfile";
 
