@@ -20,7 +20,9 @@ wrong # args: should be "cd ?dirName?"
 OUT
 
 ## tclsh on windows shows unix slashies, so use unix canonpath to get them
-my $homedir = File::Spec::Unix->canonpath( $ENV{HOME} );
+my $homedir = $ENV{HOME} || $ENV{HOMEPATH};
+$homedir = File::Spec::Unix->canonpath( $homedir );
+
 
 my $todo = 'pwd is broken on windows' if $^O eq 'MSWin32';
 
