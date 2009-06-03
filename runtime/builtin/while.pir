@@ -1,12 +1,15 @@
 .HLL 'Tcl'
 .namespace []
 
+# while test body
+
 .sub '&while'
   .param pmc argv :slurpy
 
   .local int argc
   argc = elements argv
   if argc != 2 goto bad_args
+
   # get necessary conversion subs
   .local pmc compileTcl
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
@@ -15,13 +18,14 @@
   .local pmc toBoolean
   toBoolean = get_root_global ['_tcl'], 'toBoolean'
 
-  .local pmc a_test
-  a_test = argv[0]
-  a_test = compileExpr(a_test)
+  # coerce arguments to proper types
+  .local pmc test
+  test = argv[0]
+  test = compileExpr(test)
 
-  .local pmc a_command
-  a_command = argv[1]
-  a_command = compileTcl(a_command)
+  .local pmc body
+  body = argv[1]
+  body = compileTcl(body)
 
   .local pmc eh
   eh = root_new ['parrot'; 'ExceptionHandler']
@@ -29,12 +33,12 @@
   set_addr eh, while_loop_exception
 
 while_loop:
-  $P0 = a_test()
+  $P0 = test()
   $I0 = toBoolean($P0)
   unless $I0 goto while_loop_done
 
   push_eh eh
-    a_command()
+    body()
   pop_eh
 
   goto while_loop
