@@ -10,7 +10,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 139
+plan 144
 
 # arg checking
 eval_is {string} \
@@ -296,3 +296,18 @@ is [string is double -2.] 1 {string is double}
 is [string is double {}]  1 {empty string always works...}
 is [string is double -strict {}]  0 {except in strict mode}
 eval_is {string is double -monkeys uncle} {bad option "-monkeys": must be -strict or -failindex} {bad [string is] option}
+
+
+# these tests rely on ICU 
+is [string match -nocase ABC abc] 1 {string match nocase}
+is [string match -nocase \u03b1 \u0391] 1 {string match nocase: Greek alpha}
+is [string equal -nocase APPLEs oranGES] 0 {string equal, diff, -nocase}
+is [string equal -nocase baNAna BAnana] 1 {string equal, same, -nocase}
+is [string equal -nocase -length 4 fERry FeRroUs] 1 {string equal, -length&-nocase}
+
+# Local Variables:
+#   mode: cperl
+#   cperl-indent-level: 4
+#   fill-column: 100
+# End:
+# vim: expandtab shiftwidth=4:
