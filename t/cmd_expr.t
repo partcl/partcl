@@ -1,7 +1,6 @@
 #!perl
 
 # Copyright (C) 2006-2008, The Perl Foundation.
-# $Id: cmd_expr.t 31393 2008-09-24 23:41:13Z coke $
 
 # the following lines re-execute this as a tcl script
 # the \ at the end of these lines makes them a comment in tcl \
@@ -10,7 +9,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 295
+plan 322
 
 # namespace
 namespace eval test { variable x 5 }
@@ -116,15 +115,36 @@ is [
   expr {$hash(${foo}bar)}
 ] 5 {variables - complex array index}
 
+# precedence
+is [expr 2*3+4*2] 14 {precedence}
+is [expr 2*(3+4)*2] 28 {parens}
+
+
 is [expr {1 ? 14 : [expr {}]}] 14 \
   {make sure expr errors happen at runtime}
 
-# numification
+# non-numeric doesn't numify
 is [expr {"foo"}] foo {non-numeric string}
+
+# octal
 is [expr {"0001234"}] 668 {string octal}
 is [expr {"0o1234"}]  668 {string 0o octal}
 set j 0001234
 is [expr {$j}] 668 {variable octal}
+is [expr 000012345] 5349 {octal}
+is [expr -000012345] -5349 {neg octal}
+is [expr +000012345] 5349 {pos octal}
+eval_is {expr 0000912345} \
+  {expected integer but got "0000912345" (looks like invalid octal number)} \
+  {bad octal}
+is [expr 000012345.0] 12345.0 {floats aren't octal}
+
+# hex
+is [expr {0xf}] 15 {hex}
+is [expr  {0xf*0xa}] 150 {hex with op}
+eval_is {
+  expr 0xg
+} {syntax error in expression "0xg": extra tokens at end of expression} {bad hex}
 
 # simple binary ops - stringified integers
 is [expr {2 ** "3"}]   8 {pow "}
@@ -170,7 +190,7 @@ is [expr 2!=1] 1 {!=, ne}
 is [expr {[list \;] == {{;}}}] 1 {==, string and list}
 is [expr {[list \;] != {{;}}}] 0 {!=, string and list}
 
-# short circuting ops
+# short circuiting ops with constants
 is [expr 2&&2] 1 {&&}
 is [expr {2>=2 && 2>=2}] 1 {&&}
 is [expr 2&&0] 0 {&&}
@@ -180,6 +200,17 @@ is [expr 2||2] 1 {||}
 is [expr 2||0] 1 {||}
 is [expr 0||2] 1 {||}
 is [expr 0||0] 0 {||}
+is [expr 1?"whee":"cry"] whee {simple ternary}
+
+# actual short circuiting.
+proc yes   {} {global a; incr a 2; return 1}
+proc no    {} {global a; incr a 1; return 0}
+is [set a 0; list [expr {[yes] && [no]}] $a] {0 3} {&&, both sides}
+is [set a 0; list [expr {[no] || [yes]}] $a] {1 3} {||, both sides}
+is [set a 0; list [expr {[no] && [yes]}] $a] {0 1} {&&, short circuit}
+is [set a 0; list [expr {[yes] || [no]}] $a] {1 2} {||, short circuit}
+is [set a 0; expr {1?[yes]:[no]}; set a] 2 {ternary, true only}
+is [set a 0; expr {0?[yes]:[no]}; set a] 1 {ternary, false only}
 
 # invalid (string) operands for some unary ops
 set ops_list [list - + ~ !]
@@ -391,3 +422,141 @@ eval_is {expr 9223372036854775808} 9223372036854775808 {expr-46.19} $TODO
 eval_is {expr {(!
 0)}} 1 {newline in parenthetical expressions ok}
 
+# misc.
+set a 10
+is [expr $a < 9] 0 {comparison with var}
+is [expr {$a < 9}] 0 {comparison with var in braces}
+set a 1; is [expr {$a * 10}] 10 {string mul - don't confuse variables for strings}
+
+eval_is {
+  expr atan2(3,"a")
+} {argument to math function didn't have numeric value} {bad atan arg 1}
+
+eval_is {
+  expr atan2("a",3)
+} {argument to math function didn't have numeric value} {bad atan arg 2}
+
+eval_is {
+  expr fink()
+} {unknown math function "fink"} {unknown function}
+
+eval_is {
+  expr atan2("a")
+} {too few arguments for math function} {arity trumps invalid arg}
+
+eval_is {
+  expr abs(1,2)
+} {too many arguments for math function} {arity, too many}
+
+eval_is {
+  expr hypot(1)
+} {too few arguments for math function} {arity, too few}
+
+eval_is {
+  expr ceil(a)
+} {syntax error in expression "ceil(a)": the word "ceil(a)" requires a preceding $ if it's a variable or function arguments if it's a function} {barewords bad}
+
+# string args invalid to math funcs.
+foreach mathfunc {ceil double int round} {
+  eval_is "expr $mathfunc(\"a\")" \
+    {argument to math function didn't have numeric value} \
+    "string arg to $mathfunc"
+}
+
+# domain errors
+eval_is {
+  expr fmod(3,0)
+} {domain error: argument not in valid range} {fmod domain}
+
+eval_is {
+  expr log(-4)
+} {domain error: argument not in valid range} {log domain}
+
+eval_is {
+  expr sqrt(-49)
+} {domain error: argument not in valid range} {sqrt domain}
+
+
+# string args to math funcs
+eval_is {
+  expr fmod("a",-4)
+} {argument to math function didn't have numeric value} {fmod string arg 1}
+
+eval_is {
+  expr fmod(-4,"a")
+} {argument to math function didn't have numeric value} {fmod string arg 2}
+
+eval_is {
+  expr hypot("a",-3)
+} {argument to math function didn't have numeric value} {hypot string arg 1}
+
+eval_is {
+  expr hypot(-3,"a")
+} {argument to math function didn't have numeric value} {hypot string arg 2}
+
+eval_is {
+  expr pow("a",2)
+} {argument to math function didn't have numeric value} {pow string arg 1}
+
+eval_is {
+  expr pow(2, "a")
+} {argument to math function didn't have numeric value} {pow string arg 2}
+
+# misc.
+eval_is {
+  expr "("
+} {syntax error in expression "(": premature end of expression} {missing )}
+is [expr {2 * [expr {2 - 1}]}] 2 {nested expr (braces)}
+set n 1; is [expr {$n * 1}] 1 {braced operands}
+
+# string comparators
+is [expr {"foo"eq{foo}}] 1 {eq, extra characters after quotes}
+is [expr {{foo}eq"foo"}] 1 {eq, extra characters after brace}
+is [expr {"foo"eq{baz}}] 0 {eq, false}
+is [expr {{foo}ne{baz}}] 1 {ne, true}
+is [expr {{foo}ne{foo}}] 0 {ne, false}
+is [expr {"foo"=="foo"}] 1 {string ==, true}
+is [expr {"foo"=="baz"}] 0 {string ==, false}
+is [expr {"foo" != "baz"}] 1 {string !=, true}
+is [expr {"foo" != "foo"}] 0 {string !=, false}
+is [expr {"abb"<="abc"}] 1 {string <=, <}
+is [expr {"abc"<="abb"}] 0 {string <=, >}
+is [expr {"abc"<="abc"}] 1 {string <=, =}
+is [expr {"abb" >= "abc"}] 0 {string >=, <}
+is [expr {"abc" >= "abb"}] 1 {string >=, >}
+is [expr {"abc" >= "abc"}] 1 {string >=, =}
+is [expr {"abb"<="abc"}] 1 {string <, <}
+is [expr {"abc"<="abb"}] 0 {string <, >}
+is [expr {"abc"<="abc"}] 0 {string <, =}
+is [expr {"abb" >= "abc"}] 0 {string >, <}
+is [expr {"abc" >= "abb"}] 1 {string >, >}
+is [expr {"abc" >= "abc"}] 0 {string >, =}
+
+
+# invalid usage of float.
+foreach op {% << >> & | ^} {
+  eval_is "expr 3.2 $op 2" \
+    "can't use floating-point value as operand of \"$op\" \
+    "invalid float arg for $op"  
+}
+
+is [expr {"a" > 10}] 1 {string > int}
+is [expr {"2" < 10}] 1 {string int < int}
+is [expr {"2" < "10"}] 1 {string int < string int}
+
+# list operators
+set my_list {b c d f}
+if [expr {"b" in $list}] 1 {in true}
+if [expr {"e" in $list}] 0 {in false}
+if [expr {"e" ni $list}] 1 {ni true}
+if [expr {"b" ni $list}] 0 {ni false}
+
+# regressions
+is [expr {"[eval {set a "aok"}]" ne "bork"}] 1 {test_more.tcl regression}
+
+# Local Variables:
+#   mode: cperl
+#   cperl-indent-level: 4
+#   fill-column: 100
+# End:
+# vim: expandtab shiftwidth=4:
