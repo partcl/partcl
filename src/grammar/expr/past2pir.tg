@@ -77,7 +77,7 @@ transform pir (PAST::Val) {
     goto end
   assign_nan:
     pir.'emit'(' box %0, 0', ret)
-    pir.'emit'(' %0 = "nan"', ret)
+    pir.'emit'(' %0 = "NaN"', ret)
     goto end
   assign_string:
     $S0 = pir.'escape'($S0)
