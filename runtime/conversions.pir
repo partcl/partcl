@@ -371,6 +371,7 @@ Given a chunk of tcl code, return a subroutine.
 .sub compileTcl
     .param string code
     .param int    pir_only    :named('pir_only') :optional
+    .param int    has_pir_only :opt_flag
     .param pmc    ns          :named('ns')       :optional
     .param int    has_ns      :opt_flag
     .param int    bsnl        :named('bsnl')     :optional
@@ -426,6 +427,7 @@ end_preamble:
 
     .local pmc pir
     pir = new 'CodeString'
+    unless has_pir_only goto do_wrapper
     unless pir_only goto do_wrapper
     if has_wrapper  goto do_wrapper
     pir = result
