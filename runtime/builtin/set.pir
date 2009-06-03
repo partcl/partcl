@@ -4,38 +4,32 @@
 .sub '&set'
   .param pmc argv :slurpy
 
+  # check usage
   .local int argc
   argc = elements argv
   if argc < 1 goto bad_args
   if argc > 2 goto bad_args
-  # get necessary conversion subs
-  .local pmc a_varName
-  a_varName = argv[0]
-  .local pmc a_newValue
-  if argc < 2 goto default_newValue
-  a_newValue = argv[1]
-  goto done_newValue
-default_newValue:
-  null a_newValue
-done_newValue:
-  .local pmc R
-  .local pmc temp
 
-  if null a_newValue goto read_var
+  .local pmc varName
+  varName = argv[0]
 
-  .local pmc set
-  set = get_root_global ['_tcl'], 'setVar'
-  R = set(a_varName, a_newValue)
-  goto end
+  if argc == 2 goto set
 
-read_var:
-  .local pmc read
-  read = get_root_global ['_tcl'], 'readVar'
-  R = read(a_varName)
+get:
+  .local pmc readVar
+  readVar = get_root_global ['_tcl'], 'readVar'
+  .tailcall readVar(varName)
 
-end:
-  R = clone R
-  .return(R)
+set:
+  .local pmc value
+  value = argv[1]
+
+  .local pmc setVar
+  setVar = get_root_global ['_tcl'], 'setVar'
+
+  .tailcall setVar(varName, value)
+
+
 bad_args:
   die 'wrong # args: should be "set varName ?newValue?"'
 .end
