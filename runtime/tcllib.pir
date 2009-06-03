@@ -50,7 +50,7 @@ providing a compreg-compatible method.
 
 # library files (HLL: _Tcl)
 .include 'runtime/conversions.pir'
-.include 'runtime/string_to_list.pir'
+.include 'runtime/string_to_dict.pir'
 .include 'runtime/variables.pir'
 .include 'runtime/options.pir'
 
