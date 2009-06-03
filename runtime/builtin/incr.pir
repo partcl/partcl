@@ -4,39 +4,41 @@
 .sub '&incr'
   .param pmc argv :slurpy
 
+  # check usage
   .local int argc
   argc = elements argv
   if argc < 1 goto bad_args
   if argc > 2 goto bad_args
-  # get necessary conversion subs
+
+  # get helper subs
   .local pmc toInteger
   toInteger = get_root_global ['_tcl'], 'toInteger'
   .local pmc makeVar
   makeVar = get_root_global ['_tcl'], 'makeVar'
-  .local pmc a_varName
-  a_varName = argv[0]
-  $P0 = makeVar(a_varName)
-  $S0 = typeof $P0
-  if $S0 != 'Undef' goto got_var
-  .local pmc setVar
-  setVar = get_root_global ['_tcl'], 'setVar'
-  $P0 = setVar(a_varName,0)
+
+  # Get/Vivify variable
+  .local pmc varName
+  varName = argv[0]
+  .local pmc var
+  var = makeVar(varName)
+  $I0 = defined var
+  if $I0 goto got_var
+  var = 0
 got_var:
-  a_varName = toInteger($P0)
-  .local pmc a_increment
+  var = toInteger(var)
+
+  # Increment
   if argc < 2 goto default_increment
-  a_increment = argv[1]
-  a_increment = toInteger(a_increment)
-  a_varName += a_increment
+  .local pmc increment
+  increment = argv[1]
+  increment = toInteger(increment)
+  var += increment
   goto done_increment
 default_increment:
-  a_varName += 1
+  inc var
 
 done_increment:
-  .local pmc R
-
-   R = clone a_varName
-  .return(R)
+  .return(var)
 
 bad_args:
   die 'wrong # args: should be "incr varName ?increment?"'
