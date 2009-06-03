@@ -9,34 +9,33 @@
 
   if argc == 0 goto badargs
 
-  .local pmc call_chain, lexpad
+  .local pmc call_chain
   .local int call_level
   call_chain = get_root_global ['_tcl'], 'call_chain'
   call_level = elements call_chain
   unless call_level goto done # global doesn't work when already global.
+  .local pmc lexpad
   lexpad = call_chain[-1]
 
-  .local int ii
-  ii = 0
   .local string varname
   .local string sigil_varname
+ 
+  .local pmc iterator
+  iterator = iter argv
 
 loop:
-  if ii == argc goto done
-  varname = argv[ii]
+  unless iterator goto done
+  varname = shift iterator
   sigil_varname = '$' . varname
 
   $P1 = get_hll_global sigil_varname
-  if null $P1 goto create_global
-has_global:
-  lexpad[sigil_varname] = $P1
-  inc ii
-  goto loop
-
-create_global:
+  unless null $P1 goto has_global
   $P1 = root_new ['parrot'; 'Undef']
   set_hll_global sigil_varname, $P1
-  goto has_global
+
+has_global:
+  lexpad[sigil_varname] = $P1
+  goto loop
 
 done:
   .return('')

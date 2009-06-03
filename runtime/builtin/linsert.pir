@@ -5,21 +5,23 @@
   .param pmc argv :slurpy
 
   # make sure we have the right # of args
-  $I0 = argv
-  if $I0 < 3 goto wrong_args
+  .local int argc
+  argc = elements argv
+  if argc < 3 goto bad_args
 
+  # helper functions
   .local pmc toList
   toList = get_root_global ['_tcl'], 'toList'
+  .local pmc getIndex
+  getIndex = get_root_global ['_tcl'], 'getIndex'
 
+  # coerce arguments
   .local pmc the_list
   the_list = shift argv
   the_list = toList(the_list)
 
   .local string position
   position = shift argv
-
-  .local pmc getIndex
-  getIndex = get_root_global ['_tcl'], 'getIndex'
 
   .local int the_index
   the_index = getIndex(position, the_list)
@@ -28,21 +30,19 @@
   if $S0 != 'end' goto next
   inc the_index
 
+  .local int list_size
 next:
-  $I0 = elements the_list
-  if the_index <= $I0 goto splice_it
+  list_size = elements the_list
+  if the_index <= list_size goto splice_it
 
-  the_index = $I0  # keep it in the list..
+  the_index = list_size  # keep it in the list..
 
 splice_it:
-
    splice the_list, argv, the_index, 0
-
   .return (the_list)
 
-wrong_args:
+bad_args:
   die 'wrong # args: should be "linsert list index element ?element ...?"'
-
 .end
 
 # Local Variables:

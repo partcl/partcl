@@ -10,7 +10,7 @@
   if argc < 1 goto badargs
   if argc > 3 goto badargs
 
-  .local pmc errorInfo, errorCode
+  .local pmc message, errorInfo, errorCode
   if argc == 3 goto arg_3
   if argc == 2 goto arg_2
 
@@ -32,8 +32,9 @@ finish:
   assign $P1, errorInfo
   $P1 = get_hll_global '$errorCode'
   assign $P1, errorCode
-  $P0 = argv[0]
-  die $P0
+
+  message = argv[0]
+  die message
 
 badargs:
   die 'wrong # args: should be "error message ?errorInfo? ?errorCode?"'
