@@ -4,6 +4,7 @@
 .sub '&exit'
     .param pmc argv :slurpy
 
+    .prof('tcl;&exit')
     .local int argc
     argc = elements argv
 

@@ -9,6 +9,7 @@
 .sub '&array'
   .param pmc argv :slurpy
 
+  .prof('tcl;&array')
   .local int argc
   argc = elements argv
 
@@ -70,6 +71,7 @@ few_args:
   .param string array_name
   .param pmc argv
 
+  .prof('_tcl;helpers;array;exists')
   .local int argc
   argc = elements argv
   if argc goto bad_args
@@ -86,6 +88,7 @@ bad_args:
   .param string array_name
   .param pmc argv
 
+  .prof('_tcl;helpers;array;size')
   .local int argc
   argc = elements argv
   if argc goto bad_args
@@ -107,6 +110,7 @@ bad_args:
   .param string array_name
   .param pmc argv
 
+  .prof('_tcl;helpers;array;set')
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args
@@ -178,6 +182,7 @@ odd_args:
   .param string array_name
   .param pmc argv
 
+  .prof('_tcl;helpers;array;get')
   .local int argc
   argc = elements argv
   if argc > 1 goto bad_args
@@ -242,6 +247,7 @@ not_array:
   .param string array_name
   .param pmc argv
 
+  .prof('_tcl;helpers;array;unset')
   .local int argc
   argc = elements argv
   if argc > 1 goto bad_args
@@ -302,6 +308,7 @@ no_args:
   .param string array_name
   .param pmc argv
 
+  .prof('_tcl;helpers;array;names')
   .local pmc retval
 
   .local int argc
@@ -348,6 +355,7 @@ not_array:
   .param string array_name
   .param pmc argv
 
+  .prof('_tcl;helpers;array;startsearch')
   .local int argc
   argc = elements argv
   if argc != 0 goto bad_args
@@ -372,6 +380,7 @@ not_array:
   .param string array_name
   .param pmc argv
 
+  .prof('_tcl;helpers;array;anymore')
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args
@@ -403,6 +412,7 @@ not_array:
   .param string array_name
   .param pmc argv
 
+  .prof('_tcl;helpers;array;nextelement')
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args
@@ -434,6 +444,7 @@ not_array:
   .param string array_name
   .param pmc argv
 
+  .prof('_tcl;helpers;array;donesearch')
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args
@@ -464,6 +475,7 @@ not_array:
   .param pmc the_array
   .param string pattern
 
+  .prof('_tcl;helpers;array;names_helper;-glob')
   .local pmc iterator
   .local string name
 
@@ -498,6 +510,7 @@ check_end:
   .param pmc the_array
   .param string match
 
+  .prof('_tcl;helpers;array;names_helper;-exact')
   .local pmc iterator, retval
   .local string name
 
@@ -520,6 +533,7 @@ found_match:
   .param pmc the_array
   .param string pattern
 
+  .prof('_tcl;helpers;array;names_helper;-regexp')
   .local pmc iterator
   .local string name
 
@@ -552,6 +566,7 @@ check_end:
 
 
 .sub 'anon' :load :anon
+  .prof('_tcl;helpers;array;names_helper;anon')
   .local pmc options
   options = root_new ['parrot'; 'TclList']
   options[0] = 'anymore'

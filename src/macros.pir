@@ -124,6 +124,28 @@ Utility macro to simplify generating output during debug cycles.
   $P9999(.dingus)
 .endm
 
+=head2 prof
+
+A braindead profiler assistant - swap out the definition here to
+enable some very verbose timing information that is
+disabled by default.
+
+For now, only items in F<runtime/> use this macro
+
+.macro prof(where)
+  $N99999 = time
+  printerr '### '
+  printerr .where
+  printerr ' #'
+  printerr $N99999
+  printerr "\n"
+.endm
+
+=cut
+
+.macro prof(where)
+.endm
+
 =head2 parrot_debug
 
 Add this macro to PIR code to dump some verbose parrot

@@ -8,9 +8,17 @@ providing a compreg-compatible method.
 
 =cut
 
+.HLL 'parrot'
+
+.loadlib 'tcl_ops'
+.include 'src/macros.pir'
+.include 'cclass.pasm'
+
+
 .HLL '_tcl'
 
 .sub 'mappings' :anon :init
+  .prof('_tcl;mappings')
   .local pmc interp
   .local pmc core_int, tclint
   .local pmc core_num, tclfloat
@@ -31,11 +39,8 @@ providing a compreg-compatible method.
   interp.'hll_map'(core_string, tclstring)
 .end
 
-.HLL 'parrot'
 
-.loadlib 'tcl_ops'
-.include 'src/macros.pir'
-.include 'cclass.pasm'
+.HLL 'parrot'
 
 .namespace [ 'TclExpr'; 'PAST'; 'Grammar' ]
 .include 'src/grammar/expr/pge2past.pir'
@@ -65,6 +70,7 @@ providing a compreg-compatible method.
 .HLL 'Tcl'
 .namespace ['tcl']
 .sub foo
+  .prof('tcl;foo')
   .return()
 .end
 
@@ -72,12 +78,14 @@ providing a compreg-compatible method.
 .namespace []
 
 .sub load_macros :load :anon
+  .prof('_tcl;load_macros')
   $P0 = compreg 'PIR'
   $P0 = $P0(".sub main\n.include 'src/macros.pir'\n.end")
   $P0()
 .end
 
 .sub prepare_lib :load :anon
+  .prof('_tcl;prepare_lib')
 
   # Load any dependant libraries.
   load_bytecode 'Getopt/Obj.pbc'
@@ -276,6 +284,7 @@ got_platform:
 .namespace []
 
 .sub load_stdlib :load :anon
+  .prof('tcl;load_stdlib')
   .include 'iglobals.pasm'
   .local pmc interp
   interp = getinterp
@@ -291,6 +300,7 @@ got_platform:
 .namespace ['Tcl';'Compiler']
 
 .sub '' :anon :load :init
+    .prof('parrot;tcl;compiler;')
     .local pmc ns, tclass, compiler
     ns = get_hll_namespace ['Tcl';'Compiler']
     tclass = newclass ns
@@ -301,6 +311,9 @@ got_platform:
 .sub 'load_library' :method
     .param pmc name
     .param pmc extra :named :slurpy
+
+    .prof('parrot;tcl;compiler;load_library')
+
     .local pmc ct, lit, contents
     .local string filename
 
@@ -354,6 +367,7 @@ got_platform:
 .namespace []
 
 .sub hack_grammar :load :anon
+  .prof('parrot;hack_grammar')
   # Override whitespace parsing in expression's optable
   $P0 = get_hll_global ['TclExpr'; 'Grammar'], '$optable'
   $P1 = get_hll_global ['TclExpr'; 'Grammar'], 'exprws'

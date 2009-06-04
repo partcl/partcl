@@ -4,6 +4,7 @@
 .sub '&inline'
   .param pmc argv :slurpy
 
+  .prof('tcl;&inline')
   .local int argc
   argc = elements argv
 

@@ -4,6 +4,7 @@
 .sub '&info'
   .param pmc argv :slurpy
 
+  .prof('tcl;&info')
   .local int argc
   argc = elements argv
   unless argc goto bad_args
@@ -40,6 +41,7 @@ bad_subcommand:
 
 .sub 'args'
   .param pmc argv
+  .prof('_tcl;helpers;info;args')
 
   .local int argc
   argc = elements argv
@@ -81,6 +83,7 @@ bad_args:
 
 .sub 'body'
   .param pmc argv
+  .prof('_tcl;helpers;info;body')
 
   .local int argc
   argc = elements argv
@@ -117,6 +120,7 @@ bad_args:
 
 .sub 'complete'
   .param pmc argv
+  .prof('_tcl;helpers;info;complete')
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args
@@ -145,6 +149,7 @@ bad_args:
 
 .sub 'default'
   .param pmc argv
+  .prof('_tcl;helpers;info;default')
 
   .local int argc
   argc = elements argv
@@ -231,6 +236,7 @@ bad_args:
 
 .sub 'functions'
   .param pmc argv
+  .prof('_tcl;helpers;info;functions')
 
   .local int argc
   argc = elements argv
@@ -270,6 +276,7 @@ bad_args:
 
 .sub 'commands'
     .param pmc argv
+    .prof('_tcl;helpers;info;commands')
 
     .local int argc
     argc = elements argv
@@ -322,6 +329,7 @@ bad_args:
 
 .sub 'exists'
   .param pmc argv
+  .prof('_tcl;helpers;info;exists')
 
   .local int argc
   argc = elements argv
@@ -350,6 +358,7 @@ bad_args:
 #
 .sub 'tclversion'
   .param pmc argv
+  .prof('_tcl;helpers;info;tclversion')
 
   .local int argc
   argc = elements argv
@@ -371,6 +380,7 @@ bad_args:
 
 .sub 'patchlevel'
   .param pmc argv
+  .prof('_tcl;helpers;info;patchlevel')
 
   .local int argc
   argc = elements argv
@@ -388,6 +398,7 @@ bad_args:
 
 .sub 'library'
   .param pmc argv
+  .prof('_tcl;helpers;info;library')
 
   .local int argc
   argc = elements argv
@@ -409,6 +420,7 @@ bad_args:
 
 .sub 'vars'
   .param pmc argv
+  .prof('_tcl;helpers;info;vars')
 
   .local int argc
   argc = elements argv
@@ -447,6 +459,7 @@ get_globals:
 
 .sub 'level'
   .param pmc argv
+  .prof('_tcl;helpers;info;level')
 
   .local int argc
   argc = elements argv
@@ -483,6 +496,7 @@ find_info_level:
 
 .sub 'globals'
   .param pmc argv
+  .prof('_tcl;helpers;info;globals')
 
   .local int argc
   argc = elements argv
@@ -522,6 +536,7 @@ bad_args:
 
 .sub 'script'
   .param pmc argv
+  .prof('_tcl;helpers;info;script')
   $P0 = get_root_global ['_tcl'], '$script'
   if null $P0 goto empty
   .return($P0)
@@ -533,12 +548,14 @@ empty:
 # sharedlibextension - should be able to pull this from parrot config.
 .sub 'sharedlibextension'
   .param pmc argv
+  .prof('_tcl;helpers;info;sharedlibextension')
   .return(0)
 .end
 
 # RT#40741: stub
 .sub 'nameofexecutable'
   .param pmc argv
+  .prof('_tcl;helpers;info;nameofexecutable')
   .local int argc
   argc = elements argv
   if argc goto bad_args
@@ -551,16 +568,19 @@ bad_args:
 # RT#40742: stub
 .sub 'loaded'
   .param pmc argv
+  .prof('_tcl;helpers;info;loaded')
   .return(0)
 .end
 
 # RT#40744: stub
 .sub 'cmdcount'
   .param pmc argv
+  .prof('_tcl;helpers;info;cmdcount')
   .return(0)
 .end
 
 .sub 'anon' :anon :load
+  .prof('_tcl;helpers;info;anon')
   .local pmc options
   options = root_new ['parrot'; 'TclList']
   push options, 'args'

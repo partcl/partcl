@@ -4,6 +4,8 @@
 .sub '&read'
   .param pmc argv :slurpy
 
+  .prof('tcl;&read')
+
   # XXX this just supports the [read $channel] variant.
 
   .local pmc getChannel,channel

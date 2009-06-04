@@ -4,6 +4,7 @@
 .sub '&expr'
   .param pmc argv :slurpy
 
+  .prof('tcl;&expr')
   .local int argc
 
   .local pmc compileExpr

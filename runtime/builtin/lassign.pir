@@ -4,6 +4,8 @@
 .sub '&lassign'
   .param pmc argv :slurpy
 
+  .prof('tcl;&lassign')
+
   .local int argc
   argc = elements argv
   if argc < 2 goto bad_args

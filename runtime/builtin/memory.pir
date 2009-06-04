@@ -3,6 +3,7 @@
 
 .sub '&memory'
   .param pmc argv :slurpy
+  .prof('tcl;&memory')
   .return('')
 .end
 

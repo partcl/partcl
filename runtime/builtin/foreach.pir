@@ -3,6 +3,9 @@
 
 .sub '&foreach'
   .param pmc argv :slurpy
+
+  .prof('tcl;&foreach')
+
   # Requires multiple of 3 args.
 
   .local int argc

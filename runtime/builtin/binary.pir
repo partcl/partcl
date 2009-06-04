@@ -4,6 +4,7 @@
 .sub '&binary'
     .param pmc argv :slurpy
 
+    .prof('tcl;&binary')
     .local int argc
     argc = elements argv
     unless argc goto no_args
@@ -40,6 +41,7 @@ no_args:
 .sub 'format'
     .param pmc argv
 
+    .prof('_tcl;helpers;binary;format')
     .local int argc
     argc = elements argv
     unless argc goto bad_args
@@ -57,6 +59,7 @@ bad_args:
 .sub 'scan'
     .param pmc argv
 
+    .prof('_tcl;helpers;binary;scan')
     .local int argc
     argc = elements argv
     unless argc >= 2 goto bad_args
@@ -91,6 +94,7 @@ bad_args:
 .end
 
 .sub 'anon' :anon :load
+    .prof('_tcl;helpers;binary;anon')
     .local pmc options
     options = root_new ['parrot'; 'TclList']
     push options, 'format'
@@ -98,6 +102,7 @@ bad_args:
 
     set_root_global ['_tcl'; 'helpers'; 'binary'], 'options', options
 .end
+
 # Local Variables:
 #   mode: pir
 #   fill-column: 100

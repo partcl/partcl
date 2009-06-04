@@ -4,6 +4,8 @@
 .sub '&regexp'
   .param pmc argv :slurpy
 
+  .prof('tcl;&regexp')
+
   .local int argc
   argc = elements argv
   if argc < 2 goto badargs
@@ -131,6 +133,7 @@ badargs:
 .end
 
 .sub 'anon' :anon :load
+  .prof('tcl;anon')
   .local pmc options
   options = root_new ['parrot'; 'TclList']
   push options, 'all'

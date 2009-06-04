@@ -4,6 +4,7 @@
 .sub '&clock'
   .param pmc argv :slurpy
 
+  .prof('tcl;&clock')
   .local int argc
   argc = elements argv
 
@@ -41,6 +42,7 @@ few_args:
 # XXX Need bignum support
 .sub 'microseconds'
   .param pmc argv
+  .prof('_tcl;helpers;clock;microseconds')
   $I0 = elements argv
   if $I0 goto bad_args
   $N0 = time
@@ -54,6 +56,7 @@ bad_args:
 # XXX Need bignum support
 .sub 'milliseconds'
   .param pmc argv
+  .prof('_tcl;helpers;clock;milliseconds')
   $I0 = elements argv
   if $I0 goto bad_args
   $N0 = time
@@ -67,6 +70,7 @@ bad_args:
 
 .sub 'seconds'
   .param pmc argv
+  .prof('_tcl;helpers;clock;seconds')
   $I0 = elements argv
   if $I0 goto bad_args
   $I0 = time
@@ -76,6 +80,7 @@ bad_args:
 .end
 
 .sub 'anon' :anon :load
+  .prof('_tcl;helpers;clock;anon')
   .local pmc options
   options = root_new ['parrot'; 'TclList']
   push options, 'add'

@@ -4,6 +4,7 @@
 .sub listToDict
   .param pmc list
 
+  .prof('_tcl;listToDict')
   .local int sizeof_list
   sizeof_list = elements list
 
@@ -54,6 +55,7 @@ odd_args:
 .sub stringToDict
   .param string str
 
+  .prof('_tcl;stringToDict')
   .local pmc list
   $P0 = root_new ['parrot'; 'TclString']
   list = $P0.'get_list'(str)

@@ -4,6 +4,7 @@
 .sub '&after'
   .param pmc argv :slurpy
 
+  .prof('tcl;&after')
   .local int argc
   argc = elements argv
   if argc == 0 goto bad_args

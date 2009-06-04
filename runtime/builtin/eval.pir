@@ -4,6 +4,7 @@
 .sub '&eval'
   .param pmc argv :slurpy
 
+  .prof('tcl;&eval')
   .local int argc
   argc = elements argv
   unless argc goto bad_args

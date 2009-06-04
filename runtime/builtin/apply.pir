@@ -4,6 +4,7 @@
 .sub '&apply'
   .param pmc argv :slurpy
 
+  .prof('tcl;&apply')
   .local int argc
   argc = elements argv
   if argc == 0 goto no_args

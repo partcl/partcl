@@ -4,6 +4,8 @@
 .sub '&scan'
   .param pmc argv :slurpy
 
+  .prof('tcl;&scan')
+
   .local int argc
   argc = elements argv
 

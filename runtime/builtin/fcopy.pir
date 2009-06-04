@@ -3,6 +3,7 @@
 
 .sub '&fcopy'
   .param pmc argv :slurpy
+  .prof('tcl;&fcopy')
   .return('')
 .end
 

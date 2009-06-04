@@ -4,6 +4,8 @@
 .sub '&join'
   .param pmc argv :slurpy
 
+  .prof('tcl;&join')
+
   .local int argc
   argc = elements argv
   if argc < 1 goto bad_args

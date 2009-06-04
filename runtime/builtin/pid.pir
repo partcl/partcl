@@ -3,6 +3,7 @@
 
 .sub '&pid'
   .param pmc argv :slurpy
+  .prof('tcl;&pid')
   .return('')
 .end
 

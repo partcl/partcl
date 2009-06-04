@@ -3,6 +3,7 @@
 
 .sub '&update'
   .param pmc argv :slurpy
+  .prof('tcl;&update')
   .return('')
 .end
 

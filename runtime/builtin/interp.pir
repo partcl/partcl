@@ -4,6 +4,7 @@
 .sub '&interp'
   .param pmc argv :slurpy
 
+  .prof('tcl;&interp')
   # XXX just enough to get us through some spec tests.
   .local int argc
   argc = argv

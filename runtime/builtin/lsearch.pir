@@ -4,6 +4,8 @@
 .sub '&lsearch'
   .param pmc argv :slurpy
 
+  .prof('tcl;&lsearch')
+
   .local pmc options
   options = get_root_global ['_tcl'; 'helpers'; 'lsearch'], 'options'
 
@@ -103,6 +105,7 @@ bad_args:
 .end
 
 .sub 'anon' :anon :load
+  .prof('tcl;anon')
   .local pmc options
   options = root_new ['parrot'; 'TclList']
   push options, 'all'

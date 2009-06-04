@@ -20,6 +20,7 @@ Defaults to 'option'.
   .param string type_name  :optional
   .param int has_type_name :opt_flag
 
+  .prof('_tcl;select_option')
   if has_type_name goto got_type_name
   type_name = 'option'
 
@@ -128,6 +129,7 @@ to customize the error message slightly.
   .param string name   :named('name') :optional
   .param int has_name  :opt_flag
 
+  .prof('_tcl;select_switches')
   .local pmc toNumber
   toNumber = get_root_global [ '_tcl' ], 'toNumber'
 
@@ -237,6 +239,7 @@ done:
 .sub optionsToString
   .param pmc options
 
+  .prof('_tcl;optionsToString')
   # uncomment this if folks start passing in un-ordered lists...
   # options.'sort'()
 
@@ -274,6 +277,7 @@ done:
 .sub switchesToString
   .param pmc switches
 
+  .prof('_tcl;switchesToString')
   # uncomment this if folks start passing in un-ordered lists...
   # switches.'sort'()
 

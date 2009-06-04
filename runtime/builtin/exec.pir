@@ -3,6 +3,7 @@
 
 .sub '&exec'
   .param pmc argv :slurpy
+  .prof('tcl;&exec')
   .return('')
 .end
 

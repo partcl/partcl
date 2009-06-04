@@ -4,6 +4,8 @@
 .sub '&vwait'
     .param pmc args :slurpy
 
+    .prof('tcl;&vwait')
+
     .local int argc
     argc = elements args
 

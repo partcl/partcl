@@ -4,6 +4,7 @@
 .sub '&encoding'
   .param pmc argv :slurpy
 
+  .prof('tcl;&encoding')
   .local pmc retval
 
   .local int argc
@@ -44,6 +45,7 @@ no_args:
 .sub 'convertfrom'
   .param pmc argv
 
+  .prof('_tcl;helpers;encoding;convertfrom')
   .local int argc
   argc = elements argv
 
@@ -59,6 +61,7 @@ bad_args:
 .sub 'convertto'
   .param pmc argv
 
+  .prof('_tcl;helpers;encoding;convertto')
   .local int argc
   argc = elements argv
 
@@ -74,6 +77,7 @@ bad_args:
 .sub 'dirs'
   .param pmc argv
 
+  .prof('_tcl;helpers;encoding;dirs')
   .local int argc
   argc = elements argv
 
@@ -88,6 +92,7 @@ bad_args:
 .sub 'names'
   .param pmc argv
 
+  .prof('_tcl;helpers;encoding;names')
   .local int argc
   argc = elements argv
 
@@ -102,6 +107,7 @@ bad_args:
 .sub 'system'
   .param pmc argv
 
+  .prof('_tcl;helpers;encoding;system')
   .local int argc
   argc = elements argv
 
@@ -114,6 +120,7 @@ bad_args:
 .end
 
 .sub 'anon' :anon :load
+  .prof('_tcl;helpers;encoding;anon')
   .local pmc options
   options = root_new ['parrot'; 'TclList']
   push options, 'convertfrom'

@@ -10,12 +10,14 @@ this is as simple as returning the list.
 
 .sub toList :multi(TclList)
   .param pmc list
+  .prof('_tcl;toList :multi(TclList)')
   .return(list)
 .end
 
 .sub toList :multi(_)
   .param pmc value
 
+  .prof('_tcl;toList :multi(_)')
   $P0 = root_new ['parrot'; 'TclString']
   $S0 = value
 
@@ -34,12 +36,14 @@ Given a PMC, get a TclDict from it, converting as needed.
 
 .sub toDict :multi(TclDict)
   .param pmc dict
+  .prof('_tcl;toDict :multi(TclDict)')
   .return(dict)
 .end
 
 .sub toDict :multi(TclList)
   .param pmc list
-
+  
+  .prof('_tcl;toDict :multi(TclList)')
   $P0 = listToDict(list)
   copy list, $P0
 
@@ -49,6 +53,7 @@ Given a PMC, get a TclDict from it, converting as needed.
 .sub toDict :multi(_)
   .param pmc value
 
+  .prof('_tcl;toDict :multi(_)')
   $P0 = stringToDict(value)
   copy value, $P0
 
@@ -64,17 +69,20 @@ Given a PMC, get a number from it.
 
 .sub toNumber :multi(TclInt)
   .param pmc n
+  .prof('_tcl;toNumber :multi(TclInt)')
   .return(n)
 .end
 
 .sub toNumber :multi(TclFloat)
   .param pmc n
+  .prof('_tcl;toNumber :multi(TclFloat)')
   .return(n)
 .end
 
 .sub toNumber :multi(_)
   .param pmc number
 
+  .prof('_tcl;toNumber:multi(_)')
   .local string str
   .local int    len
   str = number
@@ -134,6 +142,7 @@ Given a PMC, get an integer from it.
 
 .sub toInteger :multi(TclInt)
   .param pmc n
+  .prof('_tcl;toInteger :multi(TclInt)')
   .return(n)
 .end
 
@@ -142,6 +151,7 @@ Given a PMC, get an integer from it.
   .param pmc rawhex :named ('rawhex') :optional
   .param int has_rawhex               :opt_flag
 
+  .prof('_tcl;toInteger :multi(_)')
   unless has_rawhex goto normal
   $S0 = value
   $S0 =  '0x' . $S0
@@ -186,6 +196,7 @@ index.
   .param string idx
   .param pmc    list
 
+  .prof('_tcl;getIndex')
   if idx == 'end' goto end
 
   $S0 = substr idx, 0, 4
@@ -249,6 +260,7 @@ Given a string, return the appropriate channel.
 .sub getChannel
   .param string channelID
 
+  .prof('_tcl;getChannel')
   .local pmc channels
   channels = get_global 'channels'
 
@@ -285,6 +297,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
     .param pmc    ns       :named('ns')       :optional
     .param int    has_ns   :opt_flag
 
+    .prof('_tcl;compileExpr')
     .local pmc parse
     .local pmc match
 
@@ -335,6 +348,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
 .HLL 'Tcl'
 .namespace %0
 .sub '_anon' :anon
+.prof('tcl;%0;_anon')
 %1
 .if_nan(%2,domain_error)
 .return(%2)
@@ -379,6 +393,7 @@ Given a chunk of tcl code, return a subroutine.
     .param int    wrapper     :named('wrapper')  :optional
     .param int    has_wrapper :opt_flag
 
+    .prof('_tcl;compileTcl')
     .local pmc parse
     .local pmc match
 
@@ -437,8 +452,9 @@ do_wrapper:
     pir.'emit'(".HLL 'Tcl'")
     pir.'emit'(".loadlib 'tcl_ops'")
     pir.'emit'('.namespace %0', namespace)
-    pir.'emit'(".include 'src/returncodes.pasm'")
+    pir.'emit'(".include 'src/macros.pir'")
     pir.'emit'(".sub '_anon' :anon")
+    pir.'emit'(".prof('tcl;%0,_anon')",namespace)
     pir .= result
     pir.'emit'('  .return(%0)', ret)
     pir.'emit'('.end')
@@ -475,6 +491,7 @@ Given a string namespace, return an array of names.
   .param int    depth     :optional
   .param int    has_depth :opt_flag
 
+  .prof('_tcl;splitNamespace')
   if has_depth goto depth_set
   depth = 0
 
@@ -527,6 +544,7 @@ throw an exception.
 .sub toBoolean
     .param pmc value
 
+    .prof('_tcl;toBoolean')
     .local string lc
     $S0 = value
     lc = downcase $S0
@@ -581,6 +599,8 @@ was this a valid tcl-style level, or did we get this value as a default?
 
 .sub getCallLevel
   .param pmc tcl_level
+
+  .prof('_tcl;getCallLevel')
   .local pmc parrot_level, defaulted, orig_level
   defaulted = new 'TclInt'
   defaulted = 0
@@ -645,6 +665,7 @@ Given a string of tcl code, perform the backslash/newline subsitution.
 .sub 'backslash_newline_subst'
   .param string contents
 
+  .prof('_tcl;backslash_newline_subst')
   .local int len
   len = length contents
 

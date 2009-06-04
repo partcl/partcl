@@ -5,6 +5,8 @@
 .sub '&trace'
   .param pmc argv :slurpy
 
+  .prof('tcl;&trace')
+
   # comment this line to reactivate basic (BUT VERY SLOW) tracing
   .return()
 

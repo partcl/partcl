@@ -15,6 +15,8 @@ real top level namespace.
 .sub '&namespace'
    .param pmc argv :slurpy
 
+  .prof('tcl;&namespace')
+
   .local pmc retval
 
   .local int argc
@@ -55,6 +57,8 @@ no_args:
 .sub 'current'
   .param pmc argv
 
+  .prof('_tcl;helpers;namespace;current')
+
   .local int argc
   argc = elements argv
   if argc goto bad_args
@@ -72,6 +76,8 @@ bad_args:
 
 .sub 'delete'
   .param pmc argv
+
+  .prof('_tcl;helpers;namespace;delete')
 
   .local int argc
   argc = elements argv
@@ -108,6 +114,8 @@ return:
 
 .sub 'exists'
   .param pmc argv
+
+  .prof('_tcl;helpers;namespace;exists')
 
   .local int argc
   argc = elements argv
@@ -155,6 +163,8 @@ bad_args:
 .sub 'qualifiers'
   .param pmc argv
 
+  .prof('_tcl;helpers;namespace;qualifiers')
+
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args
@@ -181,6 +191,8 @@ WHOLE:
 
 .sub 'tail'
   .param pmc argv
+
+  .prof('_tcl;helpers;namespace;tail')
 
   .local int argc
   argc = elements argv
@@ -210,6 +222,8 @@ bad_args:
 
 .sub 'eval'
   .param pmc argv
+
+  .prof('_tcl;helpers;namespace;eval')
 
   .local int argc
   argc = elements argv
@@ -255,6 +269,7 @@ global_ns:
 .namespace %0
 # src/compiler.pir :: pir_compiler (2)
 .sub compiled_tcl_sub_%2
+  .prof('tcl;%0;compiled_tcl_sub_%2')
   %1
   .return(%3)
 .end
@@ -279,11 +294,14 @@ bad_args:
 .end
 
 .sub 'export'
+  .prof('_tcl;helpers;namespace;export')
   .return ('')
 .end
 
 .sub 'children'
   .param pmc argv
+
+  .prof('_tcl;helpers;namespace;children')
 
   .local int has_pattern
   has_pattern = 0
@@ -356,6 +374,8 @@ unknown_namespace:
     .param string a
     .param string b
 
+    .prof('_tcl;helpers;namespace;children_cmp')
+
     a = downcase a
     b = downcase b
 
@@ -394,6 +414,8 @@ b_first:
 .sub 'code'
   .param pmc argv
 
+  .prof('_tcl;helpers;namespace;code')
+
   .local string script, current_ns, retval
   script = shift argv
 
@@ -410,15 +432,18 @@ b_first:
 .end
 
 .sub 'export'
+  .prof('_tcl;helpers;namespace;export')
   .return ('')
 .end
 
 .sub 'forget'
+  .prof('_tcl;helpers;namespace;forget')
   .return ('')
 .end
 
 .sub 'import'
   .param pmc argv
+  .prof('_tcl;helpers;namespace;import')
   .local int argc
   argc = argv
   if argc == 0 goto done
@@ -490,12 +515,14 @@ done:
 
 .sub 'inscope'
   .param pmc argv
+  .prof('_tcl;helpers;namespace;inscope')
   .tailcall eval(argv)
 .end
 
 #XXX complete hack to get tcltest working...
 .sub 'origin'
   .param pmc argv
+  .prof('_tcl;helpers;namespace;origin')
   $S0 = shift argv
   $S0 = "::tcltest::" . $S0
   .return ($S0)
@@ -504,6 +531,7 @@ done:
 .sub 'parent'
   .param pmc argv
 
+  .prof('_tcl;helpers;namespace;parent')
   .local int argc
   argc = elements argv
 
@@ -539,6 +567,7 @@ bad_args:
 .sub 'which'
   .param pmc argv
 
+  .prof('_tcl;helpers;namespace;which')
   .local string cmd
 do_over:
   cmd = shift argv
@@ -556,6 +585,7 @@ nothing:
 .end
 
 .sub 'anon' :anon :load
+  .prof('_tcl;helpers;namespace;anon')
   .local pmc options
   options = root_new ['parrot'; 'TclList']
   options[0] = 'children'

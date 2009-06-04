@@ -4,6 +4,7 @@
 .sub '&error'
   .param pmc argv :slurpy
 
+  .prof('tcl;&error')
   .local int argc
   argc = elements argv
 

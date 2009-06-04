@@ -4,6 +4,8 @@
 .sub '&lrange'
   .param pmc argv :slurpy
 
+  .prof('tcl;&lrange')
+
   .local int argc
   argc = elements argv
   if argc != 3 goto bad_args

@@ -4,6 +4,8 @@
 .sub '&open'
   .param pmc argv :slurpy
 
+  .prof('tcl;&open')
+
   .local string fileName, channel_id, access, pir_access
 
   .local int argc

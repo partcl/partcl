@@ -3,6 +3,7 @@
 
 .sub '&dde'
   .param pmc argv :slurpy
+  .prof('tcl;&dde')
   .return('')
 .end
 

@@ -4,6 +4,8 @@
 .sub '&pwd'
   .param pmc argv :slurpy
 
+  .prof('tcl;&pwd')
+
   .local int argc
   argc = elements argv
   if argc != 0 goto bad_args

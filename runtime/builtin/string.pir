@@ -4,6 +4,8 @@
 .sub '&string'
   .param pmc argv :slurpy
 
+  .prof('tcl;&string')
+
   .local pmc retval
 
   .local int argc
@@ -44,6 +46,8 @@ no_args:
 .sub 'first'
   .param pmc argv
 
+  .prof('_tcl;helpers;string;first')
+
   .local int argc
   .local pmc retval
 
@@ -73,6 +77,8 @@ bad_args:
 
 .sub 'last'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;last')
 
   .local int argc
   .local pmc retval
@@ -121,6 +127,8 @@ bad_args:
 .sub 'index'
   .param pmc argv
 
+  .prof('_tcl;helpers;string;index')
+
   .local int index_1
   .local pmc retval
   .local int argc
@@ -151,6 +159,8 @@ done:
 
 .sub 'tolower'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;tolower')
 
   .local int argc
   .local pmc retval
@@ -205,6 +215,8 @@ bad_args:
 .sub 'toupper'
   .param pmc argv
 
+  .prof('_tcl;helpers;string;toupper')
+
   .local int argc
   .local pmc retval
 
@@ -256,6 +268,8 @@ bad_args:
 
 .sub 'totitle'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;totitle')
 
   .local int argc
   .local pmc retval
@@ -309,6 +323,8 @@ bad_args:
 .sub 'bytelength'
   .param pmc argv
 
+  .prof('_tcl;helpers;string;bytelength')
+
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_length
@@ -322,6 +338,8 @@ bad_length:
 
 .sub 'length'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;length')
 
   .local int argc
   argc = elements argv
@@ -337,6 +355,8 @@ bad_length:
 
 .sub 'range'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;range')
 
   .local int argc
   argc = elements argv
@@ -382,6 +402,8 @@ bad_range:
 
 .sub 'match'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;match')
 
   .local int argc
   argc = elements argv
@@ -438,6 +460,8 @@ bad_match:
 .sub 'repeat'
   .param pmc argv
 
+  .prof('_tcl;helpers;string;repeat')
+
   .local int argc
   argc = elements argv
 
@@ -465,6 +489,8 @@ bad_repeat:
 
 .sub 'map'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;map')
 
   .local int argc
   argc = elements argv
@@ -547,6 +573,9 @@ bad_args:
 
 .sub 'equal'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;equal')
+
   .local int argc
   argc = elements argv
 
@@ -606,6 +635,8 @@ bad_args:
 
 .sub 'is'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;is')
 
   .local pmc toNumber
 
@@ -823,6 +854,8 @@ bad_args:
 .sub 'replace'
   .param pmc argv
 
+  .prof('_tcl;helpers;string;replace')
+
   .local int argc
   .local int low
   .local int high
@@ -881,6 +914,8 @@ bad_args:
 .sub 'trimleft'
   .param pmc argv
 
+  .prof('_tcl;helpers;string;trimleft')
+
   .local int argc
   .local pmc retval
 
@@ -919,6 +954,8 @@ bad_args:
 
 .sub 'trimright'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;trimright')
 
   .local int argc
   .local pmc retval
@@ -959,6 +996,8 @@ bad_args:
 
 .sub 'trim'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;trim')
 
   .local int argc
   .local pmc retval
@@ -1008,6 +1047,8 @@ bad_args:
 
 .sub 'compare'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;compare')
 
   .local int argc
   .local pmc retval
@@ -1068,6 +1109,8 @@ bad_args:
 .sub 'reverse'
   .param pmc argv
 
+  .prof('_tcl;helpers;string;reverse')
+
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args
@@ -1083,6 +1126,8 @@ bad_args:
 
 .sub 'wordend'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;wordend')
 
   .local int argc
   argc = elements argv
@@ -1113,6 +1158,8 @@ bad_args:
 
 .sub 'wordstart'
   .param pmc argv
+
+  .prof('_tcl;helpers;string;wordstart')
 
   .local int argc
   argc = elements argv
@@ -1160,6 +1207,8 @@ bad_args:
 .end
 
 .sub 'anon' :anon :load
+  .prof('_tcl;helpers;string;anon')
+
   .local pmc options
   options = root_new ['parrot'; 'TclList']
   push options, 'bytelength'

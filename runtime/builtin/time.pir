@@ -4,6 +4,8 @@
 .sub '&time'
   .param pmc argv :slurpy
 
+  .prof('tcl;&time')
+
   .local int argc
   argc = elements argv
   if argc < 1 goto bad_args

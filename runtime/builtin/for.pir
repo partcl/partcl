@@ -4,6 +4,7 @@
 .sub '&for'
   .param pmc argv :slurpy
 
+  .prof('tcl;&for')
   .local int argc
   argc = elements argv
   if argc != 4 goto bad_args

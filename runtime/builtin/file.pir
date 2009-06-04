@@ -4,6 +4,7 @@
 .sub '&file'
   .param pmc argv :slurpy
 
+  .prof('tcl;&file')
   .local int argc
   argc = elements argv
 
@@ -41,6 +42,7 @@ few_args:
 
 .sub 'normalize' # RT#40721: Stub for testing
   .param pmc argv
+  .prof('_tcl;helpers;file;normalize')
   $P0 = argv[0]
   .return ($P0)
 .end
@@ -48,6 +50,7 @@ few_args:
 .sub 'join'
   .param pmc argv
 
+  .prof('_tcl;helpers;file;join')
   .local int argc
   argc = elements argv
   if argc == 0 goto bad_args
@@ -158,6 +161,7 @@ bad_args:
 .sub 'isdirectory'
   .param pmc argv
 
+  .prof('_tcl;helpers;file;isdirectory')
   .local int argc
   argc = elements argv
 
@@ -196,6 +200,7 @@ bad_args:
 .sub 'isfile'
   .param pmc argv
 
+  .prof('_tcl;helpers;file;isfile')
   .local int argc
   argc = elements argv
 
@@ -234,6 +239,7 @@ bad_args:
 .sub 'type'
   .param pmc argv
 
+  .prof('_tcl;helpers;file;type')
   .local int argc
   argc = elements argv
 
@@ -269,6 +275,7 @@ bad_args:
 .sub 'size'
   .param pmc argv
 
+  .prof('_tcl;helpers;file;size')
   .local int argc
   argc = elements argv
 
@@ -298,6 +305,7 @@ bad_args:
 .sub 'atime'
   .param pmc argv
 
+  .prof('_tcl;helpers;file;atime')
   .local int argc
   argc = elements argv
 
@@ -327,6 +335,7 @@ bad_args:
 .sub 'mtime'
   .param pmc argv
 
+  .prof('_tcl;helpers;file;mtime')
   .local int argc
   argc = elements argv
 
@@ -357,6 +366,7 @@ bad_args:
 .sub 'dirname'
     .param pmc argv
 
+    .prof('_tcl;helpers;file;dirname')
     .local int argc
     argc = elements argv
     if argc != 1 goto bad_args
@@ -406,6 +416,7 @@ bad_args:
 # RT#40723: Stub (unixy)
 .sub 'tail'
   .param pmc argv
+  .prof('_tcl;helpers;file;tail')
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args
@@ -445,18 +456,21 @@ bad_args:
 # RT#40724: Stub for test parsing
 .sub 'readable'
   .param pmc argv
+  .prof('_tcl;helpers;file;readable')
   .return(1)
 .end
 
 # RT#40725: Stub for test parsing
 .sub 'delete'
   .param pmc argv
+  .prof('_tcl;helpers;file;delete')
   .return(0)
 .end
 
 .sub 'exists'
     .param pmc argv
 
+    .prof('_tcl;helpers;file;exists')
     .local int argc
     argc = elements argv
     if argc != 1 goto badargs
@@ -481,11 +495,13 @@ badargs:
 # RT#40727: Stub for test parsing
 .sub 'copy'
   .param pmc argv
+  .prof('_tcl;helpers;file;copy')
   .return(0)
 .end
 
 .sub 'rootname'
     .param pmc argv
+    .prof('_tcl;helpers;file;rootname')
     .local int argc
 
     argc = elements argv
@@ -518,6 +534,7 @@ done:
 
 .sub 'extension'
     .param pmc argv
+    .prof('_tcl;helpers;file;extension')
     .local int argc
 
     # check if filename arg exists
@@ -549,6 +566,7 @@ done:
 # XXX: Stub
 .sub 'owned'
   .param pmc argv
+  .prof('_tcl;helpers;file;owned')
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args
@@ -560,12 +578,14 @@ bad_args:
 # XXX: Stub for test parsing
 .sub 'writable'
   .param pmc argv
+  .prof('_tcl;helpers;file;writable')
   .return(1)
 .end
 
 # XXX: Stub
 .sub 'volumes'
   .param pmc argv
+  .prof('_tcl;helpers;file;volumes')
   .local int argc
   argc = elements argv
   if argc != 0 goto bad_args
@@ -577,6 +597,7 @@ bad_args:
 .end
 
 .sub 'anon' :anon :load
+  .prof('_tcl;helpers;file;anon')
   .local pmc options
   options = root_new ['parrot'; 'TclList']
   push options, 'atime'

@@ -4,6 +4,8 @@
 .sub '&subst'
     .param pmc argv :slurpy
 
+    .prof('tcl;&subst')
+
     .local pmc options
     options = get_root_global ['_tcl'; 'helpers'; 'subst'], 'options'
 
@@ -89,6 +91,7 @@ subst:
     pir.'emit'(".HLL 'Tcl'")
     pir.'emit'('.namespace %0', namespace)
     pir.'emit'(".sub '_anon' :anon")
+    pir.'emit'(".prof('tcl;%0;anon')")
     pir .= code
     pir.'emit'('  .return(%0)', ret)
     pir.'emit'('.end')
@@ -123,6 +126,7 @@ badswitch:
 .end
 
 .sub 'anon' :anon :load
+    .prof('tcl;anon')
     .local pmc options
     options = root_new ['parrot'; 'TclList']
     options[0] = 'nobackslashes'

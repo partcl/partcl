@@ -4,6 +4,7 @@
 .sub '&cd'
   .param pmc argv :slurpy
 
+  .prof('tcl;&cd')
   .local int argc
   argc = elements argv
 

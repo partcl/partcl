@@ -4,6 +4,8 @@
 .sub '&source'
   .param pmc argv :slurpy
 
+  .prof('tcl;&source')
+
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args
