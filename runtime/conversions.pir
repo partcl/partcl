@@ -444,9 +444,6 @@ do_wrapper:
     pir.'emit'('.end')
     pir.'emit'(<<"END_PIR")
 
-.sub '_init' :init
-    load_bytecode 'runtime/tcllib.pir'
-.end
 END_PIR
 
     if pir_only goto only_pir
