@@ -157,8 +157,7 @@ scalar:
 
 make_variable:
     variable = root_new ['parrot'; 'Undef']
-    variable = storeVar(name, variable, 'depth' => depth)
-    .return(variable)
+    .tailcall storeVar(name, variable, 'depth' => depth)
 .end
 
 =head2 _Tcl::setVar
