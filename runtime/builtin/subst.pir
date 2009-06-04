@@ -88,13 +88,16 @@ subst:
     .local pmc pir
     pir = root_new ['parrot'; 'CodeString']
 
-    pir.'emit'(".HLL 'Tcl'")
-    pir.'emit'('.namespace %0', namespace)
-    pir.'emit'(".sub '_anon' :anon")
-    pir.'emit'(".prof('tcl;%0;anon')")
-    pir .= code
-    pir.'emit'('  .return(%0)', ret)
-    pir.'emit'('.end')
+    pir.'emit'(<<"END_PIR", namespace, code, ret)
+.HLL 'Tcl'
+.namespace %0
+.sub '_anon' :anon
+.prof("tcl;%0;anon")
+%1
+.return(%2)
+.end
+END_PIR
+
     $S0 = pir
 
     $P1    = compreg 'PIR'

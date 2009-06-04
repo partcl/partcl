@@ -348,7 +348,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
 .HLL 'Tcl'
 .namespace %0
 .sub '_anon' :anon
-.prof('tcl;%0;_anon')
+.prof("tcl;%0;_anon")
 %1
 .if_nan(%2,domain_error)
 .return(%2)
@@ -449,17 +449,16 @@ end_preamble:
     goto only_pir
 
 do_wrapper:
-    pir.'emit'(".HLL 'Tcl'")
-    pir.'emit'(".loadlib 'tcl_ops'")
-    pir.'emit'('.namespace %0', namespace)
-    pir.'emit'(".include 'src/macros.pir'")
-    pir.'emit'(".sub '_anon' :anon")
-    pir.'emit'(".prof('tcl;%0,_anon')",namespace)
-    pir .= result
-    pir.'emit'('  .return(%0)', ret)
-    pir.'emit'('.end')
-    pir.'emit'(<<"END_PIR")
-
+    pir.'emit'(<<"END_PIR", namespace, result, ret)
+.HLL 'Tcl'
+.loadlib 'tcl_ops'
+.namespace %0
+.include 'src/macros.pir'
+.sub '_anon' :anon
+.prof("tcl;%0,_anon")
+%1
+.return(%2)
+.end
 END_PIR
 
     if pir_only goto only_pir

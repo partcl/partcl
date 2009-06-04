@@ -269,7 +269,7 @@ global_ns:
 .namespace %0
 # src/compiler.pir :: pir_compiler (2)
 .sub compiled_tcl_sub_%2
-  .prof('tcl;%0;compiled_tcl_sub_%2')
+  .prof("tcl;%0;compiled_tcl_sub_%2")
   %1
   .return(%3)
 .end
