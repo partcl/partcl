@@ -6,24 +6,26 @@
 
   .prof('tcl;&llength')
 
+  # usage
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args
+
   # get necessary conversion subs
   .local pmc toList
   toList = get_root_global ['_tcl'], 'toList'
-  .local pmc a_list
-  a_list = argv[0]
-  a_list = toList(a_list)
-  .local pmc R
-  .local pmc temp
+  
+  # coerce args
+  .local pmc list
+  list = argv[0]
+  list = toList(list)
 
-  $I0 = elements a_list
+  $I0 = elements list
   .return($I0)
+
 bad_args:
   die 'wrong # args: should be "llength list"'
 .end
-
 
 # Local Variables:
 #   mode: pir
