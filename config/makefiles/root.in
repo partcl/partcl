@@ -67,7 +67,7 @@ runtime/builtin/format.pir       runtime/builtin/subst.pir \
 runtime/builtin/gets.pir         runtime/builtin/switch.pir \
 runtime/builtin/glob.pir         runtime/builtin/tell.pir \
 runtime/builtin/global.pir       runtime/builtin/time.pir \
-runtime/builtin/history.pir      runtime/builtin/trace.pir \
+runtime/builtin/trace.pir \
 runtime/builtin/if.pir           \
 runtime/builtin/incr.pir         runtime/builtin/unload.pir \
 runtime/builtin/info.pir         runtime/builtin/unset.pir \
