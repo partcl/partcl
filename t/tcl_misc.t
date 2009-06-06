@@ -1,250 +1,128 @@
 #! perl
 
 # Copyright (C) 2004-2007, The Perl Foundation.
-# $Id: tcl_misc.t 31338 2008-09-22 17:08:26Z coke $
 
-use strict;
-use warnings;
-use lib qw(lib);
+# the following lines re-execute this as a tcl script
+# the \ at the end of these lines makes them a comment in tcl \
+use lib qw(lib); # \
+use Tcl::Test; #\
+__DATA__
 
-use Parrot::Test::Tcl;
-use Test::More tests => 31;
+source lib/test_more.tcl
+plan 32
 
-tcl_output_is( <<'TCL', <<OUT, "leading spacex2 should be ok" );
-   puts Parsing
-TCL
-Parsing
-OUT
+eval_is {
+  set a Parsing
+} Parsing {leading spaces on commands ok}
 
-tcl_output_is( <<'TCL', <<OUT, "double quoting words, puts" );
- puts "Parsing"
-TCL
-Parsing
-OUT
+is [set a "Parsing"] Parsing {double quoting words}
+is [set a {Parsing}] Parsing {block quoting}
+is [set a Parsing]   Parsing {bare words}
 
-tcl_output_is( <<'TCL', <<OUT, "simple block quoting" );
- puts {Parsing}
-TCL
-Parsing
-OUT
+eval_is {
+  set a #whee
+} {#whee} {comment must start command}
 
-tcl_output_is( <<'TCL', <<OUT, "bare words should be allowed" );
- puts Parsing
-TCL
-Parsing
-OUT
+eval_is {
+  list
+} {} {command with no args}
 
-tcl_output_is( <<'TCL', <<OUT, "hash isn't a comment if it only starts a word (not a command)" );
- puts #whee
- exit ;
-TCL
-#whee
-OUT
+eval_is {
+  list
+} {} {command with no args, semicolon}
 
-tcl_output_is( <<'TCL', <<OUT, "no arg command" );
- puts {test}
- exit
- puts {bar}
-TCL
-test
-OUT
+eval_is {
+  list ;
+} {} {command with no args, space-semicolon}
 
-tcl_output_is( <<'TCL', <<OUT, "no arg command with semicolon" );
- puts {test}
- exit;
- puts {bar}
-TCL
-test
-OUT
+is [set x $] $ {$ by itself isn't a var}
 
-tcl_output_is( <<'TCL', <<OUT, "no arg command with spaced semicolon" );
- puts {test}
- exit ;
-TCL
-test
-OUT
+is [set x ";"] {;} {; doesn't end command in the middle of a string}
 
-tcl_output_is( <<'TCL', <<'OUT', "\$ is only a variable if it's followed by \\w or {" );
-set x $
-puts $x
-TCL
-$
-OUT
+eval_is {
+  set a 2
+  a
+} {invalid command name "a"} {variables can't be used as commands}
 
-tcl_output_is( <<'TCL', <<'OUT', "semi-colon in a string" );
-puts ";"
-TCL
-;
-OUT
+eval_is {
+# commment
+} {} {comments start lines}
 
-tcl_output_is( <<'TCL', <<'OUT', "variables and procs with same name" );
-set a 2
-a
-TCL
-invalid command name "a"
-OUT
-
-tcl_output_is( <<'TCL', <<'OUT', "comments must *start* commands (doesn't)" );
-puts 4 # comment
-TCL
-bad argument "comment": should be "nonewline"
-OUT
-
-tcl_output_is( <<'TCL', <<'OUT', "comments must *start* commands (does)" );
-# comment
-puts 1
-TCL
-1
-OUT
-
-tcl_output_is( <<'TCL', <<'OUT', "comments with a blank line in between" );
+eval_is {
 #one
 
 #two
-puts foo
-TCL
-foo
-OUT
+} {} {comments with a blank line in between ok}
 
-tcl_output_is( <<'TCL', <<'OUT', "comments must *start* commands (does), with whitespace" );
- # comment
- puts 1
-TCL
-1
-OUT
+eval_is {
+#one
+#two
+} {} {2 comments in a row ok}
 
-tcl_output_is( <<'TCL', <<'OUT', "comments end on newline, not ;" );
- # comment ; puts 1
- puts 2
-TCL
-2
-OUT
+eval_is {
+  # comment
+} {} {leading whitespace ok on comments}
 
-tcl_output_is( <<'TCL', <<'OUT', "two comments in a row should work" );
- # comment1
- # comment2
- puts 2
-TCL
-2
-OUT
+eval_is {
+ set a 2
+ # comment ; set a 3
+ set a
+} 2 {comments end on newline, not ;}
 
-tcl_output_is( <<'TCL', <<'OUT', "extra characters after close-quote" );
+eval_is {
   list "a"a
-TCL
-extra characters after close-quote
-OUT
+} {extra characters after close-quote} "extra characters after close-quote"
 
-tcl_output_is( <<'TCL', <<'OUT', "extra characters after close-brace" );
+eval_is {
+  set a [list "a"a]
+} {extra characters after close-quote} "extra characters after close-quote in []"
+
+eval_is {
   list {a}a
-TCL
-extra characters after close-brace
-OUT
+} {extra characters after close-brace} {extra characters after close-brace}
 
-tcl_output_is( <<'TCL', <<'OUT', "extra characters after close-quote" );
-  puts [list "a"a]
-TCL
-extra characters after close-quote
-OUT
+eval_is {
+  set a [set b 1; set c 2]
+} 2 {subcommands with semicolons}
 
-tcl_output_is( <<'TCL', <<'OUT', "extra characters after close-brace" );
-  puts [list {a}a]
-TCL
-extra characters after close-brace
-OUT
-
-tcl_output_is( <<'TCL', <<'OUT', "subcommands with semicolons" );
-  puts [set a [set b 1; set c 2]]
-TCL
-2
-OUT
-
-tcl_output_is( <<'TCL', <<'OUT', "{} command" );
-  proc {} {} {puts ok}
+eval_is {
+  proc {} {} {return ok}
   {}
-TCL
-ok
-OUT
+} ok {empty proc name ok.}
 
-{
-    $ENV{cow}    = 'moo';
-    $ENV{pig}    = 'oink';
-    $ENV{cowpig} = 'moink';
+eval_is {
+  proc lreverse {} { return ok }
+  lreverse
+} ok {arg checking in proc overriding a builtin}
 
-    tcl_output_is( <<'TCL', <<"OUT", "reading environment variables" );
-  puts "$env(cow) $env(pig) $env(cowpig)"
-TCL
-moo oink moink
-OUT
-}
+eval_is {
+  set x 0012
+  list $x [incr x]
+} {0012 11} {order of arguments with integer conversion}
 
-tcl_output_is( <<'TCL', <<'OUT', "args checking from inlined commands" );
-  proc incr {} { puts ok }
-  incr
-TCL
-ok
-OUT
-
-tcl_output_is( <<'TCL', <<'OUT', 'order of arguments with integer conversion' );
-set x 0012
-puts [list $x [incr x]]
-TCL
-0012 11
-OUT
-
-tcl_output_is( <<'TCL', <<'OUT', 'make sure list value can be overridden by a string value' );
+eval_is {
   set value [list a b c]
   set value 2
-  puts $value
-TCL
-2
-OUT
+  set value
+} 2 {list value can be overridden by a string value}
 
-tcl_output_is( <<'TCL', <<'OUT', '{\n}' );
-proc new {} {
-}
-puts [new]
-TCL
 
-OUT
-
-tcl_output_is( <<'TCL', <<'OUT','{*} syntax');
+eval_is {
   set var {a   b c}
-  puts [join [list {*}$var] ,]
-  puts [join [list {*}{a {b c} d}] ,]
-TCL
-a,b,c
-a,b c,d
-OUT
+  list [join [list {*}$var] ,] \
+    [join [list {*}{a {b c} d}] ,]
+} {a,b,c {a,b c,d}} {expand}
 
-tcl_output_is( <<'TCL', <<'OUT', '{*} on command');
-  {*}{puts hi}
-  {*}{puts "hello world"}
-  {*}"puts {hello world}"
-  {*}[concat puts {{hello world}}]
-  {*}[concat puts] {hello world}
-  set a puts
-  {*}"$a {hello world}"
-TCL
-hi
-hello world
-hello world
-hello world
-hello world
-hello world
-OUT
+is [{*}{set a hi}] hi {*, simple command}
+is [{*}{set a "hello world"}] "hello world" {*, quotes}
+is [{*}"set a {goodbye}"] "goodbye" {*, block}
+is [{*}[concat set b {{hello world}}]] "hello world" {*, subcommand with args}
+is [{*}[concat set c] {hello world}] "hello world" {*, subcommand}
+is [set d set; {*}"$d b {hello world}"] "hello world" {*, dynamic command}
 
-tcl_output_is( <<'TCL', <<'OUT', 'failure to find a dynamic command');
+eval_is {
 proc Default {{verify {boom}}} {
     [$verify]
 }
 Default
-TCL
-invalid command name "boom"
-OUT
-
-# Local Variables:
-#   mode: cperl
-#   cperl-indent-level: 4
-#   fill-column: 100
-# End:
-# vim: expandtab shiftwidth=4:
+} {invalid command name "boom"} {failure to find a dynamic command'}
