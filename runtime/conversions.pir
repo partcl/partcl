@@ -42,7 +42,7 @@ Given a PMC, get a TclDict from it, converting as needed.
 
 .sub toDict :multi(TclList)
   .param pmc list
-  
+
   .prof('_tcl;toDict :multi(TclList)')
   $P0 = listToDict(list)
   copy list, $P0
@@ -120,7 +120,7 @@ Given a PMC, get a number from it.
   $N0 = value
   number = $N0
   .return (number)
-  
+
 found_int:
   $I0 = value
   number = $I0
@@ -535,49 +535,58 @@ return:
 
 =head2 _Tcl::toBoolean
 
-Given a string, return its boolean value if it's a valid boolean. Otherwise,
+Given a PMC, return its boolean value if it's a valid boolean. Otherwise,
 throw an exception.
 
 =cut
 
-.sub toBoolean
+.sub toBoolean :multi(TclInt)
     .param pmc value
 
-    .prof('_tcl;toBoolean')
-    .local string lc
-    $S0 = value
-    lc = downcase $S0
+    .prof('_tcl;toBoolean :multi(TclInt)')
 
-    if lc == '1' goto true
-    if lc == '0' goto false
+    $I0 = istrue value
+    .return($I0)
+.end
+
+.sub toBoolean :multi(_)
+    .param string value
+
+    .prof('_tcl;toBoolean :multi(_)')
+
+    .local string lc
+    lc = downcase value
+
+    # full words
     if lc == 'true'  goto true
+    if lc == 'false' goto false
+    if lc == 'yes'   goto true
+    if lc == 'no'    goto false
+    if lc == 'on'    goto true
+    if lc == 'off'   goto false
+
+    # partials
     if lc == 'tru'   goto true
     if lc == 'tr'    goto true
     if lc == 't'     goto true
-    if lc == 'false' goto false
     if lc == 'fals'  goto false
     if lc == 'fal'   goto false
     if lc == 'fa'    goto false
     if lc == 'f'     goto false
-    if lc == 'yes'   goto true
     if lc == 'ye'    goto true
     if lc == 'y'     goto true
-    if lc == 'no'    goto false
     if lc == 'n'     goto false
-    if lc == 'on'    goto true
-    if lc == 'off'   goto false
     if lc == 'of'    goto false
 
     push_eh error
-      value = toNumber(value)
+        $P1 = toNumber(value)
     pop_eh
-    if value goto true
+    if $P1 goto true
     goto false
 
 error:
     .catch()
-    $S0 = value
-    $S0 = 'expected boolean value but got "' . $S0
+    $S0 = 'expected boolean value but got "' . value
     $S0 = $S0 . '"'
     die $S0
 
