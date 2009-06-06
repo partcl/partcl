@@ -8,20 +8,7 @@ use warnings;
 use lib qw(lib);
 
 use Parrot::Test::Tcl;
-use Test::More tests => 34;
-
-tcl_output_is( <<'TCL', <<'OUT', 'multiple foreaches. seems to need puts to trigger.' );
-  set names [list 1 2 3]
-  foreach name $names { puts $name }
-  foreach name $names { puts $name }
-TCL
-1
-2
-3
-1
-2
-3
-OUT
+use Test::More tests => 31;
 
 tcl_output_is( <<'TCL', <<OUT, "leading spacex2 should be ok" );
    puts Parsing
@@ -171,20 +158,6 @@ TCL
 2
 OUT
 
-tcl_output_is( <<'TCL', <<'OUT', "GC bug?" );
-  for {set i 1} {$i < 100} {incr i} {}
-  puts ok
-TCL
-ok
-OUT
-
-tcl_output_is( <<'TCL', <<'OUT', "compiler bug with reusing registers" );
-  set x " \{"
-  puts [list [catch {lappend x "a"} msg] $msg]
-TCL
-1 {unmatched open brace in list}
-OUT
-
 tcl_output_is( <<'TCL', <<'OUT', "{} command" );
   proc {} {} {puts ok}
   {}
@@ -234,7 +207,7 @@ TCL
 
 OUT
 
-tcl_output_is( <<'TCL', <<'OUT');
+tcl_output_is( <<'TCL', <<'OUT','{*} syntax');
   set var {a   b c}
   puts [join [list {*}$var] ,]
   puts [join [list {*}{a {b c} d}] ,]
