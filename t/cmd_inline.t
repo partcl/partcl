@@ -20,6 +20,11 @@ TCL
 ok
 OUT
 
+# XXX can't convert this to a tcl-based test yet, as
+# 'end' stops parrot, not just the processing
+# for the individual PASM invocation. Leaving it off
+# is also bad, as that just keeps walking the bytecode.
+
 tcl_output_is( <<'TCL', <<'OUT', "PASM compiler" );
  inline PASM {
    print "ok\n"
