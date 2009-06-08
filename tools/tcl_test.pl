@@ -11,6 +11,8 @@ use lib qw(lib);
 use Parrot::Installed;
 use Parrot::Config;
 
+use Fatal qw(open);
+
 my $parrot = $PConfig{bindir} . '/parrot';
 
 # the directory to put the tests in
@@ -28,7 +30,8 @@ tcl_test.pl
 
 Run the tests from the Tcl distribution. This script will download
 the tests from the Tcl CVS repository and then run them individually
-using tcltest.
+using tcltest. The script also downloads information from the
+partcl wiki to see what should be skipped.
 
 =head1 BUGS
 
@@ -41,39 +44,23 @@ each individual C<.test> file.
 
 =cut
 
-# When testing, avoid these files for now.
+# Get a listing of skippable files
 
-# these files are mostly skips...
-my @skipfiles = qw(
-  assocd     cmdInfo   dcall      dstring
-  indexObj   link      lset       macOSXFCmd
-  macOSXLoad misc      notify     obj
-  registry   stringObj thread     unixFCmd
-  unixInit   unixNotfy winConsole winDde
-  winFCmd    winFile   winNotify  winPipe
-  winTime    
-);
+my $specfile = 'SpecTestStatus.wiki';
+warn "Getting a copy of $specfile\n";
 
-# tests that hang or explode
-push @skipfiles, qw(
-  async      autoMkindex binary   chan
-  chanio     cmdAH       cmdMZ    compile
-  encoding   env         exec     expr
-  expr-old   fCmd        fileName fileSystem
-  history    interp      io       ioCmd
-  iogt       ioUtil      msgcat   namespace
-  opt        pkgMkIndex  reg      regexp
-  regexpComp safe        socket   string
-  tcltest    trace       unixFile
-);
+my $svn_info = `svn info .`;
+$svn_info =~ /Repository Root:\s+(.*)\n/;
+my $repo = $1;
+my $specstatus = $repo . "/wiki/$specfile";
+`svn export $specstatus tools/$specfile`;
 
-# not implemented, all fail, other.
-push @skipfiles, qw(
-  case  clock   config   execute
-  http  httpold init     main
-  pid   pkg     platform result
-  stack tm      unload
-);
+my @skipfiles;
+open my $fh, '<', "tools/$specfile";
+while (my $line = <$fh>) {
+  next unless $line =~ /^\s+\*\s*(.*)\s+\@SKIP/;
+  push @skipfiles, $1;
+}
 
 main();
 
