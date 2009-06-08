@@ -9,7 +9,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 322
+plan 323
 
 # namespace
 namespace eval test { variable x 5 }
@@ -93,7 +93,8 @@ is [expr 0 ** 0]   1 {pow}
 eval_is {expr 0 ** -1} {exponentiation of zero by negative power} \
   {pow of 0 with neg exp}
 is [expr 2 * 3]    6 {mul}
-is [expr 6 / 2]    3 {times}
+is [expr 6 / 2]    3 {int div}
+is [expr 5 / -2]  -3 {int div, negative} {TODO offbyeone}
 is [expr 3 % 2]    1 {remainder}
 is [expr 2 + 3]    5 {plus}
 is [expr 2 - 3]   -1 {minus}
