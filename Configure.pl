@@ -39,8 +39,8 @@ my $build_tool = $perlbin . " "
 
 my %makefiles = (
     "config/makefiles/root.in" => "Makefile",
-    "config/makefiles/pmc.in" => "src/pmc/Makefile",
-    "config/makefiles/ops.in" => "src/ops/Makefile",
+    "config/makefiles/pmc.in"  => "src/pmc/Makefile",
+    "config/makefiles/ops.in"  => "src/ops/Makefile",
 );
 
 foreach my $template (keys %makefiles) {
@@ -63,9 +63,10 @@ print {$fh} "1;\n";
 print "Generating miscellaneous files\n";
 
 my $parrot = "$bindir/parrot";
-add_shebang($parrot, "t/internals/select_switches.t", "t/internals/select_switches_t.in");
-add_shebang($parrot, "t/internals/select_option.t", "t/internals/select_option_t.in");
-
+add_shebang($parrot, 't/internals/select_switches.t', 'config/misc/select_switches_t.in');
+add_shebang($parrot, 't/internals/select_option.t', 'config/misc/select_option_t.in');
+replace_parrot($parrot, 'tools/spectcl', 'config/misc/spectcl.in');
+chmod 0755, 'tools/spectcl';
 
 print <<"END";
 
@@ -96,5 +97,23 @@ sub add_shebang {
  
     open my $ofh, '>', $target;
     print {$ofh} $shebang, "\n";
+    print {$ofh} $contents;
+}
+
+# This is like gen_makefiles, but that adds an inappropriate header.
+sub replace_parrot {
+    my $exe    = shift;
+    my $target = shift;
+    my $source = shift;
+
+    my $contents;
+    {
+        local undef $/;
+        open my $fh, '<', $source;
+        $contents = <$fh>;
+    }
+    $contents =~ s/\@parrot\@/$exe/g;
+
+    open my $ofh, '>', $target;
     print {$ofh} $contents;
 }
