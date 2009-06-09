@@ -20,8 +20,9 @@
   toList = get_root_global ['_tcl'], 'toList'
   setVar  = get_root_global ['_tcl'], 'setVar'
 
-  .local pmc retval, list
-  list = readVar(name)
+  .local pmc retval, list, original_list
+  original_list = readVar(name)
+  list = clone original_list
   list = toList(list)
   retval = list
 
@@ -70,6 +71,7 @@ loop:
 done:
   prev[$I2] = value
   setVar(name, retval)
+  original_list = copy retval
   .return(retval)
 
 out_of_range:
