@@ -16,6 +16,7 @@
   if subcommand != 'create' goto done
 create:
   .local string childName
+  if argc == 1 goto done
   childName = pop argv
   # XXX: this creates a command with the name of the child interpreter
   # that doesn't do anything; this stub gets us through some spec tests.
