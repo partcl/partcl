@@ -94,7 +94,7 @@ eval_is {expr 0 ** -1} {exponentiation of zero by negative power} \
   {pow of 0 with neg exp}
 is [expr 2 * 3]    6 {mul}
 is [expr 6 / 2]    3 {int div}
-is [expr 4 / -3]  -2 {int div, negative} {TODO offbyeone}
+is [expr 4 / -3]  -2 {int div, negative}
 is [expr 3 % 2]    1 {remainder}
 is [expr 2 + 3]    5 {plus}
 is [expr 2 - 3]   -1 {minus}

@@ -31,9 +31,12 @@ pmclass TclInt
     }
 
 
-    /* TclInt shouldn't automatically promote division to float. */
+    /*
+     * TclInt shouldn't automatically promote division to float;
+     *  also, explicitly use floor when dividing.
+     */
     MULTI PMC *divide(Integer value, PMC* dest) {
-        INTVAL d = VTABLE_get_integer(INTERP, value);
+        FLOATVAL d = VTABLE_get_number(INTERP, value);
 
         if (d == 0)
             Parrot_ex_throw_from_c_args(INTERP, NULL, EXCEPTION_DIV_BY_ZERO,
@@ -42,7 +45,7 @@ pmclass TclInt
         if (!dest)
             dest = pmc_new(INTERP, SELF->vtable->base_type);
 
-        VTABLE_set_integer_native(INTERP, dest, SELF.get_integer() / d);
+        VTABLE_set_integer_native(INTERP, dest, floor(SELF.get_integer() / d));
         return dest;
     }
 }
