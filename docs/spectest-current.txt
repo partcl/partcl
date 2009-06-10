@@ -2,6 +2,8 @@ append.test:	Total	37	Passed	31	Skipped	0	Failed	6
 appendComp.test:	Total	40	Passed	30	Skipped	0	Failed	10
 apply.test:	Total	41	Passed	3	Skipped	0	Failed	38
 basic.test:	Total	140	Passed	39	Skipped	74	Failed	27
+chan.test:	Total	35	Passed	2	Skipped	0	Failed	33
+compExpr-old.test:	Total	190	Passed	172	Skipped	4	Failed	14
 compExpr.test:	Total	80	Passed	75	Skipped	0	Failed	5
 concat.test:	Total	9	Passed	9	Skipped	0	Failed	0
 env.test:	Total	20	Passed	6	Skipped	1	Failed	13
@@ -18,7 +20,8 @@ if.test:	Total	73	Passed	64	Skipped	0	Failed	9
 incr-old.test:	Total	14	Passed	11	Skipped	0	Failed	3
 incr.test:	Total	65	Passed	55	Skipped	0	Failed	10
 init.test:	Total	8	Passed	4	Skipped	0	Failed	4
-join.test:	Total	9	Passed	6	Skipped	0	Failed	3
+ioUtil.test:	Total	25	Passed	2	Skipped	22	Failed	1
+join.test:	Total	9	Passed	8	Skipped	0	Failed	1
 lindex.test:	Total	80	Passed	40	Skipped	37	Failed	3
 linsert.test:	Total	26	Passed	26	Skipped	0	Failed	0
 list.test:	Total	69	Passed	64	Skipped	0	Failed	5
@@ -39,13 +42,13 @@ pkg.test:	Total	0	Passed	0	Skipped	0	Failed	0
 proc-old.test:	Total	75	Passed	51	Skipped	0	Failed	24
 proc.test:	Total	31	Passed	8	Skipped	0	Failed	23
 pwd.test:	Total	3	Passed	3	Skipped	0	Failed	0
-rename.test:	Total	18	Passed	5	Skipped	7	Failed	6
+rename.test:	Total	18	Passed	7	Skipped	7	Failed	4
 scan.test:	Total	171	Passed	95	Skipped	4	Failed	72
 security.test:	Total	1	Passed	1	Skipped	0	Failed	0
 set-old.test:	Total	149	Passed	128	Skipped	0	Failed	21
 set.test:	Total	63	Passed	58	Skipped	1	Failed	4
 source.test:	Total	20	Passed	6	Skipped	0	Failed	14
-split.test:	Total	16	Passed	14	Skipped	0	Failed	2
+split.test:	Total	16	Passed	16	Skipped	0	Failed	0
 stringComp.test:	Total	143	Passed	133	Skipped	0	Failed	10
 subst.test:	Total	59	Passed	35	Skipped	0	Failed	24
 switch.test:	Total	108	Passed	66	Skipped	0	Failed	42
