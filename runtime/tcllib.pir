@@ -77,13 +77,6 @@ providing a compreg-compatible method.
 .HLL '_Tcl'
 .namespace []
 
-.sub load_macros :load :anon
-  .prof('_tcl;load_macros')
-  $P0 = compreg 'PIR'
-  $P0 = $P0(".sub main\n.include 'src/macros.pir'\n.end")
-  $P0()
-.end
-
 .sub prepare_lib :load :anon
   .prof('_tcl;prepare_lib')
 
