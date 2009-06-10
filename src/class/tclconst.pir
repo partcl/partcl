@@ -227,7 +227,17 @@ uni_loop:
 uni_done:
   $I0 = uni_pos - pos
   if $I0 == 2 goto uni_not_really
-  $S0 = chr uni_value
+
+  if uni_value <= 0xd7ff goto uni_good
+  if uni_value <  0xe000 goto uni_bad
+  if uni_value >  0x10ffff goto uni_bad
+  goto uni_good
+
+  uni_bad:
+    uni_value = 0xfffd
+  uni_good:
+    $S0 = chr uni_value
+
   substr value, pos, $I0, $S0
 
   inc pos
