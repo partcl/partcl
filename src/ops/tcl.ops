@@ -63,6 +63,10 @@ isn't a TCL_OK).
 
 Generate a TCL_ERROR with $1 as the value, and set $errorCode to $2
 
+=item B<tcl_error>(in STR)
+
+Generate a TCL_ERROR with $1 as the message, use $errorCode of C<NONE>.
+
 =cut
 
 inline op tcl_error(in STR, in PMC) :flow {
@@ -80,6 +84,30 @@ inline op tcl_error(in STR, in PMC) :flow {
 
     errorCode = Parrot_find_global_n(interp, ns, string_from_literal(interp, "$errorCode"));
     VTABLE_assign_pmc(interp, errorCode, $2);
+
+    /* Throw the exception */
+    dest = Parrot_ex_throw_from_op(interp, exception, ret);
+    goto ADDRESS(dest);
+}
+
+inline op tcl_error(in STR) :flow {
+    PMC      *errorCode, *ns;
+    PMC      *const root_ns = interp->root_namespace;
+    PMC      *tcl_key        = pmc_new(interp, enum_class_Key);
+    PMC *exception = Parrot_ex_build_exception(interp, EXCEPT_error,
+            CONTROL_ERROR, $1);
+    opcode_t * const ret  = expr NEXT();
+    opcode_t * dest;
+    PMC *newEC;
+
+    /* Set the global $errorCode */
+    VTABLE_set_string_native(interp, tcl_key, string_from_literal(interp, "tcl"));
+    ns = Parrot_get_namespace_keyed(interp, root_ns, tcl_key);
+
+    errorCode = Parrot_find_global_n(interp, ns, string_from_literal(interp, "$errorCode"));
+    newEC = pmc_new(interp, Parrot_get_ctx_HLL_type(interp, enum_class_String));
+    VTABLE_set_string_native(interp, newEC, string_from_literal(interp, "NONE"));
+    VTABLE_assign_pmc(interp, errorCode, newEC);
 
     /* Throw the exception */
     dest = Parrot_ex_throw_from_op(interp, exception, ret);

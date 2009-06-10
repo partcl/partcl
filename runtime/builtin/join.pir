@@ -34,7 +34,7 @@ done_joinString:
   .return ($S0)
 
 bad_args:
-  die 'wrong # args: should be "join list ?joinString?"'
+  tcl_error 'wrong # args: should be "join list ?joinString?"'
 .end
 
 # Local Variables:
