@@ -9,7 +9,7 @@
   .local int argc
   argc = elements argv
 
-  if argc != 3 goto error
+  if argc != 3 goto bad_args
 
   .local string full_name
   .local pmc args, body
@@ -17,9 +17,9 @@
   args      = argv[1]
   body      = argv[2]
 
-  .local pmc pir_compiler, compileTcl, toList, splitNamespace
-  pir_compiler = compreg 'PIR'
-  compileTcl     = get_root_global ['_tcl'], 'compileTcl'
+  .local pmc pirc, tclc, toList, splitNamespace
+  pirc = compreg 'PIR'
+  tclc = compreg 'TCL'
   toList         = get_root_global ['_tcl'], 'toList'
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
 
@@ -38,23 +38,24 @@
   if full_name == '' goto create
 
   ns   = splitNamespace(full_name, 1)
-  $I0  = elements ns
-  if $I0 == 0 goto create
+  .local int ns_elements
+  ns_elements  = elements ns
+  if ns_elements == 0 goto create
   name = pop ns
 
-  if $I0 == 1 goto create
+  if ns_elements == 1 goto create
+
   $P0 = get_hll_namespace ns
   if null $P0 goto unknown_namespace
 
   namespace = join "'; '", ns
   namespace = "['" . namespace
   namespace .= "']"
-  goto create
 
 create:
   code.'emit'(<<'END_PIR', name, namespace)
 .namespace %1
-.sub 'xxx' :anon
+.sub '' :anon
   .param pmc args :slurpy
 
   .prof("tcl;%1;&%0")
@@ -105,8 +106,10 @@ args_loop:
   if $I0 == 2 goto default_arg
 
   min = i + 1
-  args_code.'emit'('  $P1 = shift args')
-  args_code.'emit'("  lexpad['$%0'] = $P1", $S0)
+  args_code.'emit'(<<"END_PIR", $S0)
+    $P1 = shift args
+    lexpad['$%0'] = $P1
+END_PIR
 
   args_usage .= ' '
   args_usage .= $S0
@@ -173,14 +176,14 @@ done_args:
 BAD_ARGS:
   $P0 = pop call_chain
   $P0 = shift info_level
-  die 'wrong # args: should be "%0%1"'
+  tcl_error 'wrong # args: should be "%0%1"'
 ARGS_OK:
   push_eh is_return
 END_PIR
 
   # Save the parsed body.
   .local string parsed_body, body_reg
-  (parsed_body, body_reg) = compileTcl(body, 'pir_only'=>1)
+  (parsed_body, body_reg) = tclc(body, 'pir_only'=>1)
 
   code .= parsed_body
 
@@ -204,35 +207,35 @@ is_return:
   .get_message($P0)
   .return ($P0)
 bad_continue:
-  die 'invoked "continue" outside of a loop'
+  tcl_error 'invoked "continue" outside of a loop'
 bad_break:
-  die 'invoked "break" outside of a loop'
+  tcl_error 'invoked "break" outside of a loop'
 not_return_nor_ok:
   .rethrow()
 .end
 END_PIR
 
-  $P0 = pir_compiler(code)
+  $P0 = pirc(code)
 
   # the PIR compiler returns an Eval PMC, which contains each sub that
   # was compiled in it. we want the first (and only) one, and we want to
   # put it into a TclProc...
   $P0 = $P0[0]
 
-  $P1 = root_new ['parrot'; 'TclProc']
-  assign $P1, $P0
+  .local pmc proc
+  proc = root_new ['parrot'; 'TclProc']
+  assign proc, $P0
 
-  setattribute $P1, 'HLL_source', body
+  setattribute proc, 'HLL_source', body
 
   $P9 = box args_info
-  setattribute $P1, 'args',       $P9
-  setattribute $P1, 'defaults',   defaults_info
+  setattribute proc, 'args',       $P9
+  setattribute proc, 'defaults',   defaults_info
 
-# XXX save the original namespace in the 'namespace' attribute...
+  # XXX save the original namespace in the 'namespace' attribute...
 
+  # And now store the proc subclass into the appropriate slot in the namespace
 
-
-  # And now store it into the appropriate slot in the namespace
   .local pmc ns_target
   ns_target = get_hll_namespace
 
@@ -246,7 +249,7 @@ walk_ns:
 done_walk:
 
   name = '&' . name
-  ns_target[name] = $P1
+  ns_target[name] = proc
 
   .return ('')
 
@@ -254,17 +257,17 @@ unknown_namespace:
   $S0 = "can't create procedure \""
   $S0 .= full_name
   $S0 .= '": unknown namespace'
-  die $S0
+  tcl_error $S0
 
 too_many_fields:
   $S0 = arg
   $S1 = 'too many fields in argument specifier "'
   $S1 .= $S0
   $S1 .= '"'
-  die $S1
+  tcl_error $S1
 
-error:
-  die 'wrong # args: should be "proc name args body"'
+bad_args:
+  tcl_error 'wrong # args: should be "proc name args body"'
 .end
 
 # Local Variables:
