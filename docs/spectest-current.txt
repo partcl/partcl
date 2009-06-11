@@ -19,6 +19,7 @@ if-old.test:	Total	33	Passed	33	Skipped	0	Failed	0
 if.test:	Total	73	Passed	64	Skipped	0	Failed	9
 incr-old.test:	Total	14	Passed	11	Skipped	0	Failed	3
 incr.test:	Total	65	Passed	55	Skipped	0	Failed	10
+info.test:	Total	177	Passed	69	Skipped	16	Failed	92
 init.test:	Total	8	Passed	4	Skipped	0	Failed	4
 ioUtil.test:	Total	25	Passed	2	Skipped	22	Failed	1
 join.test:	Total	9	Passed	8	Skipped	0	Failed	1
@@ -27,6 +28,7 @@ linsert.test:	Total	26	Passed	26	Skipped	0	Failed	0
 list.test:	Total	69	Passed	64	Skipped	0	Failed	5
 listObj.test:	Total	43	Passed	37	Skipped	1	Failed	5
 llength.test:	Total	6	Passed	6	Skipped	0	Failed	0
+load.test:	Total	26	Passed	2	Skipped	10	Failed	14
 lrange.test:	Total	22	Passed	22	Skipped	0	Failed	0
 lrepeat.test:	Total	10	Passed	10	Skipped	0	Failed	0
 lreplace.test:	Total	34	Passed	33	Skipped	0	Failed	1
