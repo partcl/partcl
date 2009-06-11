@@ -212,11 +212,7 @@ not_return_nor_ok:
 .end
 END_PIR
 
-  # (see note on trans_charset in lib/parser.pir) RT#40752:
-  $S0 = code
-  $I0 = find_charset 'ascii'
-  $S0 = trans_charset $I0
-  $P0 = pir_compiler($S0)
+  $P0 = pir_compiler(code)
 
   # the PIR compiler returns an Eval PMC, which contains each sub that
   # was compiled in it. we want the first (and only) one, and we want to
