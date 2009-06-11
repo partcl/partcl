@@ -30,7 +30,7 @@ my $parrot_revision = 'r' . $PConfig{revision};
 
 my $start = time();
 
-open my $fh, "$^X tools/tcl_test.pl|";
+open my $fh, "$^X tools/tcl_test.pl 2>&1|";
 
 my $csv = "docs/spectest-progress.csv";
 my $sum = "docs/spectest-current.txt";
