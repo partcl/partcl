@@ -205,20 +205,6 @@ Returns the list as a string
 
 /*
 
-=item C<void set_pmc(PMC *other)>
-
-An alias to assign_pmc to make other things happy before set_pmc is removed.
-
-=cut
-
-*/
-
-    void set_pmc(PMC *other) {
-        VTABLE_assign_pmc(INTERP, SELF, other);
-    }
-
-/*
-
 =item C<void assign_pmc(PMC *other)>
 
 Copy the contents of other to self.
