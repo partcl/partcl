@@ -1,25 +1,32 @@
-/* TclInt.pmc
- *  Copyright (C) 2001-2008, The Perl Foundation.
- *  SVN Info
- *     $Id: tclint.pmc 29952 2008-08-02 22:45:13Z allison $
- *  Overview:
- *     These are the vtable functions for the TclInt base class
- *  Data Structure and Algorithms:
- *  History:
- *  References:
+/*
+ *  Copyright (C) 2001-2009, The Perl Foundation.
+ *  $Id: tclint.pmc 29952 2008-08-02 22:45:13Z allison $
  */
 
 #include "parrot/embed.h"
+#include "pmc/pmc_float.h"
+#include "pmc/pmc_string.h"
+
+static INTVAL dynpmc_TclFloat;
+static INTVAL dynpmc_TclString;
 
 pmclass TclInt
     dynpmc
-    extends TclObject
     extends Integer
     does    integer
     group   tcl_group
     hll     Tcl
     maps    Integer
 {
+
+    void class_init() {
+        if (pass) {
+            dynpmc_TclFloat  = pmc_type(INTERP,
+                CONST_STRING(INTERP, "TclFloat"));
+            dynpmc_TclString  = pmc_type(INTERP,
+                CONST_STRING(INTERP, "TclString"));
+        }
+    }
 
     void assign_pmc(PMC* value) {
         STRING * const undef = CONST_STRING(INTERP, "Undef");
@@ -30,6 +37,16 @@ pmclass TclInt
             SELF.set_integer_native(VTABLE_get_integer(INTERP, value));
     }
 
+    void set_number_native(FLOATVAL value) {
+        pmc_reuse(INTERP, SELF, dynpmc_TclFloat, 0);
+        SETATTR_Float_fv(INTERP, SELF, value);
+    }
+
+
+    void set_string_native(STRING *value) {
+        pmc_reuse(INTERP, SELF, dynpmc_TclString, 0);
+        SETATTR_String_str_val(INTERP, SELF, Parrot_str_copy(INTERP, value));
+    }
 
     /*
      * TclInt shouldn't automatically promote division to float;

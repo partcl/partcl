@@ -1,27 +1,42 @@
-/* TclFloat.pmc
- *  Copyright (C) 2001-2003, The Perl Foundation.
- *  SVN Info
- *     $Id: tclfloat.pmc 26652 2008-03-31 02:23:48Z coke $
- *  Overview:
- *     These are the vtable functions for the TclFloat base class
- *  Data Structure and Algorithms:
- *  History:
- *  Notes:
- *  References:
+/*
+ *  $Id: tclfloat.pmc 26652 2008-03-31 02:23:48Z coke $
+ *  Copyright (C) 2001-2009, The Perl Foundation.
  */
 
-#include "parrot/embed.h"
-#include <assert.h>
+#include "pmc/pmc_integer.h"
+#include "pmc/pmc_string.h"
+
+static INTVAL dynpmc_TclInt;
+static INTVAL dynpmc_TclString;
 
 pmclass TclFloat
     dynpmc
-    extends TclObject
     extends Float
     does    float
     group   tcl_group
     hll     Tcl
     maps    Float
 {
+
+    void class_init() {
+        if (pass) {
+            dynpmc_TclInt    = pmc_type(INTERP,
+                CONST_STRING(INTERP, "TclInt"));
+            dynpmc_TclString = pmc_type(INTERP,
+                CONST_STRING(INTERP, "TclString"));
+        }
+    }
+
+    void set_integer_native(INTVAL value) {
+        pmc_reuse(INTERP, SELF, dynpmc_TclInt, 0);
+        SETATTR_Integer_iv(INTERP, SELF, value);
+    }
+
+    void set_string_native(STRING *value) {
+        pmc_reuse(INTERP, SELF, dynpmc_TclString, 0);
+        SETATTR_String_str_val(INTERP, SELF, Parrot_str_copy(INTERP, value));
+    }
+
     STRING* get_string() {
         UINTVAL buflen;
         int check_flag;
