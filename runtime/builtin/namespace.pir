@@ -236,8 +236,7 @@ bad_args:
 
   .local pmc info_level
   info_level = get_root_global ['_tcl'], 'info_level'
-  $P0 = root_new ['parrot'; 'TclList']
-  assign $P0, argv
+  $P0 = clone argv
   unshift $P0, 'eval'
   unshift $P0, 'namespace'
   unshift info_level, $P0
