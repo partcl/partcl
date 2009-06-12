@@ -62,6 +62,7 @@ providing a compreg-compatible method.
 # class files (HLL: _Tcl)
 .include 'src/class/tclarray.pir'
 .include 'src/class/tclconst.pir'
+.include 'src/class/tcldict.pir'
 .include 'src/class/tclproc.pir'
 .include 'src/class/tracearray.pir'
 

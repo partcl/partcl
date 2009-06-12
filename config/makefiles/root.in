@@ -115,6 +115,7 @@ tcl.pbc: $(PARROT) pmcs ops runtime/tcllib.pbc src/tclsh.pir
 CLASSES = \
   $(CLASSDIR)/tclarray.pir \
   $(CLASSDIR)/tclconst.pir \
+  $(CLASSDIR)/tcldict.pir \
   $(CLASSDIR)/tclproc.pir \
   $(CLASSDIR)/tracearray.pir
 
