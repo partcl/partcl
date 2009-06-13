@@ -14,12 +14,13 @@ exec.test:	Total	97	Passed	1	Skipped	31	Failed	65
 for-old.test:	Total	9	Passed	9	Skipped	0	Failed	0
 for.test:	Total	50	Passed	42	Skipped	0	Failed	8
 foreach.test:	Total	40	Passed	38	Skipped	0	Failed	2
+format.test:	Total	256	Passed	182	Skipped	29	Failed	45
 get.test:	Total	20	Passed	3	Skipped	14	Failed	3
 if-old.test:	Total	33	Passed	33	Skipped	0	Failed	0
 if.test:	Total	73	Passed	64	Skipped	0	Failed	9
 incr-old.test:	Total	14	Passed	11	Skipped	0	Failed	3
 incr.test:	Total	65	Passed	55	Skipped	0	Failed	10
-info.test:	Total	177	Passed	69	Skipped	16	Failed	92
+    :	Total	177	Passed	69	Skipped	16	Failed	92
 init.test:	Total	8	Passed	4	Skipped	0	Failed	4
 ioUtil.test:	Total	25	Passed	2	Skipped	22	Failed	1
 join.test:	Total	9	Passed	8	Skipped	0	Failed	1
@@ -34,6 +35,7 @@ lrepeat.test:	Total	10	Passed	10	Skipped	0	Failed	0
 lreplace.test:	Total	34	Passed	33	Skipped	0	Failed	1
 lsearch.test:	Total	101	Passed	47	Skipped	0	Failed	54
 lsetComp.test:	Total	19	Passed	19	Skipped	0	Failed	0
+mathop.test:	Total	329	Passed	158	Skipped	0	Failed	171
 namespace-old.test:	Total	126	Passed	68	Skipped	0	Failed	58
 package.test:	Total	16	Passed	6	Skipped	0	Failed	10
 parse.test:	Total	251	Passed	63	Skipped	156	Failed	32
@@ -51,14 +53,15 @@ set-old.test:	Total	149	Passed	128	Skipped	0	Failed	21
 set.test:	Total	63	Passed	58	Skipped	1	Failed	4
 source.test:	Total	20	Passed	6	Skipped	0	Failed	14
 split.test:	Total	16	Passed	16	Skipped	0	Failed	0
+string.test:	Total	473	Passed	381	Skipped	1	Failed	91
 stringComp.test:	Total	143	Passed	133	Skipped	0	Failed	10
-subst.test:	Total	59	Passed	35	Skipped	0	Failed	24
 switch.test:	Total	108	Passed	66	Skipped	0	Failed	42
 timer.test:	Total	54	Passed	8	Skipped	0	Failed	46
 unknown.test:	Total	7	Passed	6	Skipped	0	Failed	1
 unload.test:	Total	26	Passed	1	Skipped	0	Failed	25
 upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
 utf.test:	Total	114	Passed	82	Skipped	12	Failed	20
+util.test:	Total	290	Passed	124	Skipped	128	Failed	38
 var.test:	Total	84	Passed	36	Skipped	17	Failed	31
 while-old.test:	Total	15	Passed	14	Skipped	0	Failed	1
 while.test:	Total	46	Passed	42	Skipped	0	Failed	4
