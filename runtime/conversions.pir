@@ -1,3 +1,19 @@
+.HLL 'parrot'
+.namespace ['String']
+
+.sub getListValue :method
+  .prof('parrot;String;getListValue')
+  $P0 = root_new ['parrot'; 'TclString'] 
+  $S0 = self
+  $P0 = $S0
+
+  $P0 = $P0.'getListValue'()
+
+  copy self, $P0
+
+  .return(self)
+.end
+
 .HLL '_Tcl'
 .namespace []
 
@@ -8,35 +24,13 @@ this is as simple as returning the list.
 
 =cut
 
-.sub toList :multi(TclList)
-  .param pmc list
-  .prof('_tcl;toList :multi(TclList)')
-  .return(list)
-.end
-
-.sub toList :multi(TclString)
+.sub toList
   .param pmc value
-  .prof('_tcl;toList :multi(TclString)')
-  # XXX can't tailcall to a method defined in C.
+  .prof('_tcl;toList')
+  # XXX can't tailcall to a method (that coul be) defined in C.
   $P0 = value.'getListValue'()
   copy value, $P0
   .return($P0)
-.end
-
-# XXX How are we getting plain Strings in here??
-.sub toList :multi(String)
-  .param pmc value
-
-  .prof('_tcl;toList :multi(_)')
-  $P0 = root_new ['parrot'; 'TclString'] 
-  $S0 = value
-  $P0 = $S0
-
-  $P0 = $P0.'getListValue'()
-
-  copy value, $P0
-
-  .return(value)
 .end
 
 =head2 _Tcl::toDict

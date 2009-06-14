@@ -275,6 +275,9 @@ moved back into parrot core where we'd be happy to inherit it.
         RETURN(PMC *SELF);
     }
 
+    METHOD getListValue() {
+        RETURN(PMC *SELF);
+    }
 /*
 
 =back
