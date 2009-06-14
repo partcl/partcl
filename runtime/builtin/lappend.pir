@@ -44,6 +44,7 @@ loop_done:
   .local pmc set
   set = get_root_global ['_tcl'], 'setVar'
   set(listname, value)
+  # should be able to return ourselves, but for Issue #2
   .local pmc retval
   retval = clone value
   .return(retval)

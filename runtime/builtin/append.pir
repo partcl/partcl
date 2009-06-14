@@ -46,6 +46,7 @@ loop_done:
   .local pmc set
   set = get_root_global ['_tcl'], 'setVar'
   set(name, value)
+  # should be able to return ourselves, but for Issue #2
   .return(value)
 
 getter:
