@@ -30,7 +30,7 @@ sub pir_cmds_in_dir {
     opendir( DIR, $dir );
 
     # only return pir files (and strip the extension)
-    my @files = grep { s/\.pir$// } readdir(DIR);
+    my @files = sort grep { s/\.pir$// } readdir(DIR);
     closedir(DIR);
 
     return @files;
