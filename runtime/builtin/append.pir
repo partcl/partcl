@@ -45,7 +45,8 @@ loop:
 loop_done:
   .local pmc set
   set = get_root_global ['_tcl'], 'setVar'
-  .tailcall set(name, value)
+  set(name, value)
+  .return(value)
 
 getter:
   .tailcall read(name)
