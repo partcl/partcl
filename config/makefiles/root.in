@@ -79,6 +79,7 @@ runtime/builtin/lassign.pir      runtime/builtin/vwait.pir \
 runtime/builtin/lindex.pir       runtime/builtin/while.pir
 
 DEPS = \
+runtime/compilers.pir \
 runtime/conversions.pir \
 runtime/string_to_dict.pir \
 runtime/variables.pir \

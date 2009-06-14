@@ -54,6 +54,7 @@ providing a compreg-compatible method.
 .include 'runtime/builtins.pir'
 
 # library files (HLL: _Tcl)
+.include 'runtime/compilers.pir'
 .include 'runtime/conversions.pir'
 .include 'runtime/string_to_dict.pir'
 .include 'runtime/variables.pir'
