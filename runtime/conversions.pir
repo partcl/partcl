@@ -14,14 +14,25 @@ this is as simple as returning the list.
   .return(list)
 .end
 
-.sub toList :multi(_)
+.sub toList :multi(TclString)
+  .param pmc value
+  .prof('_tcl;toList :multi(TclString)')
+  # XXX can't tailcall to a method defined in C.
+  $P0 = value.'getListValue'()
+  copy value, $P0
+  .return($P0)
+.end
+
+# XXX How are we getting plain Strings in here??
+.sub toList :multi(String)
   .param pmc value
 
   .prof('_tcl;toList :multi(_)')
-  $P0 = root_new ['parrot'; 'TclString']
+  $P0 = root_new ['parrot'; 'TclString'] 
   $S0 = value
+  $P0 = $S0
 
-  $P0 = $P0.'get_list'($S0)
+  $P0 = $P0.'getListValue'()
 
   copy value, $P0
 

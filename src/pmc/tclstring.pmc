@@ -39,7 +39,7 @@ pmclass TclString
         SETATTR_Integer_iv(INTERP, SELF, value);
     }
 
-    METHOD get_list(STRING* str :optional) {
+    METHOD getListValue() {
         PMC*    retval = pmc_new(INTERP, pmc_type(INTERP, CONST_STRING(INTERP, "TclList")));
         INTVAL  pos = -1;       /* we increment before we use it */
         INTVAL  len;            /* length of the string */
@@ -49,9 +49,7 @@ pmclass TclString
         PMC*    element_pmc;    /* An item to add to the list */
         INTVAL  peek_pos;       /* keep track of pos when scanning ahead */
         INTVAL  depth;          /* keep track of nested {} pairs */
-
-        if (! str)
-             str = SELF.get_string();
+        STRING* str = SELF.get_string();
 
         /* make sure our return value isn't GC'd out from under us! */
         Parrot_register_pmc(INTERP, retval);

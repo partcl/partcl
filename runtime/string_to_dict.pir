@@ -53,12 +53,11 @@ odd_args:
 .end
 
 .sub stringToDict
-  .param string str
+  .param pmc str
 
   .prof('_tcl;stringToDict')
   .local pmc list
-  $P0 = root_new ['parrot'; 'TclString']
-  list = $P0.'get_list'(str)
+  list = toList(str)
   .tailcall listToDict(list)
 .end
 
