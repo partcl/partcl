@@ -40,7 +40,7 @@ sub _output_is {
     print {$code_fh} $code;
     close $code_fh;
 
-    # Generate a temp file for the code.
+    # Generate a temp file for the output.
     my ($out_fh, $out_tempfile) = tempfile(
         SUFFIX => '.out',
         UNLINK => 1
