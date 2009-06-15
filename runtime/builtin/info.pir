@@ -174,18 +174,21 @@ bad_args:
   name = pop ns
   name = '&' . name
 
+  .local pmc proc
   unshift ns, 'tcl'
-  $P1 = get_root_global ns, name
-  if null $P1 goto not_proc
+  proc = get_root_global ns, name
+  if null proc goto not_proc
 
-  $P2 = getattribute $P1, 'defaults'
-  $P9 = getattribute $P1, 'args'
-  if null $P2 goto check_arg
+  .local pmc defaults, args
+  defaults = getattribute proc, 'defaults'
+  args = getattribute proc, 'args'
+  if null defaults goto check_arg
 
-  $P3 = $P2[argname]
-  if_null $P3, check_arg
+  .local pmc arg_defaults
+  arg_defaults = defaults[argname]
+  if_null arg_defaults, check_arg
   push_eh error_on_set
-    setVar(varname, $P3)
+    setVar(varname, arg_defaults) 
   pop_eh
 
   # store in variable
@@ -193,12 +196,15 @@ bad_args:
 
 check_arg:
   # there's no default. is there even an arg?
-  $P3 = toList($P9)
-  $P4 = iter $P3
+  if null args goto not_argument
+  arg_defaults = args.'getListValue'()
+  .local pmc iterator
+  .local string checking_arg
+  iterator = iter arg_defaults
 loop:
-  unless $P4 goto not_argument
-  $S1 = shift $P4
-  if $S1==argname goto no_default
+  unless iterator goto not_argument
+  checking_arg = shift iterator
+  if checking_arg==argname goto no_default
   goto loop
 
 not_argument:

@@ -508,11 +508,8 @@ setup:
   .local pmc map_list
   .local int strpos,strlen,mappos,maplen,skiplen,mapstrlen,replacementstrlen
 
-  .local pmc toList
-  toList = get_root_global ['_tcl'], 'toList'
-
   $P0 = argv[0]
-  map_list = toList($P0)
+  map_list = $P0.'getListValue'()
   the_string = argv[1]
 
   maplen = map_list
@@ -788,10 +785,9 @@ integer_check:
   if $S0 == 'TclInt' goto yep
   goto nope
 list_check:
-  .local pmc toList
-  toList = get_root_global ['_tcl'], 'toList'
+  $P0 = box the_string
   push_eh nope_eh
-    toList(the_string)
+    $P0.'getListValue'()
   pop_eh
   goto yep
 lower_check:

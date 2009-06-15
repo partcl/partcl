@@ -10,11 +10,9 @@
   argc = elements argv
   if argc != 3 goto bad_args
   # get necessary conversion subs
-  .local pmc toList
-  toList = get_root_global ['_tcl'], 'toList'
   .local pmc a_list
   a_list = argv[0]
-  a_list = toList(a_list)
+  a_list = a_list.'getListValue'()
   .local pmc a_first
   a_first = argv[1]
   .local pmc a_last

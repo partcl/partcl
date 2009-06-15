@@ -20,8 +20,7 @@
   $P0 = getinterp
   ns  = $P0['namespace'; 1]
 
-  .local pmc toList, compileTcl, setVar
-  toList   = get_root_global ['_tcl'], 'toList'
+  .local pmc compileTcl, setVar
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
   setVar    = get_root_global ['_tcl'], 'setVar'
 
@@ -40,9 +39,9 @@ arg_loop:
 
   .local pmc varList, list
   varList = shift iterator
-  varList = toList(varList)
+  varList = varList.'getListValue'()
   list    = shift iterator
-  list    = toList(list)
+  list    = list.'getListValue'()
 
   $I0 = elements varList
   if $I0 == 0 goto bad_varlist

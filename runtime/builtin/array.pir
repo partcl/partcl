@@ -118,9 +118,7 @@ bad_args:
   .local pmc elems
   elems = argv[0]
 
-  .local pmc toList
-  toList = get_hll_global 'toList'
-  elems  = toList(elems)
+  elems  = elems.'getListValue'()
 
 pre_loop:
   .local int count

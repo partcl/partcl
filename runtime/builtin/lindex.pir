@@ -10,13 +10,12 @@
   argc = elements argv
   if argc < 1 goto bad_args
 
-  .local pmc toList, getIndex
-  toList  = get_root_global ['_tcl'], 'toList'
+  .local pmc getIndex
   getIndex = get_root_global ['_tcl'], 'getIndex'
 
   .local pmc list
   list = argv[0]
-  list = toList(list)
+  list = list.'getListValue'()
 
 have_list:
   if argc == 1 goto done
@@ -29,7 +28,7 @@ select_elem:
   $P0 = argv[$I0]
   .local pmc indices
   push_eh not_a_list
-    indices = toList($P0)
+    indices = $P0.'getListValue'()
   pop_eh
   goto select
 
@@ -46,7 +45,7 @@ select:
   $I1 = 0
 select_loop:
   if $I1 >= elems goto select_elem
-  list = toList(list)
+  list = list.'getListValue'()
 
   $P0 = indices[$I1]
   index = getIndex($P0, list)

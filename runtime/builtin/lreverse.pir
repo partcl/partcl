@@ -10,11 +10,8 @@
   argc = elements argv
   if argc != 1 goto bad_args
 
-  .local pmc toList
-  toList = get_root_global ['_tcl'], 'toList'
-
   $P0 = argv[0]
-  $P0 = toList($P0)
+  $P0 = $P0.'getListValue'()
   $P0 = clone $P0
   $P0.'reverse'()
 

@@ -241,7 +241,7 @@ do_script_prelude:
 
   .local pmc vars, body
   vars = shift argv
-  vars = toList(vars)
+  vars = vars.'getListValue'()
   $I0 = elements vars
   if $I0 != 2 goto bad_list_size
 
@@ -317,7 +317,7 @@ bad_args:
   .local string keyVar, valueVar
 
   varNames = shift argv
-  varNames = toList(varNames)
+  varNames = varNames.'getListValue'()
   $I0 = elements varNames
   if $I0 != 2 goto bad_list_size
   keyVar   = varNames[0]
@@ -542,7 +542,7 @@ got_dict:
 
 vivified:
   value = dictionary[key]
-  value = toList(value)
+  value = value.'getListValue'()
 
 loop:
   argc = elements argv

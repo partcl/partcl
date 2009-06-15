@@ -1149,12 +1149,8 @@ nan:
     .param pmc elem
     .param pmc list
 
-    .local pmc toList
-    $P0 = get_root_namespace
-    toList = $P0['_tcl'; 'toList']
-
     .local pmc iterator
-    list = toList(list)
+    list = list.'getListValue'()
     iterator = iter list
 loop:
     unless iterator goto false
@@ -1172,12 +1168,8 @@ false:
     .param pmc elem
     .param pmc list
 
-    .local pmc toList
-    $P0 = get_root_namespace
-    toList = $P0['_tcl'; 'toList']
-
     .local pmc iterator
-    list = toList(list)
+    list = list.'getListValue'()
     iterator = iter list
 loop:
     unless iterator goto true

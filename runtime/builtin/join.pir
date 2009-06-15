@@ -12,14 +12,10 @@
   if argc < 1 goto bad_args
   if argc > 2 goto bad_args
 
-  # get necessary conversion subs
-  .local pmc toList
-  toList = get_root_global ['_tcl'], 'toList'
-
   # coerce args
   .local pmc list
   list = argv[0]
-  list = toList(list)
+  list = list.'getListValue'()
 
   # get default string
   .local string joinString

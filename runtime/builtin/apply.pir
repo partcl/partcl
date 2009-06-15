@@ -9,10 +9,9 @@
   argc = elements argv
   if argc == 0 goto no_args
 
-  .local pmc toList, lambda
-  toList = get_root_global ['_tcl'], 'toList'
+  .local pmc lambda
   lambda = argv[0]
-  lambda = toList(lambda)
+  lambda = lambda.'getListValue'()
 
   $I0 = elements lambda
   if $I0 < 2 goto bad_lambda

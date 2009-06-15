@@ -61,10 +61,7 @@ c_command:
 
 got_list:
 
-  .local pmc toList
-  toList = get_root_global ['_tcl'], 'toList'
-  $P0 = toList($P0)
-
+  $P0 = $P0.'getListValue'()
   $P0.'sort'(compare)
 
   unless unique goto skip_unique

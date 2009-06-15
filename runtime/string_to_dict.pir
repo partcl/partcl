@@ -32,7 +32,7 @@ is_list:
 
 is_string:
   # Can we listify the value here? If so, make it into a dictionary.
-  $P3 = toList($P2)
+  $P3 = $P2.'getListValue'()
   $I0 = elements $P3
   if $I0 <= 1 goto only_string
   push_eh only_string
@@ -57,7 +57,7 @@ odd_args:
 
   .prof('_tcl;stringToDict')
   .local pmc list
-  list = toList(str)
+  list = str.'getListValue'()
   .tailcall listToDict(list)
 .end
 

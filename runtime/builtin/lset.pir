@@ -15,15 +15,14 @@
   value = pop argv
   dec argc
 
-  .local pmc readVar, toList, setVar
+  .local pmc readVar, setVar
   readVar = get_root_global ['_tcl'], 'readVar'
-  toList = get_root_global ['_tcl'], 'toList'
   setVar  = get_root_global ['_tcl'], 'setVar'
 
   .local pmc retval, list, original_list
   original_list = readVar(name)
   list = clone original_list
-  list = toList(list)
+  list = list.'getListValue'()
   retval = list
 
   # we removed the value, so this would be one now
@@ -35,7 +34,7 @@ lset:
 
   unless argc == 2 goto iterate
   $P0 = argv[1]
-  $P0 = toList($P0)
+  $P0 = $P0.'getListValue'()
   $I0 = elements $P0
   if $I0 == 0 goto replace
 
@@ -47,7 +46,7 @@ outer_loop:
   inc outer_i
   if outer_i == argc goto done
   indices = argv[outer_i]
-  indices = toList(indices)
+  indices = indices.'getListValue'()
 
   $I0 = 0
   $I1 = elements indices
@@ -62,7 +61,7 @@ loop:
 
   prev = list
   list = list[$I2]
-  list = toList(list)
+  list = list.'getListValue'()
   prev[$I2] = list
 
   inc $I0

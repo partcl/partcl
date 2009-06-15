@@ -14,14 +14,12 @@
   .local pmc list
 
   # get helper subs
-  .local pmc toList
-  toList = get_root_global ['_tcl'], 'toList'
   .local pmc setVar
   setVar = get_root_global ['_tcl'], 'setVar'
 
   # coerce argument types
   list = shift argv
-  list = toList(list)
+  list = list.'getListValue'()
 
   .local string varname, value
 

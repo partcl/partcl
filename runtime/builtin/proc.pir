@@ -17,10 +17,9 @@
   args      = argv[1]
   body      = argv[2]
 
-  .local pmc pirc, tclc, toList, splitNamespace
+  .local pmc pirc, tclc, splitNamespace
   pirc = compreg 'PIR'
   tclc = compreg 'TCL'
-  toList         = get_root_global ['_tcl'], 'toList'
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
 
   .local pmc code, args_code, defaults
@@ -80,7 +79,7 @@ END_PIR
   .local pmc arg
   args_usage = ''
   args_info  = ''
-  args  = toList(args)
+  args  = args.'getListValue'()
   i     = 0
   elems = elements args
   min   = 0
@@ -95,7 +94,7 @@ END_PIR
 args_loop:
   if i == elems goto args_loop_done
   arg = args[i]
-  arg = toList(arg)
+  arg = arg.'getListValue'()
 
   $S0 = arg[0]
   args_info .= $S0

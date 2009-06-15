@@ -19,11 +19,10 @@
   if argc != 2 goto bad_args
 
   .local string option, pattern
-  .local pmc list, toList
+  .local pmc list
 
-  toList = get_root_global [ '_tcl' ] , 'toList'
-  list    = shift argv
-  list = toList(list)
+  list = shift argv
+  list = list.'getListValue'()
   pattern = shift argv
 
   .local pmc iterator

@@ -1,37 +1,34 @@
+
+=head1 String
+
+Contains overrides for the builtin Parrot String type so we can reliably
+call Tcl methods on them.
+
+=cut
+
 .HLL 'parrot'
 .namespace ['String']
 
 .sub getListValue :method
   .prof('parrot;String;getListValue')
-  $P0 = root_new ['parrot'; 'TclString'] 
-  $S0 = self
-  $P0 = $S0
 
-  $P0 = $P0.'getListValue'()
+  # a TclString would know what to do!
+  .local pmc tclstring
+  tclstring = root_new ['parrot'; 'TclString'] 
+  .local string self_s
+  self_s = self
+  tclstring = self_s
 
-  copy self, $P0
+  .local pmc tcllist
+  tcllist = tclstring.'getListValue'()
+
+  copy self, tcllist
 
   .return(self)
 .end
 
 .HLL '_Tcl'
 .namespace []
-
-=head2 _Tcl::toList
-
-Given a PMC, get a list from it. If the PMC is a TclList,
-this is as simple as returning the list.
-
-=cut
-
-.sub toList
-  .param pmc value
-  .prof('_tcl;toList')
-  # XXX can't tailcall to a method (that coul be) defined in C.
-  $P0 = value.'getListValue'()
-  copy value, $P0
-  .return($P0)
-.end
 
 =head2 _Tcl::toDict
 

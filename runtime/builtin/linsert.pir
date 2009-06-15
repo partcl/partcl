@@ -12,15 +12,13 @@
   if argc < 3 goto bad_args
 
   # helper functions
-  .local pmc toList
-  toList = get_root_global ['_tcl'], 'toList'
   .local pmc getIndex
   getIndex = get_root_global ['_tcl'], 'getIndex'
 
   # coerce arguments
   .local pmc the_list
   the_list = shift argv
-  the_list = toList(the_list)
+  the_list = the_list.'getListValue'()
 
   .local string position
   position = shift argv
