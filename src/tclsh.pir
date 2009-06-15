@@ -95,6 +95,12 @@ execute_line:
 
 loop_error:
   .catch()
+ 
+  .get_severity($I0)
+  if $I0 != .EXCEPT_EXIT goto loop_ok
+  .rethrow()
+
+loop_ok:
   .local string exception_msg
   .get_message(exception_msg)
   # Are we just missing a close-foo?
