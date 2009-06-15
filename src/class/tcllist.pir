@@ -31,12 +31,14 @@ moved back into parrot core where we'd be happy to inherit it.
     low = 0
     high = elements self
 
-    .local pmc swap
+    .local pmc swap1, swap2
   loop:
-    dec high
     if low >= high goto done
-    swap = self[high]
-    self[low] = swap
+    dec high
+    swap1 = self[low]
+    swap2 = self[high]
+    self[low] = swap2
+    self[high] = swap1
     inc low
     goto loop
   done: 
