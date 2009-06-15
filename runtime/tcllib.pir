@@ -60,7 +60,8 @@ providing a compreg-compatible method.
 .include 'runtime/variables.pir'
 .include 'runtime/options.pir'
 
-# class files (HLL: _Tcl)
+# class files
+.include 'src/class/string.pir'
 .include 'src/class/tclarray.pir'
 .include 'src/class/tclconst.pir'
 .include 'src/class/tcldict.pir'
