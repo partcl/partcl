@@ -118,6 +118,7 @@ CLASSES = \
   $(CLASSDIR)/tclarray.pir \
   $(CLASSDIR)/tclconst.pir \
   $(CLASSDIR)/tcldict.pir \
+  $(CLASSDIR)/tcllist.pir \
   $(CLASSDIR)/tclproc.pir \
   $(CLASSDIR)/tracearray.pir
 
