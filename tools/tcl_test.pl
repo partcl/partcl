@@ -10,6 +10,7 @@ use lib qw(lib);
 
 use Parrot::Installed;
 use Parrot::Config;
+use Tcl::Version;
 
 use Fatal qw(open);
 
@@ -80,11 +81,9 @@ sub main {
 sub checkout_tests {
     print "Checking out tests from CVS\n";
 
-    my $tag = 'core-8-5-6';    # For the version we're targeting.
-
     my $command =
         'cvs -z3 -d :pserver:anonymous:\@tcl.cvs.sourceforge.net:'
-        . "/cvsroot/tcl co -d $DIR -r $tag tcl/tests";
+        . "/cvsroot/tcl co -d $DIR -r $Tcl::Version::CVS tcl/tests";
     my $rc = system $command;
 
     return ( $rc == 0 );       # just care if it failed, not how

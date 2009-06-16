@@ -209,5 +209,4 @@ Makefile: config/makefiles/root.in config/makefiles/pmc.in config/makefiles/ops.
 
 # fetch the tcl source.
 tcl-cvs:
-	cvs -z3 -d :pserver:anonymous:@tcl.cvs.sourceforge.net/cvsroot/tcl co -d tcl-cvs -r core-8-5-6 tcl
-
+	$(PERL) tools/tcl_cvs.pl
