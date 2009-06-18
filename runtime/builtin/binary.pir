@@ -79,10 +79,10 @@ loop:
     unless variables goto end
     unless values    goto end
 
-    .local pmc var, value
+    .local pmc var, value_p
     var   = shift variables
-    value = shift values
-    setVar(var, value)
+    value_p = shift values
+    setVar(var, value_p)
 
     goto loop
 end:

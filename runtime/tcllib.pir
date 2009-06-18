@@ -311,7 +311,7 @@ got_platform:
 
     .prof('parrot;tcl;compiler;load_library')
 
-    .local pmc ct, lit, contents
+    .local pmc ct, lit
     .local string filename
 
     filename = join '/', name
