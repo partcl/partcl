@@ -1,5 +1,4 @@
-
-.HLL '_Tcl'
+.HLL '_tcl'
 .namespace []
 
 =head2 _Tcl::toDict

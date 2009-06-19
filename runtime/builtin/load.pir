@@ -1,4 +1,4 @@
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace []
 
 # In a normal tclsh, load would load only platform specific files. since

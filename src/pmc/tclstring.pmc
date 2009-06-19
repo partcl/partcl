@@ -15,7 +15,7 @@ pmclass TclString
     extends String
     does    string
     group   tcl_group
-    hll     Tcl
+    hll     tcl
     maps    String
 {
 

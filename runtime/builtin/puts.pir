@@ -1,4 +1,4 @@
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace []
 
 .sub '&puts'

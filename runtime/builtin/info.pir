@@ -1,4 +1,4 @@
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace []
 
 .sub '&info'
@@ -36,7 +36,7 @@ bad_subcommand:
   die 'wrong # args: should be "info subcommand ?argument ...?"'
 .end
 
-.HLL '_Tcl'
+.HLL '_tcl'
 .namespace [ 'helpers'; 'info' ]
 
 .sub 'args'

@@ -1,4 +1,4 @@
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace []
 
 .sub '&clock'
@@ -36,7 +36,7 @@ few_args:
   die 'wrong # args: should be "clock subcommand ?argument ...?"'
 .end
 
-.HLL '_Tcl'
+.HLL '_tcl'
 .namespace [ 'helpers'; 'clock' ]
 
 # XXX Need bignum support

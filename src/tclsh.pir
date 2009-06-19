@@ -6,7 +6,7 @@
 
 .loadlib 'tcl_ops'
 
-.HLL 'Tcl'
+.HLL 'tcl'
 .loadlib 'tcl_group'
 
 .include 'src/returncodes.pasm'

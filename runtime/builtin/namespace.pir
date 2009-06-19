@@ -1,7 +1,7 @@
 =head2 [namespace]
 
 Parrot has its own namespaces which Tcl is only a part of. So, in the top
-level parrot namespace, C<Tcl> refers to the top of the Tcl namespace.
+level parrot namespace, C<tcl> refers to the top of the Tcl namespace.
 
 To refer back to something in another parrot namespace, use the special
 C<parrot> namespace inside Tcl - this should be an alias back to parrot's
@@ -9,7 +9,7 @@ real top level namespace.
 
 =cut
 
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace []
 
 .sub '&namespace'
@@ -51,7 +51,7 @@ no_args:
 
 .end
 
-.HLL '_Tcl'
+.HLL '_tcl'
 .namespace [ 'helpers'; 'namespace' ]
 
 .sub 'current'

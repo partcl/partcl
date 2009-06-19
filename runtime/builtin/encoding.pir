@@ -1,4 +1,4 @@
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace []
 
 .sub '&encoding'
@@ -38,7 +38,7 @@ no_args:
 
 .end
 
-.HLL '_Tcl'
+.HLL '_tcl'
 
 .namespace [ 'helpers'; 'encoding' ]
 

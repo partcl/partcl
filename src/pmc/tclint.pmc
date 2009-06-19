@@ -15,7 +15,7 @@ pmclass TclInt
     extends Integer
     does    integer
     group   tcl_group
-    hll     Tcl
+    hll     tcl
     maps    Integer
 {
 

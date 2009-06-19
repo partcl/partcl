@@ -60,7 +60,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
     pir = new 'CodeString'
 
     pir.'emit'(<<"END_PIR", namespace, result, ret)
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace %0
 .sub '_anon' :anon
 .prof("tcl;%0;_anon")
@@ -165,7 +165,7 @@ end_preamble:
 
 do_wrapper:
     pir.'emit'(<<"END_PIR", namespace, result, ret)
-.HLL 'Tcl'
+.HLL 'tcl'
 .loadlib 'tcl_ops'
 .namespace %0
 .include 'src/macros.pir'

@@ -1,4 +1,4 @@
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace []
 
 .sub '&file'
@@ -37,7 +37,7 @@ few_args:
 
 .end
 
-.HLL '_Tcl'
+.HLL '_tcl'
 .namespace [ 'helpers'; 'file' ]
 
 .sub 'normalize' # RT#40721: Stub for testing

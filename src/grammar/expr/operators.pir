@@ -8,7 +8,7 @@ src/grammar/expr/operators.pir - [expr] operator definitions.
 
 =cut
 
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace []
 
 # unary plus

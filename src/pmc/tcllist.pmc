@@ -28,7 +28,7 @@ pmclass TclList
     extends ResizablePMCArray
     provides    array
     group   tcl_group
-    hll     Tcl
+    hll     tcl
     maps    Array
     maps    ResizablePMCArray
 {

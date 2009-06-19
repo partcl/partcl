@@ -1,4 +1,4 @@
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace []
 
 .sub '&binary'
@@ -35,7 +35,7 @@ no_args:
     die 'wrong # args: should be "binary option ?arg arg ...?"'
 .end
 
-.HLL '_Tcl'
+.HLL '_tcl'
 .namespace [ 'helpers'; 'binary' ]
 
 .sub 'format'

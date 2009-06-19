@@ -1,4 +1,4 @@
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace []
 
 .sub '&subst'
@@ -89,7 +89,7 @@ subst:
     pir = root_new ['parrot'; 'CodeString']
 
     pir.'emit'(<<"END_PIR", namespace, code, ret)
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace %0
 .sub '_anon' :anon
 .prof("tcl;%0;anon")

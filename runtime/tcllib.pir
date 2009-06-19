@@ -53,7 +53,7 @@ providing a compreg-compatible method.
 # all the builtin commands (HLL: Tcl - loads 'tcl_group')
 .include 'runtime/builtins.pir'
 
-# library files (HLL: _Tcl)
+# library files (HLL: _tcl)
 .include 'runtime/compilers.pir'
 .include 'runtime/conversions.pir'
 .include 'runtime/string_to_dict.pir'
@@ -71,14 +71,14 @@ providing a compreg-compatible method.
 
 # create the 'tcl' namespace -- see RT #39852
 # https://rt.perl.org/rt3/Ticket/Display.html?id=39852
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace ['tcl']
 .sub foo
   .prof('tcl;foo')
   .return()
 .end
 
-.HLL '_Tcl'
+.HLL '_tcl'
 .namespace []
 
 .sub prepare_lib :load :anon
@@ -277,7 +277,7 @@ got_platform:
 .include 'src/mathops.pir'
 
 # Load the standard library
-.HLL 'Tcl'
+.HLL 'tcl'
 .namespace []
 
 .sub load_stdlib :load :anon

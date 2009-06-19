@@ -14,7 +14,7 @@ pmclass TclFloat
     extends Float
     does    float
     group   tcl_group
-    hll     Tcl
+    hll     tcl
     maps    Float
 {
 
