@@ -4,6 +4,13 @@
 .sub '&exec'
   .param pmc argv :slurpy
   .prof('tcl;&exec')
+
+  .local string command
+  command = argv
+  
+  .local int result # XXX ignored
+  result = spawnw command
+
   .return('')
 .end
 
