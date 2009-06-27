@@ -653,6 +653,39 @@ bad_args:
     .return(0)
 .end
 
+.sub 'split'
+    .param pmc argv
+    .prof('_tcl;helpers;file;split')
+    .local int argc
+
+    # check if filename arg exists
+    argc = elements argv
+    if argc != 1 goto bad_args
+
+    .local string filename
+    filename = argv[0]
+
+    .local pmc retval
+    retval = root_new ['parrot'; 'TclList']
+
+    # XXX not platform-independent.
+    # XXX this $P0 is a parrot type, not a tcl type.
+    $P0 = split '/', filename 
+
+    .local string first_char
+    first_char =substr filename, 0, 1
+    if first_char != '/' goto done
+
+    $P0[0] = '/' # replaces empty string.
+
+  done:
+    assign retval, $P0
+    .return(retval)
+
+  bad_args:
+    die 'wrong # args: should be "file split name"'
+.end
+
 .sub 'anon' :anon :load
   .prof('_tcl;helpers;file;anon')
   .local pmc options
