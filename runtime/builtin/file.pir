@@ -596,6 +596,63 @@ bad_args:
   die 'wrong # args: should be "file volumes"'
 .end
 
+# TT #731 - this is is only a stub implementation
+
+.sub 'executable'
+    .param pmc argv
+    .prof('_tcl;helpers;file;executable')
+    .local int argc
+
+    # check if filename arg exists
+    argc = elements argv
+    if argc != 1 goto bad_args
+
+    .local string filename
+    filename = argv[0]
+
+    # XXX not exported from C to PIR
+    .local int STAT_PLATFORM_MODE
+    STAT_PLATFORM_MODE = -3 
+    .local int UID
+    UID = 9
+
+    .local int mode
+    push_eh bad_file
+      mode = stat filename, STAT_PLATFORM_MODE
+    pop_eh
+
+    .local int check_mode
+    # is this executable by anyone?
+    check_mode = band mode, 1
+    if check_mode goto true
+
+    # is this executable by the owner?
+    check_mode = band mode, 64
+    .local int file_uid
+    file_uid = stat filename, UID
+    .local int my_uid 
+    # XXX Now what?
+
+    # is this executable by a group?
+    check_mode = band mode, 8
+
+    # XXX am I in that group?
+
+    # If we got this far, it's not executable
+  false:
+    .return(0)
+
+    # Standard modes
+  true:
+    .return(1)
+
+  bad_args:
+    die 'wrong # args: should be "file executable name"'
+  bad_file:
+    pop_eh
+    .return(0)
+.end
+
 .sub 'anon' :anon :load
   .prof('_tcl;helpers;file;anon')
   .local pmc options
