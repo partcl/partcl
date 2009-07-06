@@ -1,0 +1,13 @@
+# Specific an svn revision, e.g.:
+# revision: 12345
+revision: 39892
+
+# Use this if there is a specific feature in parrot that we need to function.
+# partcl trunk will typically use this.
+
+# Or a release number, e.g.:
+# release: 1.3.0
+
+# Use this for partcl releases. You'll be more likely to find this in a
+# tagged version of partcl, though we may use this in trunk just after
+# a release.

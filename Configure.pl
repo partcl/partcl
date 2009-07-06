@@ -14,13 +14,44 @@ my $config =  $options{'parrot-config'} || "parrot_config";
 
 my %opt;
 
-my @keys = qw(perl libdir bindir versiondir slash make);
+my @keys = qw(perl libdir bindir versiondir slash make VERSION revision);
 
 foreach my $key (@keys) {
       my $value = `$config $key`
-          or die "Unable to find parrot_config, $config";
+          or die "Unable to find parrot_config, $config\n";
       chomp $value;
       $opt{$key} = $value;
+}
+
+# Which version of parrot do we need?
+open my $cfh, '<', 'config/PARROT_VERSION';
+while (<$cfh>) {
+    next if /^#/;
+    next if /^\s+$/;
+    if (/^release:\s*(.*)\s*$/) {
+        my $rel = $1;
+        # compare dotted notation.
+        if (version_int($opt{VERSION}) >= version_int($rel)) {
+            print "Need at least r$rel of parrot, using r$opt{VERSION}.\n";
+            if ($opt{revision} != 0) {
+                print "Warning: this is a development version of parrot (r$opt{revision}).\n";
+            }
+            last; # that works.
+        } else {
+            die "We need at least release $rel of parrot but only have $opt{VERSION}.\n";
+        }
+    } elsif (/^revision:\s*(.*)\s*$/) {
+        my $rev = $1;
+        if ($opt{revision} == 0) {
+            die "This is a released version of parrot ($opt{VERSION}).\nWe need at least r$rev from the svn repository.\n";
+        }
+        if ($opt{revision} >= $rev) {
+            print "Need at least r$rev of parrot, using r$opt{revision}.\n";
+            last; # that works.
+        } else {
+            die "We need at least revision $rev of parrot but only have $opt{revision}.\n"
+        }
+    }
 }
 
 my $build_tool = $opt{perl} . ' '
@@ -113,3 +144,6 @@ sub replace_parrot {
     open my $ofh, '>', $target;
     print {$ofh} $contents;
 }
+
+# Convert dotted version to an int.
+sub version_int { sprintf('%d%03d%03d', split(/\./, $_[0]))}
