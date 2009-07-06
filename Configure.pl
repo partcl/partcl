@@ -12,30 +12,26 @@ usage() if $options{'help'};
 
 my $config =  $options{'parrot-config'} || "parrot_config";
 
-my $perlbin = `$config perl`
-        or die "Unable to find parrot_config, $config";
-my $libdir = `$config libdir`;
-my $bindir = `$config bindir`;
-my $versiondir = `$config versiondir`;
-my $slash = `$config slash`;
-my $make = `$config make`;
+my %opt;
 
-chomp($perlbin);
-chomp($libdir);
-chomp($bindir);
-chomp($versiondir);
-chomp($slash);
-chomp($make);
+my @keys = qw(perl libdir bindir versiondir slash make);
 
-my $build_tool = $perlbin . " "
-               . $libdir
-               . $versiondir
-               . $slash
-               . "tools"
-               . $slash
-               . "dev"
-               . $slash
-               . "gen_makefile.pl";
+foreach my $key (@keys) {
+      my $value = `$config $key`
+          or die "Unable to find parrot_config, $config";
+      chomp $value;
+      $opt{$key} = $value;
+}
+
+my $build_tool = $opt{perl} . ' '
+               . $opt{libdir}
+               . $opt{versiondir}
+               . $opt{slash}
+               . 'tools'
+               . $opt{slash}
+               . 'dev'
+               . $opt{slash}
+               . 'gen_makefile.pl';
 
 my %makefiles = (
     "config/makefiles/root.in" => "Makefile",
@@ -47,8 +43,8 @@ foreach my $template (keys %makefiles) {
     my $makefile = $makefiles{$template};
     print "Creating $makefile\n";
     if (system("$build_tool $template $makefile") != 0) {
-        die "Unable to create makefile; You may have forgotten to run 'make install-dev'\n";
-    } 
+        die "Unable to create makefile; did you run parrot's 'make install-dev' ?\n";
+    }
 }
 
 
@@ -57,12 +53,12 @@ print "Creating Parrot::Installed\n";
 open my $fh, '>', 'lib/Parrot/Installed.pm';
 
 print {$fh} "package Parrot::Installed;\n";
-print {$fh} "use lib qw(${libdir}${versiondir}/tools/lib);\n";
+print {$fh} "use lib qw($opt{libdir}$opt{versiondir}/tools/lib);\n";
 print {$fh} "1;\n";
 
 print "Generating miscellaneous files\n";
 
-my $parrot = "$bindir/parrot";
+my $parrot = "$opt{bindir}/parrot";
 add_shebang($parrot, 't/internals/select_switches.t', 'config/misc/select_switches_t.in');
 add_shebang($parrot, 't/internals/select_option.t', 'config/misc/select_option_t.in');
 replace_parrot($parrot, 'tools/spectcl', 'config/misc/spectcl.in');
@@ -70,7 +66,7 @@ chmod 0755, 'tools/spectcl';
 
 print <<"END";
 
-You can now use '$make' to build partcl.
+You can now use '$opt{make}' to build partcl.
 END
 
 exit;
@@ -94,7 +90,7 @@ sub add_shebang {
         open my $fh, '<', $source;
         $contents = <$fh>;
     }
- 
+
     open my $ofh, '>', $target;
     print {$ofh} $shebang, "\n";
     print {$ofh} $contents;
