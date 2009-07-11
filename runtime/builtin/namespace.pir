@@ -355,8 +355,13 @@ is_namespace:
   goto loop
 end:
 
-  $P0 = find_name 'children_cmp'
-  list.'sort'($P0)
+  # the assigns are necessary to avoid TT #218
+  .local pmc comparator, rpa
+  comparator = find_name 'children_cmp'
+  rpa = new 'ResizablePMCArray'
+  assign rpa, list
+  rpa.'sort'(comparator)
+  assign list, rpa
   .return(list)
 
 bad_args:

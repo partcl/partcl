@@ -23,11 +23,9 @@ Generate an arithmetic domain error
 
 .macro domain_error()
 domain_error:
-  $P9999 = root_new ['parrot'; 'TclList']
-  $P9999[0] = 'ARITH'
-  $P9999[1] = 'DOMAIN'
+  $P9999 = root_new ['parrot'; 'TclString']
+  $P9999 = 'ARITH DOMAIN {domain error: argument not in valid range}'
   $S9999 = 'domain error: argument not in valid range'
-  $P9999[2] = $S9999
   tcl_error $S9999, $P9999
 .endm
 

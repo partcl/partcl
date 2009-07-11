@@ -14,10 +14,9 @@ providing a compreg-compatible method.
 .include 'src/macros.pir'
 .include 'cclass.pasm'
 
-
 .HLL '_tcl'
 
-.sub 'mappings' :anon :init
+.sub 'mappings' :anon :load
   .prof('_tcl;mappings')
   .local pmc interp
   .local pmc core_int, tclint
@@ -39,9 +38,16 @@ providing a compreg-compatible method.
   interp.'hll_map'(core_string, tclstring)
 .end
 
+# class files
+.include 'src/class/string.pir'
+.include 'src/class/tclarray.pir'
+.include 'src/class/tclconst.pir'
+.include 'src/class/tcldict.pir'
+.include 'src/class/tcllist.pir'
+.include 'src/class/tclproc.pir'
+.include 'src/class/tracearray.pir'
 
 .HLL 'parrot'
-
 .namespace [ 'TclExpr'; 'PAST'; 'Grammar' ]
 .include 'src/grammar/expr/pge2past.pir'
 
@@ -59,15 +65,6 @@ providing a compreg-compatible method.
 .include 'runtime/string_to_dict.pir'
 .include 'runtime/variables.pir'
 .include 'runtime/options.pir'
-
-# class files
-.include 'src/class/string.pir'
-.include 'src/class/tclarray.pir'
-.include 'src/class/tclconst.pir'
-.include 'src/class/tcldict.pir'
-.include 'src/class/tcllist.pir'
-.include 'src/class/tclproc.pir'
-.include 'src/class/tracearray.pir'
 
 # create the 'tcl' namespace -- see RT #39852
 # https://rt.perl.org/rt3/Ticket/Display.html?id=39852
@@ -90,7 +87,6 @@ providing a compreg-compatible method.
   load_bytecode 'PGE/Text.pbc'
   load_bytecode 'PGE/Util.pbc'
   load_bytecode 'TGE.pbc'
-
   load_bytecode 'Tcl/Glob.pir'
 
   # Expose Environment variables.
@@ -296,7 +292,7 @@ got_platform:
 .HLL 'parrot'
 .namespace ['Tcl';'Compiler']
 
-.sub '' :anon :load :init
+.sub '' :anon :load
     .prof('parrot;tcl;compiler;')
     .local pmc ns, tclass, compiler
     ns = get_hll_namespace ['Tcl';'Compiler']

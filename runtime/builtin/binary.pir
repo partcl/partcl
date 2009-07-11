@@ -64,12 +64,12 @@ bad_args:
     argc = elements argv
     unless argc >= 2 goto bad_args
 
-    .local string value, formatString
-    value        = shift argv
+    .local string value_s, formatString
+    value_s      = shift argv
     formatString = shift argv
 
     .local pmc ret
-    ret = tcl_binary_scan value, formatString
+    ret = tcl_binary_scan value_s, formatString
 
     .local pmc setVar, variables, values
     setVar = get_root_global ['_tcl'], 'setVar'

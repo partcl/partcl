@@ -61,8 +61,12 @@ c_command:
 
 got_list:
 
+  # the assigns are necessary to avoid TT# 218
   $P0 = $P0.'getListValue'()
-  $P0.'sort'(compare)
+  $P1 = new 'ResizablePMCArray'
+  assign $P1, $P0
+  $P1.'sort'(compare)
+  assign $P0, $P1
 
   unless unique goto skip_unique
   .local int c, size

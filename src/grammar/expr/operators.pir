@@ -259,12 +259,9 @@ nan:
     .return($P0)
 
 divide_by_zero:
-    $P0 = root_new ['parrot'; 'TclList']
-    $P0[0] = 'ARITH'
-    $P0[1] = 'DIVZERO'
-    $S0 = 'divide by zero'
-    $P0[2] = $S0
-    tcl_error $S0,  $P0
+    $P0 = root_new ['parrot'; 'TclString']
+    $P0 = 'ARITH DIVZERO {divide by zero}'
+    tcl_error 'divide by zero', $P0
 
 is_string:
     .catch()

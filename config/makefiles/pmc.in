@@ -31,9 +31,7 @@ LINKARGS        = $(LDFLAGS) $(LD_LOAD_FLAGS) $(LIBPARROT)
 PMC_SOURCES = \
   tclstring.pmc \
   tclint.pmc \
-  tclfloat.pmc \
-  tcllist.pmc
-
+  tclfloat.pmc
 
 TCL_GROUP = tcl_group
 
@@ -42,8 +40,8 @@ all : $(TCL_GROUP)$(LOAD_EXT)
 	$(CP) "*$(LOAD_EXT)" $(INSTALL_DIR)
 
 
-$(TCL_GROUP)$(LOAD_EXT): tclstring$(O) tclint$(O) tclfloat$(O) tcllist$(O) lib-$(TCL_GROUP)$(O)
-	$(LD) $(LD_OUT) $(TCL_GROUP)$(LOAD_EXT) lib-$(TCL_GROUP)$(O) tclstring$(O) tclint$(O) tclfloat$(O) tcllist$(O) $(LINKARGS)
+$(TCL_GROUP)$(LOAD_EXT): tclstring$(O) tclint$(O) tclfloat$(O) lib-$(TCL_GROUP)$(O)
+	$(LD) $(LD_OUT) $(TCL_GROUP)$(LOAD_EXT) lib-$(TCL_GROUP)$(O) tclstring$(O) tclint$(O) tclfloat$(O) $(LINKARGS)
 
 lib-$(TCL_GROUP)$(O): $(TCL_GROUP).c
 	$(CC) $(CC_OUT) lib-$(TCL_GROUP)$(O) $(INCLUDES) $(CFLAGS) $(TCL_GROUP).c
@@ -77,12 +75,3 @@ tclfloat.c: tclfloat.dump
 
 tclfloat$(O): tclfloat.c
 	$(CC) $(CC_OUT) tclfloat$(O) $(INCLUDES) $(CFLAGS) tclfloat.c
-
-tcllist.dump: tcllist.pmc
-	$(PMC2CD) tcllist.pmc
-
-tcllist.c: tcllist.dump
-	$(PMC2CC) tcllist.pmc
-
-tcllist$(O): tcllist.c
-	$(CC) $(CC_OUT) tcllist$(O) $(INCLUDES) $(CFLAGS) tcllist.c
