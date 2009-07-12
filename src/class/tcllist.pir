@@ -151,7 +151,8 @@ Returns the list as a string
     # escape {ab}\, but brace-wrap anything else. 
     $I0 = elem_len - 2
     if brace_check_pos != $I0 goto quote
-    char = ord elem_s, -1 
+    $I0 = elem_len - 1
+    char = ord elem_s, $I0
     if char != 0x5c goto quote
 
     goto escape
@@ -199,11 +200,11 @@ Returns the list as a string
     string_t = new 'String'
     string_t = elem_s
     string_t.'replace'("\\", "\\\\")
-    string_t.'replace'("\t", "\\\t")
-    string_t.'replace'("\f", "\\\f")
-    string_t.'replace'("\n", "\\\n")
-    string_t.'replace'("\r", "\\\r")
-    string_t.'replace'("\v", "\\\v")
+    string_t.'replace'("\t", "\\t")
+    string_t.'replace'("\f", "\\f")
+    string_t.'replace'("\n", "\\n")
+    string_t.'replace'("\r", "\\r")
+    string_t.'replace'("\v", "\\v")
     string_t.'replace'("\;", "\\;" )
     string_t.'replace'("$",  "\\$" )
     string_t.'replace'("}",  "\\}" )
@@ -211,7 +212,7 @@ Returns the list as a string
     string_t.'replace'(" ",  "\\ " )
     string_t.'replace'("[",  "\\[" )
     string_t.'replace'("]",  "\\]" )
-    string_t.'replace'('\"', '\\"')
+    string_t.'replace'("\"", "\\\"")
     new_s = string_t
     goto append_elem
 
