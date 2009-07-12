@@ -96,8 +96,7 @@ src/grammar/expr/pge2past.pir \
 $(TCL_LIB)/parray.tcl \
 $(RUNTIME_PIR)
 
-# should be tclsh@exe@ but for TT #691
-all: tcl.pbc
+all: tclsh@exe@
 
 tcl.pbc: $(PARROT) pmcs ops runtime/tcllib.pbc src/tclsh.pir
 	$(PARROT) --output=tcl.pbc src/tclsh.pir

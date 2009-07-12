@@ -1,6 +1,6 @@
 # Specific an svn revision, e.g.:
 # revision: 12345
-revision: 39992
+revision: 40039
 
 # Use this if there is a specific feature in parrot that we need to function.
 # partcl trunk will typically use this.
