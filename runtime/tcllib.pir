@@ -45,6 +45,7 @@ providing a compreg-compatible method.
 .include 'src/class/tcldict.pir'
 .include 'src/class/tcllist.pir'
 .include 'src/class/tclproc.pir'
+.include 'src/class/tclstring.pir'
 .include 'src/class/tracearray.pir'
 
 .HLL 'parrot'

@@ -370,15 +370,19 @@ proc unknown args {
 	    set newcmd [history event -1]
 	    catch {regsub -all -- $old $newcmd $new newcmd}
 	}
+puts "HERE?"
 	if {[info exists newcmd]} {
 	    tclLog $newcmd
 	    history change $newcmd 0
+puts "HERE"
 	    uplevel 1 [list ::catch $newcmd \
 		    ::tcl::UnknownResult ::tcl::UnknownOptions]
 	    dict incr ::tcl::UnknownOptions -level
+puts "NOTHER"
 	    return -options $::tcl::UnknownOptions $::tcl::UnknownResult
 	}
 
+puts "THERE?"
 	set ret [catch {set candidates [info commands $name*]} msg]
 	if {$name eq "::"} {
 	    set name ""
