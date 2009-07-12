@@ -27,7 +27,7 @@ providing a compreg-compatible method.
 
   core_int = get_class 'Integer'
   core_num = get_class 'Float'
-  core_string = get_class 'Float'
+  core_string = get_class 'String'
 
   tclint    = get_class 'TclInt'
   tclfloat  = get_class 'TclFloat'
