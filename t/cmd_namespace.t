@@ -39,8 +39,8 @@ namespace eval bob {}
 namespace eval Bob {}
 namespace eval audreyt { namespace eval Matt {} }
 
-is [namespace children ::] {::audreyt ::Bob ::bob ::tcl} \
-  {namespace children: ordering}
+is [lsort [namespace children ::]] {::Bob ::audreyt ::bob ::tcl} \
+  {namespace children}
 is [namespace children ::audreyt] ::audreyt::Matt  {namespace chlidren: nested}
 is [namespace eval ::audreyt {namespace children}] ::audreyt::Matt \
   {namespace children in namespace eval}
