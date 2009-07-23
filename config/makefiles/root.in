@@ -149,6 +149,9 @@ test: tcl.pbc
 spectest: tcl.pbc
 	$(PERL) tools/tcl_test.pl
 
+specinfo: tcl.pbc
+	$(PERL) tools/spec_info.pl
+
 CLEANERS = \
 tcl.c \
 tcl$(O) \
