@@ -100,15 +100,37 @@ sub run_tests {
     my $url = 'http://code.google.com/p/partcl/wiki/SpecTestStatus';
 
     foreach my $file (@files) {
-      $file =~ m{/([^.]+).test$};
-      my $basename = $1;
-      if (grep {$_ eq $basename} @skipfiles) {
-        print "Skipping $file: see $url\n";
-        next;
-      }
-      my $cmd = "$parrot tcl.pbc $file";
-      print "$cmd\n";
-      system $cmd;
+        $file =~ m{/([^.]+).test$};
+        my $basename = $1;
+
+        if (grep {$_ eq $basename} @skipfiles) {
+            print "Skipping $file: see $url\n";
+            next;
+        }
+
+        my $cmd = "$parrot tcl.pbc $file 2>&1";
+        open my $fh, "$cmd|";
+
+        open my $ofh, '>', "log/${basename}.log";
+        while (my $line = <$fh>) {
+            print {$ofh} $line;
+            print $line;
+        }
+
+        close $ofh;
+        close $fh;
+
+        # ...courtesy "perldoc -f system"
+        if ($? == -1) {
+            print "!! failed to execute: $!\n";
+        }
+        elsif ($? & 127) {
+            printf "!! child died with signal %d, %s coredump\n",
+                ($? & 127),  ($? & 128) ? 'with' : 'without';
+        }
+        elsif ($?) {
+            printf "!! child exited with value %d\n", $? >> 8;
+        }
     }
 }
 
