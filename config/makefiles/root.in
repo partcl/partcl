@@ -152,6 +152,9 @@ spectest: tcl.pbc
 specinfo: tcl.pbc
 	$(PERL) tools/spec_info.pl
 
+unfudge: tcl.pbc
+	$(PERL) tools/tcl_test.pl --skip
+
 CLEANERS = \
 tcl.c \
 tcl$(O) \

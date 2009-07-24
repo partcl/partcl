@@ -56,12 +56,31 @@ my $repo = $1;
 my $specstatus = $repo . "/wiki/$specfile";
 `svn export $specstatus tools/$specfile`;
 
+# Normally, skip tests marked with @SKIP
+# If invoked with --skip, ONLY run those tests, so we can
+# figure out what to unskip.
+
+my $skip = 1;
+if ($ARGV[0] eq "--skip") {
+    $skip = 0;
+}
+
 my @skipfiles;
 open my $fh, '<', "tools/$specfile";
 while (my $line = <$fh>) {
-  next unless $line =~ /^\s+\*\s*(.*)\s+\@SKIP/;
-  push @skipfiles, $1;
+    if ($line =~ m/^\s+\*\s+(\w*)(\s+\@SKIP)?/) {
+        my $file = $1;
+        my $skippable = defined($2);
+        if ($skippable && $skip) {
+            push @skipfiles, $file;
+        } elsif (!$skippable && !$skip) {
+            push @skipfiles, $file;
+        }
+    }
 }
+
+# If something kills a sub-process, don't wait around for it.
+$SIG{CHLD} = 'IGNORE';
 
 main();
 
@@ -113,25 +132,32 @@ sub run_tests {
 
         open my $ofh, '>', "log/${basename}.log";
         while (my $line = <$fh>) {
-            print {$ofh} $line;
-            print $line;
+            tee_msg($ofh, $line);
         }
 
-        close $ofh;
         close $fh;
 
         # ...courtesy "perldoc -f system"
         if ($? == -1) {
-            print "!! failed to execute: $!\n";
+            tee_msg($ofh, "!! failed to execute: $!\n"); 
         }
         elsif ($? & 127) {
-            printf "!! child died with signal %d, %s coredump\n",
+            my $msg = sprintf "!! child died with signal %d, %s coredump\n",
                 ($? & 127),  ($? & 128) ? 'with' : 'without';
+            tee_msg($ofh, $msg);
         }
         elsif ($?) {
-            printf "!! child exited with value %d\n", $? >> 8;
+            my $msg = sprintf "!! child exited with value %d\n", $? >> 8;
+            tee_msg($ofh, $msg);
         }
+        close $ofh;
     }
+}
+
+sub tee_msg {
+  my $fh = shift;
+  print {$fh} join("\n", @_);
+  print join("\n", @_);
 }
 
 # Local Variables:
