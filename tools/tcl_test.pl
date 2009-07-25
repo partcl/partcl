@@ -61,7 +61,7 @@ my $specstatus = $repo . "/wiki/$specfile";
 # figure out what to unskip.
 
 my $skip = 1;
-if ($ARGV[0] eq "--skip") {
+if (@ARGV && $ARGV[0] eq "--skip") {
     $skip = 0;
 }
 
