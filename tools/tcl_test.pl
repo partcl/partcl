@@ -79,9 +79,6 @@ while (my $line = <$fh>) {
     }
 }
 
-# If something kills a sub-process, don't wait around for it.
-$SIG{CHLD} = 'IGNORE';
-
 main();
 
 ##
@@ -123,7 +120,12 @@ sub run_tests {
         my $basename = $1;
 
         if (grep {$_ eq $basename} @skipfiles) {
-            print "Skipping $file: see $url\n";
+            print "Skipping $file: ";
+            if ($skip) {
+                print "see $url\n";
+            } else {
+                print "completes normally.\n";
+            }
             next;
         }
 
