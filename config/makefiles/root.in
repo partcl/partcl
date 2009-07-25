@@ -215,4 +215,4 @@ Makefile: config/makefiles/root.in config/makefiles/pmc.in config/makefiles/ops.
 
 # fetch the tcl source.
 tcl-cvs:
-	$(PERL) tools/tcl_cvs.pl
+	$(PERL) tools/tcl_cvs.pl tcl-cvs
