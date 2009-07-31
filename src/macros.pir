@@ -1,5 +1,55 @@
 .include 'src/returncodes.pasm'
 
+=head1 PIR macros
+
+=head2 .str(name,init)
+=head2 .num(name,init)
+=head2 .int(name,init)
+=head2 .pmc(name,init)
+
+Declare a .local and give it an initial value.
+
+=cut
+
+.macro str(name,init)
+  .local string .name
+  .name = .init
+.endm
+
+.macro num(name,init)
+  .local num .name
+  .name = .init
+.endm
+
+.macro int(name,init)
+  .local int .name
+  .name = .init
+.endm
+
+.macro pmc(name,init)
+  .local pmc .name
+  .name = .init
+.endm
+
+=head2 Try(try)
+
+Simplistic Try that just eats an exception.
+
+=cut
+
+.macro Try(try_code)
+  push_eh .$catch_label
+    .try_code
+    goto .$finally_label
+  pop_eh
+
+.label $catch_label:
+    .catch()
+
+.label $finally_label:
+
+.endm
+
 =head1 math macros
 
 =head2 if_nan(reg,target)
