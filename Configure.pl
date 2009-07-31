@@ -14,7 +14,17 @@ my $config =  $options{'parrot-config'} || "parrot_config";
 
 my %opt;
 
-my @keys = qw(perl libdir bindir versiondir slash make VERSION revision);
+my @keys = qw(
+    bindir
+    has_icu
+    libdir
+    make
+    perl
+    revision
+    slash
+    VERSION
+    versiondir
+);
 
 foreach my $key (@keys) {
       my $value = `$config $key`
@@ -53,6 +63,13 @@ while (<$cfh>) {
         }
     }
 }
+
+warn <<END_WARN
+!! Partcl relies on ICU, which is not linked with this parrot.
+   Some features may not work.
+
+END_WARN
+  unless $opt{has_icu};
 
 my $build_tool = $opt{perl} . ' '
                . $opt{libdir}
