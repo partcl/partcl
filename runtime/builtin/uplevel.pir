@@ -13,6 +13,7 @@
   .local pmc compileTcl, getCallLevel
   compileTcl        = get_root_global ['_tcl'], 'compileTcl'
   getCallLevel    = get_root_global ['_tcl'], 'getCallLevel'
+  .local int rethrow_flag
 
   # save the old call level
   .local pmc call_chain
@@ -56,13 +57,13 @@ save_chain_end:
     retval = $P0()
   pop_eh
 
-  bsr restore
-  .return(retval)
+  rethrow_flag = 0
+  goto restore
 
 restore_and_rethrow:
   .catch()
-  bsr restore
-  .rethrow()
+  rethrow_flag = 1
+  goto restore
 
 restore:
   # restore the old level
@@ -74,7 +75,11 @@ restore_chain_loop:
   inc $I0
   goto restore_chain_loop
 restore_chain_end:
-  ret
+  if rethrow_flag goto rethrow
+  .return(retval)
+
+rethrow:
+  .rethrow()
 
 bad_args:
   die 'wrong # args: should be "uplevel ?level? command ?arg ...?"'
