@@ -242,7 +242,7 @@ eval_is {
   catch {unset a}
   set a(monkey1) see
   set a(monkey2) do
-  array names a monkey*
+  lsort [array names a monkey*]
 } {monkey1 monkey2}\
   {array names, default glob pattern}
 
@@ -257,7 +257,7 @@ eval_is {
   catch {unset a}
   set a(monkey1) see
   set a(monkey2) do
-  array names a -glob monkey*
+  lsort [array names a -glob monkey*]
 } {monkey1 monkey2} {array names, explicit glob pattern}
 
 eval_is {
@@ -286,7 +286,7 @@ eval_is {
   set a(monkey1) see
   set a(monkey2) do
   set a(ferret)  don't
-  array names a -regexp ^mon.*
+  lsort [array names a -regexp ^mon.*]
 } {monkey1 monkey2} {array names, explicit regexp match}
 
 eval_is {
