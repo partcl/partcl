@@ -11,6 +11,7 @@ providing a compreg-compatible method.
 .HLL 'parrot'
 
 .loadlib 'tcl_ops'
+.include 'hllmacros.pir'  # from parrot
 .include 'src/macros.pir'
 .include 'cclass.pasm'
 
