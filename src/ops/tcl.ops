@@ -3,13 +3,15 @@
  * Copyright (C) 2006-2008, The Perl Foundation.
  */
 
+BEGIN_OPS_PREAMBLE
+
 #include "parrot/parrot.h"
 #include "parrot/string_funcs.h"
 #include "parrot/exceptions.h"
 
 #include "../binary.h"
 
-VERSION = PARROT_VERSION;
+END_OPS_PREAMBLE
 
 =head1 NAME
 
