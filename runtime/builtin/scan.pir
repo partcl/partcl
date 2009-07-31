@@ -50,7 +50,9 @@ loop:
   $I0 = is_cclass .CCLASS_WHITESPACE, format, format_pos
   unless $I0 goto handle_other
 
-  bsr eat_whitespace
+  # consume as much whitespace as possible from the input string
+  input_pos = find_not_cclass .CCLASS_WHITESPACE, input, input_pos, input_len
+
   inc format_pos
   goto next
 
@@ -157,15 +159,36 @@ get_width:
 got_width:
 
   .local int size_modifier # XXX we parse it, but ignore it for now
-  bsr get_size_modifier
+  size_modifier = 0
+  inc format_pos
+  $S0 = substr format, format_pos, 2
+  if $S0 == 'll' goto set_size_ll
+  $S0 = substr format, format_pos, 1
+  if $S0 == 'h' goto set_size_h
+  if $S0 == 'l' goto set_size_l
+  if $S0 == 'L' goto set_size_l
+  dec format_pos
+  goto size_set
 
+set_size_h:
+  size_modifier = 1
+  goto size_set
+set_size_l:
+  size_modifier = 2
+  goto size_set
+set_size_ll:
+  size_modifier = 3
+  inc format_pos # for the extra char
+
+size_set:
   # conversion character
   $S0 = substr format, format_pos, 1
   inc format_pos
 
   if $S0 == 'c' goto handle_character
   if $S0 == '[' goto handle_charclass
-  bsr eat_whitespace
+  # consume as much whitespace as possible from the input string
+  input_pos = find_not_cclass .CCLASS_WHITESPACE, input, input_pos, input_len
 
   if $S0 == 'n' goto handle_numchars
   if $S0 == 'd' goto handle_decimal
@@ -221,7 +244,29 @@ loop_dash:
   $I0 = index class_fmt, '-'
   if $I0 == -1 goto just_chars
   $I1 = $I0 - 1
-  bsr add_range
+
+  # $I1 has the lower position
+  $I2 = $I1 + 2
+  $S1 = substr class_fmt, $I1, 1
+  $S2 = substr class_fmt, $I2, 1
+
+  $I10 = ord $S1
+  $I11 = ord $S2
+  if $I10 <= $I11 goto range_loop
+  # otherwise swap the order
+  $I12 = $I10
+  $I10 = $I11
+  $I11 = $I12
+
+range_loop:
+  if $I10 > $I11 goto range_loop_done
+  $S0 = chr $I10
+  class[$S0] = 1
+  inc $I10
+  goto range_loop
+
+range_loop_done:
+
   $S0 = substr class_fmt, $I1, 3, ''
   goto loop_dash
 
@@ -261,32 +306,7 @@ done_loop:
   $I2 = $I1 - input_pos
   $S0 = substr input, input_pos, $I2
   $P0 = box $S0 
-  bsr set_val
-  goto next
-
-add_range:
-  # $I1 has the lower position
-  $I2 = $I1 + 2
-  $S1 = substr class_fmt, $I1, 1
-  $S2 = substr class_fmt, $I2, 1
-
-  $I10 = ord $S1
-  $I11 = ord $S2
-  if $I10 <= $I11 goto range_loop
-  # otherwise swap the order
-  $I12 = $I10
-  $I10 = $I11
-  $I11 = $I12
-
-range_loop:
-  if $I10 > $I11 goto range_loop_done
-  $S0 = chr $I10
-  class[$S0] = 1
-  inc $I10
-  goto range_loop
-
-range_loop_done:
-  ret
+  goto set_val
 
 bad_class:
   die 'unmatched [ in format string'
@@ -305,8 +325,7 @@ handle_character:
   inc input_pos
   $I0 = ord $S1
   $P0 = box $I0
-  bsr set_val
-  goto next
+  goto set_val
 
 bad_character_size:
   die 'field size modifier may not be specified in %c conversion'
@@ -315,8 +334,7 @@ bad_character_width:
 
 handle_numchars:
   $P0 = box input_pos
-  bsr set_val
-  goto next
+  goto set_val
 
 handle_decimal:
   rule = decimal
@@ -342,8 +360,7 @@ handle_hex:
 hex_width:
   input_pos += $I2
   $P0 = toInteger($S0, 'rawhex'=>1)
-  bsr set_val
-  goto next
+  goto set_val
 
 handle_integer:
   rule = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'integer'
@@ -362,8 +379,7 @@ do_integer:
 integer_width:
   input_pos += $I2
   $P0 = toInteger($S0)
-  bsr set_val
-  goto next
+  goto set_val
 
 handle_float:
   rule = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'number'
@@ -381,8 +397,7 @@ handle_float:
   $P0 = $P1($S0)
 
 done_float:
-  bsr set_val
-  goto next
+  goto set_val
 
 handle_string:
   $I1 = find_cclass .CCLASS_WHITESPACE, input, input_pos, input_len
@@ -396,48 +411,18 @@ string_width:
   $S1 = substr input, input_pos, $I2
   input_pos = $I1
   $P0 = box $S1
-  bsr set_val
-  goto next
+  goto set_val
 
 bad_match:
   $P0 = box ''
-  bsr set_val
-  goto next
-
-# consume as much whitespace as possible from the input string
-eat_whitespace:
-  input_pos = find_not_cclass .CCLASS_WHITESPACE, input, input_pos, input_len
-  ret
-
-get_size_modifier:
-  size_modifier = 0
-  inc format_pos
-  $S0 = substr format, format_pos, 2
-  if $S0 == 'll' goto set_size_ll
-  $S0 = substr format, format_pos, 1
-  if $S0 == 'h' goto set_size_h
-  if $S0 == 'l' goto set_size_l
-  if $S0 == 'L' goto set_size_l
-  dec format_pos
-  ret
-
-set_size_h:
-  size_modifier = 1
-  ret
-set_size_l:
-  size_modifier = 2
-  ret
-set_size_ll:
-  size_modifier = 3
-  inc format_pos # for the extra char
-  ret
+  goto set_val
 
 set_val:
   if xpg3 != 0 goto set_xpg3
   if using_xpg3 == 1 goto cant_mix
   using_xpg3 = 0
   push results, $P0
-  ret
+  goto next
 
 set_xpg3:
   if using_xpg3 == 0 goto cant_mix
@@ -451,7 +436,7 @@ set_xpg3:
 set_xpg3_ok:
   results[xpg3] = $P0
 done_xpg3:
-  ret
+  goto next
 
 cant_mix:
   die 'cannot mix "%" and "%n$" conversion specifiers'
