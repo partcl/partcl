@@ -5,15 +5,14 @@
     .param pmc argv :slurpy
 
     .prof('tcl;&break')
-    .local int argc
-    argc = elements argv
+    
+    .int(argc, elements argv)
 
-    if argc != 0 goto bad_args
-
+    .If (argc !=0, {
+        die 'wrong # args: should be "break"'
+    })
+ 
     tcl_break
-
-bad_args:
-    die 'wrong # args: should be "break"'
 .end
 
 # Local Variables:
