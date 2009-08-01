@@ -2,21 +2,22 @@
 .namespace []
 
 .sub '&after'
-  .param pmc argv :slurpy
+    .param pmc argv :slurpy
 
-  .prof('tcl;&after')
-  .local int argc
-  argc = elements argv
-  if argc == 0 goto bad_args
+    .prof('tcl;&after')
 
-  $I0 = argv[0]
-  $N0 = $I0 / 1000
-  sleep $N0
+    .int(argc, elements argv)
 
-  .return('')
+    .If (argc==0, {
+        die 'wrong # args: should be "after option ?arg arg ...?"'
+    })
 
-bad_args:
-  die 'wrong # args: should be "after option ?arg arg ...?"'
+    .int(msec, argv[0])
+    .int(sec , msec / 1000)
+
+    sleep sec
+
+    .return('')
 .end
 
 

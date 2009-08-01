@@ -2,31 +2,31 @@
 .namespace []
 
 .sub '&apply'
-  .param pmc argv :slurpy
+    .param pmc argv :slurpy
 
-  .prof('tcl;&apply')
-  .local int argc
-  argc = elements argv
-  if argc == 0 goto no_args
+    .prof('tcl;&apply')
 
-  .local pmc lambda
-  lambda = argv[0]
-  lambda = lambda.'getListValue'()
+    .int( argc, elements argv)
+    .If(argc==0, {
+        die 'wrong # args: should be "apply lambdaExpr ?arg1 arg2 ...?"'
+    })
 
-  $I0 = elements lambda
-  if $I0 < 2 goto bad_lambda
-  if $I0 > 3 goto bad_lambda
+    .pmc(lambda, argv[0])
 
-  tcl_return ''
+    lambda = lambda.'getListValue'()
+
+    .int(elems, elements lambda)
+
+    if elems < 2 goto bad_lambda
+    if elems > 3 goto bad_lambda
+
+    tcl_return ''
 
 bad_lambda:
-  $S0 = argv[0]
-  $S0 = "can't interpret \"" . $S0
-  $S0 = $S0 . "\" as a lambda expression"
-  die $S0
-
-no_args:
-  die 'wrong # args: should be "apply lambdaExpr ?arg1 arg2 ...?"'
+    .str(error, argv[0])
+    error  = "can't interpret \"" . error
+    error .= "\" as a lambda expression"
+    die error
 .end
 
 # Local Variables:

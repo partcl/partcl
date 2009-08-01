@@ -2,58 +2,45 @@
 .namespace []
 
 .sub '&append'
-  .param pmc argv :slurpy
+    .param pmc argv :slurpy
 
-  .prof('tcl;&after')
-  .local int argc
-  argc = elements argv
+    .prof('tcl;&append')
 
-  .local pmc read
-  read = get_root_global ['_tcl'], 'readVar'
+    .local int argc
+    argc = elements argv
 
-  .local string value
-  .local int looper
-  looper = 1
+    .local pmc readVar
+    readVar = get_root_global ['_tcl'], 'readVar'
 
-  if argc == 0 goto badargs
+    .If(argc==0, {
+        die 'wrong # args: should be "append varName ?value value ...?"'
+    })
 
-  .local string name
-  name = argv[0]
+    .str(name,argv[0])
 
-  if argc == 1 goto getter
+    .If(argc==1, {
+        .tailcall readVar(name)
+    })
 
-setter:
-  push_eh new_variable
-    $P1 = read(name)
-  pop_eh
+    .str(value,'')
 
-  value = $P1
-  goto loop
+    .Try({
+        value = readVar(name)
+    })
+    
+    .int(looper,1)
+    .While( looper!=argc, {
+        .str(strVal,argv[looper])
+        concat value, strVal
+        inc looper
+    })
 
-new_variable:
-  .catch()
-  value = ''
+    .local pmc setVar
+    setVar = get_root_global ['_tcl'], 'setVar'
 
-loop:
-  if looper == argc goto loop_done
-
-  $S2 = argv[looper]
-  concat value, $S2
-  inc looper
-  goto loop
-
-loop_done:
-  .local pmc set
-  set = get_root_global ['_tcl'], 'setVar'
-  set(name, value)
-  # should be able to return ourselves, but for Issue #2
-  .return(value)
-
-getter:
-  .tailcall read(name)
-
-badargs:
-  die 'wrong # args: should be "append varName ?value value ...?"'
+    setVar(name, value)
+    # should be able to return ourselves, but for Issue #2
+    .return(value)
 .end
 
 # Local Variables:
