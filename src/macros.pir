@@ -6,6 +6,7 @@
 =head2 .num(name,init)
 =head2 .int(name,init)
 =head2 .pmc(name,init)
+=head2 .null(name)
 
 Declare a .local and give it an initial value.
 
@@ -29,6 +30,11 @@ Declare a .local and give it an initial value.
 .macro pmc(name,init)
   .local pmc .name
   .name = .init
+.endm
+
+.macro null(name)
+  .local pmc .name
+  null .name
 .endm
 
 =head2 Try(try)
