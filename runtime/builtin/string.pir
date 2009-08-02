@@ -48,61 +48,61 @@ bad_args:
 .namespace [ 'helpers'; 'string' ]
 
 .sub 'first'
-  .param pmc argv
+    .param pmc argv
 
-  .prof('_tcl;helpers;string;first')
+    .prof('_tcl;helpers;string;first')
 
-  .local int argc
-  .local pmc retval
+    .local int argc
+    argc = elements argv
 
-  argc = elements argv
-  if argc > 3 goto bad_args
-  if argc < 2 goto bad_args
-  $S1 = argv[0]
-  $S2 = argv[1]
-  $I0 = 0
-  if argc == 2 goto first_do
-  $S3 = argv[2]
-  .local pmc getIndex
-  getIndex = get_root_global ['_tcl'], 'getIndex'
-  $I0 = getIndex($S3,$S2)
-  if $I0 >0 goto first_do
-  $I0 = 0 # XXX should this be done in getIndex?
+    .int(args_ok, 1)
+    .If(argc <2, {args_ok = 0})
+    .If(argc >3, {args_ok = 0})
+    .Unless(args_ok, {
+        die 'wrong # args: should be "string first needleString haystackString ?startIndex?"'
+    })
 
-first_do:
-  .local int index_1
-  index_1 = index $S2, $S1, $I0
-  .return(index_1)
+    .str(needle,   argv[0])
+    .str(haystack, argv[1])
+    .int(pos, 0)
+    .Unless(argc==2, {
+        .str(pos_s, argv[2])
+        .local pmc getIndex
+        getIndex = get_root_global ['_tcl'], 'getIndex'
+        pos = getIndex(pos_s, haystack)
+        .If(pos <=0, {pos = 0})
+    })
 
-bad_args:
-  die 'wrong # args: should be "string first needleString haystackString ?startIndex?"'
+    .local int index_1
+    index_1 = index haystack, needle, pos
+    .return(index_1)
 
 .end
 
 .sub 'last'
-  .param pmc argv
+    .param pmc argv
 
-  .prof('_tcl;helpers;string;last')
+    .prof('_tcl;helpers;string;last')
 
-  .local int argc
-  .local pmc retval
+    .local int argc
+    .local pmc retval
 
-  argc = elements argv
-  if argc > 3 goto bad_args
-  if argc < 2 goto bad_args
-  $S1 = argv[0]
-  $S2 = argv[1]
+    argc = elements argv
+    if argc > 3 goto bad_args
+    if argc < 2 goto bad_args
+    $S1 = argv[0]
+    $S2 = argv[1]
 
-  $I0 = length $S2
-  if argc == 2 goto last_do
+    $I0 = length $S2
+    if argc == 2 goto last_do
 
-  $S3 = argv[2]
-  .local pmc getIndex
-  getIndex = get_root_global ['_tcl'], 'getIndex'
-  $I1 = getIndex($S3,$S2)
+    $S3 = argv[2]
+    .local pmc getIndex
+    getIndex = get_root_global ['_tcl'], 'getIndex'
+    $I1 = getIndex($S3,$S2)
 
-  if $I1 > $I0 goto last_do
-  $I0 = $I1
+    if $I1 > $I0 goto last_do
+    $I0 = $I1
 
 last_do:
   .local int index_1
@@ -129,35 +129,38 @@ bad_args:
 .end
 
 .sub 'index'
-  .param pmc argv
+    .param pmc argv
 
-  .prof('_tcl;helpers;string;index')
+    .prof('_tcl;helpers;string;index')
 
-  .local int index_1
-  .local pmc retval
-  .local int argc
-  argc = elements argv
-  if argc != 2 goto bad_index
-  $S1 = argv[0]
-  $S2 = argv[1]
-  .local pmc getIndex
-  getIndex = get_root_global ['_tcl'], 'getIndex'
-  $I0 = getIndex($S2,$S1)
-  index_1 = length $S1
-  inc index_1
-  if $I0 > index_1 goto index_null
-  if $I0 < 0 goto index_null
-  $S0 = substr $S1, $I0, 1
-  .return ($S0)
+    .local int argc
+    argc = elements argv
 
-index_null:
-  .return ('')
+    .If(argc != 2, {
+        die 'wrong # args: should be "string index string charIndex"'
+    })
 
-bad_index:
-  die 'wrong # args: should be "string index string charIndex"'
+    .str(index_s,  argv[0])
+    .str(string_s, argv[1])
 
-done:
-  .return (retval)
+    .local pmc getIndex
+    getIndex = get_root_global ['_tcl'], 'getIndex'
+
+    .int(pos, {getIndex(string_s, index_s)})
+
+    .If(pos < 0, {
+        .return('')
+    })
+
+    .int(strlen, length string_s)
+    inc strlen
+
+    .If(pos > strlen, {
+    	.return('')
+    })
+
+    $S0 = substr index_s, pos, 1
+    .return ($S0)
 .end
 
 
