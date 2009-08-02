@@ -1,41 +1,45 @@
 .HLL 'tcl'
 .namespace []
 
+.sub 'string_options' :anon :immediate
+    .prof('tcl;string_options')
+
+    .local pmc opts
+    opts = split ' ', 'bytelength compare equal first index is last length map match range repeat replace reverse tolower toupper totitle trim trimleft trimright wordend wordstart'
+
+    .return(opts)
+.end
+
 .sub '&string'
-  .param pmc argv :slurpy
+    .param pmc argv :slurpy
 
-  .prof('tcl;&string')
+    .prof('tcl;&string')
 
-  .local pmc retval
+    .int(argc, elements argv)
+    .Unless(argc, {
+        die 'wrong # args: should be "string subcommand ?argument ...?"'
+    })
 
-  .local int argc
-  argc = elements argv
-  unless argc goto no_args
+    .local string subcommand_name
+    subcommand_name = shift argv
 
-  .local string subcommand_name
-  subcommand_name = shift argv
+    .const 'Sub' options = 'string_options'
 
-  .local pmc options
-  options = get_root_global ['_tcl'; 'helpers'; 'string'], 'options'
+    .local pmc select_option
+    select_option  = get_root_global ['_tcl'], 'select_option'
 
-  .local pmc select_option
-  select_option  = get_root_global ['_tcl'], 'select_option'
+    .local string canonical_subcommand
+    canonical_subcommand = select_option(options, subcommand_name)
 
-  .local string canonical_subcommand
-  canonical_subcommand = select_option(options, subcommand_name)
+    .local pmc subcommand_proc
+    null subcommand_proc
 
-  .local pmc subcommand_proc
-  null subcommand_proc
-
-  subcommand_proc = get_root_global ['_tcl'; 'helpers'; 'string'], canonical_subcommand
-  if_null subcommand_proc, bad_args
-  .tailcall subcommand_proc(argv)
+    subcommand_proc = get_root_global ['_tcl'; 'helpers'; 'string'], canonical_subcommand
+    if_null subcommand_proc, bad_args
+    .tailcall subcommand_proc(argv)
 
 bad_args:
-  .return ('') # once all commands are implemented, remove this...
-
-no_args:
-  die 'wrong # args: should be "string subcommand ?argument ...?"'
+    .return ('') # once all commands are implemented, remove this...
 
 .end
 
@@ -1201,38 +1205,6 @@ ret_val:
 bad_args:
   die 'wrong # args: should be "string wordstart string index"'
 .end
-
-.sub 'anon' :anon :load
-  .prof('_tcl;helpers;string;anon')
-
-  .local pmc options
-  options = root_new ['parrot'; 'TclList']
-  push options, 'bytelength'
-  push options, 'compare'
-  push options, 'equal'
-  push options, 'first'
-  push options, 'index'
-  push options, 'is'
-  push options, 'last'
-  push options, 'length'
-  push options, 'map'
-  push options, 'match'
-  push options, 'range'
-  push options, 'repeat'
-  push options, 'replace'
-  push options, 'reverse'
-  push options, 'tolower'
-  push options, 'toupper'
-  push options, 'totitle'
-  push options, 'trim'
-  push options, 'trimleft'
-  push options, 'trimright'
-  push options, 'wordend'
-  push options, 'wordstart'
-
-  set_root_global [ '_tcl'; 'helpers'; 'string' ], 'options', options
-.end
-
 
 # Local Variables:
 #   mode: pir
