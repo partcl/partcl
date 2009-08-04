@@ -1010,8 +1010,9 @@
         dec pos
         goto loop2
     loop_done:
-        if pos == old_idx goto ret_val
-        inc pos
+        .If(pos != old_idx, {
+            inc pos
+        })
     ret_val:
         .return(pos)
     })
