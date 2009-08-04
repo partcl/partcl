@@ -1,0 +1,9 @@
+/*.exe
+/tclsh
+/Makefile
+/tcl.pbc
+/tcl.c
+/tcl.o
+/t_tcl
+/tcl-cvs
+/spectest_results.log

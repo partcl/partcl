@@ -1,0 +1,6 @@
+/Makefile
+/*.dump
+/*.c
+/*.h
+/*.bundle
+/*.dll
