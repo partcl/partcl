@@ -1,6 +1,15 @@
 .HLL 'tcl'
 .namespace []
 
+.sub 'regexp_options' :anon :immediate
+    .prof('tcl;regexp_options')
+    .local pmc opts
+    opts = split ' ' , 'all about indices inline expanded line linestop lineanchor nocase start'
+
+    .return(opts)
+.end
+
+
 .sub '&regexp'
   .param pmc argv :slurpy
 
@@ -10,8 +19,7 @@
   argc = elements argv
   if argc < 2 goto badargs
 
-  .local pmc options
-  options = get_root_global ['_tcl'; 'helpers'; 'regexp'], 'options'
+    .const 'Sub' options = 'regexp_options'
 
   .local pmc select_switches, switches
   select_switches  = get_root_global ['_tcl'], 'select_switches'
@@ -130,24 +138,6 @@ done:
 badargs:
   die 'wrong # args: should be "regexp ?switches? exp string ?matchVar? ?subMatchVar subMatchVar ...?"'
 
-.end
-
-.sub 'anon' :anon :load
-  .prof('tcl;anon')
-  .local pmc options
-  options = root_new ['parrot'; 'TclList']
-  push options, 'all'
-  push options, 'about'
-  push options, 'indices'
-  push options, 'inline'
-  push options, 'expanded' # RT#40774: use tcl-regexps
-  push options, 'line'
-  push options, 'linestop'
-  push options, 'lineanchor'
-  push options, 'nocase'
-  push options, 'start'
-
-  set_root_global ['_tcl'; 'helpers'; 'regexp'], 'options', options
 .end
 
 # Local Variables:

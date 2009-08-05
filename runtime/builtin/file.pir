@@ -1,6 +1,15 @@
 .HLL 'tcl'
 .namespace []
 
+.sub 'file_options' :anon :immediate
+    .prof('tcl;file_options')
+
+    .local pmc opts
+    opts = split ' ', 'atime attributes channels copy delete dirname executable exists extension isdirectory isfile join link lstat mtime mkdir nativename normalize owned pathtype readable readlink rename rootname separator size split stat system tail type volumes writable'
+
+    .return(opts)
+.end
+
 .sub '&file'
   .param pmc argv :slurpy
 
@@ -13,8 +22,7 @@
   .local string subcommand_name
   subcommand_name = shift argv
 
-  .local pmc options
-  options = get_root_global ['_tcl'; 'helpers'; 'file'], 'options'
+    .const 'Sub' options = 'file_options'
 
   .local pmc select_option
   select_option  = get_root_global ['_tcl'], 'select_option'
@@ -684,47 +692,6 @@ bad_args:
 
   bad_args:
     die 'wrong # args: should be "file split name"'
-.end
-
-.sub 'anon' :anon :load
-  .prof('_tcl;helpers;file;anon')
-  .local pmc options
-  options = root_new ['parrot'; 'TclList']
-  push options, 'atime'
-  push options, 'attributes'
-  push options, 'channels'
-  push options, 'copy'
-  push options, 'delete'
-  push options, 'dirname'
-  push options, 'executable'
-  push options, 'exists'
-  push options, 'extension'
-  push options, 'isdirectory'
-  push options, 'isfile'
-  push options, 'join'
-  push options, 'link'
-  push options, 'lstat'
-  push options, 'mtime'
-  push options, 'mkdir'
-  push options, 'nativename'
-  push options, 'normalize'
-  push options, 'owned'
-  push options, 'pathtype'
-  push options, 'readable'
-  push options, 'readlink'
-  push options, 'rename'
-  push options, 'rootname'
-  push options, 'separator'
-  push options, 'size'
-  push options, 'split'
-  push options, 'stat'
-  push options, 'system'
-  push options, 'tail'
-  push options, 'type'
-  push options, 'volumes'
-  push options, 'writable'
-
-  set_root_global ['_tcl'; 'helpers'; 'file'], 'options', options
 .end
 
 # Local Variables:

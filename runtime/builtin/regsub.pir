@@ -1,6 +1,15 @@
 .HLL 'tcl'
 .namespace []
 
+.sub 'regsub_options' :anon :immediate
+    .prof('tcl;regsub_options')
+
+    .local pmc opts
+    opts = split ' ', 'all nocase expanded line linestop lineanchor start'
+
+    .return(opts)
+.end
+
 .sub '&regsub'
   .param pmc argv :slurpy
 
@@ -12,8 +21,7 @@
 
   .local string expression, target, subSpec, original_target
 
-  .local pmc options
-  options = get_root_global ['_tcl'; 'helpers'; 'regsub'], 'options'
+    .const 'Sub' options = 'regsub_options'
 
   .local pmc select_switches, switches
   select_switches  = get_root_global ['_tcl'], 'select_switches'
@@ -115,21 +123,6 @@ match_failed:
 
 badargs:
   die 'wrong # args: should be "regsub ?switches? exp string subSpec ?varName?"'
-.end
-
-.sub 'anon' :anon :load
-  .prof('tcl;anon')
-  .local pmc options
-  options = root_new ['parrot'; 'TclList']
-  push options, 'all'
-  push options, 'nocase'
-  push options, 'expanded' # RT#40774: use tcl-regexps
-  push options, 'line'
-  push options, 'linestop'
-  push options, 'lineanchor'
-  push options, 'start'
-
-  set_root_global ['_tcl'; 'helpers'; 'regsub'], 'options', options
 .end
 
 # Local Variables:

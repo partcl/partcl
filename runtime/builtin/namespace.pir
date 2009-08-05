@@ -12,6 +12,31 @@ real top level namespace.
 .HLL 'tcl'
 .namespace []
 
+.sub 'namespace_options' :anon :immediate
+    .prof('tcl;namespace_options')
+
+    .local pmc opts
+    opts = split ' ', 'children code current delete ensemble eval exists export forget import inscope origin parent path qualifiers tail unknown upvar which'
+
+    .return(opts)
+.end
+
+.sub 'namespace_wrapper' :anon :immediate
+    .prof('tcl;namespace_wrapper')
+
+    .return(<<'END_PIR')
+.HLL 'tcl'
+.namespace %0
+# src/compiler.pir :: pir_compiler (2)
+.sub compiled_tcl_sub_%2
+  .prof("tcl;%0;compiled_tcl_sub_%2")
+  %1
+  .return(%3)
+.end
+END_PIR
+
+.end
+
 .sub '&namespace'
    .param pmc argv :slurpy
 
@@ -26,8 +51,7 @@ real top level namespace.
   .local string subcommand_name
   subcommand_name = shift argv
 
-  .local pmc options
-  options = get_root_global ['_tcl'; 'helpers'; 'namespace'], 'options'
+    .const 'Sub' options = 'namespace_options'
 
   .local pmc select_option
   select_option  = get_root_global ['_tcl'], 'select_option'
@@ -263,16 +287,8 @@ global_ns:
   $S0 = join ' ', argv
   ($S0, $S1) = compileTcl($S0, 'pir_only'=>1)
   $I0 = code.'unique'()
-  code.'emit'(<<'END_PIR', namespace, $S0, $I0, $S1)
-.HLL 'tcl'
-.namespace %0
-# src/compiler.pir :: pir_compiler (2)
-.sub compiled_tcl_sub_%2
-  .prof("tcl;%0;compiled_tcl_sub_%2")
-  %1
-  .return(%3)
-.end
-END_PIR
+  .const 'Sub' ns_wrapper = 'namespace_wrapper'
+  code.'emit'(ns_wrapper, namespace, $S0, $I0, $S1)
 
   .local pmc pir_compiler
   pir_compiler = compreg 'PIR'
@@ -580,34 +596,6 @@ do_over:
 nothing:
   .return ('')
 .end
-
-.sub 'anon' :anon :load
-  .prof('_tcl;helpers;namespace;anon')
-  .local pmc options
-  options = root_new ['parrot'; 'TclList']
-  options[0] = 'children'
-  options[1] = 'code'
-  options[2] = 'current'
-  options[3] = 'delete'
-  options[4] = 'ensemble'
-  options[5] = 'eval'
-  options[6] = 'exists'
-  options[7] = 'export'
-  options[8] = 'forget'
-  options[9] = 'import'
-  options[10] = 'inscope'
-  options[11] = 'origin'
-  options[12] = 'parent'
-  options[13] = 'path'
-  options[14] = 'qualifiers'
-  options[15] = 'tail'
-  options[16] = 'unknown'
-  options[17] = 'upvar'
-  options[18] = 'which'
-
-  set_root_global ['_tcl'; 'helpers'; 'namespace'], 'options', options
-.end
-
 # Local Variables:
 #   mode: pir
 #   fill-column: 100

@@ -1,13 +1,21 @@
 .HLL 'tcl'
 .namespace []
 
+.sub 'subst_options' :anon :immediate
+    .prof('tcl;subst_options')
+
+    .local pmc opts
+    opts = split ' ', 'nobackslashes nocommands novariables'
+
+    .return(opts)
+.end
+
 .sub '&subst'
     .param pmc argv :slurpy
 
     .prof('tcl;&subst')
 
-    .local pmc options
-    options = get_root_global ['_tcl'; 'helpers'; 'subst'], 'options'
+    .const 'Sub' options = 'subst_options'
 
     .local pmc select_switches, switches
     select_switches  = get_root_global ['_tcl'], 'select_switches'
@@ -127,18 +135,6 @@ badswitch:
     $S0 .= '": must be -nobackslashes, -nocommands, or -novariables'
     die $S0
 .end
-
-.sub 'anon' :anon :load
-    .prof('tcl;anon')
-    .local pmc options
-    options = root_new ['parrot'; 'TclList']
-    options[0] = 'nobackslashes'
-    options[1] = 'nocommands'
-    options[2] = 'novariables'
-
-    set_root_global ['_tcl'; 'helpers'; 'subst'], 'options', options
-.end
-
 
 # Local Variables:
 #   mode: pir

@@ -1,6 +1,15 @@
 .HLL 'tcl'
 .namespace []
 
+.sub 'dict_options' :anon :immediate
+    .prof('tcl;dict_options')
+
+    .local pmc opts
+    opts = split ' ', 'append create exists filter for get incr info keys lappend merge remove replace set size unset update values with'
+
+    .return(opts)
+.end
+
 .sub '&dict'
   .param pmc argv :slurpy
 
@@ -14,8 +23,7 @@
   .local string subcommand_name
   subcommand_name = shift argv
 
-  .local pmc options
-  options = get_root_global ['_tcl'; 'helpers'; 'dict'], 'options'
+    .const 'Sub' options = 'dict_options'
 
   .local pmc select_option
   select_option  = get_root_global ['_tcl'], 'select_option'
@@ -1052,34 +1060,6 @@ cant_dict_array:
 bad_args:
   die 'wrong # args: should be "dict with dictVar ?key ...? script"'
 .end
-
-.sub 'anon' :anon :load
-  .prof('_tcl;helpers;dict;anon')
-  .local pmc options
-  options = root_new ['parrot'; 'TclList']
-  options[0] = 'append'
-  options[1] = 'create'
-  options[2] = 'exists'
-  options[3] = 'filter'
-  options[4] = 'for'
-  options[5] = 'get'
-  options[6] = 'incr'
-  options[7] = 'info'
-  options[8] = 'keys'
-  options[9] = 'lappend'
-  options[10] = 'merge'
-  options[11] = 'remove'
-  options[12] = 'replace'
-  options[13] = 'set'
-  options[14] = 'size'
-  options[15] = 'unset'
-  options[16] = 'update'
-  options[17] = 'values'
-  options[18] = 'with'
-
-  set_root_global ['_tcl'; 'helpers'; 'dict'], 'options', options
-.end
-
 # Local Variables:
 #   mode: pir
 #   fill-column: 100

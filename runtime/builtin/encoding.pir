@@ -1,6 +1,16 @@
 .HLL 'tcl'
 .namespace []
 
+.sub 'encoding_options' :anon :immediate
+    .prof('tcl;encoding_options')
+
+    .local pmc opts
+    opts = split ' ', 'convertfrom convertto dirs names system'
+
+    .return(opts)
+.end
+
+
 .sub '&encoding'
   .param pmc argv :slurpy
 
@@ -14,8 +24,7 @@
   .local string subcommand_name
   subcommand_name = shift argv
 
-  .local pmc options
-  options = get_root_global ['_tcl'; 'helpers'; 'encoding'], 'options'
+    .const 'Sub' options = 'encoding_options'
 
   .local pmc select_option
   select_option  = get_root_global ['_tcl'], 'select_option'
@@ -117,19 +126,6 @@ bad_args:
 
 bad_args:
   die 'wrong # args: should be "encoding system ?encoding?"'
-.end
-
-.sub 'anon' :anon :load
-  .prof('_tcl;helpers;encoding;anon')
-  .local pmc options
-  options = root_new ['parrot'; 'TclList']
-  push options, 'convertfrom'
-  push options, 'convertto'
-  push options, 'dirs'
-  push options, 'names'
-  push options, 'system'
-
-  set_root_global ['_tcl'; 'helpers'; 'encoding'], 'options', options
 .end
 
 # Local Variables:

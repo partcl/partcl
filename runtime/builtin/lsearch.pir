@@ -1,13 +1,21 @@
 .HLL 'tcl'
 .namespace []
 
+.sub 'lsearch_options' :anon :immediate
+    .prof('tcl;lsearch_options')
+
+    .local pmc opts
+    opts = split ' ', 'all ascii decreasing dictionary exact glob increasing index inline integer nocase not real regexp sorted start subindices'
+
+    .return(opts)
+.end
+
 .sub '&lsearch'
   .param pmc argv :slurpy
 
   .prof('tcl;&lsearch')
 
-  .local pmc options
-  options = get_root_global ['_tcl'; 'helpers'; 'lsearch'], 'options'
+      .const 'Sub' options = 'lsearch_options'
 
   .local pmc select_switches, switches
   select_switches  = get_root_global ['_tcl'], 'select_switches'
@@ -102,32 +110,6 @@ done:
 bad_args:
   die 'wrong # args: should be "lsearch ?options? list pattern"'
 .end
-
-.sub 'anon' :anon :load
-  .prof('tcl;anon')
-  .local pmc options
-  options = root_new ['parrot'; 'TclList']
-  push options, 'all'
-  push options, 'ascii'
-  push options, 'decreasing'
-  push options, 'dictionary'
-  push options, 'exact'
-  push options, 'glob'
-  push options, 'increasing'
-  push options, 'index'
-  push options, 'inline'
-  push options, 'integer'
-  push options, 'nocase'
-  push options, 'not'
-  push options, 'real'
-  push options, 'regexp'
-  push options, 'sorted'
-  push options, 'start'
-  push options, 'subindices'
-
-  set_root_global ['_tcl'; 'helpers'; 'lsearch'], 'options', options
-.end
-
 
 # Local Variables:
 #   mode: pir
