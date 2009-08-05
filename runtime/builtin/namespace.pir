@@ -38,15 +38,14 @@ END_PIR
 .end
 
 .sub '&namespace'
-   .param pmc argv :slurpy
+    .param pmc argv :slurpy
 
-  .prof('tcl;&namespace')
+    .prof('tcl;&namespace')
 
-  .local pmc retval
-
-  .local int argc
-  argc = elements argv
-  unless argc goto no_args
+    .int(argc, elements argv)
+    .Unless(argc, {
+        die 'wrong # args: should be "namespace subcommand ?arg ...?"'
+    })
 
   .local string subcommand_name
   subcommand_name = shift argv
@@ -69,10 +68,6 @@ END_PIR
 
 bad_args:
   .return ('') # once all commands are implemented, remove this...
-
-no_args:
-  die 'wrong # args: should be "namespace subcommand ?arg ...?"'
-
 .end
 
 .HLL '_tcl'
@@ -85,7 +80,10 @@ no_args:
 
   .local int argc
   argc = elements argv
-  if argc goto bad_args
+
+  .If(argc, {
+      die 'wrong # args: should be "namespace current"'
+  })
 
   .local pmc ns, splitNamespace
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
@@ -93,9 +91,6 @@ no_args:
   $S0 = join '::', ns
   $S0 = '::' . $S0
   .return($S0)
-
-bad_args:
-  die 'wrong # args: should be "namespace current"'
 .end
 
 .sub 'delete'
@@ -105,8 +100,11 @@ bad_args:
 
   .local int argc
   argc = elements argv
+
   # no arg delete does nothing
-  if argc == 0 goto return
+  .Unless(argc, {
+  	.return('')
+  })
 
   .local pmc splitNamespace, ns_root
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
@@ -143,7 +141,9 @@ return:
 
   .local int argc
   argc = elements argv
-  if argc != 1 goto bad_args
+  .If(argc != 1, {
+      die 'wrong # args: should be "namespace exists name"'
+  })
 
   .local pmc colons, split, name
   colons = get_root_global ['_tcl'], 'colons'
@@ -179,9 +179,6 @@ get_end:
 
 doesnt_exist:
   .return(0)
-
-bad_args:
-  die 'wrong # args: should be "namespace exists name"'
 .end
 
 .sub 'qualifiers'
@@ -191,7 +188,10 @@ bad_args:
 
   .local int argc
   argc = elements argv
-  if argc != 1 goto bad_args
+
+  .If(argc != 1, {
+      die 'wrong # args: should be "namespace qualifiers string"'
+  })
 
   .local pmc p6r,match
   p6r = compreg 'PGE::Perl6Regex'
@@ -199,18 +199,14 @@ bad_args:
 
   $S0 = argv[0]
   $P0 = match($S0)
-  unless $P0 goto WHOLE
-  $P1 = $P0[0]
-  $S1 = $P1
-  .return ($S1)
+  .If($P0, {
+      $P1 = $P0[0]
+      $S1 = $P1
+      .return ($S1)
+  })
 
-WHOLE:
   $S0 = argv[0]
   .return($S0)
-
-  bad_args:
-   die 'wrong # args: should be "namespace qualifiers string"'
-
 .end
 
 .sub 'tail'
@@ -220,7 +216,9 @@ WHOLE:
 
   .local int argc
   argc = elements argv
-  if argc != 1 goto bad_args
+  .If(argc !=1, {
+      die 'wrong # args: should be "namespace tail string"'
+  })
 
   .local pmc p6r,match
   p6r= compreg 'PGE::Perl6Regex'
@@ -228,20 +226,14 @@ WHOLE:
 
   $S0 = argv[0]
   $P0 = match($S0)
-  unless $P0 goto WHOLE
+  .If($P0, {
+      $P2 = $P0[0]
+      $S1 = $P2
+      .return ($S1)
+  })
 
-  $P2 = $P0[0]
-
-  $S1 = $P2
-  .return ($S1)
-
-WHOLE:
   $P0 = argv[0]
   .return($P0)
-
-bad_args:
-  die 'wrong # args: should be "namespace tail string"'
-
 .end
 
 .sub 'eval'
@@ -251,7 +243,9 @@ bad_args:
 
   .local int argc
   argc = elements argv
-  if argc < 2 goto bad_args
+  .If(argc < 2, {
+      die 'wrong # args: should be "namespace eval name arg ?arg...?"'
+  })
 
   .local pmc call_chain, temp_call_chain
   call_chain      = get_root_global ['_tcl'], 'call_chain'
@@ -292,25 +286,16 @@ global_ns:
 
   .local pmc pir_compiler
   pir_compiler = compreg 'PIR'
-  push_eh restore_call_chain
-    $P0 = pir_compiler(code)
-    $P0 = $P0()
-  pop_eh
-  set_root_global ['_tcl'], 'call_chain', call_chain
-  .return($P0)
 
-restore_call_chain:
-  .catch()
-  set_root_global ['_tcl'], 'call_chain', call_chain
-  .rethrow()
-
-bad_args:
-  die 'wrong # args: should be "namespace eval name arg ?arg...?"'
-.end
-
-.sub 'export'
-  .prof('_tcl;helpers;namespace;export')
-  .return ('')
+  .TryCatch({
+      $P0 = pir_compiler(code)
+      $P0 = $P0()
+      set_root_global ['_tcl'], 'call_chain', call_chain
+      .return($P0)
+  }, {
+      set_root_global ['_tcl'], 'call_chain', call_chain
+      .rethrow()
+  })
 .end
 
 .sub 'children'
@@ -323,7 +308,9 @@ bad_args:
 
   .local int argc
   argc = elements argv
-  if argc > 2  goto bad_args
+  .If(argc > 2, {
+      die 'wrong # args: should be "namespace children ?name? ?pattern?"'
+  })
   if argc != 2 goto iterate
 
   .local pmc glob, pattern
@@ -339,16 +326,22 @@ iterate:
   .local pmc splitNamespace, ns, ns_name
   .local string name
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
-  name = ''
-  if argc == 0 goto getname
 
-  name = argv[0]
-getname:
+  name = ''
+  .If(argc, {
+      name = argv[0]
+  })
+
   ns_name  = splitNamespace(name, 1)
 
   unshift ns_name, 'tcl'
   ns = get_root_namespace ns_name
-  if null ns goto unknown_namespace
+  .If(null ns, {
+      $S0 = argv[0]
+      $S0 = 'unknown namespace "' . $S0
+      $S0 = $S0 . '" in namespace children command'
+      die $S0
+  })
 
   .local pmc iterator
   iterator = iter ns
@@ -372,56 +365,6 @@ is_namespace:
 end:
 
   .return(list)
-
-bad_args:
-  die 'wrong # args: should be "namespace children ?name? ?pattern?"'
-
-unknown_namespace:
-  $S0 = argv[0]
-  $S0 = 'unknown namespace "' . $S0
-  $S0 = $S0 . '" in namespace children command'
-  die $S0
-.end
-
-.sub 'children_cmp'
-    .param string a
-    .param string b
-
-    .prof('_tcl;helpers;namespace;children_cmp')
-
-    a = downcase a
-    b = downcase b
-
-    .local int len_a, len_b, pos
-    len_a = length a
-    len_b = length b
-    pos   = 0
-
-loop:
-    if pos >= len_a goto exhausted_a
-    if pos >= len_b goto a_first
-
-    $I0 = ord a, pos
-    $I1 = ord b, pos
-
-    if $I0 < $I1 goto a_first
-    if $I1 < $I0 goto b_first
-
-    inc pos
-    goto loop
-
-exhausted_a:
-    if len_a == len_b goto same
-    goto b_first
-
-same:
-    .return(0)
-
-a_first:
-    .return(-1)
-
-b_first:
-    .return(1)
 .end
 
 .sub 'code'
@@ -506,6 +449,7 @@ done_ns_walk:
 
   ns_iterator = iter namespace
   .local string proc_name
+
 begin_ns_loop:
   unless ns_iterator goto end_ns_loop
   proc_name = shift ns_iterator
@@ -536,6 +480,7 @@ done:
 .sub 'origin'
   .param pmc argv
   .prof('_tcl;helpers;namespace;origin')
+
   $S0 = shift argv
   $S0 = "::tcltest::" . $S0
   .return ($S0)
@@ -548,33 +493,30 @@ done:
   .local int argc
   argc = elements argv
 
-  .local string name
-  name = ''
+  .str(name, '')
 
-  if argc > 1  goto bad_args
-  if argc == 0 goto get_parent
+  .If(argc > 1, {
+      die 'wrong # args: should be "namespace parent ?name?"'
+  })
 
-  name = argv[0]
+  .If (argc, {
+      name = argv[0]
+  })
 
-get_parent:
-  .local pmc ns, splitNamespace
+  .local pmc splitNamespace
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
+
+  .local pmc ns
   ns  = splitNamespace(name)
 
-  push_eh current_in_root
-    $S0 = pop ns
-  pop_eh
-
-  $S0 = join '::', ns
-  $S0 = '::' . $S0
-  .return($S0)
-
-current_in_root:
-  .catch()
-  .return('')
-
-bad_args:
-  die 'wrong # args: should be "namespace parent ?name?"'
+  .TryCatch({
+      $S0 = pop ns
+      $S0 = join '::', ns
+      $S0 = '::' . $S0
+      .return($S0)
+  }, {
+      .return('')
+  })
 .end
 
 .sub 'which'
@@ -582,20 +524,21 @@ bad_args:
 
   .prof('_tcl;helpers;namespace;which')
   .local string cmd
-do_over:
-  cmd = shift argv
-  if cmd == '-command' goto do_over
+
+  .DoWhile({
+      cmd = shift argv
+  },{cmd == '-command'})
 
   # This should use the same logic as our command dispatch. 
   $S1 = "&" . cmd 
   $P1 = get_root_global ['tcl'], $S1
-  if null $P1 goto nothing
+  .If(null $P1, {
+      .return ('')
+  })
   $S0 = '::' . cmd
   .return($S0)
-
-nothing:
-  .return ('')
 .end
+
 # Local Variables:
 #   mode: pir
 #   fill-column: 100
