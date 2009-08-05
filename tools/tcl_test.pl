@@ -50,7 +50,7 @@ each individual C<.test> file.
 my $specfile = 'SpecTestStatus.wiki';
 warn "Getting a copy of $specfile\n";
 
-my $svn_info = `svn info .`;
+my $svn_info = `svn info .` || `git svn info README`;
 $svn_info =~ /Repository Root:\s+(.*)\n/;
 my $repo = $1;
 my $specstatus = $repo . "/wiki/$specfile";
