@@ -187,3 +187,13 @@ found_close_quote:
 done:
     .return(retval)
 .end
+
+=head2 getDictValue
+
+=cut
+
+.sub getDictValue :method
+    # convert to list, then to dict.
+    $P1 = self.'getListValue'()
+    .tailcall $P1.'getDictValue'()
+.end

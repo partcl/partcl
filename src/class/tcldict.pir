@@ -51,6 +51,14 @@ present in TclList.
     .return(retval)
 .end
 
+=head2 getDictValue
+
+=cut
+
+.sub getDictValue :method
+    .return(self)
+.end
+
 # Local Variables:
 #   mode: pir
 #   fill-column: 100

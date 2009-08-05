@@ -277,6 +277,65 @@ Copy the contents of other to self.
     .return()
 .end
 
+=head getDictValue
+
+=cut
+
+.sub getDictValue :method
+
+  .local int sizeof_list
+  sizeof_list = elements self
+
+  $I0 = mod sizeof_list, 2
+  if $I0 == 1 goto odd_args
+
+  .local pmc result
+  result = root_new ['parrot'; 'TclDict']
+
+  .local int pos
+  pos = 0
+
+loop:
+  if pos >= sizeof_list goto done
+  $S1 = self[pos]
+  inc pos
+  $P2 = self[pos]
+  inc pos
+  $I0 = isa $P2, 'String'
+  if $I0 goto is_string
+is_list:
+  $P2 = $P2.'getDictValue'()
+  result[$S1] = $P2
+  goto loop
+
+is_string:
+  # Can we listify the value here? If so, make it into a dictionary.
+  $P3 = $P2.'getListValue'()
+  $I0 = elements $P3
+  if $I0 <= 1 goto only_string
+  push_eh only_string
+    $P3 = $P3.'getDictValue'()
+  pop_eh
+  result[$S1] = $P3
+  goto loop
+
+only_string:
+  result[$S1] = $P2
+  goto loop
+
+done:
+  .return (result)
+
+odd_args:
+  die 'missing value to go with key'
+.end
+
+# Local Variables:
+#   mode: pir
+#   fill-column: 100
+# End:
+# vim: expandtab shiftwidth=4 ft=pir:
+
 # Local Variables:
 #   mode: pir
 #   fill-column: 100

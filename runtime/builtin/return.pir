@@ -104,10 +104,9 @@ onearg:
 
 handle_opts:
     $P1 = shift argv # discard -options
-    $P1 = shift argv # get dictionary.
-    $P2 = get_root_global ['_tcl'], 'toDict'
     .local pmc options, iterator, key, value
-    options = $P2($P1)
+    options = shift argv # get dictionary.
+    options = options.'getDictValue'()
     iterator = iter options
 o_loop:
     unless iterator goto do_over

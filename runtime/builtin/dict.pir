@@ -67,7 +67,7 @@ no_args:
   push_eh dict_error
     dictionary = read(dict_name)
   pop_eh
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
   goto got_dict
 
 dict_error:
@@ -157,7 +157,7 @@ bad_args:
 
   .local pmc dictionary
   dictionary = shift argv
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
 
   .local pmc key
 loop:
@@ -189,7 +189,7 @@ bad_args:
 
   .local pmc dictionary
   dictionary = shift argv
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
 
   .local pmc options
   options = root_new ['parrot'; 'TclList']
@@ -333,7 +333,7 @@ bad_args:
 
   .local pmc dictionary
   dictionary = shift argv
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
 
   .local pmc body,code
   body = shift argv
@@ -387,7 +387,7 @@ bad_args:
 
   .local pmc dictionary
   dictionary = shift argv
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
   if argc < 0 goto loop_done
 
   .local pmc key
@@ -397,7 +397,7 @@ loop:
   key = shift argv
   dictionary = dictionary[key]
   if_null dictionary, not_exist
-  dictionary = toDict(dictionary) # might be a string, error out if so
+  dictionary = dictionary.'getDictValue'()
   goto loop
 
 loop_done:
@@ -436,7 +436,7 @@ bad_args:
   push_eh dict_error
     dictionary = read(dict_name)
   pop_eh
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
   goto got_dict
 
 dict_error:
@@ -502,7 +502,7 @@ bad_args:
 
   .local pmc dictionary
   dictionary = shift argv
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
 
   .return (dictionary)
 
@@ -527,7 +527,7 @@ bad_args:
   push_eh dict_error
     dictionary = read(dict_name)
   pop_eh
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
   goto got_dict
 
 dict_error:
@@ -584,7 +584,7 @@ bad_args:
 
   .local pmc dictionary
   dictionary = shift argv
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
 
   .local string pattern
   pattern = '*'
@@ -629,7 +629,7 @@ bad_args:
   .local pmc retval
   $P1 = argv[0]
   retval = clone $P1
-  retval = toDict(retval)
+  retval = retval.'getDictValue'()
   if argc == 1 goto done
   $P2 =  shift argv # discard
 
@@ -639,7 +639,7 @@ dict_loop:
   $I1 = elements argv
   unless $I1 goto done
   dictionary = shift argv
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
   iterator = iter dictionary
 key_loop:
   unless iterator goto dict_loop
@@ -664,7 +664,7 @@ nothing:
 
   .local pmc dictionary
   dictionary = shift argv
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
   dictionary = clone dictionary
 
   .local pmc key, value
@@ -693,7 +693,7 @@ bad_args:
 
   .local pmc dictionary
   dictionary = shift argv
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
   dictionary = clone dictionary
 
   if argc < 0 goto loop_done
@@ -735,7 +735,7 @@ bad_args:
   push_eh dict_error
     dictionary = read(dict_name)
   pop_eh
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
   goto got_dict
 
 dict_error:
@@ -791,7 +791,7 @@ bad_args:
 
   .local pmc dictionary
   dictionary = shift argv
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
 
   .local int size
   size = elements dictionary
@@ -818,7 +818,7 @@ bad_args:
   push_eh dict_error
     dictionary = read(dict_name)
   pop_eh
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
   goto got_dict
 
 dict_error:
@@ -880,7 +880,7 @@ bad_args:
   push_eh dict_error
     dictionary = read(dict_name)
   pop_eh
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
   goto got_dict
 
 dict_error:
@@ -952,7 +952,7 @@ bad_args:
 
   .local pmc dictionary
   dictionary = shift argv
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
 
   .local string pattern
   pattern = '*'
@@ -1003,7 +1003,7 @@ bad_args:
   push_eh dict_error
     dictionary = read(dict_name)
   pop_eh
-  dictionary = toDict(dictionary)
+  dictionary = dictionary.'getDictValue'()
   goto got_dict
 
 dict_error:

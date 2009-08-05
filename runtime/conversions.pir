@@ -1,39 +1,6 @@
 .HLL '_tcl'
 .namespace []
 
-=head2 _Tcl::toDict
-
-Given a PMC, get a TclDict from it, converting as needed.
-
-=cut
-
-.sub toDict :multi(TclDict)
-  .param pmc dict
-  .prof('_tcl;toDict :multi(TclDict)')
-  .return(dict)
-.end
-
-.sub toDict :multi(TclList)
-  .param pmc list
-
-  .prof('_tcl;toDict :multi(TclList)')
-  $P0 = listToDict(list)
-  copy list, $P0
-
-  .return(list)
-.end
-
-.sub toDict :multi(_)
-  .param pmc value
-
-  .prof('_tcl;toDict :multi(_)')
-  $P0 = stringToDict(value)
-  copy value, $P0
-
-  .return(value)
-.end
-
-
 =head2 _Tcl::toNumber
 
 Given a PMC, get a number from it.
