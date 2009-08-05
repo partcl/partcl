@@ -3,3 +3,5 @@
 /*.h
 /*.bundle
 /*.dll
+/*.o
+/*.so
