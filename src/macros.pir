@@ -46,8 +46,8 @@ Simplistic Try that just eats an exception.
 .macro Try(try_code)
   push_eh .$catch_label
     .try_code
-    goto .$finally_label
   pop_eh
+  goto .$finally_label
 
 .label $catch_label:
     .catch()
@@ -55,6 +55,27 @@ Simplistic Try that just eats an exception.
 .label $finally_label:
 
 .endm
+
+=head2 TryCatch(try)
+
+Try with Catch block.
+
+=cut
+
+.macro TryCatch (try_code, catch_code)
+  push_eh .$catch_label
+    .try_code
+  pop_eh
+  goto .$finally_label
+
+.label $catch_label:
+    .catch()
+    .catch_code
+
+.label $finally_label:
+
+.endm
+
 
 =head1 math macros
 
