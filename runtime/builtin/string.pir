@@ -610,7 +610,14 @@
         the_cclass = .CCLASS_ALPHABETIC
         goto cclass_check
     ascii_check:
-        goto bad_args2 # RT #40772:
+        .int(pos, 0)
+	.int(strlen, length the_string)
+	.While(pos < strlen, {
+            $I0 = ord the_string, pos
+	    .If($I0 > 255, { .return(0) })
+	    inc pos
+	})
+        .return(1)
     control_check:
         the_cclass = .CCLASS_CONTROL
         goto cclass_check
