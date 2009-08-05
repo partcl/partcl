@@ -387,16 +387,6 @@ end:
   .return (script)
 .end
 
-.sub 'export'
-  .prof('_tcl;helpers;namespace;export')
-  .return ('')
-.end
-
-.sub 'forget'
-  .prof('_tcl;helpers;namespace;forget')
-  .return ('')
-.end
-
 .sub 'import'
   .param pmc argv
   .prof('_tcl;helpers;namespace;import')
