@@ -17,8 +17,6 @@
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
   .local pmc compileExpr
   compileExpr = get_root_global ['_tcl'], 'compileExpr'
-  .local pmc toBoolean
-  toBoolean = get_root_global ['_tcl'], 'toBoolean'
 
   # coerce arguments to proper types
   .local pmc test
@@ -36,7 +34,7 @@
 
 while_loop:
   $P0 = test()
-  $I0 = toBoolean($P0)
+  $I0 = istrue $P0
   unless $I0 goto while_loop_done
 
   push_eh eh

@@ -118,18 +118,13 @@ empty_string:
 .end
 
 # logical NOT
-.sub 'prefix:!' :multi(String)
+.sub 'prefix:!'
     .param pmc a
 
-    .local pmc toBoolean
-    toBoolean = get_root_global ['_tcl'], 'toBoolean'
-
     push_eh is_string
-      a = toBoolean(a)
+      $I0 = isfalse a
     pop_eh
-
-    $I0 = a
-    $I0 = not $I0
+    
     .return($I0)
 
 is_string:
@@ -139,12 +134,6 @@ is_string:
 
 empty_string:
     die "can't use empty string as operand of \"!\""
-.end
-
-.sub 'prefix:!' :multi(pmc)
-    .param int a
-    $I0 = not a
-    .return ($I0)
 .end
 
 =head2 Infix Operators

@@ -137,10 +137,8 @@ is_string:
 .sub '&bool'
     .param pmc a
 
-    .local pmc toBoolean
-    toBoolean = get_root_global ['_tcl'], 'toBoolean'
-
-     .tailcall toBoolean(a)
+    $I0 = istrue a
+    .return($I0)
 .end
 
 .sub '&ceil'

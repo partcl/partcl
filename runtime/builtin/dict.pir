@@ -197,10 +197,9 @@ bad_args:
   options[1] = 'script'
   options[2] = 'value'
 
-  .local pmc select_option, compileTcl, toBoolean
+  .local pmc select_option, compileTcl
   select_option  = get_root_global ['_tcl'], 'select_option'
   compileTcl  = get_root_global ['_tcl'], 'compileTcl'
-  toBoolean  = get_root_global ['_tcl'], 'toBoolean'
   .local pmc option
   option = shift argv
   option = select_option(options, option, 'filterType')
@@ -279,8 +278,8 @@ script_loop:
   push_eh eh
     $P1 = body_proc()
   pop_eh
-  $P1 = toBoolean($P1)
-  unless $P1 goto script_loop
+  $I0 = istrue $P1
+  unless $I0 goto script_loop
   retval[check_key] = check_value
   goto script_loop
 end_script_loop:

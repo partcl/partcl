@@ -38,13 +38,11 @@
   eh_done.'handle_types'(.CONTROL_BREAK)
   set_addr eh_done, done
 
-  .local pmc toBoolean
-  toBoolean = get_root_global ['_tcl'], 'toBoolean'
   a_start()
 
 loop:
   temp = a_test()
-  $I0 = toBoolean(temp)
+  $I0 = istrue temp
   unless $I0 goto done
   push_eh eh_continue
     a_command()

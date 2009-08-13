@@ -274,6 +274,10 @@ we're subclassing String...
   print self
 .end
 
+.sub 'get_bool' :vtable
+   die "EEK"
+.end
+
 
 # Local Variables:
 #   mode: pir

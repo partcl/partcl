@@ -8,14 +8,11 @@
 
     if argc != 1 goto bad_args
 
-    .local pmc toBoolean
-    toBoolean = get_root_global ['_tcl'], 'toBoolean'
     $P1 = args[0]
     push_eh bad_arg
-        $P1 = toBoolean($P1)
+        $I0 = isfalse $P1
     pop_eh
-    $I0 = $P1
-    $I0 = not $I0
+
     .return($I0)
 
 bad_arg:

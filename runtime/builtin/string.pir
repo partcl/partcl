@@ -573,7 +573,9 @@
 
     no_opts:
         .local string the_string
-        the_string = shift argv
+        .local pmc pmc_string
+        pmc_string = shift argv
+        the_string = pmc_string
 
         if the_string != '' goto not_empty
         $I0 = not strict
@@ -622,20 +624,12 @@
         the_cclass = .CCLASS_CONTROL
         goto cclass_check
     boolean_check:
-        if the_string == 'yes'   goto yep
-        if the_string == 'no'    goto yep
-        if the_string == '1'     goto yep
-        if the_string == '0'     goto yep
-        if the_string == 'true'  goto yep
-        if the_string == 'tru'   goto yep
-        if the_string == 'tr'    goto yep
-        if the_string == 't'     goto yep
-        if the_string == 'false' goto yep
-        if the_string == 'fals'  goto yep
-        if the_string == 'fal'   goto yep
-        if the_string == 'fa'    goto yep
-        if the_string == 'f'     goto yep
-        goto nope
+        .TryCatch({
+            $I0 = istrue pmc_string
+            .return(1)
+	}, {
+            .return(0)
+	})
     digit_check:
         the_cclass = .CCLASS_NUMERIC
         goto cclass_check
@@ -650,14 +644,12 @@
         if $S0 == 'TclInt'   goto yep
         goto nope
     false_check:
-        if the_string == 'no'    goto yep
-        if the_string == '0'     goto yep
-        if the_string == 'false' goto yep
-        if the_string == 'fals'  goto yep
-        if the_string == 'fal'   goto yep
-        if the_string == 'fa'    goto yep
-        if the_string == 'f'     goto yep
-        goto nope
+        .TryCatch({
+            $I0 = isfalse pmc_string
+            .return($I0)
+	}, {
+            .return(0)
+	})
     graph_check:
         the_cclass = .CCLASS_GRAPHICAL
         goto cclass_check
@@ -689,13 +681,12 @@
         the_cclass = .CCLASS_WHITESPACE
         goto cclass_check
     true_check:
-        if the_string == 'yes'  goto yep
-        if the_string == '1'    goto yep
-        if the_string == 'true' goto yep
-        if the_string == 'tru'  goto yep
-        if the_string == 'tr'   goto yep
-        if the_string == 't'    goto yep
-        goto nope
+        .TryCatch({
+            $I0 = istrue pmc_string
+            .return($I0)
+	}, {
+            .return(0)
+	})
     upper_check:
         the_cclass = .CCLASS_UPPERCASE
         goto cclass_check

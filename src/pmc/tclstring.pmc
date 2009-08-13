@@ -38,6 +38,21 @@ pmclass TclString
         pmc_reuse(INTERP, SELF, dynpmc_TclInt, 0);
         SETATTR_Integer_iv(INTERP, SELF, value);
     }
+
+    VTABLE INTVAL get_bool() {
+        PMC    * const _class     = VTABLE_get_class(interp, SELF);
+        STRING * const get_bool   = CONST_STRING(interp, "get_bool");
+
+        /* Get the vtable override for 'get_bool', run that instead. */
+        PMC * const method = Parrot_oo_find_vtable_override_for_class(interp, _class, get_bool);
+
+        if (!PMC_IS_NULL(method)) {
+            return (INTVAL)Parrot_run_meth_fromc_args_reti(interp, method, SELF, get_bool, "I");
+	} else {
+            return -9999; // This should never happen.
+	}
+
+     }
 }
 
 /*

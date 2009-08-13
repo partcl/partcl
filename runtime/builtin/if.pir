@@ -88,9 +88,8 @@ arg_else:
 arg_end:
 
     # now we can do the actual evaluation
-    .local pmc compileTcl, toBoolean
+    .local pmc compileTcl
     compileTcl  = get_root_global ['_tcl'], 'compileTcl'
-    toBoolean = get_root_global ['_tcl'], 'toBoolean'
 
     .local pmc    cond
     .local string code
@@ -100,7 +99,7 @@ arg_end:
 
 loop:
     $P1 = cond()
-    $I1 = toBoolean($P1)
+    $I1 = istrue $P1
     unless $I1 goto next
     $P0 = compileTcl(code, 'ns'=>ns)
     .tailcall $P0()

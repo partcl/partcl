@@ -298,11 +298,9 @@ transform past (boolean) {
     past.'set_node'(node)
     
     $S0 = node
-    $P0 = new 'TclConst'
-    $P0 = $S0
-    $S0 = $P0
+
     past['value'] = $S0
-    past['class'] = "TclString"
+    past['class'] = 'TclString'
     .return(past)
 }
 

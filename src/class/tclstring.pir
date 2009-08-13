@@ -1,6 +1,6 @@
 =head1 TclString
 
-Contains overrides for our TclString type 
+Contains overrides for our TclString type
 
 =cut
 
@@ -43,12 +43,12 @@ Convert to a List.
    # Trim any whitespace before a word
 eat_space:
     inc pos
-    $I0 = is_cclass .CCLASS_WHITESPACE, str, pos # 
+    $I0 = is_cclass .CCLASS_WHITESPACE, str, pos
     if $I0 goto eat_space
 
     if pos >= len goto done
 
-    character = ord str, pos 
+    character = ord str, pos
     if character != 123 goto check_char_quote
     depth = 1
     peek_pos = pos
@@ -180,7 +180,7 @@ found_close_quote:
     element_pmc = root_new ['parrot'; 'TclConst']
     element_pmc = element_string
     push retval, element_pmc
- 
+
     pos = peek_pos + 1
     goto eat_space
 
@@ -196,4 +196,63 @@ done:
     # convert to list, then to dict.
     $P1 = self.'getListValue'()
     .tailcall $P1.'getDictValue'()
+.end
+
+=head2 get_bool
+
+Given a PMC, return its boolean value if it's a valid boolean. Otherwise,
+throw an exception.
+
+=cut
+
+.sub 'get_bool' :vtable
+    .prof('TclString;get_bool')
+
+    .str(self_s, self)
+    .int(self_len, length self_s)
+
+    .local pmc truth
+    truth = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'true_s'
+
+    .local pmc match
+    match = truth(self_s, 'grammar'=>'TclExpr::Grammar')
+
+    unless match goto check_false
+    $I0 = match.'to'()
+    $I0 -= self_len
+    if $I0 goto check_false
+
+    .return(1)
+
+
+check_false:
+
+    .local pmc falsehood
+    falsehood = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'false_s'
+
+    match = falsehood(self_s, 'grammar'=>'TclExpr::Grammar')
+
+    unless match goto check_numeric
+    $I0 = match.'to'()
+    $I0 -= self_len
+    if $I0 goto check_numeric
+
+    .return(0)
+
+check_numeric:
+
+    .TryCatch({
+        .local pmc toNumber
+        toNumber = get_root_global [ '_tcl' ], 'toNumber'
+
+        $P1 = toNumber(self_s)
+        .If($P1, {
+            .return (1)
+        })
+        .return(0)
+    },{
+        $S0 = 'expected boolean value but got "' . self_s
+        $S0 = $S0 . '"'
+        die $S0
+    })
 .end
