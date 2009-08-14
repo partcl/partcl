@@ -20,12 +20,8 @@ pmclass TclInt
 {
 
     void class_init() {
-        if (pass) {
-            dynpmc_TclFloat  = pmc_type(INTERP,
-                CONST_STRING(INTERP, "TclFloat"));
-            dynpmc_TclString  = pmc_type(INTERP,
-                CONST_STRING(INTERP, "TclString"));
-        }
+        dynpmc_TclFloat  = pmc_type(INTERP, CONST_STRING(INTERP, "TclFloat"));
+        dynpmc_TclString = pmc_type(INTERP, CONST_STRING(INTERP, "TclString"));
     }
 
     void set_number_native(FLOATVAL value) {
