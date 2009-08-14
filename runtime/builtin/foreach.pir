@@ -40,8 +40,17 @@ arg_loop:
   .local pmc varList, list
   varList = shift iterator
   varList = varList.'getListValue'()
+
   list    = shift iterator
-  list    = list.'getListValue'()
+
+  # XXX This shouldn't be necessary; r578 somehow caused this to start
+  #     receiving .Sub's, which it shouldn't get. This bandaid lets us
+  #     run the spectests again.
+  .TryCatch({
+    list    = list.'getListValue'()
+  }, {
+    list = root_new ['parrot'; 'TclList']
+    })
 
   $I0 = elements varList
   if $I0 == 0 goto bad_varlist
