@@ -166,7 +166,6 @@ end_preamble:
 do_wrapper:
     pir.'emit'(<<"END_PIR", namespace, result, ret)
 .HLL 'tcl'
-.loadlib 'tcl_ops'
 .namespace %0
 .include 'src/macros.pir'
 .sub '_anon' :anon

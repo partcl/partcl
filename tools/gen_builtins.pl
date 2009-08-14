@@ -19,7 +19,6 @@ my @static_cmds = pir_cmds_in_dir($static_dir);
 
 print <<'END_PIR';
 .HLL 'tcl'
-.loadlib 'tcl_group'
 END_PIR
 
 print "  .include '$static_dir/$_.pir'\n" for @static_cmds;
