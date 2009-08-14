@@ -22,7 +22,7 @@ use Parrot::Config;
 
 use IO::Handle;
 
-my $svn_info  = `svn info .`;
+my $svn_info = `svn info .` || `git svn info README`;
 $svn_info =~ /Revision:\s+(\d+)/sm;
 my $revision = $1;
 
