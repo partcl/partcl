@@ -11,6 +11,7 @@ use Parrot::Test::Tcl;
 use Test::More tests => 7;
 
 pir_output_is( <<'CODE', <<'OUTPUT', "test tcl compiler, verify double call works" );
+.loadlib 'tcl_group'
   .sub main :main
      load_bytecode "runtime/tcllib.pbc"
      .local pmc tcl_compiler,compiled_sub
@@ -61,6 +62,7 @@ hello
 OUTPUT
 
 pir_output_is( <<'CODE', <<'OUTPUT', "invoke argless tcl proc from PIR" );
+.loadlib 'tcl_group'
 .sub _main :main
   load_bytecode "runtime/tcllib.pbc"
   $S1 = 'proc hey {} { puts 11 }; hey; '
