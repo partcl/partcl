@@ -372,6 +372,11 @@ end:
 
   .prof('_tcl;helpers;namespace;code')
 
+  .int(argc,argv)
+  .If(argc!=1, {
+      die 'wrong # args: should be "namespace code arg"' 
+  })
+
   .local string script, current_ns, retval
   script = shift argv
 
