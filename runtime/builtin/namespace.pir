@@ -205,8 +205,7 @@ doesnt_exist:
       .return ($S1)
   })
 
-  $S0 = argv[0]
-  .return($S0)
+  .return('')
 .end
 
 .sub 'tail'
