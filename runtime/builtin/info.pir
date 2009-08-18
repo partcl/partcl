@@ -282,33 +282,55 @@ bad_args:
 
 .sub 'commands'
     .param pmc argv
+
     .prof('_tcl;helpers;info;commands')
 
     .local int argc
     argc = elements argv
     if argc > 1 goto bad_args
-    .local pmc matching
-    null matching
-    if argc ==0 goto done_setup
-
-    $P1 = compreg 'Tcl::Glob'
-    .local string pattern
-    pattern = argv[0]
-
-    # cheat and just remove a leading "::" for now
-    $S0 = substr pattern, 0, 2
-    if $S0 != "::" goto create_glob
-    $S0 = substr pattern, 0, 2, ''
-
-  create_glob:
-    matching = $P1.'compile'(pattern)
-
-  done_setup:
-    .local pmc result
-    result = root_new ['parrot'; 'TclList']
+    .null(matching)
 
     .local pmc ns
     ns = get_root_global 'tcl'
+
+    .str(prefix, "")
+
+    .If(argc, {
+        $P1 = compreg 'Tcl::Glob'
+        .local string pattern
+        pattern = argv[0]
+
+        .local pmc splitNamespace
+        splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
+
+        .local pmc ns_a
+        ns_a = splitNamespace(pattern)
+
+        pattern = pop ns_a
+
+        $I0 = elements ns_a
+        .If($I0, {
+            prefix = join '::', ns_a
+            prefix = '::' . prefix
+            prefix = prefix . '::'
+        })
+  
+	.int(ns_size, elements ns_a)
+        .If (ns_size, {
+            .pmc(iterator, iter ns_a)
+            .While(iterator, {
+                .str(key, {shift iterator})
+                ns = ns[key]
+            })
+        })
+
+        matching = $P1.'compile'(pattern)
+    })
+
+    .local pmc result
+    result = root_new ['parrot'; 'TclList']
+
+    if null ns goto iter_loop_end
 
     .local pmc iterator
     iterator = iter ns
@@ -322,6 +344,7 @@ bad_args:
      $P2 = matching($S1)
      unless $P2 goto iter_loop
   add_result:
+     $S1 = prefix . $S1
      push result, $S1
      goto iter_loop
   iter_loop_end:
