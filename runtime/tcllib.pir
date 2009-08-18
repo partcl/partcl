@@ -171,19 +171,6 @@ got_platform:
   $P1 = box 0
   set_root_global ['tcl'], '$tcl_precision', $P1
 
-  # keep track of names of file types.
-  .local pmc filetypes
-  filetypes = new 'TclArray'
-  filetypes[0o060000] = 'blockSpecial'
-  filetypes[0o020000] = 'characterSpecial'
-  filetypes[0o040000] = 'directory'
-  filetypes[0o010000] = 'fifo'
-  filetypes[0o100000] = 'file'
-  filetypes[0o120000] = 'link'
-  filetypes[0o140000] = 'socket'
-
-   set_global 'filetypes', filetypes
-
    .local pmc binary_types
    binary_types = new 'TclArray'
    binary_types['a'] = 1

@@ -10,6 +10,21 @@
     .return(opts)
 .end
 
+
+.sub 'file_types' :anon :immediate
+    .local pmc filetypes
+    filetypes = new 'Hash'
+    filetypes[0o060000] = 'blockSpecial'
+    filetypes[0o020000] = 'characterSpecial'
+    filetypes[0o040000] = 'directory'
+    filetypes[0o010000] = 'fifo'
+    filetypes[0o100000] = 'file'
+    filetypes[0o120000] = 'link'
+    filetypes[0o140000] = 'socket'
+
+    .return(filetypes)
+.end
+
 .sub '&file'
   .param pmc argv :slurpy
 
@@ -143,7 +158,7 @@ bad_args:
   $I2 = 0o170000   #S_IFMT
   $I3 = $I1 & $I2
 
-  $P4 = get_global 'filetypes'
+  .const 'Sub' $P4 = 'file_types'
   $S1 = $P4[$I3]
   $P3['type'] = $S1
 
@@ -265,7 +280,7 @@ bad_args:
   $I2 = 0o170000   #S_IFMT
   $I3 = $I1 & $I2
 
-  $P4 = get_global 'filetypes'
+  .const 'Sub' $P4 = 'file_types'
   $S1 = $P4[$I3]
   .return ($S1)
 
