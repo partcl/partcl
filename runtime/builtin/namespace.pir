@@ -313,54 +313,59 @@ global_ns:
   })
   if argc != 2 goto iterate
 
+  .local string pattern_s
   .local pmc glob, pattern
   glob        = compreg 'Tcl::Glob'
-  pattern     = argv[1]
-  pattern     = glob.'compile'(pattern)
+  pattern_s   = argv[1]
+  pattern     = glob.'compile'(pattern_s)
   has_pattern = 1
 
 iterate:
   .local pmc list
   list = root_new ['parrot'; 'TclList']
 
-  .local pmc splitNamespace, ns, ns_name
-  .local string name
+  .local pmc splitNamespace
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
 
-  name = ''
+  .str(name, '')
+
   .If(argc, {
       name = argv[0]
   })
 
+  .local pmc ns, ns_name
   ns_name  = splitNamespace(name, 1)
+
+  .str(prefix,'')
+  $I1 = elements ns_name
+  .If($I1, {
+      prefix = join '::', ns_name
+      prefix .= '::'
+  })
+  prefix = '::' . prefix
 
   unshift ns_name, 'tcl'
   ns = get_root_namespace ns_name
   .If(null ns, {
-      $S0 = argv[0]
-      $S0 = 'unknown namespace "' . $S0
-      $S0 = $S0 . '" in namespace children command'
-      die $S0
+      $S0 = 'unknown namespace "' . name
+      $S0 .= '" in namespace children command'
+      tcl_error $S0
   })
 
   .local pmc iterator
   iterator = iter ns
 loop:
   unless iterator goto end
-  $S0 = shift iterator
-  $P0 = ns[$S0]
+  .str(ns_s, {shift iterator} )
+  $P0 = ns[ns_s]
   $I0 = isa $P0, 'NameSpace'
   unless $I0 goto loop
-  $P0 = $P0.'get_name'()
-  $S0 = shift $P0 # get rid of 'tcl'
-  $S0 = join '::', $P0
-  $S0 = '::' . $S0
-  $P0 = box $S0
   unless has_pattern goto is_namespace
-  $P1 = pattern($P0)
+  $P1 = pattern(ns_s)
   unless $P1 goto loop
 is_namespace:
-  push list, $P0
+  ns_s = prefix . ns_s
+  push list, ns_s
   goto loop
 end:
 
