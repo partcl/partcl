@@ -171,32 +171,6 @@ got_platform:
   $P1 = box 0
   set_root_global ['tcl'], '$tcl_precision', $P1
 
-   .local pmc binary_types
-   binary_types = new 'TclArray'
-   binary_types['a'] = 1
-   binary_types['A'] = 1
-   binary_types['b'] = 1
-   binary_types['B'] = 1
-   binary_types['h'] = 1
-   binary_types['H'] = 1
-   binary_types['c'] = 1
-   binary_types['s'] = 1
-   binary_types['S'] = 1
-   binary_types['i'] = 1
-   binary_types['I'] = 1
-   binary_types['w'] = 1
-   binary_types['W'] = 1
-   binary_types['f'] = 1
-   binary_types['d'] = 1
-   binary_types['x'] = 1
-   binary_types['X'] = 1
-   binary_types['@'] = 1
-
-   set_global 'binary_types', binary_types
-
-  # Eventually, we'll need to register MMD for the various Tcl PMCs
-  # (Presuming we don't do this from the .pmc definitions.)
-
   $P1 = root_new ['parrot'; 'TclList']
   set_global 'info_level', $P1
 
