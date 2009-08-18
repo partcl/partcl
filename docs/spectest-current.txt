@@ -2,7 +2,6 @@ append.test:	Total	37	Passed	33	Skipped	0	Failed	4
 appendComp.test:	Total	40	Passed	32	Skipped	0	Failed	8
 basic.test:	Total	140	Passed	39	Skipped	74	Failed	27
 chan.test:	Total	35	Passed	2	Skipped	0	Failed	33
-cmdIL.test:	Total	122	Passed	71	Skipped	3	Failed	48
 compExpr-old.test:	Total	190	Passed	171	Skipped	4	Failed	15
 compExpr.test:	Total	80	Passed	75	Skipped	0	Failed	5
 concat.test:	Total	9	Passed	9	Skipped	0	Failed	0
@@ -13,7 +12,6 @@ event.test:	Total	64	Passed	4	Skipped	31	Failed	29
 for-old.test:	Total	9	Passed	9	Skipped	0	Failed	0
 for.test:	Total	50	Passed	41	Skipped	0	Failed	9
 foreach.test:	Total	40	Passed	37	Skipped	0	Failed	3
-format.test:	Total	256	Passed	181	Skipped	29	Failed	46
 get.test:	Total	20	Passed	3	Skipped	14	Failed	3
 if-old.test:	Total	33	Passed	33	Skipped	0	Failed	0
 if.test:	Total	73	Passed	64	Skipped	0	Failed	9
@@ -32,7 +30,6 @@ load.test:	Total	26	Passed	2	Skipped	10	Failed	14
 lrange.test:	Total	22	Passed	22	Skipped	0	Failed	0
 lrepeat.test:	Total	10	Passed	10	Skipped	0	Failed	0
 lreplace.test:	Total	34	Passed	33	Skipped	0	Failed	1
-mathop.test:	Total	329	Passed	158	Skipped	0	Failed	171
 namespace-old.test:	Total	126	Passed	82	Skipped	0	Failed	44
 package.test:	Total	16	Passed	6	Skipped	0	Failed	10
 parseOld.test:	Total	179	Passed	87	Skipped	21	Failed	71
@@ -52,6 +49,8 @@ switch.test:	Total	108	Passed	66	Skipped	0	Failed	42
 timer.test:	Total	54	Passed	8	Skipped	0	Failed	46
 unknown.test:	Total	7	Passed	6	Skipped	0	Failed	1
 unload.test:	Total	26	Passed	1	Skipped	0	Failed	25
-util.test:	Total	290	Passed	121	Skipped	128	Failed	41
+upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
+utf.test:	Total	114	Passed	82	Skipped	12	Failed	20
 var.test:	Total	84	Passed	37	Skipped	17	Failed	30
+while-old.test:	Total	15	Passed	14	Skipped	0	Failed	1
 while.test:	Total	46	Passed	42	Skipped	0	Failed	4
