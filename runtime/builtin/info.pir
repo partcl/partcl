@@ -352,8 +352,7 @@ bad_args:
     .return(result)
 
   bad_args:
-    die 'wrong # args: should be "info commands ?pattern?"'
-
+    tcl_error 'wrong # args: should be "info commands ?pattern?"'
 .end
 
 .sub 'exists'
