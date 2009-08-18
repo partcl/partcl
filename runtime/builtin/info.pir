@@ -526,40 +526,71 @@ find_info_level:
   .param pmc argv
   .prof('_tcl;helpers;info;globals')
 
-  .local int argc
-  argc = elements argv
-  if argc > 1 goto bad_args
+  .int(argc, {elements argv})
+  .If(argc >1, {
+    tcl_error 'wrong # args: should be "info globals ?pattern?"'
+  })
 
-  .local pmc ns,iterator,retval
-
+  .local pmc globber
+  globber = compreg 'Tcl::Glob'
+  
+  .str(pattern,'$*')
+  .local pmc ns
   ns = get_root_namespace ['tcl']
-  iterator = iter ns
+
+  .str(prefix,'::')
+  .If(argc==1, {
+    pattern = shift argv
+
+    .local pmc splitNamespace
+    splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
+ 
+    .local pmc ns_a
+    ns_a = splitNamespace(pattern)
+    pattern = pop ns_a
+  
+    .int(ns_len, {elements ns_a})
+    .If(ns_len, {
+        prefix = join '::', ns_a
+        prefix = prefix . '::'
+    })
+    prefix = '::' . prefix
+
+    .While(ns_len, {
+      $S0 = shift ns_a
+      ns = ns[$S0]
+      ns_len = elements ns_a
+    })
+
+    pattern = '$' . pattern
+  })
+
+  .local pmc retval
   retval = root_new ['parrot'; 'TclList']
 
-  .local pmc globber,rule,match
-  globber = compreg 'Tcl::Glob'
-  if argc == 1 goto got_glob
-  $S1 = "$*"
-  goto compile
-got_glob:
-  $S1 = argv[0]
-  $S1 = '$' . $S1
-compile:
-  rule = globber.'compile'($S1)
-loop:
-  unless iterator goto end
-  $S0 = shift iterator
-  $P0 = ns[$S0]
-  match = rule($S0)
-  unless match goto loop
-  $S1 = substr $S0, 1
-  push retval, $S1
-  goto loop
-end:
+  .If(null ns, {
+      .return(retval)
+  })
+
+  .local pmc rule
+  rule = globber.'compile'(pattern)
+
+  .local pmc iterator
+  iterator = iter ns
+
+  .local pmc match
+  .While(iterator, {
+    .str(key, { shift iterator })
+    match = rule(key)
+    .If(match, {
+      # match, strip off leading $
+      $S1 = substr key, 1
+      $S1 = prefix . $S1
+      push retval, $S1
+    })
+  })
   .return(retval)
 
-bad_args:
-  die 'wrong # args: should be "info globals ?pattern?"'
 .end
 
 .sub 'script'
