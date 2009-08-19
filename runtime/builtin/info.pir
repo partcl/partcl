@@ -538,7 +538,7 @@ find_info_level:
   .local pmc ns
   ns = get_root_namespace ['tcl']
 
-  .str(prefix,'::')
+  .str(prefix,'')
   .If(argc==1, {
     pattern = shift argv
 
@@ -552,9 +552,9 @@ find_info_level:
     .int(ns_len, {elements ns_a})
     .If(ns_len, {
         prefix = join '::', ns_a
+        prefix = '::' . prefix
         prefix = prefix . '::'
     })
-    prefix = '::' . prefix
 
     .While(ns_len, {
       $S0 = shift ns_a
