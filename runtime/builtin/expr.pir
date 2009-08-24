@@ -2,29 +2,25 @@
 .namespace []
 
 .sub '&expr'
-  .param pmc argv :slurpy
+    .param pmc argv :slurpy
 
-  .local int argc
+    .int(argc, {elements argv})
+    .Unless(argc, {
+        die 'wrong # args: should be "expr arg ?arg ...?"'
+    })
 
-  .local pmc compileExpr
-  compileExpr = get_root_global ['_tcl'], 'compileExpr'
+    .local pmc compileExpr
+    compileExpr = get_root_global ['_tcl'], 'compileExpr'
 
-  argc = elements argv
-  unless argc goto no_args
+    .local string expr
+    expr = join ' ', argv
 
-  .local string expr
-  expr = join ' ', argv
+    .pmc(interp, getinterp)
+    .pmc(ns, {interp['namespace'; 1]})
 
-  .local pmc ns, interp
-  interp = getinterp
-  ns  = interp['namespace'; 1]
-
-  .local pmc runnableExpr
-  runnableExpr = compileExpr(expr, 'ns'=>ns)
-  .tailcall runnableExpr()
-
-no_args:
-  die 'wrong # args: should be "expr arg ?arg ...?"'
+    .local pmc runnableExpr
+    runnableExpr = compileExpr(expr, 'ns'=>ns)
+    .tailcall runnableExpr()
 .end
 
 # Local Variables:

@@ -2,66 +2,60 @@
 .namespace []
 
 .sub '&for'
-  .param pmc argv :slurpy
+    .param pmc argv :slurpy
 
-  .local int argc
-  argc = elements argv
-  if argc != 4 goto bad_args
-  # get necessary conversion subs
-  .local pmc compileTcl
-  compileTcl = get_root_global ['_tcl'], 'compileTcl'
-  .local pmc compileExpr
-  compileExpr = get_root_global ['_tcl'], 'compileExpr'
+    .int(argc, {elements argv})
+    .If(argc !=4, {
+        die 'wrong # args: should be "for start test next command"'
+    })
 
-  .local pmc a_start
-  a_start = argv[0]
-  a_start = compileTcl(a_start)
-  .local pmc a_test
-  a_test = argv[1]
-  a_test = compileExpr(a_test)
-  .local pmc a_next
-  a_next = argv[2]
-  a_next = compileTcl(a_next)
-  .local pmc a_command
-  a_command = argv[3]
-  a_command = compileTcl(a_command)
-  .local pmc temp
+    # get necessary conversion subs
+    .local pmc compileTcl
+    compileTcl = get_root_global ['_tcl'], 'compileTcl'
+    .local pmc compileExpr
+    compileExpr = get_root_global ['_tcl'], 'compileExpr'
 
-  .local pmc eh_continue
-  eh_continue = root_new ['parrot'; 'ExceptionHandler']
-  eh_continue.'handle_types'(.CONTROL_BREAK,.CONTROL_CONTINUE)
-  set_addr eh_continue, command_exception
+    .pmc(start_block, argv[0])
+    start_block = compileTcl(start_block)
+    .pmc(test_block, argv[1])
+    test_block = compileExpr(test_block)
+    .pmc(next_block, argv[2])
+    next_block = compileTcl(next_block)
+    .pmc(body_block, argv[3])
+    body_block = compileTcl(body_block)
 
-  .local pmc eh_done
-  eh_done = root_new ['parrot'; 'ExceptionHandler']
-  eh_done.'handle_types'(.CONTROL_BREAK)
-  set_addr eh_done, done
+    .local pmc eh_continue
+    eh_continue = root_new ['parrot'; 'ExceptionHandler']
+    eh_continue.'handle_types'(.CONTROL_BREAK,.CONTROL_CONTINUE)
+    set_addr eh_continue, command_exception
 
-  a_start()
+    .local pmc eh_done
+    eh_done = root_new ['parrot'; 'ExceptionHandler']
+    eh_done.'handle_types'(.CONTROL_BREAK)
+    set_addr eh_done, done
+
+    start_block()
 
 loop:
-  temp = a_test()
-  $I0 = istrue temp
-  unless $I0 goto done
-  push_eh eh_continue
-    a_command()
-  pop_eh
+    .pmc(test_result, {test_block()})
+    unless test_result goto done
+    push_eh eh_continue
+        body_block()
+    pop_eh
 continue:
-  push_eh eh_done
-    a_next()
-  pop_eh
-  goto loop
+    push_eh eh_done
+        next_block()
+    pop_eh
+    goto loop
 
 command_exception:
-  .catch()
-  .get_return_code($I0)
-  if $I0 == .CONTROL_CONTINUE goto continue
-  # .CONTROL_BREAK fallthrough
+    .catch()
+    .get_return_code($I0)
+    if $I0 == .CONTROL_CONTINUE goto continue
+    # .CONTROL_BREAK fallthrough
 
 done:
-  .return('')
-bad_args:
-  die 'wrong # args: should be "for start test next command"'
+    .return('')
 .end
 
 # Local Variables:
