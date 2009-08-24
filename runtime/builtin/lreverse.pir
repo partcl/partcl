@@ -3,9 +3,8 @@
 
 .sub '&lreverse'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc != 1 goto bad_args
 
   $P0 = argv[0]

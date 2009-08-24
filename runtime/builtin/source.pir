@@ -3,9 +3,8 @@
 
 .sub '&source'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc != 1 goto bad_args
 
   .local string filename

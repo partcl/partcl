@@ -3,9 +3,7 @@
 
 .sub '&catch'
   .param pmc argv :slurpy
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   .local int retval
   .local pmc code_retval, ns

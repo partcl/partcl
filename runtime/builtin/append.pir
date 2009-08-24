@@ -3,9 +3,7 @@
 
 .sub '&append'
     .param pmc argv :slurpy
-
-    .local int argc
-    argc = elements argv
+    .argc()
 
     .local pmc readVar
     readVar = get_root_global ['_tcl'], 'readVar'

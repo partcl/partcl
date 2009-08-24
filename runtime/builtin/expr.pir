@@ -3,8 +3,8 @@
 
 .sub '&expr'
     .param pmc argv :slurpy
+    .argc()
 
-    .int(argc, {elements argv})
     .Unless(argc, {
         die 'wrong # args: should be "expr arg ?arg ...?"'
     })

@@ -25,9 +25,7 @@
 
 .sub '&file'
   .param pmc argv :slurpy
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc == 0 goto few_args
 
@@ -68,9 +66,8 @@ few_args:
 
 .sub 'join'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc == 0 goto bad_args
 
   .local string dirsep
@@ -111,9 +108,7 @@ bad_args:
 
 .sub 'stat'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 2 goto bad_args
 
@@ -178,9 +173,7 @@ bad_args:
 
 .sub 'isdirectory'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 1 goto bad_args
 
@@ -216,9 +209,7 @@ bad_args:
 
 .sub 'isfile'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 1 goto bad_args
 
@@ -254,9 +245,7 @@ bad_args:
 
 .sub 'type'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 1 goto bad_args
 
@@ -289,9 +278,7 @@ bad_args:
 
 .sub 'size'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 1 goto bad_args
 
@@ -318,9 +305,7 @@ bad_args:
 
 .sub 'atime'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 1 goto bad_args
 
@@ -347,9 +332,7 @@ bad_args:
 
 .sub 'mtime'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 1 goto bad_args
 
@@ -377,9 +360,8 @@ bad_args:
 # RT#40722: needs windows OS testing
 .sub 'dirname'
     .param pmc argv
+    .argc()
 
-    .local int argc
-    argc = elements argv
     if argc != 1 goto bad_args
 
     .local string filename
@@ -427,8 +409,8 @@ bad_args:
 # RT#40723: Stub (unixy)
 .sub 'tail'
   .param pmc argv
-  .local int argc
-  argc = elements argv
+  .argc()
+
   if argc != 1 goto bad_args
   $S0 = argv[0]
   if $S0 == '' goto whole
@@ -477,9 +459,8 @@ bad_args:
 
 .sub 'exists'
     .param pmc argv
+    .argc()
 
-    .local int argc
-    argc = elements argv
     if argc != 1 goto badargs
 
     .local pmc os
@@ -507,9 +488,8 @@ badargs:
 
 .sub 'rootname'
     .param pmc argv
-    .local int argc
+    .argc()
 
-    argc = elements argv
     if argc != 1 goto bad_args
 
     .local string filename
@@ -539,10 +519,9 @@ done:
 
 .sub 'extension'
     .param pmc argv
-    .local int argc
+    .argc()
 
     # check if filename arg exists
-    argc = elements argv
     if argc != 1 goto bad_args
 
     # get our filename
@@ -570,8 +549,7 @@ done:
 # XXX: Stub
 .sub 'owned'
   .param pmc argv
-  .local int argc
-  argc = elements argv
+  .argc()
   if argc != 1 goto bad_args
   .return(0)
 bad_args:
@@ -587,8 +565,7 @@ bad_args:
 # XXX: Stub
 .sub 'volumes'
   .param pmc argv
-  .local int argc
-  argc = elements argv
+  .argc()
   if argc != 0 goto bad_args
 
   .return('/')
@@ -601,10 +578,9 @@ bad_args:
 
 .sub 'executable'
     .param pmc argv
-    .local int argc
+    .argc()
 
     # check if filename arg exists
-    argc = elements argv
     if argc != 1 goto bad_args
 
     .local string filename
@@ -655,10 +631,9 @@ bad_args:
 
 .sub 'split'
     .param pmc argv
-    .local int argc
+    .argc()
 
     # check if filename arg exists
-    argc = elements argv
     if argc != 1 goto bad_args
 
     .local string filename

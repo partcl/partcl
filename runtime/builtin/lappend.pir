@@ -3,11 +3,10 @@
 
 .sub '&lappend'
   .param pmc argv :slurpy
+  .argc()
 
   .local pmc value, retval
   .local int return_type
-  .local int argc
-  argc = elements argv
   if argc == 0 goto error
 
   .local string listname

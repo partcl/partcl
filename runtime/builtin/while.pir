@@ -3,8 +3,8 @@
 
 .sub '&while'
     .param pmc argv :slurpy
+    .argc()
 
-    .int(argc, {elements argv})
     .If(argc != 2, {
         die 'wrong # args: should be "while test command"'
     })

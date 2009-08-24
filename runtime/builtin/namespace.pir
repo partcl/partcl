@@ -34,8 +34,8 @@ END_PIR
 
 .sub '&namespace'
     .param pmc argv :slurpy
+    .argc()
 
-    .int(argc, elements argv)
     .Unless(argc, {
         die 'wrong # args: should be "namespace subcommand ?arg ...?"'
     })
@@ -68,9 +68,7 @@ bad_args:
 
 .sub 'current'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   .If(argc, {
       die 'wrong # args: should be "namespace current"'
@@ -86,9 +84,7 @@ bad_args:
 
 .sub 'delete'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   # no arg delete does nothing
   .Unless(argc, {
@@ -125,9 +121,8 @@ return:
 
 .sub 'exists'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   .If(argc != 1, {
       die 'wrong # args: should be "namespace exists name"'
   })
@@ -170,9 +165,7 @@ doesnt_exist:
 
 .sub 'qualifiers'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   .If(argc != 1, {
       die 'wrong # args: should be "namespace qualifiers string"'
@@ -195,9 +188,8 @@ doesnt_exist:
 
 .sub 'tail'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   .If(argc !=1, {
       die 'wrong # args: should be "namespace tail string"'
   })
@@ -220,9 +212,8 @@ doesnt_exist:
 
 .sub 'eval'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   .If(argc < 2, {
       die 'wrong # args: should be "namespace eval name arg ?arg...?"'
   })
@@ -280,12 +271,11 @@ global_ns:
 
 .sub 'children'
   .param pmc argv
+  .argc()
 
   .local int has_pattern
   has_pattern = 0
-
-  .local int argc
-  argc = elements argv
+ 
   .If(argc > 2, {
       die 'wrong # args: should be "namespace children ?name? ?pattern?"'
   })
@@ -352,8 +342,8 @@ end:
 
 .sub 'code'
   .param pmc argv
+  .argc()
 
-  .int(argc,argv)
   .If(argc!=1, {
       die 'wrong # args: should be "namespace code arg"' 
   })
@@ -375,8 +365,8 @@ end:
 
 .sub 'import'
   .param pmc argv
+  .argc()
 
-  .local int argc
   argc = argv
   if argc == 0 goto done
   # ignore -force for now (assume it)
@@ -462,9 +452,7 @@ done:
 
 .sub 'parent'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   .str(name, '')
 

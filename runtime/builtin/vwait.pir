@@ -2,10 +2,8 @@
 .namespace []
 
 .sub '&vwait'
-    .param pmc args :slurpy
-
-    .local int argc
-    argc = elements args
+    .param pmc argv :slurpy
+    .argc()
 
     if argc != 1 goto badargs
     .return('')

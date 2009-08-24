@@ -3,14 +3,14 @@
 
 .sub '&lsort'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int return_type, argc
+  if argc == 0 goto wrong_args
+
+  .local int return_type
   .local pmc retval
   .local pmc compare
   .local pmc sort
-
-  argc = elements argv
-  if argc == 0 goto wrong_args
 
   compare = get_root_global ['_tcl';'helpers';'lsort'], 'ascii'
   sort    = get_root_global ['_tcl';'helpers';'lsort'], 'sort'

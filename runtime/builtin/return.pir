@@ -8,8 +8,7 @@
     argv_bkp = clone argv
 
 do_over:
-    .local int argc
-    argc = elements argv
+    .argc()
 
     .local pmc message
     message = box ''

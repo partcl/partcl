@@ -10,8 +10,7 @@
 
 .sub '&array'
     .param pmc argv :slurpy
-
-    .int(argc, elements argv)
+    .argc()
 
     .If(argc<2, {
         die 'wrong # args: should be "array option arrayName ?arg ...?"'

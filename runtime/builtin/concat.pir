@@ -3,9 +3,7 @@
 
 .sub '&concat'
   .param pmc argv :slurpy
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   .local string retval
   retval = ''

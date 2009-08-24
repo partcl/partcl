@@ -13,7 +13,7 @@
 .include 'src/macros.pir'
 
 .macro set_tcl_argv()
-  argc = argv # update
+  .argc()
   .local pmc tcl_argv
   tcl_argv = new 'TclList'
   .local int ii,jj
@@ -37,7 +37,7 @@
 
   .local pmc retval
   .local string mode,contents,filename
-  .local int argc,retcode
+  .local int retcode
 
   .local pmc tcl_interactive
   tcl_interactive = box 0
@@ -59,7 +59,7 @@
 
   if execute goto oneliner
 
-  argc = argv
+  .argc()
   if argc >0 goto open_file
 
   tcl_interactive = 1

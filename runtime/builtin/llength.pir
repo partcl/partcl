@@ -3,10 +3,7 @@
 
 .sub '&llength'
   .param pmc argv :slurpy
-
-  # usage
-  .local int argc
-  argc = elements argv
+  .argc()
   if argc != 1 goto bad_args
 
   

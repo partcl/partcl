@@ -11,11 +11,9 @@
 
 .sub '&encoding'
   .param pmc argv :slurpy
-
+  .argc()
   .local pmc retval
 
-  .local int argc
-  argc = elements argv
   unless argc goto no_args
 
   .local string subcommand_name
@@ -50,9 +48,7 @@ no_args:
 
 .sub 'convertfrom'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc == 0 goto bad_args
   if argc > 2  goto bad_args
@@ -65,9 +61,7 @@ bad_args:
 
 .sub 'convertto'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc == 0 goto bad_args
   if argc > 2  goto bad_args
@@ -80,9 +74,7 @@ bad_args:
 
 .sub 'dirs'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc > 1  goto bad_args
 
@@ -94,9 +86,7 @@ bad_args:
 
 .sub 'names'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 0 goto bad_args
 
@@ -108,9 +98,7 @@ bad_args:
 
 .sub 'system'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc > 1  goto bad_args
 

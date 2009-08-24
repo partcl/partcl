@@ -3,9 +3,7 @@
 
 .sub '&proc'
   .param pmc argv :slurpy
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 3 goto bad_args
 
@@ -53,7 +51,7 @@ create:
   code.'emit'(<<'END_PIR', name, namespace)
 .namespace %1
 .sub '' :anon
-  .param pmc args :slurpy
+  .param pmc argv :slurpy
 
   .local pmc call_chain, lexpad
   call_chain = get_root_global ['_tcl'], 'call_chain'
@@ -63,7 +61,7 @@ create:
   .local pmc info_level
   info_level = get_root_global ['_tcl'], 'info_level'
   $P0 = new 'TclList'
-  assign $P0, args
+  assign $P0, argv
   unshift $P0, '%0'
   unshift info_level, $P0
 END_PIR
@@ -103,7 +101,7 @@ args_loop:
 
   min = i + 1
   args_code.'emit'(<<"END_PIR", $S0)
-    $P1 = shift args
+    $P1 = shift argv
     lexpad['$%0'] = $P1
 END_PIR
 
@@ -113,8 +111,8 @@ END_PIR
 
 default_arg:
     args_code.'emit'(<<'END_PIR', i, $S0, $S1)
-  unless args goto default_%0
-  $P1 = shift args
+  unless argv goto default_%0
+  $P1 = shift argv
   lexpad['$%1'] = $P1
 END_PIR
 
@@ -148,8 +146,7 @@ args_loop_done:
 store_info:
 
     code .= <<'END_PIR'
-  .local int argc
-  argc = elements args
+  .argc()
 END_PIR
 
   code.'emit'('  if argc < %0 goto BAD_ARGS', min)
@@ -161,7 +158,7 @@ emit_args:
 
   # save anything left into args.
   code.'emit'(<<'END_PIR')
-  lexpad['args'] = args
+  lexpad['args'] = argv
 END_PIR
 
 done_args:

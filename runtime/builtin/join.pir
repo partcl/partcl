@@ -3,10 +3,8 @@
 
 .sub '&join'
   .param pmc argv :slurpy
+  .argc()
 
-  # usage
-  .local int argc
-  argc = elements argv
   if argc < 1 goto bad_args
   if argc > 2 goto bad_args
 

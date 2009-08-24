@@ -3,8 +3,8 @@
 
 .sub '&for'
     .param pmc argv :slurpy
+    .argc()
 
-    .int(argc, {elements argv})
     .If(argc !=4, {
         die 'wrong # args: should be "for start test next command"'
     })

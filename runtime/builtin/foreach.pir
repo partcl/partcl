@@ -3,12 +3,9 @@
 
 .sub '&foreach'
   .param pmc argv :slurpy
+  .argc()
 
   # Requires multiple of 3 args.
-
-  .local int argc
-  argc = elements argv
-
   # Were we passed the right # of arguments? (2n+1)
   if argc < 2 goto bad_args
   $I0 = argc % 2

@@ -1,14 +1,12 @@
 # ::tcl::mathop
 
 .sub '&!'
-    .param pmc args :slurpy
-
-    .local int argc
-    argc = args
+    .param pmc argv :slurpy
+    .argc()
 
     if argc != 1 goto bad_args
 
-    $P1 = args[0]
+    $P1 = argv[0]
     push_eh bad_arg
         $I0 = isfalse $P1
     pop_eh
@@ -28,17 +26,16 @@ bad_args:
 .end
 
 .sub '&+'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-     .local int argc
-     argc = args
      if argc == 0 goto nullary
 
      .local pmc toNumber
      toNumber = get_root_global ['_tcl'], 'toNumber'
 
     .local pmc iterator, arg
-    iterator = iter args
+    iterator = iter argv
     .local pmc result
     result = new 'TclInt'
     result = 0
@@ -72,24 +69,23 @@ empty_string:
 .end
 
 .sub '&-'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-     .local int argc
-     argc = args
      if argc < 1 goto bad_args
 
      .local pmc toNumber
      toNumber = get_root_global ['_tcl'], 'toNumber'
 
      .local pmc result
-     result = shift args
+     result = shift argv
      push_eh bad_arg
          result = toNumber(result)
      pop_eh
      if argc == 1 goto unary
 
     .local pmc iterator, arg
-    iterator = iter args
+    iterator = iter argv
     .local pmc result
 loop_begin:
     unless iterator goto loop_end
@@ -119,17 +115,16 @@ bad_args:
 .end
 
 .sub '&*'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-     .local int argc
-     argc = args
      if argc == 0 goto nullary
 
      .local pmc toNumber
      toNumber = get_root_global ['_tcl'], 'toNumber'
 
     .local pmc iterator, arg
-    iterator = iter args
+    iterator = iter argv
     .local pmc result
     result = new 'TclInt'
     result = 1
@@ -159,24 +154,23 @@ bad_octal_arg:
 .end
 
 .sub '&/'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-     .local int argc
-     argc = args
      if argc < 1 goto bad_args
 
      .local pmc toNumber
      toNumber = get_root_global ['_tcl'], 'toNumber'
 
      .local pmc result
-     result = shift args
+     result = shift argv
      push_eh bad_arg
          result = toNumber(result)
      pop_eh
      if argc == 1 goto unary
 
     .local pmc iterator, arg
-    iterator = iter args
+    iterator = iter argv
     .local pmc result
 loop_begin:
     unless iterator goto loop_end
@@ -208,14 +202,13 @@ bad_args:
 .end
 
 .sub '&%'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-    .local int argc
-    argc = args
     if argc != 2 goto bad_args
     .local pmc a,b
-    a = args[0]
-    b = args[1]
+    a = argv[0]
+    b = argv[1]
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
@@ -256,10 +249,9 @@ bad_args:
 .end
 
 .sub '&**'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-     .local int argc
-     argc = args
      if argc == 0 goto nullary
 
      .local pmc toNumber
@@ -267,7 +259,7 @@ bad_args:
 
     .local pmc result
     result = new 'TclInt'
-    result = shift args
+    result = shift argv
     push_eh bad_arg
         result = toNumber(result)
     pop_eh
@@ -275,7 +267,7 @@ bad_args:
     if argc == 1 goto unary
 
     .local pmc iterator, arg
-    iterator = iter args
+    iterator = iter argv
 loop_begin:
     unless iterator goto loop_end
     arg = shift iterator
@@ -303,10 +295,9 @@ unary:
 .end
 
 .sub '&=='
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-    .local int argc
-    argc = args
     if argc < 2 goto true
 
     .local pmc toNumber
@@ -314,13 +305,13 @@ unary:
 
 
     .local pmc first,cur
-    first = shift args
+    first = shift argv
     push_eh NaN
       first = toNumber(first)
 NaN:
     pop_eh
 
-    $P1 = iter args
+    $P1 = iter argv
 loop:
     unless $P1 goto true
     cur = shift $P1 
@@ -336,16 +327,15 @@ true:
 .end
 
 .sub '&eq'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-    .local int argc
-    argc = args
     if argc < 2 goto true
 
     .local string first,cur
-    first = shift args
+    first = shift argv
 
-    $P1 = iter args
+    $P1 = iter argv
 loop:
     unless $P1 goto true
     cur = shift $P1 
@@ -358,18 +348,17 @@ true:
 
 
 .sub '&!='
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-    .local int argc
-    argc = args
     if argc != 2 goto bad_args
 
     .local pmc toNumber
     toNumber = get_root_global ['_tcl'], 'toNumber'
 
     .local pmc l,r
-    l = shift args
-    r = shift args
+    l = shift argv
+    r = shift argv
     push_eh NaN
       l = toNumber(l)
 NaN:
@@ -389,15 +378,14 @@ bad_args:
 .end
 
 .sub '&ne'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-    .local int argc
-    argc = args
     if argc != 2 goto bad_args
 
     .local pmc l,r
-    l = shift args
-    r = shift args
+    l = shift argv
+    r = shift argv
 
     if l != r goto true
     .return (0)
@@ -409,42 +397,41 @@ bad_args:
 .end
 
 .sub '&<'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
     .return(0)
 .end
 
 .sub '&<='
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
     .return(0)
 .end
 
 .sub '&>'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
     .return(0)
 .end
 
 .sub '&>='
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
     .return(0)
 .end
 
 .sub '&~'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
     .return(0)
 .end
 
 .sub '&&'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-     .local int argc
-     argc = args
      if argc == 0 goto nullary
 
      .local pmc toInt
      toInt = get_root_global ['_tcl'], 'toInteger'
 
     .local pmc iterator, arg
-    iterator = iter args
+    iterator = iter argv
     .local int result
     result = -1
 loop_begin:
@@ -487,17 +474,16 @@ empty_string:
 .end
 
 .sub '&|'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-     .local int argc
-     argc = args
      if argc == 0 goto nullary
 
      .local pmc toInt
      toInt = get_root_global ['_tcl'], 'toInteger'
 
     .local pmc iterator, arg
-    iterator = iter args
+    iterator = iter argv
     .local int result
     result = 0
 loop_begin:
@@ -540,17 +526,16 @@ empty_string:
 .end
 
 .sub '&^'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-     .local int argc
-     argc = args
      if argc == 0 goto nullary
 
      .local pmc toInt
      toInt = get_root_global ['_tcl'], 'toInteger'
 
     .local pmc iterator, arg
-    iterator = iter args
+    iterator = iter argv
     .local int result
     result = 0
 loop_begin:
@@ -593,22 +578,22 @@ empty_string:
 .end
 
 .sub '&<<'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
     .return(0)
 .end
 
 .sub '&>>'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
     .return(0)
 .end
 
 .sub '&in'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
     .return(0)
 .end
 
 .sub '&ni'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
     .return(0)
 .end
 

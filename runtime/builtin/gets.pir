@@ -3,9 +3,8 @@
 
 .sub '&gets'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc == 0 goto bad_args
   if argc > 2  goto bad_args
 

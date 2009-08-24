@@ -3,9 +3,8 @@
 
 .sub '&pwd'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc != 0 goto bad_args
   # get necessary conversion subs
   .local pmc R

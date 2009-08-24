@@ -16,8 +16,8 @@
 
 .sub '&string'
     .param pmc argv :slurpy
+    .argc()
 
-    .int(argc, elements argv)
     .Unless(argc, {
         die 'wrong # args: should be "string subcommand ?argument ...?"'
     })

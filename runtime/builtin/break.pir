@@ -3,8 +3,7 @@
 
 .sub '&break'
     .param pmc argv :slurpy
-
-    .int(argc, elements argv)
+    .argc()
 
     .If (argc !=0, {
         die 'wrong # args: should be "break"'

@@ -11,9 +11,8 @@
 
 .sub '&regexp'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 2 goto badargs
 
     .const 'Sub' options = 'regexp_options'

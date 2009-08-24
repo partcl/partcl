@@ -3,8 +3,8 @@
 
 .sub '&lrange'
     .param pmc argv :slurpy
+    .argc()
 
-    .int (argc, {elements argv})
     .If(argc != 3, {
         die 'wrong # args: should be "lrange list first last"'
     })

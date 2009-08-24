@@ -3,9 +3,7 @@
 
 .sub '&inline'
   .param pmc argv :slurpy
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 2 goto bad_args
 

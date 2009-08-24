@@ -3,11 +3,9 @@
 
 .sub '&open'
   .param pmc argv :slurpy
+  .argc()
 
   .local string fileName, channel_id, access, pir_access
-
-  .local int argc
-  argc = elements argv
 
   if argc == 0 goto error
   if argc  > 3 goto error

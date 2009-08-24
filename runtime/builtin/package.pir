@@ -4,18 +4,17 @@
 # XXX contains only enough for [package require tcltest]
 
 .sub '&package'
-    .param pmc args :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-    .local int argc
-    argc = args
     if argc < 2 goto bad_subcommand
     if argc > 3 goto bad_subcommand
 
 
     .local string subcommand, package_name
-    subcommand = shift args
+    subcommand = shift argv
     if subcommand != 'require' goto check_present
-    package_name = shift args
+    package_name = shift argv
     if package_name != 'tcltest' goto bad_subcommand
     # XXX ignoring optional 3rd arg...
 
@@ -51,7 +50,7 @@ bad_subcommand:
 
 check_present:
    if subcommand != 'present' goto bad_subcommand
-   $S0 = shift args
+   $S0 = shift argv
    $S0 = 'package ' . $S0
    $S0 .= ' is not present'
    die $S0

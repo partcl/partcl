@@ -3,9 +3,7 @@
 
 .sub '&if'
     .param pmc argv :slurpy
-
-    .local int argc
-    argc = elements argv
+    .argc()
 
     .local pmc compileExpr
     compileExpr = get_root_global ['_tcl'], 'compileExpr'

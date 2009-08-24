@@ -3,9 +3,8 @@
 
 .sub '&time'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 1 goto bad_args
   if argc > 2 goto bad_args
   # get necessary conversion subs

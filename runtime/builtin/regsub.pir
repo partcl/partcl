@@ -10,9 +10,8 @@
 
 .sub '&regsub'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 3 goto badargs
 
   .local string expression, target, subSpec, original_target

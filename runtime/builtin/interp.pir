@@ -3,10 +3,9 @@
 
 .sub '&interp'
   .param pmc argv :slurpy
+  .argc()
 
   # XXX just enough to get us through some spec tests.
-  .local int argc
-  argc = argv
   if argc == 0 goto done
   .local string subcommand
   subcommand = shift argv

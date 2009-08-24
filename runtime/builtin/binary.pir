@@ -9,8 +9,8 @@
 
 .sub '&binary'
     .param pmc argv :slurpy
+    .argc()
 
-    .int(argc, elements argv)
     .Unless(argc, {
       die 'wrong # args: should be "binary option ?arg arg ...?"'
     })
@@ -25,7 +25,7 @@
     .local string canonical_subcommand
     canonical_subcommand = select_option(options, subcommand_name)
 
-    .int(argc, elements argv)
+    .argc()
     .If(canonical_subcommand=='format', {
         .Unless(argc, {
             die 'wrong # args: should be "binary format formatString ?arg arg ...?"'

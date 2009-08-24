@@ -10,12 +10,11 @@
 
 .sub '&dict'
   .param pmc argv :slurpy
+  .argc()
+
+  unless argc  goto no_args
 
   .local pmc retval
-
-  .local int argc
-  argc = elements argv
-  unless argc  goto no_args
 
   .local string subcommand_name
   subcommand_name = shift argv
@@ -49,9 +48,8 @@ no_args:
 
 .sub 'append'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 2 goto bad_args
 
   .local pmc read, set
@@ -144,9 +142,8 @@ bad_args:
 
 .sub 'exists'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 2 goto bad_args
 
   .local pmc dictionary
@@ -175,9 +172,8 @@ bad_args:
 
 .sub 'filter'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 2 goto bad_args
 
   .local pmc dictionary
@@ -303,9 +299,8 @@ bad_args:
 
 .sub 'for'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc != 3 goto bad_args
 
   .local pmc set, script
@@ -370,9 +365,8 @@ bad_args:
 
 .sub 'get'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 1 goto bad_args
 
   .local pmc dictionary
@@ -410,9 +404,8 @@ bad_args:
 
 .sub 'incr'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 2 goto bad_args
   if argc > 3 goto bad_args
 
@@ -483,9 +476,8 @@ bad_args:
 # to do this in partcl.
 .sub 'info'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc != 1 goto bad_args
 
   .local pmc dictionary
@@ -501,9 +493,8 @@ bad_args:
 
 .sub 'lappend'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 2 goto bad_args
 
   .local pmc read, set
@@ -564,9 +555,8 @@ bad_args:
 
 .sub 'keys'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 1 goto bad_args
   if argc > 2 goto bad_args
 
@@ -609,9 +599,8 @@ bad_args:
 
 .sub 'merge'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc == 0 goto nothing
 
   .local pmc retval
@@ -645,9 +634,8 @@ nothing:
 
 .sub 'remove'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 1  goto bad_args
 
   .local pmc dictionary
@@ -673,9 +661,8 @@ bad_args:
 
 .sub 'replace'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 1  goto bad_args
   if argc == 2 goto bad_args
 
@@ -709,9 +696,8 @@ bad_args:
 
 .sub 'set'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 3 goto bad_args
 
   .local pmc read, set
@@ -772,9 +758,8 @@ bad_args:
 
 .sub 'size'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc !=1 goto bad_args
 
   .local pmc dictionary
@@ -792,9 +777,8 @@ bad_args:
 
 .sub 'unset'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 2 goto bad_args
 
   .local pmc read, set
@@ -852,9 +836,8 @@ bad_args:
 
 .sub 'update'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 4 goto bad_args
   $I0 = argc % 2
   if $I0 goto bad_args
@@ -932,9 +915,8 @@ bad_args:
 
 .sub 'values'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 1 goto bad_args
   if argc > 2 goto bad_args
 
@@ -977,9 +959,8 @@ bad_args:
 
 .sub 'with'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc ==0  goto bad_args
 
   .local pmc read, set

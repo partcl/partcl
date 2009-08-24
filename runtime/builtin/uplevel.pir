@@ -3,9 +3,8 @@
 
 .sub '&uplevel'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc == 0 goto bad_args
 
   .local pmc compileTcl, getCallLevel

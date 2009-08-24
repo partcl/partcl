@@ -2,10 +2,8 @@
 .namespace []
 
 .sub '&fileevent'
-    .param pmc args :slurpy
-
-    .local int argc
-    argc = elements args
+    .param pmc argv :slurpy
+    .argc()
 
     if argc < 2 goto badargs
     if argc > 3 goto badargs
@@ -16,8 +14,8 @@
 
     .local pmc channel, script
     .local string event
-    channel = args[0]
-    event   = args[1]
+    channel = argv[0]
+    event   = argv[1]
     if event == 'readable' goto readable
     if event == 'writable' goto writable
 
@@ -31,7 +29,7 @@ readable:
     if argc == 2 goto readable_2
 
     .local pmc script
-    script = args[2]
+    script = argv[2]
     script = compileTcl(script)
 
     .local pmc events

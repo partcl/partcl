@@ -3,9 +3,8 @@
 
 .sub '&info'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   unless argc goto bad_args
 
   .local string subcommand_name
@@ -40,9 +39,8 @@ bad_subcommand:
 
 .sub 'args'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc != 1 goto bad_args
 
   .local pmc retval
@@ -81,9 +79,8 @@ bad_args:
 
 .sub 'body'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc != 1 goto bad_args
 
   .local string procname
@@ -117,9 +114,8 @@ bad_args:
 
 .sub 'complete'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc != 1 goto bad_args
 
   .local pmc body
@@ -146,9 +142,8 @@ bad_args:
 
 .sub 'default'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc != 3 goto bad_args
 
   .local pmc retval
@@ -238,9 +233,8 @@ bad_args:
 
 .sub 'functions'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc > 1 goto bad_args
 
   .local pmc mathfunc,iterator,retval
@@ -277,9 +271,8 @@ bad_args:
 
 .sub 'commands'
     .param pmc argv
+    .argc()
 
-    .local int argc
-    argc = elements argv
     if argc > 1 goto bad_args
     .null(matching)
 
@@ -350,9 +343,8 @@ bad_args:
 
 .sub 'exists'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc != 1 goto bad_args
 
   .local string varname
@@ -378,9 +370,7 @@ bad_args:
 #
 .sub 'tclversion'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 0 goto bad_args
 
@@ -399,9 +389,7 @@ bad_args:
 
 .sub 'patchlevel'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 0 goto bad_args
 
@@ -416,9 +404,7 @@ bad_args:
 
 .sub 'library'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc != 0 goto bad_args
 
@@ -437,9 +423,7 @@ bad_args:
 
 .sub 'vars'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc == 0 goto iterate
   if argc > 1  goto bad_args
@@ -475,9 +459,7 @@ get_globals:
 
 .sub 'level'
   .param pmc argv
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc == 0 goto current_level
   if argc == 1 goto find_level
@@ -511,8 +493,8 @@ find_info_level:
 
 .sub 'globals'
   .param pmc argv
+  .argc()
 
-  .int(argc, {elements argv})
   .If(argc >1, {
     tcl_error 'wrong # args: should be "info globals ?pattern?"'
   })
@@ -600,9 +582,8 @@ empty:
 # RT#40741: stub
 .sub 'nameofexecutable'
   .param pmc argv
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc goto bad_args
   $P1 = get_root_global ['_tcl'], 'nameofexecutable'
   .return($P1)

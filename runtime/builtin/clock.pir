@@ -3,9 +3,7 @@
 
 .sub '&clock'
   .param pmc argv :slurpy
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc == 0 goto few_args
 

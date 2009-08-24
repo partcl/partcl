@@ -3,10 +3,8 @@
 
 .sub '&linsert'
   .param pmc argv :slurpy
+  .argc()
 
-  # make sure we have the right # of args
-  .local int argc
-  argc = elements argv
   if argc < 3 goto bad_args
 
   # helper functions

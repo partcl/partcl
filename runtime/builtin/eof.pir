@@ -3,9 +3,7 @@
 
 .sub '&eof'
     .param pmc argv :slurpy
-
-    .local int argc
-    argc = elements argv
+    .argc()
 
     if argc != 1 goto bad_args
 

@@ -17,9 +17,8 @@
     select_switches  = get_root_global ['_tcl'], 'select_switches'
 
     switches = select_switches(options, argv)
+    .argc()
 
-    .local int argc
-    argc = elements argv
     if argc == 0 goto badargs
     if argc > 1  goto badswitch
 

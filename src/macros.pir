@@ -83,6 +83,16 @@ Try with Catch block.
 
 .endm
 
+=head2 .argc
+
+Setup argc.
+
+=cut
+
+.macro argc()
+    .local int argc
+    argc = elements argv
+.endm
 
 =head1 math macros
 

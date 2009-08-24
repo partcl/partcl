@@ -3,9 +3,8 @@
 
 .sub '&format'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc == 0 goto noargs
 
   # XXX sprintf can't handle a unicode format/args; if you pass in a unicode

@@ -3,9 +3,8 @@
 
 .sub '&eval'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   unless argc goto bad_args
 
   .local pmc ns

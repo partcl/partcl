@@ -3,9 +3,8 @@
 
 .sub '&lreplace'
     .param pmc argv :slurpy
+    .argc()
 
-    .local int argc
-    argc = elements argv
     if argc < 3 goto bad_args
 
     .local pmc list, retval, iterator, getIndex

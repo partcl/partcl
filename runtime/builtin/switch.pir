@@ -3,9 +3,7 @@
 
 .sub '&switch'
   .param pmc argv :slurpy
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   .local pmc retval
   .local string mode

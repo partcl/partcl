@@ -3,9 +3,7 @@
 
 .sub '&error'
   .param pmc argv :slurpy
-
-  .local int argc
-  argc = elements argv
+  .argc()
 
   if argc < 1 goto badargs
   if argc > 3 goto badargs

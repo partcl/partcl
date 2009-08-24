@@ -3,8 +3,8 @@
 
 .sub '&apply'
     .param pmc argv :slurpy
+    .argc()
 
-    .int( argc, elements argv)
     .If(argc==0, {
         die 'wrong # args: should be "apply lambdaExpr ?arg1 arg2 ...?"'
     })

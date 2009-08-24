@@ -3,9 +3,8 @@
 
 .sub '&upvar'
   .param pmc argv :slurpy
+  .argc()
 
-  .local int argc
-  argc = elements argv
   if argc < 2 goto bad_args
 
   .local pmc getCallLevel, call_chain
@@ -32,8 +31,8 @@ skip:
   setVar      = get_root_global ['_tcl'], 'setVar'
   findVar = get_root_global ['_tcl'], 'findVar'
 
-  .local int counter, argc
-  argc       = elements argv
+  .argc()
+  .local int counter
   counter    = 0
   .local int difference
   difference = call_level - new_call_level
