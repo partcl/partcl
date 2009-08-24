@@ -284,6 +284,10 @@ nan:
     $I0 = isa b, 'TclFloat'
     if $I0 goto is_float
 
+    .If(b==0, {
+        tcl_error "divide by zero"
+    })
+
     $P0 = new 'TclInt'
     $P0 = mod a, b
     .return($P0)

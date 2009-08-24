@@ -9,7 +9,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 323
+plan 324
 
 # namespace
 namespace eval test { variable x 5 }
@@ -362,6 +362,7 @@ eval_is {expr 0/inf} 0.0 {div by infinity} $TODO
 eval_is {expr 0 < inf} 1 {infinite comparison} $TODO
 
 eval_is {expr 3/0} {divide by zero} {divide by zero}
+eval_is {expr 3%0} {divide by zero} {mod by zero}
 
 eval_is {expr nan} \
   {domain error: argument not in valid range} {NaN lc}
