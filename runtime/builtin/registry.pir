@@ -3,7 +3,6 @@
 
 .sub '&registry'
   .param pmc argv :slurpy
-  .prof('tcl;&registry')
   .return('')
 .end
 

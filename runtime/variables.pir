@@ -15,7 +15,6 @@ other than the default, and multiple interpreters.
 
 .sub readVar
   .param string name
-  .prof('_tcl;readVar')
 
   .local pmc variable
 
@@ -101,7 +100,6 @@ other than the default, and multiple interpreters.
   .param string name
   .param int    depth :named('depth') :optional
 
-  .prof('_tcl;makeVar')
   .local pmc variable
 
   # is this an array?
@@ -175,7 +173,6 @@ other than the default, and multiple interpreters.
   .param string name
   .param pmc value
 
-  .prof('_tcl;setVar')
   .local pmc variable
 
   # Some cases in the code allow a NULL pmc to show up here.
@@ -263,7 +260,6 @@ Gets the actual variable from memory and returns it.
   .param int    isglobal :named('global') :optional
   .param int    depth    :named('depth')  :optional
 
-  .prof('_tcl;findVar')
   .local pmc value, ns
 
   .local int absolute
@@ -364,7 +360,6 @@ Sets the actual variable from memory.
   .param int    isglobal :named('global') :optional
   .param int    depth    :named('depth')  :optional
 
-  .prof('_tcl;storeVar')
   .local pmc ns
 
   $I0 = index name, '::'

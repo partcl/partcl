@@ -2,8 +2,6 @@
 .namespace []
 
 .sub 'subst_options' :anon :immediate
-    .prof('tcl;subst_options')
-
     .local pmc opts
     opts = split ' ', 'nobackslashes nocommands novariables'
 
@@ -12,8 +10,6 @@
 
 .sub '&subst'
     .param pmc argv :slurpy
-
-    .prof('tcl;&subst')
 
     .const 'Sub' options = 'subst_options'
 
@@ -100,7 +96,6 @@ subst:
 .HLL 'tcl'
 .namespace %0
 .sub '_anon' :anon
-.prof("tcl;%0;anon")
 %1
 .return(%2)
 .end

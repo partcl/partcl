@@ -4,8 +4,6 @@
 .sub '&llength'
   .param pmc argv :slurpy
 
-  .prof('tcl;&llength')
-
   # usage
   .local int argc
   argc = elements argv

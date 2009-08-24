@@ -4,8 +4,6 @@
 .sub '&lset'
   .param pmc argv :slurpy
 
-  .prof('tcl;&lset')
-
   .local int argc
   argc = elements argv
   if argc < 2 goto wrong_args

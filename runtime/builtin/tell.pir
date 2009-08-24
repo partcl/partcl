@@ -3,7 +3,6 @@
 
 .sub '&tell'
   .param pmc argv :slurpy
-  .prof('tcl;&tell')
   .return('')
 .end
 

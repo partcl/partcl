@@ -2,8 +2,6 @@
 .namespace []
 
 .sub 'lsearch_options' :anon :immediate
-    .prof('tcl;lsearch_options')
-
     .local pmc opts
     opts = split ' ', 'all ascii decreasing dictionary exact glob increasing index inline integer nocase not real regexp sorted start subindices'
 
@@ -12,8 +10,6 @@
 
 .sub '&lsearch'
   .param pmc argv :slurpy
-
-  .prof('tcl;&lsearch')
 
       .const 'Sub' options = 'lsearch_options'
 

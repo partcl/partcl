@@ -4,8 +4,6 @@
 .sub '&join'
   .param pmc argv :slurpy
 
-  .prof('tcl;&join')
-
   # usage
   .local int argc
   argc = elements argv

@@ -2,8 +2,6 @@
 .namespace []
 
 .sub 'string_options' :anon :immediate
-    .prof('tcl;string_options')
-
     .local pmc opts
     opts = split ' ', 'bytelength compare equal first index is last length map match range repeat replace reverse tolower toupper totitle trim trimleft trimright wordend wordstart'
 
@@ -11,8 +9,6 @@
 .end
 
 .sub 'string_classes' :anon :immediate
-    .prof('tcl;string_classes')
-
     .local pmc classes
     classes = split ' ', 'alnum alpha ascii control boolean digit double false graph integer list lower print punct space true upper wideinteger wordchar xdigit'
     .return(classes)
@@ -20,8 +16,6 @@
 
 .sub '&string'
     .param pmc argv :slurpy
-
-    .prof('tcl;&string')
 
     .int(argc, elements argv)
     .Unless(argc, {

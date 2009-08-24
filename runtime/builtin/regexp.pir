@@ -2,7 +2,6 @@
 .namespace []
 
 .sub 'regexp_options' :anon :immediate
-    .prof('tcl;regexp_options')
     .local pmc opts
     opts = split ' ' , 'all about indices inline expanded line linestop lineanchor nocase start'
 
@@ -12,8 +11,6 @@
 
 .sub '&regexp'
   .param pmc argv :slurpy
-
-  .prof('tcl;&regexp')
 
   .local int argc
   argc = elements argv

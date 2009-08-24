@@ -2,8 +2,6 @@
 .namespace []
 
 .sub 'regsub_options' :anon :immediate
-    .prof('tcl;regsub_options')
-
     .local pmc opts
     opts = split ' ', 'all nocase expanded line linestop lineanchor start'
 
@@ -12,8 +10,6 @@
 
 .sub '&regsub'
   .param pmc argv :slurpy
-
-  .prof('tcl;&regsub')
 
   .local int argc
   argc = elements argv

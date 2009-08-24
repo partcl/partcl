@@ -9,8 +9,6 @@ call Tcl methods on them.
 .namespace ['String']
 
 .sub getListValue :method
-  .prof('parrot;String;getListValue')
-
   # a TclString would know what to do!
   .local pmc tclstring
   tclstring = root_new ['parrot'; 'TclString'] 

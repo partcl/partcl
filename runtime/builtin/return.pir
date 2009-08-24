@@ -4,8 +4,6 @@
 .sub '&return'
     .param pmc argv :slurpy
 
-    .prof('tcl;&return')
-
     .local pmc argv_bkp
     argv_bkp = clone argv
 

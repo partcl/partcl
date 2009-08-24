@@ -4,8 +4,6 @@
 .sub '&proc'
   .param pmc argv :slurpy
 
-  .prof('tcl;&proc')
-
   .local int argc
   argc = elements argv
 
@@ -57,7 +55,6 @@ create:
 .sub '' :anon
   .param pmc args :slurpy
 
-  .prof("tcl;%1;&%0")
   .local pmc call_chain, lexpad
   call_chain = get_root_global ['_tcl'], 'call_chain'
   lexpad = root_new ['parrot'; 'Hash']

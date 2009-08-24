@@ -4,8 +4,6 @@
 .sub '&lappend'
   .param pmc argv :slurpy
 
-  .prof('tcl;&lappend')
-
   .local pmc value, retval
   .local int return_type
   .local int argc

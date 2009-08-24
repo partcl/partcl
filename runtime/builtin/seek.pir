@@ -3,7 +3,6 @@
 
 .sub '&seek'
   .param pmc argv :slurpy
-  .prof('tcl;&seek')
   .return('')
 .end
 

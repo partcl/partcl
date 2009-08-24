@@ -4,7 +4,6 @@
 .sub '&eof'
     .param pmc argv :slurpy
 
-    .prof('tcl;&eof')
     .local int argc
     argc = elements argv
 

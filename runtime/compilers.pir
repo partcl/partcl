@@ -12,7 +12,6 @@ Given an expression, return a subroutine, or optionally, the raw PIR
     .param pmc    ns       :named('ns')       :optional
     .param int    has_ns   :opt_flag
 
-    .prof('_tcl;compileExpr')
     .local pmc parse
     .local pmc match
 
@@ -63,7 +62,6 @@ Given an expression, return a subroutine, or optionally, the raw PIR
 .HLL 'tcl'
 .namespace %0
 .sub '_anon' :anon
-.prof("tcl;%0;_anon")
 %1
 .if_nan(%2,domain_error)
 .return(%2)
@@ -108,7 +106,6 @@ Given a chunk of tcl code, return a subroutine.
     .param int    wrapper     :named('wrapper')  :optional
     .param int    has_wrapper :opt_flag
 
-    .prof('_tcl;compileTcl')
     .local pmc parse
     .local pmc match
 
@@ -169,7 +166,6 @@ do_wrapper:
 .namespace %0
 .include 'src/macros.pir'
 .sub '_anon' :anon
-.prof("tcl;%0,_anon")
 %1
 .return(%2)
 .end

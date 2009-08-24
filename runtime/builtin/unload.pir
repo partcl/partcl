@@ -3,7 +3,6 @@
 
 .sub '&unload'
   .param pmc argv :slurpy
-  .prof('tcl;&unload')
   .return('')
 .end
 

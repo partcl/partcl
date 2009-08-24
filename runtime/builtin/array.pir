@@ -3,8 +3,6 @@
 
 # Setup our options...
 .sub 'array_options' :immediate :anon
-    .prof('tcl;array_options')
-
     .local pmc opts
     opts = split ' ', 'anymore donesearch exists get names nextelement set size startsearch statistics unset'
     .return(opts)
@@ -12,8 +10,6 @@
 
 .sub '&array'
     .param pmc argv :slurpy
-
-    .prof('tcl;&array')
 
     .int(argc, elements argv)
 

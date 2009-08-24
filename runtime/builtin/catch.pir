@@ -4,7 +4,6 @@
 .sub '&catch'
   .param pmc argv :slurpy
 
-  .prof('tcl;&catch')
   .local int argc
   argc = elements argv
 

@@ -4,8 +4,6 @@
 .sub '&puts'
   .param pmc argv :slurpy
 
-  .prof('tcl;&puts')
-
   .local int argc
   argc = elements argv
   if argc == 0 goto error

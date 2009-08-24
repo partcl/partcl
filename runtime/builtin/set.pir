@@ -4,8 +4,6 @@
 .sub '&set'
   .param pmc argv :slurpy
 
-  .prof('tcl;&set')
-
   # check usage
   .local int argc
   argc = elements argv

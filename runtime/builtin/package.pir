@@ -6,8 +6,6 @@
 .sub '&package'
     .param pmc args :slurpy
 
-    .prof('tcl;&package')
-
     .local int argc
     argc = args
     if argc < 2 goto bad_subcommand

@@ -4,8 +4,6 @@
 .sub '&lreverse'
   .param pmc argv :slurpy
 
-  .prof('tcl;&lreverse')
-
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args

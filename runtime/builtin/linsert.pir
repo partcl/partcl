@@ -4,8 +4,6 @@
 .sub '&linsert'
   .param pmc argv :slurpy
 
-  .prof('tcl;&linsert')
-
   # make sure we have the right # of args
   .local int argc
   argc = elements argv

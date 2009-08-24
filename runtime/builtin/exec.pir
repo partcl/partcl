@@ -3,7 +3,6 @@
 
 .sub '&exec'
   .param pmc argv :slurpy
-  .prof('tcl;&exec')
 
   # XXX We aren't yet able to parse any of the tcl command metachars, so skip them
   .local pmc cmd_args

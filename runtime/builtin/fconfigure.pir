@@ -3,7 +3,6 @@
 
 .sub '&fconfigure'
   .param pmc argv :slurpy
-  .prof('tcl;&fconfigure')
   .return('')
 .end
 

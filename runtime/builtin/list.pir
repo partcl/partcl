@@ -3,7 +3,6 @@
 
 .sub '&list'
   .param pmc argv :slurpy
-  .prof('tcl;&list')
   .return(argv)
 .end
 

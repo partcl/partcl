@@ -4,7 +4,6 @@
 .sub '&global'
   .param pmc argv :slurpy
 
-  .prof('tcl;&global')
   .local int argc
   argc = elements argv
 

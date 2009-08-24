@@ -4,8 +4,6 @@
 .sub '&break'
     .param pmc argv :slurpy
 
-    .prof('tcl;&break')
-    
     .int(argc, elements argv)
 
     .If (argc !=0, {

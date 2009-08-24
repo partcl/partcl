@@ -10,8 +10,6 @@
 .sub '&load'
   .param pmc argv :slurpy
 
-  .prof('tcl;&load')
-
   .local string fileName
   fileName = shift argv
 

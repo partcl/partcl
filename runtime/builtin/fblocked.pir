@@ -3,7 +3,6 @@
 
 .sub '&fblocked'
   .param pmc argv :slurpy
-  .prof('tcl;&fblocked')
   .return('')
 .end
 

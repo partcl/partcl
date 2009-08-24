@@ -4,8 +4,6 @@
 .sub '&switch'
   .param pmc argv :slurpy
 
-  .prof('tcl;&switch')
-
   .local int argc
   argc = elements argv
 

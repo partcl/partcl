@@ -4,7 +4,6 @@
 .sub '&fileevent'
     .param pmc args :slurpy
 
-    .prof('tcl;&fileevent')
     .local int argc
     argc = elements args
 

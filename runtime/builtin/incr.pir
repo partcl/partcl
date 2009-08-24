@@ -4,8 +4,6 @@
 .sub '&incr'
   .param pmc argv :slurpy
 
-  .prof('tcl;&incr')
-
   # check usage
   .local int argc
   argc = elements argv

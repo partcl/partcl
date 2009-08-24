@@ -18,7 +18,6 @@ providing a compreg-compatible method.
 .HLL '_tcl'
 
 .sub 'mappings' :anon :load
-  .prof('_tcl;mappings')
   .local pmc interp
   .local pmc core_int, tclint
   .local pmc core_num, tclfloat
@@ -72,7 +71,6 @@ providing a compreg-compatible method.
 .HLL 'tcl'
 .namespace ['tcl']
 .sub foo
-  .prof('tcl;foo')
   .return()
 .end
 
@@ -80,8 +78,6 @@ providing a compreg-compatible method.
 .namespace []
 
 .sub prepare_lib :load :anon
-  .prof('_tcl;prepare_lib')
-
   # Load any dependant libraries.
   load_bytecode 'Getopt/Obj.pbc'
   load_bytecode 'PGE.pbc'
@@ -239,7 +235,6 @@ got_platform:
 .namespace []
 
 .sub load_stdlib :load :anon
-  .prof('tcl;load_stdlib')
   .include 'iglobals.pasm'
   .local pmc interp
   interp = getinterp
@@ -255,7 +250,6 @@ got_platform:
 .namespace ['Tcl';'Compiler']
 
 .sub '' :anon :load
-    .prof('parrot;tcl;compiler;')
     .local pmc ns, tclass, compiler
     ns = get_hll_namespace ['Tcl';'Compiler']
     tclass = newclass ns
@@ -266,8 +260,6 @@ got_platform:
 .sub 'load_library' :method
     .param pmc name
     .param pmc extra :named :slurpy
-
-    .prof('parrot;tcl;compiler;load_library')
 
     .local pmc ct, lit
     .local string filename
@@ -322,7 +314,6 @@ got_platform:
 .namespace []
 
 .sub hack_grammar :load :anon
-  .prof('parrot;hack_grammar')
   # Override whitespace parsing in expression's optable
   $P0 = get_hll_global ['TclExpr'; 'Grammar'], '$optable'
   $P1 = get_hll_global ['TclExpr'; 'Grammar'], 'exprws'

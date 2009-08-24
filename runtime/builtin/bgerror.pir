@@ -3,7 +3,6 @@
 
 .sub '&bgerror'
   .param pmc argv :slurpy
-  .prof('tcl;&bgerror')
   .return('')
 .end
 

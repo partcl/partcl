@@ -13,8 +13,6 @@ real top level namespace.
 .namespace []
 
 .sub 'namespace_options' :anon :immediate
-    .prof('tcl;namespace_options')
-
     .local pmc opts
     opts = split ' ', 'children code current delete ensemble eval exists export forget import inscope origin parent path qualifiers tail unknown upvar which'
 
@@ -22,14 +20,11 @@ real top level namespace.
 .end
 
 .sub 'namespace_wrapper' :anon :immediate
-    .prof('tcl;namespace_wrapper')
-
     .return(<<'END_PIR')
 .HLL 'tcl'
 .namespace %0
 # src/compiler.pir :: pir_compiler (2)
 .sub compiled_tcl_sub_%2
-  .prof("tcl;%0;compiled_tcl_sub_%2")
   %1
   .return(%3)
 .end
@@ -39,8 +34,6 @@ END_PIR
 
 .sub '&namespace'
     .param pmc argv :slurpy
-
-    .prof('tcl;&namespace')
 
     .int(argc, elements argv)
     .Unless(argc, {
@@ -76,8 +69,6 @@ bad_args:
 .sub 'current'
   .param pmc argv
 
-  .prof('_tcl;helpers;namespace;current')
-
   .local int argc
   argc = elements argv
 
@@ -95,8 +86,6 @@ bad_args:
 
 .sub 'delete'
   .param pmc argv
-
-  .prof('_tcl;helpers;namespace;delete')
 
   .local int argc
   argc = elements argv
@@ -136,8 +125,6 @@ return:
 
 .sub 'exists'
   .param pmc argv
-
-  .prof('_tcl;helpers;namespace;exists')
 
   .local int argc
   argc = elements argv
@@ -184,8 +171,6 @@ doesnt_exist:
 .sub 'qualifiers'
   .param pmc argv
 
-  .prof('_tcl;helpers;namespace;qualifiers')
-
   .local int argc
   argc = elements argv
 
@@ -211,8 +196,6 @@ doesnt_exist:
 .sub 'tail'
   .param pmc argv
 
-  .prof('_tcl;helpers;namespace;tail')
-
   .local int argc
   argc = elements argv
   .If(argc !=1, {
@@ -237,8 +220,6 @@ doesnt_exist:
 
 .sub 'eval'
   .param pmc argv
-
-  .prof('_tcl;helpers;namespace;eval')
 
   .local int argc
   argc = elements argv
@@ -299,8 +280,6 @@ global_ns:
 
 .sub 'children'
   .param pmc argv
-
-  .prof('_tcl;helpers;namespace;children')
 
   .local int has_pattern
   has_pattern = 0
@@ -374,8 +353,6 @@ end:
 .sub 'code'
   .param pmc argv
 
-  .prof('_tcl;helpers;namespace;code')
-
   .int(argc,argv)
   .If(argc!=1, {
       die 'wrong # args: should be "namespace code arg"' 
@@ -398,7 +375,7 @@ end:
 
 .sub 'import'
   .param pmc argv
-  .prof('_tcl;helpers;namespace;import')
+
   .local int argc
   argc = argv
   if argc == 0 goto done
@@ -471,14 +448,12 @@ done:
 
 .sub 'inscope'
   .param pmc argv
-  .prof('_tcl;helpers;namespace;inscope')
   .tailcall eval(argv)
 .end
 
 #XXX complete hack to get tcltest working...
 .sub 'origin'
   .param pmc argv
-  .prof('_tcl;helpers;namespace;origin')
 
   $S0 = shift argv
   $S0 = "::tcltest::" . $S0
@@ -488,7 +463,6 @@ done:
 .sub 'parent'
   .param pmc argv
 
-  .prof('_tcl;helpers;namespace;parent')
   .local int argc
   argc = elements argv
 
@@ -521,7 +495,6 @@ done:
 .sub 'which'
   .param pmc argv
 
-  .prof('_tcl;helpers;namespace;which')
   .local string cmd
 
   .DoWhile({

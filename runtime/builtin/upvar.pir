@@ -4,8 +4,6 @@
 .sub '&upvar'
   .param pmc argv :slurpy
 
-  .prof('tcl;&upvar')
-
   .local int argc
   argc = elements argv
   if argc < 2 goto bad_args

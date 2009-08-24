@@ -3,7 +3,6 @@
 
 .sub '&glob'
   .param pmc argv :slurpy
-  .prof('tcl;&glob')
   .return('')
 .end
 

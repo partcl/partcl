@@ -9,20 +9,17 @@ Given a PMC, get a number from it.
 
 .sub toNumber :multi(TclInt)
   .param pmc n
-  .prof('_tcl;toNumber :multi(TclInt)')
   .return(n)
 .end
 
 .sub toNumber :multi(TclFloat)
   .param pmc n
-  .prof('_tcl;toNumber :multi(TclFloat)')
   .return(n)
 .end
 
 .sub toNumber :multi(_)
   .param pmc number
 
-  .prof('_tcl;toNumber:multi(_)')
   .local string str
   .local int    len
   str = number
@@ -82,7 +79,6 @@ Given a PMC, get an integer from it.
 
 .sub toInteger :multi(TclInt)
   .param pmc n
-  .prof('_tcl;toInteger :multi(TclInt)')
   .return(n)
 .end
 
@@ -91,7 +87,6 @@ Given a PMC, get an integer from it.
   .param pmc rawhex :named ('rawhex') :optional
   .param int has_rawhex               :opt_flag
 
-  .prof('_tcl;toInteger :multi(_)')
   unless has_rawhex goto normal
   $S0 = value
   $S0 =  '0x' . $S0
@@ -136,7 +131,6 @@ index.
   .param string idx
   .param pmc    list
 
-  .prof('_tcl;getIndex')
   if idx == 'end' goto end
 
   $S0 = substr idx, 0, 4
@@ -200,7 +194,6 @@ Given a string, return the appropriate channel.
 .sub getChannel
   .param string channelID
 
-  .prof('_tcl;getChannel')
   .local pmc channels
   channels = get_global 'channels'
 
@@ -237,7 +230,6 @@ Given a string namespace, return an array of names.
   .param int    depth     :optional
   .param int    has_depth :opt_flag
 
-  .prof('_tcl;splitNamespace')
   if has_depth goto depth_set
   depth = 0
 
@@ -291,7 +283,6 @@ was this a valid tcl-style level, or did we get this value as a default?
 .sub getCallLevel
   .param pmc tcl_level
 
-  .prof('_tcl;getCallLevel')
   .local pmc parrot_level, defaulted, orig_level
   defaulted = new 'TclInt'
   defaulted = 0
@@ -356,7 +347,6 @@ Given a string of tcl code, perform the backslash/newline subsitution.
 .sub 'backslash_newline_subst'
   .param string contents
 
-  .prof('_tcl;backslash_newline_subst')
   .local int len
   len = length contents
 

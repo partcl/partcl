@@ -4,8 +4,6 @@
 .sub '&apply'
     .param pmc argv :slurpy
 
-    .prof('tcl;&apply')
-
     .int( argc, elements argv)
     .If(argc==0, {
         die 'wrong # args: should be "apply lambdaExpr ?arg1 arg2 ...?"'

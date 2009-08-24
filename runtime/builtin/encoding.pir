@@ -2,8 +2,6 @@
 .namespace []
 
 .sub 'encoding_options' :anon :immediate
-    .prof('tcl;encoding_options')
-
     .local pmc opts
     opts = split ' ', 'convertfrom convertto dirs names system'
 
@@ -14,7 +12,6 @@
 .sub '&encoding'
   .param pmc argv :slurpy
 
-  .prof('tcl;&encoding')
   .local pmc retval
 
   .local int argc
@@ -54,7 +51,6 @@ no_args:
 .sub 'convertfrom'
   .param pmc argv
 
-  .prof('_tcl;helpers;encoding;convertfrom')
   .local int argc
   argc = elements argv
 
@@ -70,7 +66,6 @@ bad_args:
 .sub 'convertto'
   .param pmc argv
 
-  .prof('_tcl;helpers;encoding;convertto')
   .local int argc
   argc = elements argv
 
@@ -86,7 +81,6 @@ bad_args:
 .sub 'dirs'
   .param pmc argv
 
-  .prof('_tcl;helpers;encoding;dirs')
   .local int argc
   argc = elements argv
 
@@ -101,7 +95,6 @@ bad_args:
 .sub 'names'
   .param pmc argv
 
-  .prof('_tcl;helpers;encoding;names')
   .local int argc
   argc = elements argv
 
@@ -116,7 +109,6 @@ bad_args:
 .sub 'system'
   .param pmc argv
 
-  .prof('_tcl;helpers;encoding;system')
   .local int argc
   argc = elements argv
 

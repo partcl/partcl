@@ -4,7 +4,6 @@
 .sub '&concat'
   .param pmc argv :slurpy
 
-  .prof('tcl;&concat')
   .local int argc
   argc = elements argv
 

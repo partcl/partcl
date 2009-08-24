@@ -2,8 +2,6 @@
 .namespace []
 
 .sub 'dict_options' :anon :immediate
-    .prof('tcl;dict_options')
-
     .local pmc opts
     opts = split ' ', 'append create exists filter for get incr info keys lappend merge remove replace set size unset update values with'
 
@@ -13,7 +11,6 @@
 .sub '&dict'
   .param pmc argv :slurpy
 
-  .prof('tcl;&dict')
   .local pmc retval
 
   .local int argc
@@ -53,7 +50,6 @@ no_args:
 .sub 'append'
   .param pmc argv
 
-  .prof('_tcl;helpers;dict;append')
   .local int argc
   argc = elements argv
   if argc < 2 goto bad_args
@@ -121,7 +117,6 @@ bad_args:
 .sub 'create'
   .param pmc argv
 
-  .prof('_tcl;helpers;dict;create')
   $I2 = elements argv
   $I3 = $I2 % 2
   if $I3 goto bad_args
@@ -150,7 +145,6 @@ bad_args:
 .sub 'exists'
   .param pmc argv
 
-  .prof('_tcl;helpers;dict;exists')
   .local int argc
   argc = elements argv
   if argc < 2 goto bad_args
@@ -182,7 +176,6 @@ bad_args:
 .sub 'filter'
   .param pmc argv
 
-  .prof('_tcl;helpers;dict;filter')
   .local int argc
   argc = elements argv
   if argc < 2 goto bad_args
@@ -311,7 +304,6 @@ bad_args:
 .sub 'for'
   .param pmc argv
 
-  .prof('_tcl;helpers;dict;for')
   .local int argc
   argc = elements argv
   if argc != 3 goto bad_args
@@ -379,7 +371,6 @@ bad_args:
 .sub 'get'
   .param pmc argv
 
-  .prof('_tcl;helpers;dict;get')
   .local int argc
   argc = elements argv
   if argc < 1 goto bad_args
@@ -420,7 +411,6 @@ bad_args:
 .sub 'incr'
   .param pmc argv
 
-  .prof('_tcl;helpers;dict;incr')
   .local int argc
   argc = elements argv
   if argc < 2 goto bad_args
@@ -494,7 +484,6 @@ bad_args:
 .sub 'info'
   .param pmc argv
 
-  .prof('_tcl;helpers;dict;info')
   .local int argc
   argc = elements argv
   if argc != 1 goto bad_args

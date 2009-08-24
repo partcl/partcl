@@ -4,7 +4,6 @@
 .sub '&format'
   .param pmc argv :slurpy
 
-  .prof('tcl;&format')
   .local int argc
   argc = elements argv
   if argc == 0 goto noargs

@@ -4,8 +4,6 @@
 .sub '&unset'
   .param pmc argv :slurpy
 
-  .prof('tcl;&unset')
-
   .local int argc
   argc = elements argv
   if argc == 0 goto loop_end

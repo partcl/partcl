@@ -4,8 +4,6 @@
 .sub '&lsort'
   .param pmc argv :slurpy
 
-  .prof('tcl;&lsort')
-
   .local int return_type, argc
   .local pmc retval
   .local pmc compare
@@ -113,7 +111,7 @@ wrong_args:
 .sub 'ascii'
   .param string s1
   .param string s2
-  .prof('_tcl;helpers;lsort;ascii')
+
   $I0 = cmp_str s1, s2
   .return ($I0)
 .end
@@ -121,8 +119,6 @@ wrong_args:
 .sub 'integer'
   .param pmc s1
   .param pmc s2
-
-  .prof('_tcl;helpers;lsort;integer')
 
   # check that they're actually integers.
   # We recalculate this every time, but without smarter PMCs, we can't
@@ -143,8 +139,6 @@ wrong_args:
 .sub 'dictionary'
     .param string s1
     .param string s2
-
-    .prof('_tcl;helpers;lsort;dictionary')
 
     .include 'cclass.pasm'
 
@@ -216,8 +210,6 @@ greater:
 .sub 'real'
   .param pmc s1
   .param pmc s2
-
-  .prof('_tcl;helpers;lsort;real')
 
   # check that they're actually numbers
   .local pmc toNumber

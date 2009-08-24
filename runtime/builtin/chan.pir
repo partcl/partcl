@@ -3,7 +3,6 @@
 
 .sub '&chan'
   .param pmc argv :slurpy
-  .prof('tcl;&chan')
   .return('')
 .end
 

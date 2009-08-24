@@ -4,7 +4,6 @@
 .sub '&if'
     .param pmc argv :slurpy
 
-    .prof('tcl;&if')
     .local int argc
     argc = elements argv
 

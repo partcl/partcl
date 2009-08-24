@@ -4,8 +4,6 @@
 .sub '&variable'
     .param pmc argv :slurpy
 
-    .prof('tcl;&variable')
-
     .local int argc
     argc = elements argv
     if argc == 0 goto bad_args

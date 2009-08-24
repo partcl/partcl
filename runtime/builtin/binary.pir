@@ -2,8 +2,6 @@
 .namespace []
 
 .sub 'binary_options' :anon :immediate
-    .prof('tcl;binary_options')
-
     .local pmc opts
     opts = split ' ', 'format scan'
     .return(opts)
@@ -11,8 +9,6 @@
 
 .sub '&binary'
     .param pmc argv :slurpy
-
-    .prof('tcl;&binary')
 
     .int(argc, elements argv)
     .Unless(argc, {

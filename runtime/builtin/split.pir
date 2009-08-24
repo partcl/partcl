@@ -4,8 +4,6 @@
 .sub '&split'
   .param pmc argv :slurpy
 
-  .prof('tcl;&split')
-
   .local int argc
   argc = elements argv
 

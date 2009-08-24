@@ -15,8 +15,6 @@ Convert to a List.
 =cut
 
 .sub getListValue :method
-    .prof('parrot;TclString;getListValue')
-
     .local pmc retval
     retval = root_new ['parrot'; 'TclList']
 
@@ -206,8 +204,6 @@ throw an exception.
 =cut
 
 .sub 'get_bool' :vtable
-    .prof('TclString;get_bool')
-
     .str(self_s, self)
     .int(self_len, length self_s)
 

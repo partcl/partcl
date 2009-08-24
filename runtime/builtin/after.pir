@@ -4,8 +4,6 @@
 .sub '&after'
     .param pmc argv :slurpy
 
-    .prof('tcl;&after')
-
     .int(argc, elements argv)
 
     .If (argc==0, {

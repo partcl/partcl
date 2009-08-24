@@ -4,7 +4,6 @@
 .sub '&flush'
     .param pmc argv :slurpy
 
-    .prof('tcl;&flush')
     .local int argc
     argc = elements argv
 
