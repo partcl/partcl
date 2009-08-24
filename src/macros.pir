@@ -234,20 +234,10 @@ interpreter information.
   printerr .location
   printerr "\n"
 
-  .include 'runtime/parrot/include/interpinfo.pasm'
+  .include 'interpinfo.pasm'
 
   $I1234 = interpinfo .INTERPINFO_TOTAL_MEM_ALLOC
   printerr "    TOTAL_MEM_ALLOC............: "
-  printerr $I1234
-  printerr "\n"
-
-  $I1234 = interpinfo .INTERPINFO_DOD_RUNS
-  printerr "    DOD_RUNS...................: "
-  printerr $I1234
-  printerr "\n"
-
-  $I1234 = interpinfo .INTERPINFO_COLLECT_RUNS
-  printerr "    COLLECT_RUNS...............: "
   printerr $I1234
   printerr "\n"
 
@@ -288,11 +278,6 @@ interpreter information.
 
   $I1234 = interpinfo .INTERPINFO_IMPATIENT_PMCS
   printerr "    IMPATIENT_PMCS.............: "
-  printerr $I1234
-  printerr "\n"
-
-  $I1234 = interpinfo .INTERPINFO_LAZY_DOD_RUNS
-  printerr "    LAZY_DOD_RUNS..............: "
   printerr $I1234
   printerr "\n"
 
