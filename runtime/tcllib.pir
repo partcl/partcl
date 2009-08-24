@@ -287,7 +287,7 @@ got_platform:
     library['name'] = name
     library['namespace'] = sourcens
     symns = root_new ['parrot';'NameSpace']
-    nsiter = root_new ['parrot';'Iterator'], sourcens
+    nsiter = iter sourcens
   loop:
     unless nsiter goto loop_end
     item = shift nsiter
