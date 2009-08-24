@@ -10,16 +10,15 @@
 
 .sub '&lsearch'
   .param pmc argv :slurpy
-  .argc()
 
-  if argc != 2 goto bad_args
-
-      .const 'Sub' options = 'lsearch_options'
+  .const 'Sub' options = 'lsearch_options'
 
   .local pmc select_switches, switches
   select_switches  = get_root_global ['_tcl'], 'select_switches'
   switches = select_switches(options, argv, 0, 1, 'option')
 
+  .argc()
+  if argc != 2 goto bad_args
 
   .local string option, pattern
   .local pmc list
