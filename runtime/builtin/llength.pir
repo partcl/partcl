@@ -2,21 +2,18 @@
 .namespace []
 
 .sub '&llength'
-  .param pmc argv :slurpy
-  .argc()
-  if argc != 1 goto bad_args
+    .param pmc argv :slurpy
+    .argc()
 
-  
-  # coerce args
-  .local pmc list
-  list = argv[0]
-  list = list.'getListValue'()
+    .If(argc != 1, {
+        die 'wrong # args: should be "llength list"'
+    })
 
-  $I0 = elements list
-  .return($I0)
+    .pmc(list, argv[0])
+     list = list.'getListValue'()
 
-bad_args:
-  die 'wrong # args: should be "llength list"'
+    $I0 = elements list
+    .return($I0)
 .end
 
 # Local Variables:

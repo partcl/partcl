@@ -2,49 +2,37 @@
 .namespace []
 
 .sub '&lrepeat'
-  .param pmc argv :slurpy
-  .argc()
-  
-  if argc < 2 goto bad_args
+    .param pmc argv :slurpy
+    .argc()
 
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
+    .If(argc < 2, {
+        die 'wrong # args: should be "lrepeat positiveCount value ?value ...?"'
+    })
 
-  .local int count
-  $P0   = argv[0]
-  count = toInteger($P0)
+    .local pmc toInteger
+    toInteger = get_root_global ['_tcl'], 'toInteger'
 
-  if count < 1 goto must_have_count
+    $P0 = shift argv
+    .local int count
+    count = toInteger($P0)
 
-  # convert the Array ireturned by foldup into a TclList.
-  .local pmc retval
-  retval = new 'TclList'
+    .If(count < 1, {
+        die 'must have a count of at least 1'
+    })
 
-  .local int i_cnt
-  .local int o_cnt
+    .list(retval)
 
-  o_cnt = 1
-OUTER_LOOP:
-  if o_cnt > count goto OUTER_DONE
-  i_cnt = 1
-INNER_LOOP:
-  if i_cnt >= argc goto INNER_DONE
-  $P0 = argv[i_cnt]
-  push retval, $P0
-  inc i_cnt
-  goto INNER_LOOP
-INNER_DONE:
-  inc o_cnt
-  goto OUTER_LOOP
-OUTER_DONE:
+    .int(pos, 1)
+    .While(pos <= count, {
+	.pmc(iterator, {iter argv})
+	.While(iterator, {
+	    $P0 = shift iterator
+            push retval, $P0
+	})
+        inc pos
+    })
 
   .return(retval)
-
-must_have_count:
-  die 'must have a count of at least 1'
-
-bad_args:
-  die 'wrong # args: should be "lrepeat positiveCount value ?value ...?"'
 .end
 
 # Local Variables:
