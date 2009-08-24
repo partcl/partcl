@@ -2,57 +2,43 @@
 .namespace []
 
 .sub '&lrange'
-  .param pmc argv :slurpy
+    .param pmc argv :slurpy
 
-  .local int argc
-  argc = elements argv
-  if argc != 3 goto bad_args
-  # get necessary conversion subs
-  .local pmc a_list
-  a_list = argv[0]
-  a_list = a_list.'getListValue'()
-  .local pmc a_first
-  a_first = argv[1]
-  .local pmc a_last
-  a_last = argv[2]
-  .local pmc R
-  .local pmc temp
+    .int (argc, {elements argv})
+    .If(argc != 3, {
+        die 'wrong # args: should be "lrange list first last"'
+    })
 
-  .local pmc getIndex
-  getIndex = get_root_global ['_tcl'], 'getIndex'
+    .pmc(list, argv[0])
+    list = list.'getListValue'()
 
-  .local int from, to
-  from = getIndex(a_first, a_list)
-  to   = getIndex(a_last,  a_list)
+    .pmc(first, argv[1])
+    .pmc(last,  argv[2])
 
-  if from < 0 goto set_first
-have_first:
-  $I0 = elements a_list
-  dec $I0
-  if $I0 < to goto set_last
 
-  goto have_indices
+    .local pmc getIndex
+    getIndex = get_root_global ['_tcl'], 'getIndex'
 
-set_first:
-  from = 0
-  goto have_first
+    .int(from, {getIndex(first,list)})
+    .int(to,   {getIndex(last, list)})
 
-set_last:
-  to = $I0
+    .If(from < 0, {from = 0})
+
+    $I0 = elements list
+    dec $I0
+    .If(to > $I0, {to = $I0})
 
 have_indices:
-  $I0 = from
-  R  = new 'TclList'
-loop:
-  if $I0 > to goto end
-  $P0 = a_list[$I0]
-  push R, $P0
-  inc $I0
-  goto loop
+    .list(retval)    
+
+    .While(from<=to, {
+        $P0 = list[from]
+        push retval, $P0
+        inc from
+    })
 end:
-  .return(R)
-bad_args:
-  die 'wrong # args: should be "lrange list first last"'
+
+  .return(retval)
 .end
 
 # Local Variables:
