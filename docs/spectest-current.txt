@@ -1,8 +1,6 @@
 append.test:	Total	37	Passed	33	Skipped	0	Failed	4
 appendComp.test:	Total	40	Passed	32	Skipped	0	Failed	8
-basic.test:	Total	140	Passed	39	Skipped	74	Failed	27
 chan.test:	Total	35	Passed	2	Skipped	0	Failed	33
-compExpr-old.test:	Total	190	Passed	171	Skipped	4	Failed	15
 compExpr.test:	Total	80	Passed	75	Skipped	0	Failed	5
 concat.test:	Total	9	Passed	9	Skipped	0	Failed	0
 env.test:	Total	20	Passed	6	Skipped	1	Failed	13
@@ -17,7 +15,6 @@ if-old.test:	Total	33	Passed	33	Skipped	0	Failed	0
 if.test:	Total	73	Passed	64	Skipped	0	Failed	9
 incr-old.test:	Total	14	Passed	11	Skipped	0	Failed	3
 incr.test:	Total	65	Passed	55	Skipped	0	Failed	10
-    :	Total	177	Passed	67	Skipped	16	Failed	94
 init.test:	Total	8	Passed	4	Skipped	0	Failed	4
 ioUtil.test:	Total	25	Passed	2	Skipped	22	Failed	1
 join.test:	Total	9	Passed	9	Skipped	0	Failed	0
@@ -30,27 +27,21 @@ load.test:	Total	26	Passed	2	Skipped	10	Failed	14
 lrange.test:	Total	22	Passed	22	Skipped	0	Failed	0
 lrepeat.test:	Total	10	Passed	10	Skipped	0	Failed	0
 lreplace.test:	Total	34	Passed	33	Skipped	0	Failed	1
-namespace-old.test:	Total	126	Passed	82	Skipped	0	Failed	44
 package.test:	Total	16	Passed	6	Skipped	0	Failed	10
-parseOld.test:	Total	179	Passed	87	Skipped	21	Failed	71
 pid.test:	Total	5	Passed	1	Skipped	1	Failed	3
 pkg.test:	Total	0	Passed	0	Skipped	0	Failed	0
 proc-old.test:	Total	75	Passed	51	Skipped	0	Failed	24
 proc.test:	Total	31	Passed	12	Skipped	0	Failed	19
 pwd.test:	Total	3	Passed	3	Skipped	0	Failed	0
 rename.test:	Total	18	Passed	7	Skipped	7	Failed	4
-scan.test:	Total	171	Passed	93	Skipped	4	Failed	74
 set.test:	Total	63	Passed	58	Skipped	1	Failed	4
 source.test:	Total	20	Passed	6	Skipped	0	Failed	14
 split.test:	Total	16	Passed	16	Skipped	0	Failed	0
-stringComp.test:	Total	143	Passed	129	Skipped	0	Failed	14
 subst.test:	Total	59	Passed	35	Skipped	0	Failed	24
-switch.test:	Total	108	Passed	66	Skipped	0	Failed	42
 timer.test:	Total	54	Passed	8	Skipped	0	Failed	46
 unknown.test:	Total	7	Passed	6	Skipped	0	Failed	1
 unload.test:	Total	26	Passed	1	Skipped	0	Failed	25
 upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
-utf.test:	Total	114	Passed	82	Skipped	12	Failed	20
-var.test:	Total	84	Passed	37	Skipped	17	Failed	30
+var.test:	Total	84	Passed	38	Skipped	17	Failed	29
 while-old.test:	Total	15	Passed	14	Skipped	0	Failed	1
 while.test:	Total	46	Passed	42	Skipped	0	Failed	4
