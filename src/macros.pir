@@ -7,8 +7,9 @@
 =head2 .int(name,init)
 =head2 .pmc(name,init)
 =head2 .null(name)
+=head2 .list(name)
 
-Declare a .local and give it an initial value.
+Declare a .local and (maybe) give it an initial value.
 
 =cut
 
@@ -36,6 +37,12 @@ Declare a .local and give it an initial value.
   .local pmc .name
   null .name
 .endm
+
+.macro list(name)
+  .local pmc .name
+  .name = new 'TclList'
+.endm
+
 
 =head2 Try(try)
 
