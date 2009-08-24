@@ -29,7 +29,7 @@ present in TclList.
 .sub get_string :vtable
 
     .local pmc list
-    list = root_new ['parrot'; 'TclList']
+    list = new 'TclList'
 
     .local pmc iterator
     iterator = iter self

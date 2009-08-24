@@ -23,7 +23,7 @@
     body = compileTcl(body)
 
     .local pmc eh
-    eh = root_new ['parrot'; 'ExceptionHandler']
+    eh = new 'ExceptionHandler'
     eh.'handle_types'(.CONTROL_CONTINUE,.CONTROL_BREAK)
     set_addr eh, while_loop_exception
 

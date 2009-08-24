@@ -55,7 +55,7 @@ loop:
 
 store_var:
   .local pmc saved_call_chain
-  saved_call_chain = root_new ['parrot'; 'TclList']
+  saved_call_chain = new 'TclList'
   $I0 = 0
 save_chain_loop:
   if $I0 == difference goto save_chain_end

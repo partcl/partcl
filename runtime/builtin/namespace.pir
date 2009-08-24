@@ -229,7 +229,7 @@ doesnt_exist:
 
   .local pmc call_chain, temp_call_chain
   call_chain      = get_root_global ['_tcl'], 'call_chain'
-  temp_call_chain = root_new ['parrot'; 'TclList']
+  temp_call_chain = new 'TclList'
   set_root_global ['_tcl'], 'call_chain', temp_call_chain
 
   .local pmc info_level
@@ -257,7 +257,7 @@ doesnt_exist:
 global_ns:
   .local pmc compileTcl, code
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
-  code     = root_new ['parrot'; 'CodeString']
+  code     = new 'CodeString'
   $S0 = join ' ', argv
   ($S0, $S1) = compileTcl($S0, 'pir_only'=>1)
   $I0 = code.'unique'()
@@ -300,7 +300,7 @@ global_ns:
 
 iterate:
   .local pmc list
-  list = root_new ['parrot'; 'TclList']
+  list = new 'TclList'
 
   .local pmc splitNamespace
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
@@ -362,7 +362,7 @@ end:
   script = shift argv
 
   .local string current_ns
-  $P1 = root_new ['parrot'; 'TclList']
+  $P1 = new 'TclList'
   current_ns = 'current'($P1)
 
   retval = "namespace inscope "

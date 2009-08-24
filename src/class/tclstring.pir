@@ -16,7 +16,7 @@ Convert to a List.
 
 .sub getListValue :method
     .local pmc retval
-    retval = root_new ['parrot'; 'TclList']
+    retval = new 'TclList'
 
     .local string str            # our string value
     str = self
@@ -145,7 +145,7 @@ extract:
     element_length = peek_pos - pos
     element_string = substr str, pos, element_length
 
-    element_pmc = root_new ['parrot'; 'TclConst']
+    element_pmc = new 'TclConst'
     element_pmc = element_string
     push retval, element_pmc
 
@@ -175,7 +175,7 @@ found_close_quote:
     element_length = peek_pos - pos
     element_string = substr str,pos, element_length
 
-    element_pmc = root_new ['parrot'; 'TclConst']
+    element_pmc = new 'TclConst'
     element_pmc = element_string
     push retval, element_pmc
 

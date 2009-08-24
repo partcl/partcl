@@ -26,7 +26,7 @@ Defaults to 'option'.
 got_type_name:
 
   .local pmc partials
-  partials = root_new ['parrot'; 'TclList']
+  partials = new 'TclList'
 
   # is there an exact match?
 
@@ -146,8 +146,8 @@ check_name:
 init:
   # setup types
   .local pmc with_type, results
-  with_type = root_new ['parrot'; 'Hash']
-  results = root_new ['parrot'; 'Hash']
+  with_type = new 'Hash'
+  results = new 'Hash'
   $P1 = iter switches
   .local string switch,type
 init_loop:
@@ -227,7 +227,7 @@ loop_done:
 
   # delete any processed switches from the argv
   if pos <= 0 goto done
-  $P1 = root_new ['parrot'; 'TclList']
+  $P1 = new 'TclList'
   splice argv, $P1, 0, pos
 
 done:

@@ -247,7 +247,7 @@ bad_args:
 
   mathfunc = get_root_namespace ['tcl'; 'tcl'; 'mathfunc']
   iterator = iter mathfunc
-  retval = root_new ['parrot'; 'TclList']
+  retval = new 'TclList'
 
   .local pmc globber,rule,match
   globber = compreg 'Tcl::Glob'
@@ -321,7 +321,7 @@ bad_args:
     })
 
     .local pmc result
-    result = root_new ['parrot'; 'TclList']
+    result = new 'TclList'
 
     if null ns goto iter_loop_end
 
@@ -455,7 +455,7 @@ iterate:
   .local pmc    iterator, retval
   .local string elem
   iterator = iter lexpad
-  retval = root_new ['parrot'; 'TclList']
+  retval = new 'TclList'
 loop:
   unless iterator goto end
   elem = shift iterator
@@ -552,7 +552,7 @@ find_info_level:
   })
 
   .local pmc retval
-  retval = root_new ['parrot'; 'TclList']
+  retval = new 'TclList'
 
   .If(null ns, {
       .return(retval)
@@ -626,7 +626,7 @@ bad_args:
 
 .sub 'anon' :anon :load
   .local pmc options
-  options = root_new ['parrot'; 'TclList']
+  options = new 'TclList'
   push options, 'args'
   push options, 'body'
   push options, 'cmdcount'

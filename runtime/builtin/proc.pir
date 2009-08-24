@@ -22,14 +22,14 @@
 
   .local pmc code, args_code, defaults
   .local string namespace
-  code      = root_new ['parrot'; 'CodeString']
-  args_code = root_new ['parrot'; 'CodeString']
-  defaults  = root_new ['parrot'; 'CodeString']
+  code      = new 'CodeString'
+  args_code = new 'CodeString'
+  defaults  = new 'CodeString'
   namespace = '[]'
 
   .local pmc ns
   .local string name
-  ns   = root_new ['parrot'; 'TclList']
+  ns   = new 'TclList'
   name = ''
 
   if full_name == '' goto create
@@ -57,19 +57,19 @@ create:
 
   .local pmc call_chain, lexpad
   call_chain = get_root_global ['_tcl'], 'call_chain'
-  lexpad = root_new ['parrot'; 'Hash']
+  lexpad = new 'Hash'
   push call_chain, lexpad
 
   .local pmc info_level
   info_level = get_root_global ['_tcl'], 'info_level'
-  $P0 = root_new ['parrot'; 'TclList']
+  $P0 = new 'TclList'
   assign $P0, args
   unshift $P0, '%0'
   unshift info_level, $P0
 END_PIR
 
    .local pmc defaults_info
-   defaults_info = root_new ['parrot'; 'TclDict']
+   defaults_info = new 'TclDict'
 
   .local string args_usage, args_info
   .local int i, elems, min, max, is_slurpy
@@ -219,7 +219,7 @@ END_PIR
   $P0 = $P0[0]
 
   .local pmc proc
-  proc = root_new ['parrot'; 'TclProc']
+  proc = new 'TclProc'
   assign proc, $P0
 
   setattribute proc, 'HLL_source', body

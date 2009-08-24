@@ -89,7 +89,7 @@ next_submatch:
 
 matches_ind:
   .local pmc matchList
-  matchList = root_new ['parrot'; 'TclList']
+  matchList = new 'TclList'
   matchList[0] = -1
   matchList[1] = -1
   $I0 = match.'from'()
@@ -108,7 +108,7 @@ subMatches_ind_loop:
    unless argc goto done
 
    subMatchVar = shift argv
-   subMatchList = root_new ['parrot'; 'TclList']
+   subMatchList = new 'TclList'
    subMatchList[0] = -1
    subMatchList[1] = -1
    if_null matches, set_it_ind

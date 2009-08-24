@@ -555,7 +555,7 @@
         if argc == 1 goto no_opts
 
         .local pmc options
-        options = root_new ['parrot'; 'TclList']
+        options = new 'TclList'
         push options, 'strict'
         push options, 'failindex'
 
@@ -936,7 +936,7 @@
         })
 
         $S0 = shift argv
-        $P0 = root_new ['parrot'; 'TclString']
+        $P0 = new 'TclString'
         $S0 = $P0.'reverse'($S0)
         .return ($S0)
     })

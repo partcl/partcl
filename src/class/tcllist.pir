@@ -267,7 +267,7 @@ Copy the contents of other to self.
 
   string_style:
     .local pmc tclstring
-    tclstring = root_new ['parrot'; 'TclString']
+    tclstring = new 'TclString'
     $S0 = other
     tclstring = $S0
     .return()
@@ -290,7 +290,7 @@ Copy the contents of other to self.
   if $I0 == 1 goto odd_args
 
   .local pmc result
-  result = root_new ['parrot'; 'TclDict']
+  result = new 'TclDict'
 
   .local int pos
   pos = 0

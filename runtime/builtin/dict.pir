@@ -71,7 +71,7 @@ dict_error:
   $S0 = exception
   $I0 = index $S0, 'variable is array'
   if $I0 != -1 goto cant_dict_array
-  dictionary = root_new ['parrot'; 'TclDict']
+  dictionary = new 'TclDict'
 
 got_dict:
   .local pmc key, value
@@ -122,7 +122,7 @@ bad_args:
   if $I3 goto bad_args
 
   .local pmc retval
-  retval = root_new ['parrot'; 'TclDict']
+  retval = new 'TclDict'
 
   .local pmc key,value
 
@@ -185,7 +185,7 @@ bad_args:
   dictionary = dictionary.'getDictValue'()
 
   .local pmc options
-  options = root_new ['parrot'; 'TclList']
+  options = new 'TclList'
   options[0] = 'key'
   options[1] = 'script'
   options[2] = 'value'
@@ -198,7 +198,7 @@ bad_args:
   option = select_option(options, option, 'filterType')
 
   .local pmc results, key, value
-  results = root_new ['parrot'; 'TclDict']
+  results = new 'TclDict'
 
   if option == 'script' goto do_script_prelude
 
@@ -253,13 +253,13 @@ do_script_prelude:
   .local pmc iterator
   iterator = iter dictionary
   .local pmc retval
-  retval = root_new ['parrot';'TclDict']
+  retval = new 'TclDict'
   .local pmc body_proc
   body_proc = compileTcl(body)
 
   .local pmc check_key,check_value
   .local pmc eh
-  eh = root_new ['parrot'; 'ExceptionHandler']
+  eh = new 'ExceptionHandler'
   eh.'handle_types'(.CONTROL_CONTINUE,.CONTROL_BREAK)
   set_addr eh, body_handler
 script_loop:
@@ -341,7 +341,7 @@ for_loop:
   setVar(valueVar, $P2)
 
   .local pmc eh
-  eh = root_new ['parrot'; 'ExceptionHandler']
+  eh = new 'ExceptionHandler'
   eh.'handle_types'(.CONTROL_CONTINUE,.CONTROL_BREAK)
   set_addr eh, loop_handler
   push_eh eh
@@ -433,7 +433,7 @@ dict_error:
   $S0 = exception
   $I0 = index $S0, 'variable is array'
   if $I0 != -1 goto cant_dict_array
-  dictionary = root_new ['parrot'; 'TclDict']
+  dictionary = new 'TclDict'
 
 got_dict:
   .local pmc key
@@ -462,7 +462,7 @@ vivified:
 done:
   dictionary[key] = value
   set(dict_name, dictionary)
-  $P1 = root_new ['parrot'; 'TclList']
+  $P1 = new 'TclList'
   $P1[0] = key
   $P1[1] = value
   .return ($P1)
@@ -523,7 +523,7 @@ dict_error:
   $S0 = exception
   $I0 = index $S0, 'variable is array'
   if $I0 != -1 goto cant_dict_array
-  dictionary = root_new ['parrot';'TclDict']
+  dictionary = new 'TclDict'
 
 got_dict:
   .local pmc key, value
@@ -533,7 +533,7 @@ got_dict:
 
   $I0 = exists dictionary[key]
   if $I0 goto vivified
-  value = root_new ['parrot'; 'TclList']
+  value = new 'TclList'
   goto loop
 
 vivified:
@@ -590,7 +590,7 @@ got_pattern:
   iterator = iter dictionary
 
   .local pmc results, key
-  results = root_new ['parrot'; 'TclList']
+  results = new 'TclList'
 loop:
   unless iterator goto loop_done
   key = shift iterator
@@ -731,7 +731,7 @@ dict_error:
   $S0 = exception
   $I0 = index $S0, 'variable is array'
   if $I0 != -1 goto cant_dict_array
-  dictionary = root_new ['parrot';'TclDict']
+  dictionary = new 'TclDict'
 
 got_dict:
   .local pmc value
@@ -749,7 +749,7 @@ loop:
   sub_dict = $P1
   goto loop
 new_key:
-  $P1 = root_new ['parrot'; 'TclDict']
+  $P1 = new 'TclDict'
   sub_dict[key] = $P1
   sub_dict = $P1
   goto loop
@@ -814,7 +814,7 @@ dict_error:
   $S0 = exception
   $I0 = index $S0, 'variable is array'
   if $I0 != -1 goto cant_dict_array
-  dictionary = root_new ['parrot'; 'TclDict']
+  dictionary = new 'TclDict'
   set(dict_name, dictionary)
 
 got_dict:
@@ -876,15 +876,15 @@ dict_error:
   $S0 = exception
   $I0 = index $S0, 'variable is array'
   if $I0 != -1 goto cant_dict_array
-  dictionary = root_new ['parrot'; 'TclDict']
+  dictionary = new 'TclDict'
 
 got_dict:
   .local pmc body
   body = pop argv
 
   .local pmc keys,varnames
-  keys = root_new ['parrot'; 'TclList']
-  varnames = root_new ['parrot'; 'TclList']
+  keys = new 'TclList'
+  varnames = new 'TclList'
   # get lists of both keys & varnames, setting the variables.
 key_loop:
   $I0 = elements argv
@@ -958,7 +958,7 @@ got_pattern:
   iterator = iter dictionary
 
   .local pmc results, key, value
-  results = root_new ['parrot'; 'TclList']
+  results = new 'TclList'
 loop:
   unless iterator goto loop_done
   key = shift iterator
@@ -999,7 +999,7 @@ dict_error:
   $S0 = exception
   $I0 = index $S0, 'variable is array'
   if $I0 != -1 goto cant_dict_array
-  dictionary = root_new ['parrot'; 'TclDict']
+  dictionary = new 'TclDict'
 
 got_dict:
   .local pmc body

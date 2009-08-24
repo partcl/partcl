@@ -77,7 +77,7 @@ bad_args:
 
 .sub 'anon' :anon :load
   .local pmc options
-  options = root_new ['parrot'; 'TclList']
+  options = new 'TclList'
   push options, 'add'
   push options, 'clicks'
   push options, 'format'

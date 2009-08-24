@@ -6,7 +6,7 @@
 
   # XXX We aren't yet able to parse any of the tcl command metachars, so skip them
   .local pmc cmd_args
-  cmd_args = root_new ['parrot'; 'TclList']
+  cmd_args = new 'TclList'
 
   .local pmc iterator
   iterator = iter argv

@@ -26,7 +26,7 @@
 
 new_variable:
   .catch()
-  value = root_new ['parrot'; 'TclList']
+  value = new 'TclList'
   # goto loop
 
 loop:

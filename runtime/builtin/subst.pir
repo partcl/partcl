@@ -90,7 +90,7 @@ subst:
     ret = ast['ret']
 
     .local pmc pir
-    pir = root_new ['parrot'; 'CodeString']
+    pir = new 'CodeString'
 
     pir.'emit'(<<"END_PIR", namespace, code, ret)
 .HLL 'tcl'

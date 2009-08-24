@@ -167,10 +167,10 @@ got_platform:
   $P1 = box 0
   set_root_global ['tcl'], '$tcl_precision', $P1
 
-  $P1 = root_new ['parrot'; 'TclList']
+  $P1 = new 'TclList'
   set_global 'info_level', $P1
 
-  $P1 = root_new ['parrot'; 'TclList']
+  $P1 = new 'TclList'
   set_global 'events', $P1
 
   # Global variable initialization
@@ -202,7 +202,7 @@ got_platform:
   set_global 'next_channel_id', $P1
 
   # call chain of lex pads (for upvar and uplevel)
-  $P1 = root_new ['parrot'; 'TclList']
+  $P1 = new 'TclList'
   set_global 'call_chain', $P1
 
   # the regex used for namespaces
@@ -269,7 +269,7 @@ got_platform:
     ct = get_root_global ['_tcl'], 'compileTcl'
     $P0 = get_hll_namespace
     lit = $P0['load_init_tcl']
-    $P0 = root_new ['parrot';'TclString']
+    $P0 = new 'TclString'
     $P0 = filename
     set_root_global ['_tcl'], '$script', $P0
    .local string contents
@@ -282,11 +282,11 @@ got_platform:
 
     .local pmc library, sourcens, symns, nsiter
     .local string item, titem
-    library = root_new ['parrot';'Hash']
+    library = new 'Hash'
     sourcens = get_hll_namespace name
     library['name'] = name
     library['namespace'] = sourcens
-    symns = root_new ['parrot';'NameSpace']
+    symns = new 'NameSpace'
     nsiter = iter sourcens
   loop:
     unless nsiter goto loop_end
@@ -303,7 +303,7 @@ got_platform:
     symns[titem] = $P0
     goto loop
   loop_end:
-    $P0 = root_new ['parrot';'Hash']
+    $P0 = new 'Hash'
     $P0['ALL'] = symns
     $P0['DEFAULT'] = symns
     library['symbols'] = $P0

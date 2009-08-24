@@ -10,7 +10,7 @@
   if argc < 2 goto bad_args
 
   .local pmc results
-  results = root_new ['parrot'; 'TclList']
+  results = new 'TclList'
 
   .local pmc toInteger, toNumber
   toInteger = get_root_global [ '_tcl' ], 'toInteger'
@@ -204,7 +204,7 @@ size_set:
 handle_charclass:
   .local int negated
   .local pmc class
-  class = root_new ['parrot'; 'Hash']
+  class = new 'Hash'
 
   negated = 0
   $S0 = substr format, format_pos, 1

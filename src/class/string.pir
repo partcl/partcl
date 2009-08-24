@@ -11,7 +11,7 @@ call Tcl methods on them.
 .sub getListValue :method
   # a TclString would know what to do!
   .local pmc tclstring
-  tclstring = root_new ['parrot'; 'TclString'] 
+  tclstring = new 'TclString'
   .local string self_s
   self_s = self
   tclstring = self_s

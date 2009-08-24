@@ -23,8 +23,8 @@
   setVar    = get_root_global ['_tcl'], 'setVar'
 
   .local pmc varLists, lists, command
-  varLists = root_new ['parrot'; 'TclList']
-  lists    = root_new ['parrot'; 'TclList']
+  varLists = new 'TclList'
+  lists    = new 'TclList'
   command  = pop argv
   command  = compileTcl(command, 'ns'=>ns)
 
@@ -47,7 +47,7 @@ arg_loop:
   .TryCatch({
     list    = list.'getListValue'()
   }, {
-    list = root_new ['parrot'; 'TclList']
+    list = new 'TclList'
     })
 
   $I0 = elements varList
@@ -69,7 +69,7 @@ arg_loop:
 arg_done:
 
   .local pmc eh
-  eh = root_new ['parrot'; 'ExceptionHandler']
+  eh = new 'ExceptionHandler'
   eh.'handle_types'(.CONTROL_BREAK,.CONTROL_CONTINUE)
   set_addr eh, handle_continue
 

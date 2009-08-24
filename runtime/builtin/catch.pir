@@ -20,7 +20,7 @@
   if argc  > 3 goto bad_args
 
   .local pmc opts
-  opts = root_new ['parrot'; 'TclDict']
+  opts = new 'TclDict'
 
   code = argv[0]
   push_eh non_ok
@@ -42,7 +42,7 @@ got_retval:
   varname = argv[1]
 
   .local pmc opts
-  opts = root_new ['parrot'; 'TclDict']
+  opts = new 'TclDict'
 
   # Store the caught value in a
 

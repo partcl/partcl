@@ -100,7 +100,7 @@ Generate an arithmetic domain error
 
 .macro domain_error()
 domain_error:
-  $P9999 = root_new ['parrot'; 'TclString']
+  $P9999 = new 'TclString'
   $P9999 = 'ARITH DOMAIN {domain error: argument not in valid range}'
   $S9999 = 'domain error: argument not in valid range'
   tcl_error $S9999, $P9999

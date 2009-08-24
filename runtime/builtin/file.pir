@@ -665,7 +665,7 @@ bad_args:
     filename = argv[0]
 
     .local pmc retval
-    retval = root_new ['parrot'; 'TclList']
+    retval = new 'TclList'
 
     # XXX not platform-independent.
     # XXX this $P0 is a parrot type, not a tcl type.

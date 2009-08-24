@@ -126,7 +126,7 @@
         rule = globber.'compile'(match_str)
 
         .local pmc retval
-        retval = root_new ['parrot'; 'TclList']
+        retval = new 'TclList'
 
         .pmc(iterator, iter the_array)
 
@@ -217,7 +217,7 @@
             rule = globber.'compile'(pattern)
 
             .local pmc retval
-            retval = root_new ['parrot'; 'TclList']
+            retval = new 'TclList'
 
             .pmc(iterator, iter the_array)
             .While(iterator, {
@@ -237,7 +237,7 @@
             rule = tclARE(pattern)
 
             .local pmc retval
-            retval = root_new ['parrot'; 'TclList']
+            retval = new 'TclList'
 
             .pmc(iterator, iter the_array)
             .While(iterator, {
