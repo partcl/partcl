@@ -68,7 +68,7 @@ if (@ARGV && $ARGV[0] eq "--skip") {
 my @skipfiles;
 open my $fh, '<', "tools/$specfile";
 while (my $line = <$fh>) {
-    if ($line =~ m/^\s+\*\s+(\w*)(\s+\@SKIP)?/) {
+    if ($line =~ m/^\s+\*\s+(\S*)(\s+\@SKIP)?/) {
         my $file = $1;
         my $skippable = defined($2);
         if ($skippable && $skip) {
