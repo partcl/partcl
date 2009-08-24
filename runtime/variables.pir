@@ -138,7 +138,7 @@ check_is_hash:
   .return($P0)
 
 create_elem:
-  $P0 = root_new ['parrot'; 'Undef']
+  $P0 = new 'Undef'
   variable[key] = $P0
   .return($P0)
 
@@ -154,7 +154,7 @@ scalar:
   .return(variable)
 
 make_variable:
-    variable = root_new ['parrot'; 'Undef']
+    variable = new 'Undef'
     .tailcall storeVar(name, variable, 'depth' => depth)
 .end
 

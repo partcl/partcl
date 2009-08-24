@@ -86,7 +86,7 @@ scalar:
   var = find_var(name)
   if null var goto no_such_var
 
-  $P1 = root_new ['parrot'; 'Undef']
+  $P1 = new 'Undef'
   copy var, $P1
   # goto next
 

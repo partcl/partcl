@@ -174,7 +174,7 @@
             .return ('')
         })
 
-        $P1 = root_new ['parrot'; 'Undef']
+        $P1 = new 'Undef'
         copy the_array, $P1
        .return('')
     })

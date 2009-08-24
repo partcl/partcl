@@ -52,7 +52,7 @@ no_value:
     goto end
 
 create_new:
-    value = root_new ['parrot'; 'Undef']
+    value = new 'Undef'
     # store as a lexical *and* a global
     storeVar($S0, value)
     storeVar(name, value, 'global'=>1)

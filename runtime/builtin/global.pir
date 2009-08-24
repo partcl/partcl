@@ -30,7 +30,7 @@ loop:
 
   $P1 = get_hll_global sigil_varname
   unless null $P1 goto has_global
-  $P1 = root_new ['parrot'; 'Undef']
+  $P1 = new 'Undef'
   set_hll_global sigil_varname, $P1
 
 has_global:
