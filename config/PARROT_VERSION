@@ -1,6 +1,7 @@
 # Specific an svn revision, e.g.:
 # revision: 12345
-revision: 40606
+# r40628 introduced a memory leak that kills us.
+revision: 40625
 
 # Use this if there is a specific feature in parrot that we need to function.
 # partcl trunk will typically use this.
