@@ -92,7 +92,9 @@ bad_args:
   .local pmc    ns
   .local string name
   ns   = splitNamespace(procname)
-  name = pop ns
+  .Try({
+      name = pop ns
+  })
   name = '&' . name
 
   unshift ns, 'tcl'
