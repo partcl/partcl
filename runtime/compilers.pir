@@ -17,6 +17,9 @@ Given an expression, return a subroutine, or optionally, the raw PIR
 
     if expression == '' goto empty
 
+    .const 'Sub' backslash_newline_subst = 'backslash_newline_subst'
+    expression = backslash_newline_subst(expression)
+
     parse = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'expression'
     match = parse(expression, 'pos'=>0, 'grammar'=>'TclExpr::Grammar')
 
