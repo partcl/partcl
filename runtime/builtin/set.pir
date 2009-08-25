@@ -2,34 +2,27 @@
 .namespace []
 
 .sub '&set'
-  .param pmc argv :slurpy
-  .argc()
+    .param pmc argv :slurpy
+    .argc()
 
-  if argc < 1 goto bad_args
-  if argc > 2 goto bad_args
+    .int(args_ok,1)
+    .If(argc < 1, {args_ok=0})
+    .If(argc > 2, {args_ok=0})
+ 
+    .Unless(args_ok, {
+        die 'wrong # args: should be "set varName ?newValue?"'
+    })
 
-  .local pmc varName
-  varName = argv[0]
+    .const 'Sub' readVar = 'readVar'
+    .const 'Sub' setVar  = 'setVar'
 
-  if argc == 2 goto set
+    .pmc(varName, argv[0])
+    .If(argc==2, {
+        .pmc(value, argv[1])
+        .tailcall setVar(varName, value)
+    })
+    .tailcall readVar(varName)
 
-get:
-  .local pmc readVar
-  readVar = get_root_global ['_tcl'], 'readVar'
-  .tailcall readVar(varName)
-
-set:
-  .local pmc value
-  value = argv[1]
-
-  .local pmc setVar
-  setVar = get_root_global ['_tcl'], 'setVar'
-
-  .tailcall setVar(varName, value)
-
-
-bad_args:
-  die 'wrong # args: should be "set varName ?newValue?"'
 .end
 
 # Local Variables:
