@@ -1,7 +1,6 @@
 append.test:	Total	37	Passed	33	Skipped	0	Failed	4
 appendComp.test:	Total	40	Passed	32	Skipped	0	Failed	8
-chan.test:	Total	35	Passed	2	Skipped	0	Failed	33
-compExpr.test:	Total	80	Passed	75	Skipped	0	Failed	5
+compExpr.test:	Total	80	Passed	76	Skipped	0	Failed	4
 concat.test:	Total	9	Passed	9	Skipped	0	Failed	0
 env.test:	Total	20	Passed	6	Skipped	1	Failed	13
 error.test:	Total	34	Passed	24	Skipped	0	Failed	10
@@ -41,7 +40,7 @@ subst.test:	Total	59	Passed	35	Skipped	0	Failed	24
 timer.test:	Total	54	Passed	8	Skipped	0	Failed	46
 unknown.test:	Total	7	Passed	6	Skipped	0	Failed	1
 unload.test:	Total	26	Passed	1	Skipped	0	Failed	25
-upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
-var.test:	Total	84	Passed	38	Skipped	17	Failed	29
+upvar.test:	Total	55	Passed	26	Skipped	7	Failed	22
+var.test:	Total	84	Passed	39	Skipped	17	Failed	28
 while-old.test:	Total	15	Passed	14	Skipped	0	Failed	1
 while.test:	Total	46	Passed	42	Skipped	0	Failed	4
