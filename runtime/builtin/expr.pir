@@ -9,11 +9,9 @@
         die 'wrong # args: should be "expr arg ?arg ...?"'
     })
 
-    .local pmc compileExpr
-    compileExpr = get_root_global ['_tcl'], 'compileExpr'
+    .const 'Sub' compileExpr = 'compileExpr'
 
-    .local string expr
-    expr = join ' ', argv
+    .str(expr, {join ' ', argv})
 
     .pmc(interp, getinterp)
     .pmc(ns, {interp['namespace'; 1]})
