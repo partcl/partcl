@@ -205,13 +205,14 @@ throw an exception.
 
 .sub 'get_bool' :vtable
     .str(self_s, self)
+
+    .const 'Sub' true_s  = 'true_s'
+    .const 'Sub' false_s = 'false_s'
+
     .int(self_len, length self_s)
 
-    .local pmc truth
-    truth = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'true_s'
-
     .local pmc match
-    match = truth(self_s, 'grammar'=>'TclExpr::Grammar')
+    match = true_s(self_s, 'grammar'=>'TclExpr::Grammar')
 
     unless match goto check_false
     $I0 = match.'to'()
@@ -223,10 +224,7 @@ throw an exception.
 
 check_false:
 
-    .local pmc falsehood
-    falsehood = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'false_s'
-
-    match = falsehood(self_s, 'grammar'=>'TclExpr::Grammar')
+    match = false_s(self_s, 'grammar'=>'TclExpr::Grammar')
 
     unless match goto check_numeric
     $I0 = match.'to'()

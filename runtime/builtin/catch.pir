@@ -5,6 +5,9 @@
   .param pmc argv :slurpy
   .argc()
 
+  .const 'Sub' setVar  = 'setVar'
+  .const 'Sub' readVar = 'readVar'
+
   .local int retval
   .local pmc code_retval, ns
   .local string varname,sigil_varname,code
@@ -44,12 +47,7 @@ got_retval:
 
   # Store the caught value in a
 
-  .local pmc setVar
-  setVar = get_root_global ['_tcl'], 'setVar'
   setVar(varname,code_retval)
-
-  .local pmc readVar
-  readVar = get_root_global ['_tcl'], 'readVar'
 
 handle_retval:
   # We need to convert the code
@@ -85,8 +83,6 @@ done:
   ei = readVar('::errorInfo')
   opts['-errorinfo'] = ei
 
-  .local pmc setVar
-  setVar = get_root_global ['_tcl'], 'setVar'
   setVar(optionsVarName,opts)
 
 return_val:

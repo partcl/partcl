@@ -16,6 +16,7 @@
   if argc < 2 goto badargs
 
     .const 'Sub' options = 'regexp_options'
+    .const 'Sub' setVar = 'setVar'
 
   .local pmc select_switches, switches
   select_switches  = get_root_global ['_tcl'], 'select_switches'
@@ -43,8 +44,6 @@ ready:
    argc = elements argv
    unless argc goto done
    .local string matchStr, matchVar
-   .local pmc setVar
-   setVar = get_root_global [ '_tcl' ], 'setVar'
 
    matchVar = shift argv
 

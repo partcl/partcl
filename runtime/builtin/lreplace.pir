@@ -5,10 +5,11 @@
     .param pmc argv :slurpy
     .argc()
 
+    .const 'Sub' getIndex = 'getIndex'
+
     if argc < 3 goto bad_args
 
-    .local pmc list, retval, iterator, getIndex
-    getIndex = get_root_global ['_tcl'], 'getIndex'
+    .local pmc list, retval, iterator
     $P0 = shift argv
     list = $P0.'getListValue'()
     list = clone list

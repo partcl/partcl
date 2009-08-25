@@ -11,8 +11,7 @@
   # get helper subs
   .local pmc toInteger
   toInteger = get_root_global ['_tcl'], 'toInteger'
-  .local pmc makeVar
-  makeVar = get_root_global ['_tcl'], 'makeVar'
+  .const 'Sub' makeVar = 'makeVar'
 
   # Get/Vivify variable
   .local pmc varName

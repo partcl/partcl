@@ -5,8 +5,8 @@
     .param pmc argv :slurpy
     .argc()
 
-    .local pmc readVar
-    readVar = get_root_global ['_tcl'], 'readVar'
+    .const 'Sub' setVar  = 'setVar'
+    .const 'Sub' readVar = 'readVar'
 
     .If(argc==0, {
         die 'wrong # args: should be "append varName ?value value ...?"'
@@ -30,9 +30,6 @@
         concat value, strVal
         inc looper
     })
-
-    .local pmc setVar
-    setVar = get_root_global ['_tcl'], 'setVar'
 
     setVar(name, value)
     # should be able to return ourselves, but for Issue #2

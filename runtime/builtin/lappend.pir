@@ -5,6 +5,9 @@
   .param pmc argv :slurpy
   .argc()
 
+  .const 'Sub' setVar  = 'setVar'
+  .const 'Sub' readVar = 'readVar'
+
   .local pmc value, retval
   .local int return_type
   if argc == 0 goto error
@@ -14,10 +17,8 @@
   .local int cnt
   cnt = 1
 
-  .local pmc read
-  read = get_root_global ['_tcl'], 'readVar'
   push_eh new_variable
-    value = read(listname)
+    value = readVar(listname)
   pop_eh
 
   value  = value.'getListValue'()
@@ -35,9 +36,8 @@ loop:
   inc cnt
   goto loop
 loop_done:
-  .local pmc set
-  set = get_root_global ['_tcl'], 'setVar'
-  set(listname, value)
+
+  setVar(listname, value)
   # should be able to return ourselves, but for Issue #2
   .local pmc retval
   retval = clone value

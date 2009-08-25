@@ -11,6 +11,8 @@
     .param pmc argv :slurpy
     .argc()
 
+    .const 'Sub' setVar = 'setVar'
+
     .Unless(argc, {
       die 'wrong # args: should be "binary option ?arg arg ...?"'
     })
@@ -47,8 +49,7 @@
 
         .pmc(ret, {tcl_binary_scan value_s, formatString})
 
-        .local pmc setVar, variables, values
-        setVar = get_root_global ['_tcl'], 'setVar'
+        .local pmc variables, values
         variables = iter argv
         values    = iter ret
 

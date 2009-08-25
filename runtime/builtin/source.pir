@@ -5,6 +5,8 @@
   .param pmc argv :slurpy
   .argc()
 
+  .const 'Sub' compileTcl = 'compileTcl'
+
   if argc != 1 goto bad_args
 
   .local string filename
@@ -20,8 +22,7 @@
   interp = getinterp
   ns = interp['namespace';1]
 
-  .local pmc compileTcl, code
-  compileTcl = get_root_global ['_tcl'], 'compileTcl'
+  .local pmc code
   code = compileTcl ( file_contents, 'ns' => ns, 'bsnl' => 1)
 
   .tailcall code()

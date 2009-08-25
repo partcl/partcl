@@ -5,6 +5,8 @@
   .param pmc argv :slurpy
   .argc()
 
+  .const 'Sub' findVar = 'findVar'
+
   if argc == 0 goto loop_end
 
   .local int i
@@ -29,8 +31,7 @@ no_flags:
   i = 1
 
 flags_done:
-  .local pmc find_var, var
-  find_var = get_root_global ['_tcl'], 'findVar'
+  .local pmc var
 
   .local string name
 loop:
@@ -57,7 +58,7 @@ array:
   inc char
   key = substr name, char, len
 
-  var = find_var(array_name)
+  var = findVar(array_name)
   if null var goto no_such_var
   $I0 = does var, 'associative_array'
   unless $I0 goto variable_isnt_array
@@ -82,7 +83,7 @@ no_such_element:
   die $S0
 
 scalar:
-  var = find_var(name)
+  var = findVar(name)
   if null var goto no_such_var
 
   $P1 = new 'Undef'

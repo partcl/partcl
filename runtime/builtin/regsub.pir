@@ -12,6 +12,8 @@
   .param pmc argv :slurpy
   .argc()
 
+  .const 'Sub' setVar = 'setVar'
+
   if argc < 3 goto badargs
 
   .local string expression, target, subSpec, original_target
@@ -104,8 +106,6 @@ loop_done:
 
   argc = elements argv
   unless argc goto return_it
-  .local pmc setVar
-  setVar = get_root_global [ '_tcl' ], 'setVar'
   .local string varName
   varName = shift argv
   setVar (varName, original_target)

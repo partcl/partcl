@@ -5,16 +5,15 @@
   .param pmc argv :slurpy
   .argc()
 
+  .const 'Sub' setVar  = 'setVar'
+  .const 'Sub' readVar = 'readVar'
+
   if argc < 2 goto wrong_args
 
   .local string name, value
   name  = argv[0]
   value = pop argv
   dec argc
-
-  .local pmc readVar, setVar
-  readVar = get_root_global ['_tcl'], 'readVar'
-  setVar  = get_root_global ['_tcl'], 'setVar'
 
   .local pmc retval, list, original_list
   original_list = readVar(name)

@@ -12,6 +12,9 @@
     .param pmc argv :slurpy
     .argc()
 
+    .const 'Sub' setVar  = 'setVar'
+    .const 'Sub' findVar = 'findVar'
+
     .If(argc<2, {
         die 'wrong # args: should be "array option arrayName ?arg ...?"'
     })
@@ -28,9 +31,6 @@
 
     .str(array_name, shift argv)
     .null(the_array)
-
-    .local pmc findVar
-    findVar = get_root_global ['_tcl'], 'findVar'
 
     the_array  = findVar(array_name)
 
@@ -74,9 +74,6 @@
         .If(is_odd, {
             die 'list must have an even number of elements'
         })
-
-        .local pmc setVar
-        setVar = get_root_global ['_tcl'], 'setVar'
 
         .If(null the_array, {
             the_array = new 'TclArray'

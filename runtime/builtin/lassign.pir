@@ -5,14 +5,12 @@
   .param pmc argv :slurpy
   .argc()
 
+  .const 'Sub' setVar = 'setVar'
+
   if argc < 2 goto bad_args
 
   .local pmc retval
   .local pmc list
-
-  # get helper subs
-  .local pmc setVar
-  setVar = get_root_global ['_tcl'], 'setVar'
 
   # coerce argument types
   list = shift argv

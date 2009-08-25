@@ -4,6 +4,8 @@
 .sub '&return'
     .param pmc argv :slurpy
 
+    .const 'Sub' setVar = 'setVar'
+
     .local pmc argv_bkp
     argv_bkp = clone argv
 
@@ -83,8 +85,6 @@ skip_option:
     goto process_args # skip this for now.
 
 ready:
-    .local pmc setVar
-    setVar = get_root_global ['_tcl'], 'setVar'
     setVar('::errorCode', ec)
     setVar('::errorInfo', ei)
     if type == .TCL_RETURN goto return

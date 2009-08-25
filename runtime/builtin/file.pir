@@ -27,6 +27,8 @@
   .param pmc argv :slurpy
   .argc()
 
+  .const 'Sub' setVar = 'setVar'
+
   if argc == 0 goto few_args
 
   .local string subcommand_name
@@ -120,9 +122,6 @@ bad_args:
   push_eh no_file
     $P2 = $P1.'stat'(file)
   pop_eh
-
-  .local pmc setVar
-  setVar = get_global 'setVar'
 
   $P3 = new 'TclArray'
   $P1 = $P2[8]

@@ -50,16 +50,15 @@ no_args:
   .param pmc argv
   .argc()
 
-  if argc < 2 goto bad_args
+  .const 'Sub' setVar  = 'setVar'
+  .const 'Sub' readVar = 'readVar'
 
-  .local pmc read, set
-  read = get_root_global ['_tcl'], 'readVar'
-  set  = get_root_global ['_tcl'], 'setVar'
+  if argc < 2 goto bad_args
 
   .local pmc dictionary, dict_name
   dict_name = shift argv
   push_eh dict_error
-    dictionary = read(dict_name)
+    dictionary = readVar(dict_name)
   pop_eh
   dictionary = dictionary.'getDictValue'()
   goto got_dict
@@ -98,7 +97,7 @@ loop:
 loop_done:
 
   dictionary[key] = value
-  set(dict_name, dictionary)
+  setVar(dict_name, dictionary)
   .return (dictionary)
 
 cant_dict_array:
@@ -301,10 +300,10 @@ bad_args:
   .param pmc argv
   .argc()
 
+  .const 'Sub' setVar = 'setVar'
   if argc != 3 goto bad_args
 
-  .local pmc set, script
-  set     = get_root_global ['_tcl'], 'setVar'
+  .local pmc script
   script  = get_root_global ['_tcl'], 'compileTcl'
 
   .local pmc varNames
@@ -406,17 +405,16 @@ bad_args:
   .param pmc argv
   .argc()
 
+  .const 'Sub' setVar  = 'setVar'
+  .const 'Sub' readVar = 'readVar'
+
   if argc < 2 goto bad_args
   if argc > 3 goto bad_args
-
-  .local pmc read, set
-  read = get_root_global ['_tcl'], 'readVar'
-  set  = get_root_global ['_tcl'], 'setVar'
 
   .local pmc dictionary, dict_name
   dict_name = shift argv
   push_eh dict_error
-    dictionary = read(dict_name)
+    dictionary = readVar(dict_name)
   pop_eh
   dictionary = dictionary.'getDictValue'()
   goto got_dict
@@ -454,7 +452,7 @@ vivified:
 
 done:
   dictionary[key] = value
-  set(dict_name, dictionary)
+  setVar(dict_name, dictionary)
   $P1 = new 'TclList'
   $P1[0] = key
   $P1[1] = value
@@ -495,16 +493,15 @@ bad_args:
   .param pmc argv
   .argc()
 
-  if argc < 2 goto bad_args
+  .const 'Sub' setVar  = 'setVar'
+  .const 'Sub' readVar = 'readVar'
 
-  .local pmc read, set
-  read = get_root_global ['_tcl'], 'readVar'
-  set  = get_root_global ['_tcl'], 'setVar'
+  if argc < 2 goto bad_args
 
   .local pmc dictionary, dict_name
   dict_name = shift argv
   push_eh dict_error
-    dictionary = read(dict_name)
+    dictionary = readVar(dict_name)
   pop_eh
   dictionary = dictionary.'getDictValue'()
   goto got_dict
@@ -540,7 +537,7 @@ loop:
 loop_done:
 
   dictionary[key] = value
-  set(dict_name, dictionary)
+  setVar(dict_name, dictionary)
   .return (dictionary)
 
 cant_dict_array:
@@ -698,16 +695,15 @@ bad_args:
   .param pmc argv
   .argc()
 
-  if argc < 3 goto bad_args
+  .const 'Sub' setVar  = 'setVar'
+  .const 'Sub' readVar = 'readVar'
 
-  .local pmc read, set
-  read = get_root_global ['_tcl'], 'readVar'
-  set  = get_root_global ['_tcl'], 'setVar'
+  if argc < 3 goto bad_args
 
   .local pmc dictionary, dict_name
   dict_name = shift argv
   push_eh dict_error
-    dictionary = read(dict_name)
+    dictionary = readVar(dict_name)
   pop_eh
   dictionary = dictionary.'getDictValue'()
   goto got_dict
@@ -743,7 +739,7 @@ loop_done:
   key = shift argv # should be the last one..
   sub_dict[key] = value
 
-  set(dict_name, dictionary)
+  setVar(dict_name, dictionary)
   .return (dictionary)
 
 cant_dict_array:
@@ -779,16 +775,15 @@ bad_args:
   .param pmc argv
   .argc()
 
-  if argc < 2 goto bad_args
+  .const 'Sub' setVar  = 'setVar'
+  .const 'Sub' readVar = 'readVar'
 
-  .local pmc read, set
-  read = get_root_global ['_tcl'], 'readVar'
-  set  = get_root_global ['_tcl'], 'setVar'
+  if argc < 2 goto bad_args
 
   .local pmc dictionary, dict_name
   dict_name = shift argv
   push_eh dict_error
-    dictionary = read(dict_name)
+    dictionary = readVar(dict_name)
   pop_eh
   dictionary = dictionary.'getDictValue'()
   goto got_dict
@@ -799,7 +794,7 @@ dict_error:
   $I0 = index $S0, 'variable is array'
   if $I0 != -1 goto cant_dict_array
   dictionary = new 'TclDict'
-  set(dict_name, dictionary)
+  setVar(dict_name, dictionary)
 
 got_dict:
 
@@ -838,18 +833,17 @@ bad_args:
   .param pmc argv
   .argc()
 
+  .const 'Sub' setVar  = 'setVar'
+  .const 'Sub' readVar = 'readVar'
+
   if argc < 4 goto bad_args
   $I0 = argc % 2
   if $I0 goto bad_args
 
-  .local pmc read, set
-  read = get_root_global ['_tcl'], 'readVar'
-  set  = get_root_global ['_tcl'], 'setVar'
-
   .local pmc dictionary, dict_name
   dict_name = shift argv
   push_eh dict_error
-    dictionary = read(dict_name)
+    dictionary = readVar(dict_name)
   pop_eh
   dictionary = dictionary.'getDictValue'()
   goto got_dict
@@ -877,7 +871,7 @@ key_loop:
   $P2 = shift argv
   push varnames, $P2
   $P3 = dictionary[$P1]
-  set($P2, $P3)
+  setVar($P2, $P3)
   goto key_loop
 done_key_loop:
 # run the body of the script. save the return vaalue.
@@ -961,16 +955,15 @@ bad_args:
   .param pmc argv
   .argc()
 
-  if argc ==0  goto bad_args
+  .const 'Sub' setVar  = 'setVar'
+  .const 'Sub' readVar = 'readVar'
 
-  .local pmc read, set
-  read = get_root_global ['_tcl'], 'readVar'
-  set  = get_root_global ['_tcl'], 'setVar'
+  if argc ==0  goto bad_args
 
   .local pmc dictionary, dict_name
   dict_name = shift argv
   push_eh dict_error
-    dictionary = read(dict_name)
+    dictionary = readVar(dict_name)
   pop_eh
   dictionary = dictionary.'getDictValue'()
   goto got_dict
@@ -1002,7 +995,7 @@ alias_keys:
   unless iterator goto done_alias
   $P1 = shift iterator
   $P2 = dictionary[$P1]
-  set($P1,$P2)
+  setVar($P1,$P2)
   goto alias_keys
 done_alias:
   .local pmc retval

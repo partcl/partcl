@@ -5,6 +5,8 @@
   .param pmc argv :slurpy
   .argc()
 
+  .const 'Sub' setVar = 'setVar'
+
   if argc < 2 goto bad_args
 
   .local pmc results
@@ -73,8 +75,6 @@ done:
 
 
 assign_results:
-  .local pmc setVar
-  setVar = get_root_global ['_tcl'], 'setVar'
   $I0 = 0
 var_loop:
   if $I0 >= argc goto var_loop_done

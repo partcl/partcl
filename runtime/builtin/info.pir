@@ -5,6 +5,8 @@
   .param pmc argv :slurpy
   .argc()
 
+  .const 'Sub' setVar = 'setVar'
+
   unless argc goto bad_args
 
   .local string subcommand_name
@@ -154,9 +156,6 @@ bad_args:
   procname = argv[0]
   argname  = argv[1]
   varname  = argv[2]
-
-  .local pmc setVar
-  setVar = get_root_global ['_tcl'], 'setVar'
 
   .local pmc splitNamespace
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
@@ -347,13 +346,14 @@ bad_args:
   .param pmc argv
   .argc()
 
+  .const 'Sub' readVar = 'readVar'
+
   if argc != 1 goto bad_args
 
   .local string varname
   varname = argv[0]
 
-  .local pmc readVar, found_var
-  readVar  = get_root_global ['_tcl'], 'readVar'
+  .local pmc found_var
   push_eh not_found
     found_var = readVar(varname)
   pop_eh
@@ -393,11 +393,11 @@ bad_args:
   .param pmc argv
   .argc()
 
+  .const 'Sub' readVar = 'readVar'
+
   if argc != 0 goto bad_args
 
-  .local pmc read
-  read = get_root_global ['_tcl'], 'readVar'
-  .tailcall read('tcl_patchLevel')
+  .tailcall readVar('tcl_patchLevel')
 
 bad_args:
   die 'wrong # args: should be "info patchlevel"'

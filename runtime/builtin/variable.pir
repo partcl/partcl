@@ -7,10 +7,9 @@
 
     if argc == 0 goto bad_args
 
-    .local pmc findVar, storeVar, splitNamespace
-    findVar  = get_root_global ['_tcl'], 'findVar'
-    storeVar = get_root_global ['_tcl'], 'storeVar'
-    splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
+    .const 'Sub' findVar        = 'findVar'
+    .const 'Sub' storeVar       = 'storeVar'
+    .const 'Sub' splitNamespace = 'splitNamespace'
 
     .local pmc iterator, name, value, ns
     iterator = iter argv

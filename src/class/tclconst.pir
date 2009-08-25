@@ -9,49 +9,50 @@ Define the attributes required for the class.
 
 =cut
 
+.sub const_backslashes :immediate :anon
+    $P0 = new 'Hash'
+    $P0[ 97] = "\a"
+    $P0[ 98] = "\x8" # \b
+    $P0[102] = "\f"
+    $P0[110] = "\n"
+    $P0[114] = "\r"
+    $P0[116] = "\t"
+    $P0[118] = "\v"
+    .return($P0)
+.end
+
+.sub const_hexadecimal :immediate :anon
+    $P0 = new 'Hash'
+    $P0[ 48] =  0 # '0'
+    $P0[ 49] =  1
+    $P0[ 50] =  2
+    $P0[ 51] =  3
+    $P0[ 52] =  4
+    $P0[ 53] =  5
+    $P0[ 54] =  6
+    $P0[ 55] =  7
+    $P0[ 56] =  8
+    $P0[ 57] =  9
+    $P0[ 65] = 10 # 'A'
+    $P0[ 66] = 11
+    $P0[ 67] = 12
+    $P0[ 68] = 13
+    $P0[ 69] = 14
+    $P0[ 70] = 15
+    $P0[ 97] = 10 # 'a'
+    $P0[ 98] = 11
+    $P0[ 99] = 12
+    $P0[100] = 13
+    $P0[101] = 14
+    $P0[102] = 15
+    .return($P0)
+.end
+
 .sub class_init :anon :load
   # While it is tempting to inherit directly from TclString, if we do that
   # we lose the predefined MMD is_equal that works with the existing structure.
   $P0 = get_class 'String'
   $P1 = subclass $P0, 'TclConst'
-
-  $P0 = new 'Hash'
-  $P0[ 97] = "\a"
-  $P0[ 98] = "\x8" # \b
-  $P0[102] = "\f"
-  $P0[110] = "\n"
-  $P0[114] = "\r"
-  $P0[116] = "\t"
-  $P0[118] = "\v"
-
-  # RT#40640: These should probably be moved into a class attribute.
-  set_root_global ['_tcl'], 'backslashes', $P0
-
-  $P0 = new 'Hash'
-  $P0[ 48] =  0 # '0'
-  $P0[ 49] =  1
-  $P0[ 50] =  2
-  $P0[ 51] =  3
-  $P0[ 52] =  4
-  $P0[ 53] =  5
-  $P0[ 54] =  6
-  $P0[ 55] =  7
-  $P0[ 56] =  8
-  $P0[ 57] =  9
-  $P0[ 65] = 10 # 'A'
-  $P0[ 66] = 11
-  $P0[ 67] = 12
-  $P0[ 68] = 13
-  $P0[ 69] = 14
-  $P0[ 70] = 15
-  $P0[ 97] = 10 # 'a'
-  $P0[ 98] = 11
-  $P0[ 99] = 12
-  $P0[100] = 13
-  $P0[101] = 14
-  $P0[102] = 15
-
-  set_root_global ['_tcl'], 'hexadecimal', $P0
 
 .end
 
@@ -60,9 +61,8 @@ Define the attributes required for the class.
 
   .local int value_length
 
-  .local pmc backslashes, hexadecimal
-  backslashes = get_root_global ['_tcl'], 'backslashes'
-  hexadecimal = get_root_global ['_tcl'], 'hexadecimal'
+  .const 'Sub' backslashes = 'const_backslashes'
+  .const 'Sub' hexadecimal = 'const_hexadecimal'
 
   .local int pos
   pos = 0

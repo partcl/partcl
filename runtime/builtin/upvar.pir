@@ -5,6 +5,9 @@
   .param pmc argv :slurpy
   .argc()
 
+  .const 'Sub' makeVar = 'makeVar'
+  .const 'Sub' findVar = 'findVar'
+
   if argc < 2 goto bad_args
 
   .local pmc getCallLevel, call_chain
@@ -25,12 +28,6 @@ skip:
   if $I0 == 1 goto bad_args
 
   # for each othervar/myvar pair, created a mapping from
-
-  .local pmc makeVar, setVar, findVar
-  makeVar     = get_root_global ['_tcl'], 'makeVar'
-  setVar      = get_root_global ['_tcl'], 'setVar'
-  findVar = get_root_global ['_tcl'], 'findVar'
-
   .argc()
   .local int counter
   counter    = 0
