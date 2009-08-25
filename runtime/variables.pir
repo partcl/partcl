@@ -390,12 +390,31 @@ lexical_is_null:
 global_var:
   depth += 2
   ns = splitNamespace(name, depth)
+  .str(origName, name)
   name = pop ns
   name = '$' . name
 
+  .pmc(iterator, iter ns)
+  .local pmc ns_cur
+  ns_cur = get_root_namespace
+  ns_cur = ns_cur['tcl']
+  .While(iterator, {
+      $S0 = shift iterator 
+      ns_cur = ns_cur[$S0]
+      .If(null ns_cur, {
+	  $S0 = "can't set \""
+	  $S0 .= origName
+	  $S0 .= "\": parent namespace doesn't exist"
+          tcl_error $S0
+        })
+  })
+ns_loop:
+  
   unshift ns, 'tcl'
   ns = get_root_namespace ns
   if null ns goto global_not_undef
+
+
   $P0 = ns[name]
   if null $P0 goto global_not_undef
 

@@ -10,7 +10,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 8
+plan 9
 
 eval_is {
  set a 2
@@ -53,4 +53,7 @@ eval_is {set a b c} \
   {wrong # args: should be "set varName ?newValue?"} \
   {too many args}
 
+eval_is {set ::a::b::c 1} \
+  {can't set "::a::b::c": parent namespace doesn't exist}
+  {namespaces don't auto-vivify}
 
