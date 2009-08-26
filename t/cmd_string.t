@@ -10,7 +10,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 154
+plan 158
 
 # arg checking
 eval_is {string} \
@@ -59,10 +59,16 @@ eval_is {string last a b c d} \
 
 # [string index]
 is [string index abcde 0]       a {index, initial}
+is [string index abcde "  1 "]  b {index with whitespace}
 is [string index abcde end]     e {index, end}
 is [string index abcde 10]     {} {index, overshot}
 is [string index abcde -1]     {} {index, undershot, neg.}
 is [string index abcde end--1] {} {index, overshot, neg.}
+is [string index abcde 1+1]     c {index, addition}
+is [string index abcde 4-1]     d {index, addition}
+eval_is {string index abcde 1*2} \
+  {bad index "1*2": must be integer?[+-]integer? or end?[+-]integer?} \
+  {index, unsupported mathop}
 eval_is {string index abcde 1.2} \
   {bad index "1.2": must be integer?[+-]integer? or end?[+-]integer?} \
   {index, float}

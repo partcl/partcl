@@ -122,67 +122,87 @@ not_integer_eh:
 
 =head2 _Tcl::getIndex
 
-Given a tcl string index and an List pmc, return the corresponding numeric
-index.
+Given a tcl-style index and a string|list, return the corresponding
+parrot-style index.
+
+A lot of this work could probably be pushed into the AST.
 
 =cut
 
-.sub getIndex
-  .param string idx
-  .param pmc    list
+.sub 'getIndex'
+    .param string idx
+    .param pmc    obj
 
-  if idx == 'end' goto end
+    .local pmc parser
+    parser = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'string_index'
 
-  $S0 = substr idx, 0, 4
-  if $S0 == 'end-' goto before_end
-  if $S0 == 'end+' goto after_end
+    .local pmc match
+    match = parser(idx, 'pos'=>0, 'grammar'=>'TclExpr::Grammar')
 
-  push_eh bad_index
+    unless match goto bad_index
+    .int(idx_len, {length idx})
+   
+    $I0 = match.'to'()
+
+    unless $I0 == idx_len goto bad_index # must match whole thing.
+
+    .int(obj_len, {elements obj})
+    dec obj_len
+    .If(idx == 'end', {
+        .return(obj_len)
+    })
+
+    $S0 = substr idx, 0, 4
+    .If($S0 == 'end-', {
+        $S0 = substr idx, 4
+        $I0 = toInteger($S0)
+        $I1 = obj_len - $I0
+        .return($I1)
+    })
+    .If($S0 == 'end+', {
+        $S0 = substr idx, 4
+        $I0 = toInteger($S0)
+        $I1 = obj_len + $I0
+        .return($I1)
+    })
+
+    $I0 = index idx, '+'
+    .local string str_l, str_r
+    .local int    int_l, int_r
+    .If($I0 >0 , {
+        # get both integers and add them.
+        str_l = substr idx, 0, $I0 
+        inc $I0
+        str_r = substr idx, $I0
+	int_l = 'toInteger'(str_l)
+	int_r = 'toInteger'(str_r)
+
+        $I0 = int_l + int_r
+	.return($I0)
+    })
+
+    $I0 = index idx, '-'
+    .If($I0 > 0, {
+        # get both integers and subtract them.
+        str_l = substr idx, 0, $I0 
+        inc $I0
+        str_r = substr idx, $I0
+	int_l = 'toInteger'(str_l)
+	int_r = 'toInteger'(str_r)
+
+        $I0 = int_l - int_r
+	.return($I0)
+    })
+
+    # otherwise, it's just a plain integer.
     $I0 = toInteger(idx)
-  pop_eh
-  .return($I0)
-
-before_end:
-  $S0 = substr idx, 4
-  push_eh bad_index
-    $I0 = toInteger($S0)
-  pop_eh
-
-  $I1 = elements list
-  dec $I1
-  $I0 = $I1 - $I0
-  .return($I0)
-
-after_end:
-  $S0 = substr idx, 4
-  push_eh bad_index
-    $I0 = toInteger($S0)
-  pop_eh
-
-  $I1 = elements list
-  dec $I1
-  $I0 = $I1 + $I0
-  .return($I0)
-
-end:
-  $I0 = elements list
-  dec $I0
-  .return($I0)
+   .return($I0)
 
 bad_index:
-  .catch()
-  $S99 = exception
   $S0 = 'bad index "'
   $S0 .= idx
   $S0 .= '": must be integer?[+-]integer? or end?[+-]integer?'
-  $S1 = ' (looks like invalid octal number)'
-  $I0 = index $S99, $S1
-  if $I0 == -1 goto bad_index_done
-  $I0 = index idx, '--'
-  if $I0 != -1 goto bad_index_done # don't squawk on negative indices..
-  $S0 .= $S1
-bad_index_done:
-  die $S0
+  tcl_error $S0
 .end
 
 =head2 _Tcl::getChannel

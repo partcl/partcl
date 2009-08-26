@@ -18,6 +18,8 @@
     .param pmc argv :slurpy
     .argc()
 
+    .const 'Sub' getIndex = 'getIndex'
+
     .Unless(argc, {
         die 'wrong # args: should be "string subcommand ?argument ...?"'
     })
@@ -46,8 +48,6 @@
         .int(pos, 0)
         .Unless(argc==2, {
             .str(pos_s, argv[2])
-            .local pmc getIndex
-            getIndex = get_root_global ['_tcl'], 'getIndex'
             pos = getIndex(pos_s, haystack)
             .If(pos <=0, {pos = 0})
         })
@@ -71,9 +71,6 @@
 
         .If(argc == 3, {
             .str(index_s, argv[2])
-
-            .local pmc getIndex
-            getIndex = get_root_global ['_tcl'], 'getIndex'
 
             $I0 = getIndex(index_s, haystack)
             .If($I0 <= start_pos, {
@@ -110,26 +107,23 @@
             die 'wrong # args: should be "string index string charIndex"'
         })
 
-        .str(index_s,  argv[0])
-        .str(string_s, argv[1])
+        .str(index_s,  argv[1])
+        .str(string_s, argv[0])
 
-        .local pmc getIndex
-        getIndex = get_root_global ['_tcl'], 'getIndex'
-
-        .int(pos, {getIndex(string_s, index_s)})
+        .int(pos, {getIndex(index_s, string_s)})
 
         .If(pos < 0, {
             .return('')
         })
 
         .int(strlen, length string_s)
-        inc strlen
+        dec strlen
 
         .If(pos > strlen, {
             .return('')
         })
 
-        $S0 = substr index_s, pos, 1
+        $S0 = substr string_s, pos, 1
         .return ($S0)
     })
 
@@ -149,9 +143,6 @@
         .int(last_i,  orig_len)
 
         .If(argc > 1, {
-            .local pmc getIndex
-            getIndex = get_root_global ['_tcl'], 'getIndex'
-
             .str(first_s, argv[1])
             first_i = getIndex(first_s, orig_str)
             # if just the first is specified, the last is the same
@@ -194,9 +185,6 @@
         .int(last_i,  orig_len)
 
         .If(argc > 1, {
-            .local pmc getIndex
-            getIndex = get_root_global ['_tcl'], 'getIndex'
-
             .str(first_s, argv[1])
             first_i = getIndex(first_s, orig_str)
             # if just the first is specified, the last is the same
@@ -239,9 +227,6 @@
         .int(last_i,  orig_len)
 
         .If(argc > 1, {
-            .local pmc getIndex
-            getIndex = get_root_global ['_tcl'], 'getIndex'
-
             .str(first_s, argv[1])
             first_i = getIndex(first_s, orig_str)
             # if just the first is specified, the last is the same
@@ -302,9 +287,6 @@
         .local int last_index
         last_index = length teh_string
         dec last_index
-
-        .local pmc getIndex
-        getIndex = get_root_global ['_tcl'], 'getIndex'
 
         .local int first_i, last_i
         first_i = getIndex(first_s, teh_string)
@@ -730,9 +712,6 @@
         .local int high
         .local int len
 
-        .local pmc getIndex
-        getIndex = get_root_global ['_tcl'], 'getIndex'
-
         .local string low_s, high_s, the_string
         .local int string_len
 
@@ -951,8 +930,6 @@
         str = argv[0]
         idx = argv[1]
 
-        .local pmc getIndex
-        getIndex = get_root_global ['_tcl'], 'getIndex'
         idx = getIndex(idx, str)
 
         $I0 = length str
@@ -976,8 +953,6 @@
         str = argv[0]
         idx_p = argv[1]
 
-        .local pmc getIndex
-        getIndex = get_root_global ['_tcl'], 'getIndex'
         idx_p = getIndex(idx_p, str)
 
         .local int pos

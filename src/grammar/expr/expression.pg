@@ -133,6 +133,18 @@ token raw_hex  { <[0..9A..Fa..f]> + }
 token hex     { 0<[xX]> <raw_hex> }
 token integer { (<[+\-]>)? [ <binary> | <hex> | <octal> | <decimal>] }
 
+token string_index {
+     <.ws>
+     ( <integer> '+' <integer>
+     | <integer> '-' <integer>
+     | 'end+' <integer>
+     | 'end-' <integer>
+     | 'end'
+     | <integer>
+     )
+     <.ws>
+}
+
 token nullary_function { rand }
 
 token unary_function { 
