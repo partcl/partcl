@@ -162,7 +162,7 @@ oneliner:
   pop_eh
 
 done:
-  end
+  exit 0
 
 file_error:
   .catch()
@@ -174,15 +174,15 @@ file_error:
   if $I0 == .CONTROL_BREAK    goto break_outside_loop
   .get_stacktrace($S0)
   print $S0
-  end
+  exit 0 # XXX wrong exit value
 
 continue_outside_loop:
   say 'invoked "continue" outside of a loop'
-  end
+  exit 0 # XXX should be a tcl_error
 
 break_outside_loop:
   say 'invoked "break" outside of a loop'
-  end
+  exit 0 # XXX should be a tcl_error
 
 exit_exception:
   .rethrow()
