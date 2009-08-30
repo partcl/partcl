@@ -12,12 +12,14 @@ use warnings;
 
 use Fatal qw(open);
 
-open my $fh, '<', 'parrot.pprof';
+my $filename = shift;
+
+open my $fh, '<', $filename;
 
 my %counts;
 
 while (<$fh>) {
-  next unless /^S/;
+  next unless /^CS/;
   chomp;
   $counts{$_}++;
 }
