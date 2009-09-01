@@ -8,6 +8,7 @@
 =head2 .pmc(name,init)
 =head2 .null(name)
 =head2 .list(name)
+=head2 .iter(collection)
 
 Declare a .local and (maybe) give it an initial value.
 
@@ -43,6 +44,10 @@ Declare a .local and (maybe) give it an initial value.
   .name = new 'TclList'
 .endm
 
+.macro iter(collection)
+  .local pmc iterator
+  iterator = iter .collection
+.endm
 
 =head2 Try(try)
 
