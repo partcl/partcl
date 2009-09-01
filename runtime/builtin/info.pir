@@ -50,8 +50,7 @@ bad_subcommand:
   .local string procname
   procname = shift argv
 
-  .local pmc splitNamespace
-  splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
+  .const 'Sub' splitNamespace = 'splitNamespace'
 
   .local pmc    ns
   .local string name
@@ -88,8 +87,7 @@ bad_args:
   .local string procname
   procname = argv[0]
 
-  .local pmc splitNamespace
-  splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
+  .const 'Sub' splitNamespace = 'splitNamespace'
 
   .local pmc    ns
   .local string name
@@ -157,8 +155,7 @@ bad_args:
   argname  = argv[1]
   varname  = argv[2]
 
-  .local pmc splitNamespace
-  splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
+  .const 'Sub' splitNamespace = 'splitNamespace'
 
   .local pmc    ns
   .local string name
@@ -287,8 +284,7 @@ bad_args:
         .local string pattern
         pattern = argv[0]
 
-        .local pmc splitNamespace
-        splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
+        .const 'Sub' splitNamespace = 'splitNamespace'
 
         .local pmc ns_a
         ns_a = splitNamespace(pattern)
@@ -512,8 +508,7 @@ find_info_level:
   .If(argc==1, {
     pattern = shift argv
 
-    .local pmc splitNamespace
-    splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
+    .const 'Sub' splitNamespace = 'splitNamespace'
  
     .local pmc ns_a
     ns_a = splitNamespace(pattern)
