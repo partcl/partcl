@@ -1,6 +1,8 @@
-# Specific an svn revision, e.g.:
+# Minimum svn revision, e.g.:
 # revision: 12345
-revision: 40841
+revision: 40897
+# TODO: allow specification of a maximum version, as parrot trunk does
+# sometimes break.
 
 # Use this if there is a specific feature in parrot that we need to function.
 # partcl trunk will typically use this.
