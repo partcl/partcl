@@ -2,38 +2,64 @@
 .namespace []
 
 .sub '&info'
-  .param pmc argv :slurpy
-  .argc()
+    .param pmc argv :slurpy
+    .argc()
 
-  .const 'Sub' setVar = 'setVar'
+    .const 'Sub' select_option = 'select_option'
+    .const 'Sub' setVar = 'setVar'
+    .const 'Sub' splitNamespace = 'splitNamespace'
 
-  unless argc goto bad_args
+    .If(argc==0, {
+        die 'wrong # args: should be "info subcommand ?argument ...?"'
+    })
 
-  .local string subcommand_name
-  subcommand_name = shift argv
+    .str(subcommand, {shift argv})
 
-  .local pmc options
-  options = get_root_global ['_tcl'; 'helpers'; 'info'], 'options'
+    .local pmc options
+    options = get_root_global ['_tcl'; 'helpers'; 'info'], 'options'
 
-  .local pmc select_option
-  select_option  = get_root_global ['_tcl'], 'select_option'
+    .local string canonical_subcommand
+    canonical_subcommand = select_option(options, subcommand)
+    .argc()
 
-  .local string canonical_subcommand
-  canonical_subcommand = select_option(options, subcommand_name)
+    .If(subcommand=='body', {
+        .Unless(argc == 1, {
+            die 'wrong # args: should be "info body procname"'
+        })
+    
+        .str(procname, argv[0])
 
-  .local pmc subcommand_proc
-  null subcommand_proc
+        .pmc(ns, {splitNamespace(procname)})
 
-  subcommand_proc = get_root_global ['_tcl';'helpers';'info'], canonical_subcommand
-  if null subcommand_proc goto bad_subcommand
+        .local string name
+        .Try({
+            name = pop ns
+        })
+        name = '&' . name
 
-  .tailcall subcommand_proc(argv)
+        unshift ns, 'tcl'
+        $P1 = get_root_global ns, name
+        if null $P1 goto no_body
+        $P2 = getattribute $P1, 'HLL_source'
+        if null $P2 goto no_body
+        .return($P2)
+
+      no_body:
+        $S0 = '"'
+        $S0 .= procname
+        $S0 .= "\" isn't a procedure"
+        die $S0
+    })
+
+    .null(subcommand_proc)
+
+    subcommand_proc = get_root_global ['_tcl';'helpers';'info'], canonical_subcommand
+    if null subcommand_proc goto bad_subcommand
+
+    .tailcall subcommand_proc(argv)
 
 bad_subcommand:
-  .return ('') # once all commands are implemented, remove this...
-
- bad_args:
-  die 'wrong # args: should be "info subcommand ?argument ...?"'
+    .return ('') # once all commands are implemented, remove this...
 .end
 
 .HLL '_tcl'
@@ -76,42 +102,6 @@ no_args:
 
 bad_args:
   die 'wrong # args: should be "info args procname"'
-.end
-
-.sub 'body'
-  .param pmc argv
-  .argc()
-
-  if argc != 1 goto bad_args
-
-  .local string procname
-  procname = argv[0]
-
-  .const 'Sub' splitNamespace = 'splitNamespace'
-
-  .local pmc    ns
-  .local string name
-  ns   = splitNamespace(procname)
-  .Try({
-      name = pop ns
-  })
-  name = '&' . name
-
-  unshift ns, 'tcl'
-  $P1 = get_root_global ns, name
-  if null $P1 goto no_body
-  $P2 = getattribute $P1, 'HLL_source'
-  if null $P2 goto no_body
-  .return($P2)
-
-no_body:
-  $S0 = '"'
-  $S0 .= procname
-  $S0 .= "\" isn't a procedure"
-  die $S0
-
-bad_args:
-  die 'wrong # args: should be "info body procname"'
 .end
 
 .sub 'complete'
