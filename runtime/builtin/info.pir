@@ -22,6 +22,33 @@
     canonical_subcommand = select_option(options, subcommand)
     .argc()
 
+    .If(subcommand=='args', {
+
+        .If(argc != 1, {
+            die 'wrong # args: should be "info args procname"'
+        })
+
+        .str(procname, {shift argv})
+
+        .pmc(ns, {splitNamespace(procname)})
+
+         .str(name, {pop ns})
+        name = '&' . name
+  
+        unshift ns, 'tcl'
+        $P1 = get_root_global ns, name
+	.Unless(null $P1, {
+            $P2 = getattribute $P1, 'args'
+	    .Unless(null $P2, {
+                .return($P2)
+	    })
+        })
+
+        $S0 = '"'
+        $S0 .= procname
+        $S0 .= "\" isn't a procedure"
+        die $S0
+    })
     .If(subcommand=='body', {
         .Unless(argc == 1, {
             die 'wrong # args: should be "info body procname"'
@@ -64,45 +91,6 @@ bad_subcommand:
 
 .HLL '_tcl'
 .namespace [ 'helpers'; 'info' ]
-
-.sub 'args'
-  .param pmc argv
-  .argc()
-
-  if argc != 1 goto bad_args
-
-  .local pmc retval
-
-  .local string procname
-  procname = shift argv
-
-  .const 'Sub' splitNamespace = 'splitNamespace'
-
-  .local pmc    ns
-  .local string name
-  ns   = splitNamespace(procname)
-  name = pop ns
-  name = '&' . name
-
-  unshift ns, 'tcl'
-  $P1 = get_root_global ns, name
-  if null $P1 goto no_args
-
-  $P2 = getattribute $P1, 'args'
-  if null $P2 goto no_args
-  .return($P2)
-
-  .return($P2)
-
-no_args:
-  $S0 = '"'
-  $S0 .= procname
-  $S0 .= "\" isn't a procedure"
-  die $S0
-
-bad_args:
-  die 'wrong # args: should be "info args procname"'
-.end
 
 .sub 'complete'
   .param pmc argv
