@@ -179,8 +179,7 @@ bad_args:
   dictionary = shift argv
   dictionary = dictionary.'getDictValue'()
 
-  .local pmc options
-  options = new 'TclList'
+  .list(options)
   options[0] = 'key'
   options[1] = 'script'
   options[2] = 'value'
@@ -202,9 +201,9 @@ bad_args:
   if argc != 3 goto missing_glob
   pattern = shift argv
 
-  .local pmc rule, match, iterator
+  .local pmc rule, match
   rule = globber.'compile'(pattern)
-  iterator = iter dictionary
+  .iter(dictionary)
 
   if option == 'key' goto do_key_loop
 
@@ -245,8 +244,7 @@ do_script_prelude:
   keyVar   = vars[0]
   valueVar = vars[1]
 
-  .local pmc iterator
-  iterator = iter dictionary
+  .iter(dictionary)
   .local pmc retval
   retval = new 'TclDict'
   .local pmc body_proc
@@ -324,8 +322,7 @@ bad_args:
   body = shift argv
   code = compileTcl(body)
 
-  .local pmc iterator
-  iterator = iter dictionary
+  .iter(dictionary)
 for_loop:
   unless iterator goto for_loop_done
   $P1 = shift iterator
@@ -521,7 +518,7 @@ got_dict:
 
   $I0 = exists dictionary[key]
   if $I0 goto vivified
-  value = new 'TclList'
+  .list(value)
   goto loop
 
 vivified:
@@ -573,11 +570,11 @@ got_pattern:
   .local pmc rule, match
   rule = globber.'compile'(pattern)
 
-  .local pmc iterator
-  iterator = iter dictionary
+  .iter(dictionary)
 
-  .local pmc results, key
-  results = new 'TclList'
+  .list(results)
+
+  .local pmc key
 loop:
   unless iterator goto loop_done
   key = shift iterator
@@ -607,14 +604,14 @@ bad_args:
   if argc == 1 goto done
   $P2 =  shift argv # discard
 
-  .local pmc dictionary,key,value,iterator
+  .local pmc dictionary,key,value
 
 dict_loop:
   $I1 = elements argv
   unless $I1 goto done
   dictionary = shift argv
   dictionary = dictionary.'getDictValue'()
-  iterator = iter dictionary
+  .iter(dictionary)
 key_loop:
   unless iterator goto dict_loop
   key = shift iterator
@@ -859,9 +856,9 @@ got_dict:
   .local pmc body
   body = pop argv
 
-  .local pmc keys,varnames
-  keys = new 'TclList'
-  varnames = new 'TclList'
+  .list(keys)
+  .list(varnames)
+
   # get lists of both keys & varnames, setting the variables.
 key_loop:
   $I0 = elements argv
@@ -930,11 +927,10 @@ got_pattern:
   .local pmc rule, match
   rule = globber.'compile'(pattern)
 
-  .local pmc iterator
-  iterator = iter dictionary
+  .iter(dictionary)
 
-  .local pmc results, key, value
-  results = new 'TclList'
+  .local pmc key, value
+  .list(results)
 loop:
   unless iterator goto loop_done
   key = shift iterator
@@ -988,8 +984,7 @@ while_keys:
   dictionary=dictionary[key]
 
 done_keys:
-  .local pmc iterator
-  iterator = iter dictionary
+  .iter(dictionary)
 
 alias_keys:
   unless iterator goto done_alias

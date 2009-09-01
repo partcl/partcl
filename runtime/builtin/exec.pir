@@ -5,11 +5,9 @@
   .param pmc argv :slurpy
 
   # XXX We aren't yet able to parse any of the tcl command metachars, so skip them
-  .local pmc cmd_args
-  cmd_args = new 'TclList'
+  .list(cmd_args)
 
-  .local pmc iterator
-  iterator = iter argv
+  .iter(argv)
 
   .local string arg, char
   loop:

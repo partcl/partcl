@@ -26,8 +26,7 @@
 
 new_variable:
   .catch()
-  value = new 'TclList'
-  # goto loop
+  .list(value)
 
 loop:
   if cnt == argc goto loop_done

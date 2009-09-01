@@ -11,8 +11,8 @@
     .const 'Sub' storeVar       = 'storeVar'
     .const 'Sub' splitNamespace = 'splitNamespace'
 
-    .local pmc iterator, name, value, ns
-    iterator = iter argv
+    .local pmc name, value, ns
+    .iter(argv)
 loop:
     unless iterator goto end
     name = shift iterator

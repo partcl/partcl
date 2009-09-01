@@ -24,9 +24,7 @@ Defaults to 'option'.
   type_name = 'option'
 
 got_type_name:
-
-  .local pmc partials
-  partials = new 'TclList'
+  .list(partials)
 
   # is there an exact match?
 

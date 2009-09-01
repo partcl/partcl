@@ -638,8 +638,7 @@ bad_args:
     .local string filename
     filename = argv[0]
 
-    .local pmc retval
-    retval = new 'TclList'
+    .list(retval)
 
     # XXX not platform-independent.
     # XXX this $P0 is a parrot type, not a tcl type.

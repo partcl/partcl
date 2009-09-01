@@ -87,12 +87,11 @@ providing a compreg-compatible method.
   load_bytecode 'Tcl/Glob.pir'
 
   # Expose Environment variables.
-  .local pmc env,tcl_env,iterator
+  .local pmc env,tcl_env
   env = new 'Env'
   tcl_env = new 'TclArray'
 
-  iterator = iter env
-
+  .iter(env)
   .local string key,value
 env_loop:
   unless iterator goto env_loop_done

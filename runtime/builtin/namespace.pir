@@ -23,7 +23,7 @@ real top level namespace.
     .return(<<'END_PIR')
 .HLL 'tcl'
 .namespace %0
-# src/compiler.pir :: pir_compiler (2)
+# src/compiler.pir :: namespace eval
 .sub compiled_tcl_sub_%2
   %1
   .return(%3)
@@ -36,28 +36,25 @@ END_PIR
     .param pmc argv :slurpy
     .argc()
 
+    .const 'Sub' options = 'namespace_options'
+    .const 'Sub' select_option = 'select_option'
+    .const 'Sub' splitNamespace = 'splitNamespace'
+
     .Unless(argc, {
         die 'wrong # args: should be "namespace subcommand ?arg ...?"'
     })
 
-  .local string subcommand_name
-  subcommand_name = shift argv
+    .str(subcommand, {shift argv})
+    subcommand = select_option(options, subcommand)
+    .argc()
 
-    .const 'Sub' options = 'namespace_options'
 
-  .local pmc select_option
-  select_option  = get_root_global ['_tcl'], 'select_option'
+    .null(subcommand_proc)
+    subcommand_proc = get_root_global ['_tcl';'helpers';'namespace'], subcommand
 
-  .local string canonical_subcommand
-  canonical_subcommand = select_option(options, subcommand_name)
+    if null subcommand_proc goto bad_args
 
-  .local pmc subcommand_proc
-  null subcommand_proc
-
-  subcommand_proc = get_root_global ['_tcl';'helpers';'namespace'], canonical_subcommand
-  if null subcommand_proc goto bad_args
-
-  .tailcall subcommand_proc(argv)
+    .tailcall subcommand_proc(argv)
 
 bad_args:
   .return ('') # once all commands are implemented, remove this...
@@ -67,20 +64,19 @@ bad_args:
 .namespace [ 'helpers'; 'namespace' ]
 
 .sub 'current'
-  .param pmc argv
-  .argc()
+    .param pmc argv
+    .argc()
 
-  .If(argc, {
-      die 'wrong # args: should be "namespace current"'
-  })
-
-  .local pmc ns, splitNamespace
-  splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
-  ns  = splitNamespace('')
-  $S0 = join '::', ns
-  $S0 = '::' . $S0
-  .return($S0)
+    .If(argc, {
+        die 'wrong # args: should be "namespace current"'
+    })
+    .local pmc ns
+    ns  = splitNamespace('')
+    $S0 = join '::', ns
+    $S0 = '::' . $S0
+    .return($S0)
 .end
+
 
 .sub 'delete'
   .param pmc argv
@@ -218,9 +214,9 @@ doesnt_exist:
       die 'wrong # args: should be "namespace eval name arg ?arg...?"'
   })
 
-  .local pmc call_chain, temp_call_chain
+  .local pmc call_chain
   call_chain      = get_root_global ['_tcl'], 'call_chain'
-  temp_call_chain = new 'TclList'
+  .list(temp_call_chain)
   set_root_global ['_tcl'], 'call_chain', temp_call_chain
 
   .local pmc info_level
@@ -289,8 +285,7 @@ global_ns:
   has_pattern = 1
 
 iterate:
-  .local pmc list
-  list = new 'TclList'
+  .list(list)
 
   .local pmc splitNamespace
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
@@ -320,8 +315,7 @@ iterate:
       tcl_error $S0
   })
 
-  .local pmc iterator
-  iterator = iter ns
+  .iter(ns)
 loop:
   unless iterator goto end
   .str(ns_s, {shift iterator} )
@@ -383,8 +377,7 @@ done_args:
   .local pmc ns_root
   ns_root = get_root_namespace ['tcl']
 
-  .local pmc iterator
-  iterator = iter argv
+  .iter(argv)
 begin_argv:
   unless iterator goto done_argv
   $P0 = shift iterator

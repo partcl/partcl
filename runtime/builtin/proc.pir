@@ -25,10 +25,8 @@
   defaults  = new 'CodeString'
   namespace = '[]'
 
-  .local pmc ns
-  .local string name
-  ns   = new 'TclList'
-  name = ''
+  .str(name, '')
+  .list(ns)
 
   if full_name == '' goto create
 
@@ -232,8 +230,8 @@ END_PIR
   .local pmc ns_target
   ns_target = get_hll_namespace
 
-  .local pmc iterator, sub_ns
-  iterator = iter ns
+  .local pmc sub_ns
+  .iter(ns)
 walk_ns:
   unless iterator goto done_walk
   sub_ns = shift iterator

@@ -43,8 +43,8 @@ done_hash_loop:
 
   # Loop over each character in the string. Is it one of the split
   # chars?
-  .local pmc results
-  results = new 'TclList'
+  .list(results)
+
   .local int str_len
   str_len = length splitstring
 
@@ -80,7 +80,7 @@ split_really_done:
   .return (results)
 
 split_empty:
-  results = new 'TclList'
+  .list(results)
   str_len = length splitstring
   pos = 0
 split_empty_loop:

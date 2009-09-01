@@ -394,7 +394,7 @@ global_var:
   name = pop ns
   name = '$' . name
 
-  .pmc(iterator, iter ns)
+  .iter(ns)
   .local pmc ns_cur
   ns_cur = get_root_namespace
   ns_cur = ns_cur['tcl']

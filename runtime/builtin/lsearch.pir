@@ -27,8 +27,7 @@
   list = list.'getListValue'()
   pattern = shift argv
 
-  .local pmc iterator
-  iterator = iter list
+  .iter(list)
 
   .local int pos, result
   result = -1

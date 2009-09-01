@@ -9,7 +9,7 @@
 
     if argc < 3 goto bad_args
 
-    .local pmc list, retval, iterator
+    .local pmc list, retval
     $P0 = shift argv
     list = $P0.'getListValue'()
     list = clone list

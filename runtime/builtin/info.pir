@@ -152,9 +152,8 @@ check_arg:
         # there's no default. is there even an arg?
         if null args goto not_argument
         arg_defaults = args.'getListValue'()
-        .local pmc iterator
         .local string checking_arg
-        iterator = iter arg_defaults
+	.iter(arg_defaults)
         .While(iterator, {
             checking_arg = shift iterator
             if checking_arg==argname goto no_default
@@ -186,10 +185,10 @@ error_on_set:
             die 'wrong # args: should be "info functions ?pattern?"'
         })
 
-        .local pmc mathfunc,iterator
-
+        .local pmc mathfunc
         mathfunc = get_root_namespace ['tcl'; 'tcl'; 'mathfunc']
-        iterator = iter mathfunc
+
+        .iter(mathfunc)
         .list(retval)
 
         .local pmc globber,rule,match
@@ -243,7 +242,7 @@ compile:
   
             .int(ns_size, elements ns_a)
             .If (ns_size, {
-                .pmc(iterator, iter ns_a)
+	        .iter(ns_a)
                 .While(iterator, {
                     .str(key, {shift iterator})
                     ns = ns[key]
@@ -257,8 +256,7 @@ compile:
     
         if null ns goto iter_loop_end
     
-        .local pmc iterator
-        iterator = iter ns
+        .iter(ns)
       iter_loop:
          unless iterator goto iter_loop_end
          $S1 = shift iterator
@@ -384,9 +382,8 @@ compile:
         .local pmc rule
         rule = globber.'compile'(pattern)
 
-        .local pmc iterator
-        iterator = iter ns
-
+        .iter(ns)
+       
         .local pmc match
         .While(iterator, {
             .str(key, { shift iterator })

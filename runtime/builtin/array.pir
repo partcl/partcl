@@ -121,10 +121,9 @@
         .local pmc rule
         rule = globber.'compile'(match_str)
 
-        .local pmc retval
-        retval = new 'TclList'
+        .list(retval)
 
-        .pmc(iterator, iter the_array)
+        .iter(the_array)
 
         .While(iterator, {
             .str(key, shift iterator)
@@ -159,7 +158,7 @@
             .local pmc rule
             rule = globber.'compile'(match_str)
 
-            .pmc(iterator, iter the_array)
+            .iter(the_array)
             .While(iterator,  {
                 .str(key,shift iterator)
                 $P2 = rule(key)
@@ -196,7 +195,7 @@
         })
 
         .If(mode=='-exact', {
-            .pmc(iterator, iter the_array)
+            .iter(the_array)
             .While(iterator, {
                 .str(key, shift iterator)
                 .If(key == pattern, {
@@ -212,10 +211,9 @@
             .local pmc rule
             rule = globber.'compile'(pattern)
 
-            .local pmc retval
-            retval = new 'TclList'
+            .list(retval)
 
-            .pmc(iterator, iter the_array)
+            .iter(the_array)
             .While(iterator, {
                 .str(key, shift iterator)
                 $P0 = rule(key)
@@ -232,10 +230,9 @@
             .local pmc rule
             rule = tclARE(pattern)
 
-            .local pmc retval
-            retval = new 'TclList'
+            .list(retval)
 
-            .pmc(iterator, iter the_array)
+            .iter(the_array)
             .While(iterator, {
                 .str(key, shift iterator)
                 $P0 = rule(key)

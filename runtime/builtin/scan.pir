@@ -9,8 +9,7 @@
 
   if argc < 2 goto bad_args
 
-  .local pmc results
-  results = new 'TclList'
+  .list(results)
 
   .local pmc toInteger, toNumber
   toInteger = get_root_global [ '_tcl' ], 'toInteger'

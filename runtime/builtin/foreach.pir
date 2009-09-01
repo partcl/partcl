@@ -18,16 +18,15 @@
   $P0 = getinterp
   ns  = $P0['namespace'; 1]
 
-  .local pmc varLists, lists, command
-  varLists = new 'TclList'
-  lists    = new 'TclList'
+  .list(varLists)
+  .list(lists)
+
+  .local pmc command
   command  = pop argv
   command  = compileTcl(command, 'ns'=>ns)
 
-  .local int iterations
-  iterations = 0
-  .local pmc iterator
-  iterator = iter argv
+  .int(iterations,0)
+  .iter(argv)
 arg_loop:
   unless iterator goto arg_done
 
@@ -43,7 +42,7 @@ arg_loop:
   .TryCatch({
     list    = list.'getListValue'()
   }, {
-    list = new 'TclList'
+    .list(list)
     })
 
   $I0 = elements varList

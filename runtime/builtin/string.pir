@@ -536,8 +536,7 @@
         argc = argv
         if argc == 1 goto no_opts
 
-        .local pmc options
-        options = new 'TclList'
+	.list(options)
         push options, 'strict'
         push options, 'failindex'
 

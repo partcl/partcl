@@ -32,8 +32,7 @@
   traced_var = new 'TraceArray'
 
   # copy all the elements over. 
-  .local pmc iterator
-  iterator = iter variable
+  .iter(variable)
 it_beg:
   unless iterator goto it_end
   $S1 = shift iterator

@@ -17,9 +17,8 @@
 
   .local string varname
   .local string sigil_varname
- 
-  .local pmc iterator
-  iterator = iter argv
+
+  .iter(argv)
 
 loop:
   unless iterator goto done

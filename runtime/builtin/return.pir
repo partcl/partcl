@@ -101,10 +101,10 @@ onearg:
 
 handle_opts:
     $P1 = shift argv # discard -options
-    .local pmc options, iterator, key, value
+    .local pmc options, key, value
     options = shift argv # get dictionary.
     options = options.'getDictValue'()
-    iterator = iter options
+    .iter(options)
 o_loop:
     unless iterator goto do_over
     key = shift iterator

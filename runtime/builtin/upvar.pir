@@ -50,8 +50,7 @@ loop:
   die $S0
 
 store_var:
-  .local pmc saved_call_chain
-  saved_call_chain = new 'TclList'
+  .list(saved_call_chain)
   $I0 = 0
 save_chain_loop:
   if $I0 == difference goto save_chain_end

@@ -24,7 +24,7 @@
 
     .int(pos, 1)
     .While(pos <= count, {
-	.pmc(iterator, {iter argv})
+        .iter(argv)
 	.While(iterator, {
 	    $P0 = shift iterator
             push retval, $P0

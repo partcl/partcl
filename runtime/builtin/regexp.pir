@@ -86,8 +86,7 @@ next_submatch:
   goto subMatches
 
 matches_ind:
-  .local pmc matchList
-  matchList = new 'TclList'
+  .list(matchList)
   matchList[0] = -1
   matchList[1] = -1
   $I0 = match.'from'()
@@ -100,13 +99,12 @@ matches_ind:
   matches = match.'list'()
 
 subMatches_ind:
-  .local pmc subMatchList
 subMatches_ind_loop:
    argc = elements argv
    unless argc goto done
 
    subMatchVar = shift argv
-   subMatchList = new 'TclList'
+   .list(subMatchList)
    subMatchList[0] = -1
    subMatchList[1] = -1
    if_null matches, set_it_ind
