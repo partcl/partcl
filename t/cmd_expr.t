@@ -9,7 +9,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 375
+plan 376
 
 # namespace
 namespace eval test { variable x 5 }
@@ -555,6 +555,7 @@ is [expr {"b" ni $my_list}] 0 {ni false}
 
 # regressions
 is [expr {"[eval {set a "aok"}]" ne "bork"}] 1 {test_more.tcl regression}
+is [expr 1eq4>3] 1 {no whitespace needed after eq op}
 
 # Local Variables:
 #   mode: cperl

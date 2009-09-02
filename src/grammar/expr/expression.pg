@@ -194,11 +194,11 @@ proto 'infix:>=' is precedence('10=') {...}
 proto 'infix:==' is precedence('09=') {...}
 proto 'infix:!=' is precedence('09=') {...}
 
-proto 'infix:eq' is precedence('08=') {...}
-proto 'infix:ne' is precedence('08=') {...}
+proto 'infix:eq' is wb(0) is precedence('08=') {...}
+proto 'infix:ne' is wb(0) is precedence('08=') {...}
 
-proto 'infix:in' is precedence('07=') {...}
-proto 'infix:ni' is precedence('07=') {...}
+proto 'infix:in' is wb(0) is precedence('07=') {...}
+proto 'infix:ni' is wb(0) is precedence('07=') {...}
 
 proto 'infix:&'  is precedence('06=') {...}
 
