@@ -72,6 +72,7 @@ restore_chain_loop:
   goto restore_chain_loop
 restore_chain_end:
   if rethrow_flag goto rethrow
+  retval = clone retval
   .return(retval)
 
 rethrow:
