@@ -20,11 +20,11 @@ error.test:	Total	34	Passed	24	Skipped	0	Failed	10
 eval.test:	Total	12	Passed	11	Skipped	0	Failed	1
 event.test:	Total	64	Passed	4	Skipped	31	Failed	29
 execute.test:	Total	144	Passed	27	Skipped	78	Failed	39
-expr-old.test:	Total	460	Passed	373	Skipped	34	Failed	53
+expr-old.test:	Total	460	Passed	389	Skipped	34	Failed	37
 for-old.test:	Total	9	Passed	9	Skipped	0	Failed	0
 for.test:	Total	50	Passed	42	Skipped	0	Failed	8
 foreach.test:	Total	40	Passed	37	Skipped	0	Failed	3
-format.test:	Total	256	Passed	181	Skipped	29	Failed	46
+format.test:	Total	256	Passed	182	Skipped	29	Failed	45
 get.test:	Total	20	Passed	3	Skipped	14	Failed	3
 if-old.test:	Total	33	Passed	33	Skipped	0	Failed	0
 if.test:	Total	73	Passed	64	Skipped	0	Failed	9
@@ -81,7 +81,8 @@ unixFile.test:	Total	7	Passed	0	Skipped	7	Failed	0
 unixInit.test:	Total	19	Passed	0	Skipped	19	Failed	0
 unknown.test:	Total	7	Passed	6	Skipped	0	Failed	1
 unload.test:	Total	26	Passed	1	Skipped	0	Failed	25
-upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
+uplevel.test:	Total	19	Passed	17	Skipped	0	Failed	2
+upvar.test:	Total	55	Passed	26	Skipped	7	Failed	22
 utf.test:	Total	114	Passed	82	Skipped	12	Failed	20
 util.test:	Total	290	Passed	130	Skipped	128	Failed	32
 var.test:	Total	84	Passed	39	Skipped	17	Failed	28
