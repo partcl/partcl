@@ -43,6 +43,7 @@ providing a compreg-compatible method.
 .include 'src/class/tclarray.pir'
 .include 'src/class/tclconst.pir'
 .include 'src/class/tcldict.pir'
+.include 'src/class/tclint.pir'
 .include 'src/class/tcllist.pir'
 .include 'src/class/tclproc.pir'
 .include 'src/class/tclstring.pir'

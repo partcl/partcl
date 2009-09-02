@@ -116,6 +116,7 @@ CLASSES = \
   $(CLASSDIR)/tclarray.pir \
   $(CLASSDIR)/tclconst.pir \
   $(CLASSDIR)/tcldict.pir \
+  $(CLASSDIR)/tclint.pir \
   $(CLASSDIR)/tcllist.pir \
   $(CLASSDIR)/tclproc.pir \
   $(CLASSDIR)/tclstring.pir \

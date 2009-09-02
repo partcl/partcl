@@ -9,7 +9,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 32
+plan 33
 
 eval_is {
   set a Parsing
@@ -126,3 +126,6 @@ proc Default {{verify {boom}}} {
 }
 Default
 } {invalid command name "boom"} {failure to find a dynamic command'}
+
+set a 4; incr a
+is [lindex $a 0] 5 {can we convert integers into lists?}
