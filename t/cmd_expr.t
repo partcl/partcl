@@ -9,7 +9,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 324
+plan 375
 
 # namespace
 namespace eval test { variable x 5 }
@@ -460,7 +460,7 @@ eval_is {
 
 # string args invalid to math funcs.
 foreach mathfunc {ceil double int round} {
-  eval_is "expr $mathfunc(\"a\")" \
+  eval_is "expr $mathfunc\(\"a\"\)" \
     {argument to math function didn't have numeric value} \
     "string arg to $mathfunc"
 }
@@ -502,7 +502,8 @@ eval_is {
 
 eval_is {
   expr pow(2, "a")
-} {argument to math function didn't have numeric value} {pow string arg 2}
+} {argument to math function didn't have numeric value} {pow string arg 2} \
+  {TODO yet}
 
 # misc.
 eval_is {
@@ -529,16 +530,15 @@ is [expr {"abc" >= "abb"}] 1 {string >=, >}
 is [expr {"abc" >= "abc"}] 1 {string >=, =}
 is [expr {"abb"<="abc"}] 1 {string <, <}
 is [expr {"abc"<="abb"}] 0 {string <, >}
-is [expr {"abc"<="abc"}] 0 {string <, =}
+is [expr {"abc"<="abc"}] 1 {string <, =}
 is [expr {"abb" >= "abc"}] 0 {string >, <}
 is [expr {"abc" >= "abb"}] 1 {string >, >}
-is [expr {"abc" >= "abc"}] 0 {string >, =}
-
+is [expr {"abc" >= "abc"}] 1 {string >, =}
 
 # invalid usage of float.
 foreach op {% << >> & | ^} {
   eval_is "expr 3.2 $op 2" \
-    "can't use floating-point value as operand of \"$op\" \
+    "can't use floating-point value as operand of \"$op\"" \
     "invalid float arg for $op"  
 }
 
@@ -548,10 +548,10 @@ is [expr {"2" < "10"}] 1 {string int < string int}
 
 # list operators
 set my_list {b c d f}
-if [expr {"b" in $list}] 1 {in true}
-if [expr {"e" in $list}] 0 {in false}
-if [expr {"e" ni $list}] 1 {ni true}
-if [expr {"b" ni $list}] 0 {ni false}
+is [expr {"b" in $my_list}] 1 {in true}
+is [expr {"e" in $my_list}] 0 {in false}
+is [expr {"e" ni $my_list}] 1 {ni true}
+is [expr {"b" ni $my_list}] 0 {ni false}
 
 # regressions
 is [expr {"[eval {set a "aok"}]" ne "bork"}] 1 {test_more.tcl regression}
