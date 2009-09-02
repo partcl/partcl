@@ -25,9 +25,9 @@
     })
 
     .str(subcommand, {shift argv})
+    # canonicalize the subcommand name.
+    subcommand = select_option(options, subcommand)
 
-    .local string canonical_subcommand
-    canonical_subcommand = select_option(options, subcommand)
     .argc()
 
     .If(subcommand=='args', {
