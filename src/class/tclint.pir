@@ -15,6 +15,7 @@ Convert to a List.
 
 .sub getListValue :method
     .list(retval)
-    retval[0] = self
+    $I0 = self
+    retval[0] = $I0
     .return(retval)
 .end
