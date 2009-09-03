@@ -2,19 +2,59 @@
 .namespace []
 
 .sub '&read'
-  .param pmc argv :slurpy
+    .param pmc argv :slurpy
+    .argc()
 
-  # XXX this just supports the [read $channel] variant.
+    .const 'Sub' getChannel = 'getChannel'
 
-  .local pmc getChannel,channel
-  .local string channelId
-  getChannel = get_root_global ['_tcl'], 'getChannel'
-  channelId = argv[0]
-  channel = getChannel(channelId)
+    .int(args_ok, 0)
+    .int(nonewline, 0)
+    .int(numChars, 0)
+    .int(allChars, 1)
+    
+    .local string channelName
 
-  .local string contents
-  contents = channel.'readall'()
-  .return (contents)
+    .If(argc == 1, {
+        args_ok = 1
+        channelName = argv[0]
+    })
+
+    .If(argc == 2, {
+        args_ok = 1
+        $S0 = argv[1]
+        .IfElse($S0=="-nonewline", {
+            nonewline = 1
+            channelName = argv[1]
+        }, {
+            channelName = argv[0]
+            numChars    = argv[1]
+            allChars = 0
+        })
+        channelName = argv[0]           
+    })
+
+    .Unless(args_ok, { 
+        tcl_error 'wrong # args: should be "read channelId ?numChars?" or "read ?-nonewline? channelId"'
+    })
+
+    .pmc(channel, {getChannel(channelName)})
+   
+    .str(contents,'')
+
+    .IfElse(allChars, {
+        contents = channel.'readall'()
+        .Unless(nonewline, {
+            $S0 = substr contents, -1, 1
+            .If($S0=="\n", {
+                substr contents, -1, 1, ''
+            })
+        })
+    }, {
+        .If(numChars!=0, {
+            contents = channel.'read'(numChars)
+        })
+    })
+    .return(contents)
 .end
 
 # Local Variables:
