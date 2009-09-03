@@ -1,7 +1,7 @@
 .HLL 'tcl'
 .namespace []
 
-# XXX contains only enough for [package require tcltest]
+# XXX contains only enough for [package require (tcltest|opt)]
 
 .sub '&package'
     .param pmc argv :slurpy
@@ -10,27 +10,40 @@
     if argc < 2 goto bad_subcommand
     if argc > 3 goto bad_subcommand
 
+    .include 'iglobals.pasm'
 
     .local string subcommand, package_name
     subcommand = shift argv
     if subcommand != 'require' goto check_present
     package_name = shift argv
-    if package_name != 'tcltest' goto bad_subcommand
-    # XXX ignoring optional 3rd arg...
+    .str(pkg_path, '')
 
-    .include 'iglobals.pasm'
-    .local pmc tcl_library, config, interp
-    tcl_library = get_global '$tcl_library'
+    .local pmc interp
     interp = getinterp
+    .local pmc config
     config = interp[.IGLOBALS_CONFIG_HASH]
     .local string slash
     slash = config['slash']
 
+    .If(package_name == 'tcltest', {
+        pkg_path = 'tcltest'
+        pkg_path .= slash
+        pkg_path .= 'tcltest.tcl'
+    })
+    .If(package_name == 'opt', {
+        pkg_path = 'opt'
+        pkg_path .= slash
+        pkg_path .= 'optparse.tcl'
+    })
+    if pkg_path == '' goto bad_subcommand
+    # XXX ignoring optional 3rd arg...
+
+    .local pmc tcl_library
+    tcl_library = get_global '$tcl_library'
+
     $S0 = tcl_library
     $S0 .= slash
-    $S0 .= 'tcltest'
-    $S0 .= slash
-    $S0 .= 'tcltest.tcl'
+    $S0 .= pkg_path
 
     .local pmc script
     $P99 = open $S0, 'r'
