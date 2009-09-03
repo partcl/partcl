@@ -18,7 +18,7 @@ dstring.test:	Total	35	Passed	0	Skipped	35	Failed	0
 env.test:	Total	20	Passed	6	Skipped	1	Failed	13
 error.test:	Total	34	Passed	24	Skipped	0	Failed	10
 eval.test:	Total	12	Passed	11	Skipped	0	Failed	1
-event.test:	Total	64	Passed	4	Skipped	31	Failed	29
+event.test:	Total	64	Passed	3	Skipped	31	Failed	30
 execute.test:	Total	144	Passed	27	Skipped	78	Failed	39
 expr-old.test:	Total	460	Passed	389	Skipped	34	Failed	37
 for-old.test:	Total	9	Passed	9	Skipped	0	Failed	0
@@ -31,8 +31,9 @@ if.test:	Total	73	Passed	64	Skipped	0	Failed	9
 incr-old.test:	Total	14	Passed	11	Skipped	0	Failed	3
 incr.test:	Total	65	Passed	55	Skipped	0	Failed	10
 indexObj.test:	Total	31	Passed	0	Skipped	31	Failed	0
-    :	Total	177	Passed	68	Skipped	16	Failed	93
+    :	Total	177	Passed	73	Skipped	16	Failed	88
 init.test:	Total	8	Passed	4	Skipped	0	Failed	4
+ioCmd.test:	Total	325	Passed	32	Skipped	102	Failed	191
 iogt.test:	Total	13	Passed	0	Skipped	13	Failed	0
 ioUtil.test:	Total	25	Passed	2	Skipped	22	Failed	1
 join.test:	Total	9	Passed	9	Skipped	0	Failed	0
@@ -79,10 +80,11 @@ timer.test:	Total	54	Passed	8	Skipped	0	Failed	46
 trace.test:	Total	291	Passed	35	Skipped	14	Failed	242
 unixFile.test:	Total	7	Passed	0	Skipped	7	Failed	0
 unixInit.test:	Total	19	Passed	0	Skipped	19	Failed	0
+unixNotfy.test:	Total	4	Passed	0	Skipped	4	Failed	0
 unknown.test:	Total	7	Passed	6	Skipped	0	Failed	1
 unload.test:	Total	26	Passed	1	Skipped	0	Failed	25
 uplevel.test:	Total	19	Passed	17	Skipped	0	Failed	2
-upvar.test:	Total	55	Passed	26	Skipped	7	Failed	22
+upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
 utf.test:	Total	114	Passed	82	Skipped	12	Failed	20
 util.test:	Total	290	Passed	130	Skipped	128	Failed	32
 var.test:	Total	84	Passed	39	Skipped	17	Failed	28
