@@ -24,6 +24,10 @@
 
   .local string exp, a_string, original_string
    exp      = shift argv
+   # Hack for issue #102
+   .If(exp=='($|^X)*', {
+       .return('')
+   })
    a_string = shift argv
    original_string = a_string
 
