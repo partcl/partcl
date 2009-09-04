@@ -11,7 +11,7 @@ __DATA__
 
 source lib/test_more.tcl
 
-plan 13 ;# from outer space. (HAH!)
+plan 13
 
 # [file exists]
 eval_is {file exists} \
