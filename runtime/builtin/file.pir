@@ -444,16 +444,37 @@ bad_args:
   die 'wrong # args: should be "file tail name"'
 .end
 
-# RT#40724: Stub for test parsing
 .sub 'readable'
   .param pmc argv
   .return(1)
 .end
 
-# RT#40725: Stub for test parsing
 .sub 'delete'
-  .param pmc argv
-  .return(0)
+    .param pmc argv
+    .argc()
+   
+    .Unless(argc, {
+        tcl_error 'wrong # args: should be "file delete ?options? file ?file ...?"'
+    })
+
+    $S0 = argv[0]
+    .If($S0=='--force', {
+        $P1 = shift argv # XXX ignore --force for now.
+    }) 
+    $S0 = argv[0]
+    .If($S0=='--', {
+        $P1 = shift argv # XXX ignore -- for now.
+    }) 
+    .iter(argv)
+    .local pmc os
+    os = new 'OS'
+
+    .While(iterator, {
+        .str(filename, {shift iterator}) 
+        os.'rm'(filename)   
+    })
+
+    .return('')
 .end
 
 .sub 'exists'
