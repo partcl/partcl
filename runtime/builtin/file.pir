@@ -24,37 +24,28 @@
 .end
 
 .sub '&file'
-  .param pmc argv :slurpy
-  .argc()
+    .param pmc argv :slurpy
+    .argc()
 
-  .const 'Sub' setVar = 'setVar'
-
-  if argc == 0 goto few_args
-
-  .local string subcommand_name
-  subcommand_name = shift argv
-
+    .const 'Sub' setVar = 'setVar'
     .const 'Sub' options = 'file_options'
+    .const 'Sub' select_option = 'select_option'
 
-  .local pmc select_option
-  select_option  = get_root_global ['_tcl'], 'select_option'
+    .Unless(argc, {
+        die 'wrong # args: should be "file option ?arg ...?"'
+    })
 
-  .local string canonical_subcommand
-  canonical_subcommand = select_option(options, subcommand_name)
+    .str(subcommand, {shift argv})
+    subcommand = select_option(options, subcommand)
 
-  .local pmc subcommand_proc
+    .local pmc subcommand_proc
+    subcommand_proc = get_root_global ['_tcl';'helpers';'file'], subcommand
+    if_null subcommand_proc, bad_args
 
-  subcommand_proc = get_root_global ['_tcl';'helpers';'file'], canonical_subcommand
-  if_null subcommand_proc, bad_args
-
-  .tailcall subcommand_proc(argv)
+    .tailcall subcommand_proc(argv)
 
 bad_args:
   .return ('') # once all commands are implemented, remove this...
-
-few_args:
-  die 'wrong # args: should be "file option ?arg ...?"'
-
 .end
 
 .HLL '_tcl'
