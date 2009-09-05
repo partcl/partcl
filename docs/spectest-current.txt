@@ -14,6 +14,7 @@ compExpr.test:	Total	80	Passed	76	Skipped	0	Failed	4
 concat.test:	Total	9	Passed	9	Skipped	0	Failed	0
 config.test:	Total	9	Passed	0	Skipped	0	Failed	9
 dcall.test:	Total	6	Passed	0	Skipped	6	Failed	0
+dict.test:	Total	226	Passed	165	Skipped	0	Failed	61
 dstring.test:	Total	35	Passed	0	Skipped	35	Failed	0
 env.test:	Total	20	Passed	6	Skipped	1	Failed	13
 error.test:	Total	34	Passed	24	Skipped	0	Failed	10
@@ -55,6 +56,7 @@ namespace.test:	Total	277	Passed	117	Skipped	1	Failed	159
 notify.test:	Total	23	Passed	0	Skipped	23	Failed	0
 package.test:	Total	16	Passed	6	Skipped	0	Failed	10
 parse.test:	Total	251	Passed	63	Skipped	156	Failed	32
+parseExpr.test:	Total	263	Passed	4	Skipped	196	Failed	63
 parseOld.test:	Total	179	Passed	146	Skipped	21	Failed	12
 pid.test:	Total	5	Passed	2	Skipped	1	Failed	2
 pkg.test:	Total	0	Passed	0	Skipped	0	Failed	0
@@ -67,6 +69,7 @@ regexpComp.test:	Total	178	Passed	100	Skipped	1	Failed	77
 rename.test:	Total	18	Passed	7	Skipped	7	Failed	4
 result.test:	Total	23	Passed	0	Skipped	22	Failed	1
 scan.test:	Total	171	Passed	93	Skipped	4	Failed	74
+set-old.test:	Total	149	Passed	126	Skipped	0	Failed	23
 set.test:	Total	63	Passed	58	Skipped	1	Failed	4
 socket.test:	Total	60	Passed	0	Skipped	60	Failed	0
 source.test:	Total	20	Passed	6	Skipped	0	Failed	14
@@ -85,7 +88,7 @@ unixNotfy.test:	Total	4	Passed	0	Skipped	4	Failed	0
 unknown.test:	Total	7	Passed	6	Skipped	0	Failed	1
 unload.test:	Total	26	Passed	1	Skipped	0	Failed	25
 uplevel.test:	Total	19	Passed	17	Skipped	0	Failed	2
-upvar.test:	Total	55	Passed	26	Skipped	7	Failed	22
+upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
 utf.test:	Total	114	Passed	82	Skipped	12	Failed	20
 util.test:	Total	290	Passed	130	Skipped	128	Failed	32
 var.test:	Total	84	Passed	39	Skipped	17	Failed	28
