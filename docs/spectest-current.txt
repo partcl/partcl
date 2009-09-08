@@ -88,7 +88,7 @@ unixNotfy.test:	Total	4	Passed	0	Skipped	4	Failed	0
 unknown.test:	Total	7	Passed	6	Skipped	0	Failed	1
 unload.test:	Total	26	Passed	1	Skipped	0	Failed	25
 uplevel.test:	Total	19	Passed	17	Skipped	0	Failed	2
-upvar.test:	Total	55	Passed	26	Skipped	7	Failed	22
+upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
 utf.test:	Total	114	Passed	82	Skipped	12	Failed	20
 util.test:	Total	290	Passed	130	Skipped	128	Failed	32
 var.test:	Total	84	Passed	39	Skipped	17	Failed	28
