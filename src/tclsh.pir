@@ -6,6 +6,8 @@
 
 .loadlib 'tcl_ops'
 
+.include 'hllmacros.pir'
+
 .HLL 'tcl'
 .loadlib 'tcl_group'
 
@@ -49,10 +51,19 @@
   .local pmc get_options
   get_options = new 'Getopt::Obj'
   push get_options, 'e=s'
+  push get_options, 'q'
 
   .local pmc opt
   $S0 = shift argv   # drop "tcl.pbc"
   opt = get_options.'get_options'(argv)
+
+  .int(quick, {defined opt['q']})
+  .IfElse(quick, {
+      $P0 = box 1
+   }, {
+      $P0 = box 0
+   })
+   set_root_global ['_tcl'], '$quick', $P0
 
   .local int execute
   execute   = defined opt['e']
@@ -245,27 +256,32 @@ eof:
 # load and run init.tcl
 
 .sub load_init_tcl
-    .include 'iglobals.pasm'
-    .local pmc tcl_library, config, interp
-    tcl_library = get_global '$tcl_library'
-    interp = getinterp
-    config = interp[.IGLOBALS_CONFIG_HASH]
-    .local string slash
-    slash = config['slash']
 
-    $S0 = tcl_library
-    $S0 .= slash
-    $S0 .= 'init.tcl'
+    $P0 = get_root_global ['_tcl'], '$quick'
+    .Unless($P0, {
 
-    .local pmc script
-    $P99 = open $S0, 'r'
-    $S0 = $P99.'readall'()
+        .include 'iglobals.pasm'
+        .local pmc tcl_library, config, interp
+        tcl_library = get_global '$tcl_library'
+        interp = getinterp
+        config = interp[.IGLOBALS_CONFIG_HASH]
+        .local string slash
+        slash = config['slash']
 
-    script = get_root_global ['_tcl'], 'compileTcl'
+        $S0 = tcl_library
+        $S0 .= slash
+        $S0 .= 'init.tcl'
 
-    # compile to PIR and put the sub(s) in place...
-    $P1 = script($S0, 'bsnl'=>1)
-    $P1()
+        .local pmc script
+        $P99 = open $S0, 'r'
+        $S0 = $P99.'readall'()
+
+        script = get_root_global ['_tcl'], 'compileTcl'
+
+        # compile to PIR and put the sub(s) in place...
+        $P1 = script($S0, 'bsnl'=>1)
+        $P1()
+    })
 .end
 
 
