@@ -13,10 +13,12 @@
     host = argv[0]
     port = argv[1]
 
-    load_bytecode 'library/tcpstream.pir'
     .local pmc stream
-    stream = new 'TCPStream'
-    stream.'connect'(host, port)
+    stream = new 'Socket'
+
+    .local pmc address
+    address = stream.'sockaddr'(host,port)
+    stream.'connect'(address)
 
     .local pmc channels, next_channel_id
     channels        = get_root_global ['_tcl'], 'channels'

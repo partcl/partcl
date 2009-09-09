@@ -223,7 +223,7 @@ Given a string, return the appropriate channel.
 
   $S0 = typeof io_obj
   if $S0 == 'FileHandle' goto done
-  if $S0 == 'TCPStream' goto done
+  if $S0 == 'Socket' goto done
 
   # should never happen
   goto bad_channel

@@ -18,7 +18,7 @@
   io = getChannel(channelID)
 
   $S0 = typeof io
-  if $S0 == 'TCPStream' goto stream
+  if $S0 == 'Socket' goto stream
 
   .local string tmps, lastchar
   tmps = readline io
@@ -36,7 +36,8 @@ done:
 
 stream:
   # eliminate this newline too?
-  .tailcall io.'readline'()
+  $S0 = readline io
+  .return($S0)
 
 bad_args:
   die 'wrong # args: should be "gets channelId ?varName?"'

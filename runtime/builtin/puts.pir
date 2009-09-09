@@ -27,12 +27,12 @@ three_arg:
   $S3 = trans_encoding $S3, utf8
 
   $S1 = typeof io
-  if $S1 == 'TCPStream' goto three_arg_stream
+  if $S1 == 'Socket' goto three_arg_stream
   print io, $S3
   goto done
 
 three_arg_stream:
-  io.'print'($S3)
+  io.'send'($S3)
 
 two_arg:
   # The last arg is the string to print.
@@ -49,8 +49,8 @@ two_arg_nonewline:
 two_arg_channel:
   io = getChannel($S2)
 
-  io.'print'($S3)
-  io.'print'("\n")
+  io.'send'($S3)
+  io.'send'("\n")
   goto done
 
 one_arg:
