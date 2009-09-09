@@ -48,9 +48,15 @@ two_arg_nonewline:
 
 two_arg_channel:
   io = getChannel($S2)
-
-  io.'send'($S3)
-  io.'send'("\n")
+  
+  $S1 = typeof io
+  .IfElse($S1=='Socket', {
+      io.'send'($S3)
+      io.'send'("\n")
+  }, {
+      io.'print'($S3)
+      io.'print'("\n")
+  })
   goto done
 
 one_arg:
