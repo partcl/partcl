@@ -48,6 +48,36 @@ END_PIR
     subcommand = select_option(options, subcommand)
     .argc()
 
+    .If(subcommand=='delete', {
+        # no arg delete does nothing
+        .If(argc, {
+            .local pmc ns_root
+            ns_root = get_root_namespace ['tcl']
+
+            $I0 = 0
+          delete_loop:
+            .If($I0==argc, {
+                .return('')
+            })
+            $S0 = argv[$I0]
+            $P0 = splitNamespace($S0)
+            $I1 = 0
+            $I2 = elements $P0
+            dec $I2
+            $P1 = ns_root
+          loop:
+            $S0 = $P0[$I1]
+            if $I1 == $I2 goto end
+            $P1 = $P1[$S0]
+            inc $I1
+            goto loop
+          end:
+            delete $P1[$S0]
+            inc $I0
+            goto delete_loop
+        }) 
+        .return('')
+    })
 
     .null(subcommand_proc)
     subcommand_proc = get_root_global ['_tcl';'helpers';'namespace'], subcommand
@@ -75,44 +105,6 @@ bad_args:
     $S0 = join '::', ns
     $S0 = '::' . $S0
     .return($S0)
-.end
-
-
-.sub 'delete'
-  .param pmc argv
-  .argc()
-
-  # no arg delete does nothing
-  .Unless(argc, {
-  	.return('')
-  })
-
-  .local pmc splitNamespace, ns_root
-  splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
-  ns_root = get_root_namespace ['tcl']
-
-  $I0 = 0
-delete_loop:
-  if $I0 == argc goto return
-  $S0 = argv[$I0]
-  $P0 = splitNamespace($S0)
-  $I1 = 0
-  $I2 = elements $P0
-  dec $I2
-  $P1 = ns_root
-loop:
-  $S0 = $P0[$I1]
-  if $I1 == $I2 goto end
-  $P1 = $P1[$S0]
-  inc $I1
-  goto loop
-end:
-  delete $P1[$S0]
-  inc $I0
-  goto delete_loop
-
-return:
-  .return('')
 .end
 
 .sub 'exists'
