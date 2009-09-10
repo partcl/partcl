@@ -17,7 +17,10 @@
     io_obj = channels[channel_id]
     if null io_obj goto channelid_error
 
-    io_obj.'flush'() # XXX refactor when we have events working
+    $I0 = can io_obj, 'flush'
+    .If($I0, {
+        io_obj.'flush'() # XXX refactor when we have events working
+    })
     close io_obj
 
     delete channels[channel_id]

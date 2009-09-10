@@ -13,7 +13,10 @@
     channel = shift argv
     channel = getChannel(channel)
 
-    channel.'flush'()
+    $I0 = can channel, 'flush'
+    .If($I0, {
+        channel.'flush'()
+    })
 
     .return('')
 bad_args:
