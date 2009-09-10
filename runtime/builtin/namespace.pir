@@ -63,7 +63,15 @@ END_PIR
             .While(cur_depth<=max_depth, {
                 .str(cur_ns_str,{ns_arr[cur_depth]})
                 .IfElse(cur_depth==max_depth, {
-                    delete cur_ns[cur_ns_str]
+                    $I0 = exists cur_ns[cur_ns_str]
+                    .IfElse($I0, {
+                        delete cur_ns[cur_ns_str]
+                    }, {
+                        $S0 = 'unknown namespace "'
+                        $S0 .= ns_str
+                        $S0 .= '" in namespace delete command'
+                        tcl_error $S0
+                    })
                 }, {
                     cur_ns = ns_arr[cur_ns_str]
                 })
