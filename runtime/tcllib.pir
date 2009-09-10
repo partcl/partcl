@@ -161,6 +161,9 @@ got_platform:
   $S1 = config['cpuarch'] # XXX first approximation
   $P1['machine'] = $S1
 
+  $S1 = config['ptrsize']
+  $P1['pointerSize'] = $S1
+
   $P1['osVersion'] = 8    # XXX extract from parrot
 
   # Set default precision.
