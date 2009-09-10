@@ -5,12 +5,12 @@
     .param pmc argv :slurpy
     .argc()
 
-    if argc != 1 goto bad_args
+    .const 'Sub' getChannel = 'getChannel'
+    .If(argc!=1, {
+        tcl_error 'wrong # args: should be "flush channelId"'
+    })
 
-    .local pmc getChannel,channel
-    getChannel = get_root_global ['_tcl'], 'getChannel'
-
-    channel = shift argv
+    .pmc(channel,{shift argv})
     channel = getChannel(channel)
 
     $I0 = can channel, 'flush'
@@ -19,8 +19,6 @@
     })
 
     .return('')
-bad_args:
-    die 'wrong # args: should be "flush channelId"'
 .end
 
 # Local Variables:
