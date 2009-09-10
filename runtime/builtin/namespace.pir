@@ -49,33 +49,27 @@ END_PIR
     .argc()
 
     .If(subcommand=='delete', {
-        # no arg delete does nothing
-        .If(argc, {
-            .local pmc ns_root
-            ns_root = get_root_namespace ['tcl']
+        .local pmc ns_root
+        ns_root = get_root_namespace ['tcl']
 
-            $I0 = 0
-          delete_loop:
-            .If($I0==argc, {
-                .return('')
+        .iter(argv)
+        .While(iterator, {
+            .str(ns_str,{shift iterator}) 
+            .pmc(ns_arr,{splitNamespace(ns_str)})
+            .int(cur_depth,0)
+            .int(max_depth,{elements ns_arr})
+            dec max_depth
+            .pmc(cur_ns, ns_root)
+            .While(cur_depth<=max_depth, {
+                .str(cur_ns_str,{ns_arr[cur_depth]})
+                .IfElse(cur_depth==max_depth, {
+                    delete cur_ns[cur_ns_str]
+                }, {
+                    cur_ns = ns_arr[cur_ns_str]
+                })
+                inc cur_depth
             })
-            $S0 = argv[$I0]
-            $P0 = splitNamespace($S0)
-            $I1 = 0
-            $I2 = elements $P0
-            dec $I2
-            $P1 = ns_root
-          loop:
-            $S0 = $P0[$I1]
-            if $I1 == $I2 goto end
-            $P1 = $P1[$S0]
-            inc $I1
-            goto loop
-          end:
-            delete $P1[$S0]
-            inc $I0
-            goto delete_loop
-        }) 
+        })
         .return('')
     })
 
