@@ -212,6 +212,15 @@ compile:
         })
         .return(retval)
     })
+    .int(procs_only,0)
+    .If(subcommand=='procs', {
+        # this and 'commands' share logic, reuse it.
+        .If(argc > 1, {
+            tcl_error 'wrong # args: should be "info procs ?pattern?"'
+        })
+        procs_only = 1
+        subcommand='commands'
+     }) 
     .If(subcommand=='commands', {
         .If(argc > 1, {
             tcl_error 'wrong # args: should be "info commands ?pattern?"'
@@ -259,9 +268,21 @@ compile:
         .iter(ns)
       iter_loop:
          unless iterator goto iter_loop_end
-         $S1 = shift iterator
+         .local pmc nskey
+         nskey = shift iterator
+         $S1 = nskey
          $S2 = substr $S1, 0, 1
          unless $S2 == '&' goto iter_loop
+         .If(procs_only, {
+            # Was this written in tcl?
+            .local pmc item
+            item = ns[nskey]
+            .TryCatch({
+                $P2 = getattribute item, 'HLL_source'
+            }, {
+                goto iter_loop
+            })
+         })
          $S1 = substr $S1, 1
          if_null matching, add_result
          $P2 = matching($S1)
