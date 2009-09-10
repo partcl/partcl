@@ -10,7 +10,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 44
+plan 45
 
 eval_is {namespace} \
   {wrong # args: should be "namespace subcommand ?arg ...?"} \
@@ -108,6 +108,10 @@ proc alias {one two} {
 set   foo ok
 alias foo bar
 is [set bar] ok {namespace eval + proc + upvar}
+
+eval_is {namespace delete monkeypants} \
+  {unknown namespace "monkeypants" in namespace delete command} \
+  {don't silently fail on invalid namespaces}
 
 namespace delete foo
 eval_is {namespace exists foo} 0 {namespace delete} {TODO {broken in r30286}}
