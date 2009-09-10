@@ -192,7 +192,7 @@ doesnt_exist:
 
   .local pmc p6r,match
   p6r= compreg 'PGE::Perl6Regex'
-  match = p6r("\\:\\:+(<-[:]>)$$")
+  match = p6r("\\:\\:+(<-[:]>*)$$")
 
   $S0 = argv[0]
   $P0 = match($S0)

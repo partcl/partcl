@@ -10,7 +10,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 42
+plan 44
 
 eval_is {namespace} \
   {wrong # args: should be "namespace subcommand ?arg ...?"} \
@@ -66,8 +66,10 @@ eval_is {namespace tail string string} \
   {wrong # args: should be "namespace tail string"} \
   {namespace tail: too many args}
 
-is [namespace tail ::a::b::c]   c {namespace tail: simple}
-is [namespace tail :::a:::b::c] c {namespace tail: extra colons}
+is [namespace tail ::] {} {namespace tail: main}
+is [namespace tail {}] {} {namespace tail: empty}
+is [namespace tail ::foo::bar::baz] baz {namespace tail: simple}
+is [namespace tail :::foo:::bar:::baz] baz {namespace tail: extra colons}
 
 
 eval_is {namespace exists} \
