@@ -248,8 +248,9 @@ nan:
     .return($P0)
 
 divide_by_zero:
-    $P0 = box 'ARITH DIVZERO {divide by zero}'
-    tcl_error 'divide by zero', $P0
+    $P0 = box ''
+    $P1 = box 'ARITH DIVZERO {divide by zero}'
+    tcl_error 'divide by zero', $P0, $P1
 
 is_string:
     .catch()

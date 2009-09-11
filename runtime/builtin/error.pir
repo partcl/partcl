@@ -2,40 +2,28 @@
 .namespace []
 
 .sub '&error'
-  .param pmc argv :slurpy
-  .argc()
+    .param pmc argv :slurpy
+    .argc()
 
-  if argc < 1 goto badargs
-  if argc > 3 goto badargs
+    .int(args_ok, 1)
+    .If(argc<1,{args_ok=0})
+    .If(argc>3,{args_ok=0})
+    .Unless(args_ok, {
+        tcl_error 'wrong # args: should be "error message ?errorInfo? ?errorCode?"'
+    })
 
-  .local pmc message, errorInfo, errorCode
-  if argc == 3 goto arg_3
-  if argc == 2 goto arg_2
+    .str(message,argv[0])
 
-  errorInfo = box ''
-  errorCode = box 'NONE'
-  goto finish
+    .If(argc==1, {
+        tcl_error message
+    })
+    .pmc(errorInfo,argv[1])
+    .If(argc==2, {
+        tcl_error message, errorInfo
+    })
 
-arg_3:
-  errorInfo = argv[1]
-  errorCode = argv[2]
-  goto finish
-
-arg_2:
-  errorCode = box 'NONE'
-  errorInfo = argv[1]
-
-finish:
-  $P1 = get_hll_global '$errorInfo'
-  assign $P1, errorInfo
-  $P1 = get_hll_global '$errorCode'
-  assign $P1, errorCode
-
-  message = argv[0]
-  die message
-
-badargs:
-  die 'wrong # args: should be "error message ?errorInfo? ?errorCode?"'
+    .pmc(errorCode,argv[2])
+    tcl_error message, errorInfo, errorCode
 .end
 
 # Local Variables:

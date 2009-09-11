@@ -61,18 +61,25 @@ isn't a TCL_OK).
 
 =over 4
 
+=item B<tcl_error>(in STR, in PMC, in PMC)
+
+Generate a TCL_ERROR with $1 as the value, set $errorInfo to $2,
+and $errorCode to $3
+
 =item B<tcl_error>(in STR, in PMC)
 
-Generate a TCL_ERROR with $1 as the value, and set $errorCode to $2
+Generate a TCL_ERROR with $1 as the value, and set $errorInfo $2,
+use $errorCode of C<NONE>.
 
 =item B<tcl_error>(in STR)
 
-Generate a TCL_ERROR with $1 as the message, use $errorCode of C<NONE>.
+Generate a TCL_ERROR with $1 as the message, use $errorCode of C<NONE>,
+and $errorInfo of C<''>.
 
 =cut
 
-inline op tcl_error(in STR, in PMC) :flow {
-    PMC      *errorCode, *ns;
+inline op tcl_error(in STR, in PMC, in PMC) :flow {
+    PMC      *errorCode, *errorInfo, *ns;
     PMC      *const root_ns = interp->root_namespace;
     PMC      *tcl_key        = pmc_new(interp, enum_class_Key);
     PMC *exception = Parrot_ex_build_exception(interp, EXCEPT_error,
@@ -80,20 +87,23 @@ inline op tcl_error(in STR, in PMC) :flow {
     opcode_t * const ret  = expr NEXT();
     opcode_t * dest;
 
-    /* Set the global $errorCode */
+    /* Set the globals */
     VTABLE_set_string_native(interp, tcl_key, string_from_literal(interp, "tcl"));
     ns = Parrot_get_namespace_keyed(interp, root_ns, tcl_key);
 
+    errorInfo = Parrot_find_global_n(interp, ns, string_from_literal(interp, "$errorInfo"));
+    VTABLE_assign_pmc(interp, errorInfo, $2);
+
     errorCode = Parrot_find_global_n(interp, ns, string_from_literal(interp, "$errorCode"));
-    VTABLE_assign_pmc(interp, errorCode, $2);
+    VTABLE_assign_pmc(interp, errorCode, $3);
 
     /* Throw the exception */
     dest = Parrot_ex_throw_from_op(interp, exception, ret);
     goto ADDRESS(dest);
 }
 
-inline op tcl_error(in STR) :flow {
-    PMC      *errorCode, *ns;
+inline op tcl_error(in STR, in PMC) :flow {
+    PMC      *errorCode, *errorInfo, *ns;
     PMC      *const root_ns = interp->root_namespace;
     PMC      *tcl_key        = pmc_new(interp, enum_class_Key);
     PMC *exception = Parrot_ex_build_exception(interp, EXCEPT_error,
@@ -102,9 +112,41 @@ inline op tcl_error(in STR) :flow {
     opcode_t * dest;
     PMC *newEC;
 
-    /* Set the global $errorCode */
+    /* Set the globals */
     VTABLE_set_string_native(interp, tcl_key, string_from_literal(interp, "tcl"));
     ns = Parrot_get_namespace_keyed(interp, root_ns, tcl_key);
+
+    errorInfo = Parrot_find_global_n(interp, ns, string_from_literal(interp, "$errorInfo"));
+    VTABLE_assign_pmc(interp, errorInfo, $2);
+
+    errorCode = Parrot_find_global_n(interp, ns, string_from_literal(interp, "$errorCode"));
+    newEC = pmc_new(interp, Parrot_get_ctx_HLL_type(interp, enum_class_String));
+    VTABLE_set_string_native(interp, newEC, string_from_literal(interp, "NONE"));
+    VTABLE_assign_pmc(interp, errorCode, newEC);
+
+    /* Throw the exception */
+    dest = Parrot_ex_throw_from_op(interp, exception, ret);
+    goto ADDRESS(dest);
+}
+
+inline op tcl_error(in STR) :flow {
+    PMC      *errorCode, *errorInfo, *ns;
+    PMC      *const root_ns = interp->root_namespace;
+    PMC      *tcl_key        = pmc_new(interp, enum_class_Key);
+    PMC *exception = Parrot_ex_build_exception(interp, EXCEPT_error,
+            CONTROL_ERROR, $1);
+    opcode_t * const ret  = expr NEXT();
+    opcode_t * dest;
+    PMC *newEC, *newEI;
+
+    /* Set the globals */
+    VTABLE_set_string_native(interp, tcl_key, string_from_literal(interp, "tcl"));
+    ns = Parrot_get_namespace_keyed(interp, root_ns, tcl_key);
+
+    errorInfo = Parrot_find_global_n(interp, ns, string_from_literal(interp, "$errorCode"));
+    newEI = pmc_new(interp, Parrot_get_ctx_HLL_type(interp, enum_class_String));
+    VTABLE_set_string_native(interp, newEI, string_from_literal(interp, ""));
+    VTABLE_assign_pmc(interp, errorInfo, newEI);
 
     errorCode = Parrot_find_global_n(interp, ns, string_from_literal(interp, "$errorCode"));
     newEC = pmc_new(interp, Parrot_get_ctx_HLL_type(interp, enum_class_String));
