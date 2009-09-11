@@ -1,9 +1,15 @@
 #!perl
 # Copyright (C) 2001-2008, The Perl Foundation.
 
+use Getopt::Long;
 use strict;
 use warnings;
 use lib qw( lib );
+
+my %opts;
+GetOptions(
+    'archive=s' => \$opts{archive},
+);
 
 # need runtests from T::H, but avoid running all our parrot invocations with -w
 use Test::Harness ();
@@ -11,18 +17,22 @@ undef $Test::Harness::Switches;
 
 my @tests = map { glob($_) } qw{t/*.t t/internals/*.t};
 
+my $tap_harness_class = 'TAP::Harness';
+$tap_harness_class .= '::Archive' if $opts{archive};
+
 my $harness;
-eval { require TAP::Harness };
+eval "require $tap_harness_class;";
 if ($@) {
     Test::Harness::runtests(@tests);
     exit;
 }
 else {
-    $harness = TAP::Harness->new({
+    $harness = $tap_harness_class->new({
         verbosity => $ENV{HARNESS_VERBOSE},
-        merge     => 0,
+        merge     => 1,
         jobs      => $ENV{TEST_JOBS} || 1,
         directives => 1,
+        $opts{archive} ? ( archive => $opts{archive} ) : (),
     });
 }
 my $results = $harness->runtests(@tests);
