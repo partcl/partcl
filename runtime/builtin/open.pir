@@ -14,12 +14,35 @@
 
     .str(fileName,{argv[0]})
     .str(  access,{argv[1]})
-    .str(pir_access,'r')
-    if access == '' goto done_access
-    if access == 'r' goto done_access
-    pir_access = 'w'
+    .str(pir_access,'')
+    # The + modes don't map directly to parrot.
+    # Ignoring binary mode (b) for now.
+    .If(access=='r', {
+        pir_access = 'r'
+    })
+    .If(access=='r+', {
+        pir_access = 'rw'
+    })
+    .If(access=='w', {
+        pir_access = 'w'
+    })
+    .If(access=='w+', {
+        pir_access = 'wr'
+    })
+    .If(access=='a', {
+        pir_access = 'a'
+    })
+    .If(access=='a+', {
+        pir_access = 'a'
+    })
 
-done_access:
+    .If(pir_access=='', {
+        $S0 = 'invalid access mode "'
+        $S0 .= access
+        $S0 .= '"'
+        tcl_error $S0
+    })
+
     .local pmc channel
     channel = open fileName, pir_access
 
