@@ -100,8 +100,6 @@ subst:
 .end
 END_PIR
 
-    $S0 = pir
-
     $P1    = compreg 'PIR'
     $P1    = $P1(pir)
     newstr = $P1()
