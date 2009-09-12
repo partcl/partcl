@@ -8,9 +8,6 @@
   if argc == 0 goto error
   if argc > 3 goto error
 
-  .local int utf8
-  utf8 = find_encoding 'utf8'
-
   .local pmc getChannel, io
   getChannel = get_root_global ['_tcl'], 'getChannel'
 
@@ -24,7 +21,6 @@ three_arg:
   $S2 = argv[1]
   io  = getChannel($S2)
   $S3 = argv[2]
-  $S3 = trans_encoding $S3, utf8
 
   $S1 = typeof io
   if $S1 == 'Socket' goto three_arg_stream
@@ -37,7 +33,6 @@ three_arg_stream:
 two_arg:
   # The last arg is the string to print.
   $S3 = argv[1]
-  $S3 = trans_encoding $S3, utf8
   # The first arg could be the option, or it could be a channel
   # figure out which.
   $S2 = argv[0]
@@ -62,7 +57,6 @@ two_arg_channel:
 one_arg:
   $P0 = argv[0]
   $S1 = $P0
-  $S1 = trans_encoding $S1, utf8
   say $S1
   goto done
 
