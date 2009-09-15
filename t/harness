@@ -9,6 +9,7 @@ use lib qw( lib );
 my %opts;
 GetOptions(
     'archive=s' => \$opts{archive},
+    'parrot_revision=s' => \$opts{parrot_revision},
 );
 
 # need runtests from T::H, but avoid running all our parrot invocations with -w
@@ -19,6 +20,10 @@ my @tests = map { glob($_) } qw{t/*.t t/internals/*.t};
 
 my $tap_harness_class = 'TAP::Harness';
 $tap_harness_class .= '::Archive' if $opts{archive};
+
+my $extra_properties;
+$extra_properties->{'Parrot Revision'} = $opts{parrot_revision}
+  if $opts{parrot_revision};
 
 my $harness;
 eval "require $tap_harness_class;";
@@ -33,6 +38,7 @@ else {
         jobs      => $ENV{TEST_JOBS} || 1,
         directives => 1,
         $opts{archive} ? ( archive => $opts{archive} ) : (),
+        $extra_properties ? ( extra_properties => $extra_properties ) : (),
     });
 }
 my $results = $harness->runtests(@tests);
