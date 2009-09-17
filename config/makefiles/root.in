@@ -138,7 +138,6 @@ runtime/tcllib.pbc: $(PARROT) runtime/tcllib.pir runtime/builtins.pir $(CLASSES)
 	$(PARROT) --output=runtime/tcllib.pbc runtime/tcllib.pir
 
 # targets for building a standalone tclsh
-# (We're not quite ready to make this a default target.)
 tclsh@exe@: tcl.pbc $(PBC_TO_EXE)
 	$(PBC_TO_EXE) tcl.pbc
 	$(RENAME) tcl@exe@ tclsh@exe@
