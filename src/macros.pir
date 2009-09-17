@@ -7,6 +7,7 @@
 =head2 .int(name,init)
 =head2 .pmc(name,init)
 =head2 .null(name)
+=head2 .dict(name)
 =head2 .list(name)
 =head2 .iter(collection)
 
@@ -37,6 +38,11 @@ Declare a .local and (maybe) give it an initial value.
 .macro null(name)
   .local pmc .name
   null .name
+.endm
+
+.macro dict(name)
+  .local pmc .name
+  .name = new 'TclDict'
 .endm
 
 .macro list(name)
