@@ -1,6 +1,6 @@
 append.test:	Total	37	Passed	33	Skipped	0	Failed	4
 appendComp.test:	Total	40	Passed	32	Skipped	0	Failed	8
-apply.test:	Total	41	Passed	3	Skipped	0	Failed	38
+apply.test:	Total	41	Passed	16	Skipped	0	Failed	25
 assocd.test:	Total	11	Passed	0	Skipped	11	Failed	0
 basic.test:	Total	140	Passed	39	Skipped	74	Failed	27
 case.test:	Total	15	Passed	0	Skipped	0	Failed	15
@@ -14,7 +14,7 @@ compExpr.test:	Total	80	Passed	76	Skipped	0	Failed	4
 concat.test:	Total	9	Passed	9	Skipped	0	Failed	0
 config.test:	Total	9	Passed	0	Skipped	0	Failed	9
 dcall.test:	Total	6	Passed	0	Skipped	6	Failed	0
-dict.test:	Total	226	Passed	165	Skipped	0	Failed	61
+dict.test:	Total	226	Passed	167	Skipped	0	Failed	59
 dstring.test:	Total	35	Passed	0	Skipped	35	Failed	0
 env.test:	Total	20	Passed	6	Skipped	1	Failed	13
 eval.test:	Total	12	Passed	11	Skipped	0	Failed	1
@@ -43,7 +43,7 @@ linsert.test:	Total	26	Passed	26	Skipped	0	Failed	0
 list.test:	Total	69	Passed	64	Skipped	0	Failed	5
 listObj.test:	Total	43	Passed	42	Skipped	1	Failed	0
 llength.test:	Total	6	Passed	6	Skipped	0	Failed	0
-load.test:	Total	26	Passed	2	Skipped	10	Failed	14
+load.test:	Total	26	Passed	1	Skipped	10	Failed	15
 lrange.test:	Total	22	Passed	22	Skipped	0	Failed	0
 lrepeat.test:	Total	10	Passed	10	Skipped	0	Failed	0
 lreplace.test:	Total	34	Passed	33	Skipped	0	Failed	1
@@ -80,7 +80,7 @@ string.test:	Total	473	Passed	385	Skipped	1	Failed	87
 stringComp.test:	Total	143	Passed	134	Skipped	0	Failed	9
 stringObj.test:	Total	59	Passed	0	Skipped	59	Failed	0
 subst.test:	Total	59	Passed	35	Skipped	0	Failed	24
-switch.test:	Total	108	Passed	66	Skipped	0	Failed	42
+switch.test:	Total	108	Passed	70	Skipped	0	Failed	38
 thread.test:	Total	28	Passed	0	Skipped	28	Failed	0
 timer.test:	Total	54	Passed	8	Skipped	0	Failed	46
 trace.test:	Total	291	Passed	35	Skipped	14	Failed	242
