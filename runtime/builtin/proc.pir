@@ -53,35 +53,32 @@ create:
   code.'emit'(<<'END_PIR', name, namespace)
 .namespace %1
 .sub '' :anon
-  .param pmc argv :slurpy
+    .param pmc argv :slurpy
 
-  .local pmc call_chain, lexpad
-  call_chain = get_root_global ['_tcl'], 'call_chain'
-  lexpad = new 'Hash'
-  push call_chain, lexpad
+    .local pmc call_chain, lexpad
+    call_chain = get_root_global ['_tcl'], 'call_chain'
+    lexpad = new 'Hash'
+    push call_chain, lexpad
 
-  .local pmc info_level
-  info_level = get_root_global ['_tcl'], 'info_level'
-  $P0 = new 'TclList'
-  assign $P0, argv
-  unshift $P0, '%0'
-  unshift info_level, $P0
+    .local pmc info_level
+    info_level = get_root_global ['_tcl'], 'info_level'
+    $P0 = new 'TclList'
+    assign $P0, argv
+    unshift $P0, '%0'
+    unshift info_level, $P0
 END_PIR
 
-    .local pmc defaults_info
-    defaults_info = new 'TclDict'
+    .dict(defaults_info)
 
-    .local string args_usage, args_info
-    .local int i, elems, min, max, is_slurpy
     .local pmc arg
-    args_usage = ''
-    args_info  = ''
+    .str(args_usage,'')
+    .str(args_info,'')
     args  = args.'getListValue'()
-    i     = 0
-    elems = elements args
-    min   = 0
-    max   = elems
-    is_slurpy = 0
+    .int(i,0)
+    .int(elems,{elements args})
+    .int(min,0)
+    .int(max,elems)
+    .int(is_slurpy,0)
     if elems == 0 goto args_loop_done
     $I0 = elems - 1
     $S0 = args[$I0]
@@ -118,10 +115,10 @@ END_PIR
     goto args_next
 
 default_arg:
-      args_code.'emit'(<<'END_PIR', i, $S0, $S1)
-  unless argv goto default_%0
-  $P1 = shift argv
-  lexpad['$%1'] = $P1
+    args_code.'emit'(<<'END_PIR', i, $S0, $S1)
+    unless argv goto default_%0
+    $P1 = shift argv
+    lexpad['$%1'] = $P1
 END_PIR
 
     $S0 = arg[0]
@@ -132,8 +129,8 @@ got_default_key:
 
     defaults.'emit'(<<'END_PIR', i, $S0, $S1)
 default_%0:
-  $P1 = box '%2'
-  lexpad['$%1'] = $P1
+    $P1 = box '%2'
+    lexpad['$%1'] = $P1
 END_PIR
 
     args_usage .= ' ?'
@@ -147,11 +144,10 @@ args_next:
 args_loop_done:
     chopn args_info,  1
 
-    unless is_slurpy goto store_info
-    args_usage .= ' ...'
-    args_info  .= ' args'
-
-store_info:
+    .If(is_slurpy, {
+        args_usage .= ' ...'
+        args_info  .= ' args'
+    })
 
     code .= <<'END_PIR'
   .argc()
@@ -166,14 +162,14 @@ emit_args:
 
     # save anything left into args.
     code.'emit'(<<'END_PIR')
-  lexpad['args'] = argv
+    lexpad['args'] = argv
 END_PIR
 
 done_args:
     code.'emit'('  goto ARGS_OK')
     code .= defaults
     code.'emit'(<<'END_PIR', name, args_usage)
-  goto ARGS_OK
+    goto ARGS_OK
 BAD_ARGS:
   $P0 = pop call_chain
   $P0 = shift info_level
@@ -189,11 +185,11 @@ END_PIR
     code .= parsed_body
 
     code.'emit'(<<'END_PIR', body_reg)
-  pop_eh
+    pop_eh
 was_ok:
-  $P0 = pop call_chain
-  $P0 = shift info_level
-  .return(%0)
+    $P0 = pop call_chain
+    $P0 = shift info_level
+    .return(%0)
 END_PIR
 
     code .= <<'END_PIR'
