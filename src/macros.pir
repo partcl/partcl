@@ -10,6 +10,7 @@
 =head2 .dict(name)
 =head2 .list(name)
 =head2 .iter(collection)
+=head2 .interp()
 
 Declare a .local and (maybe) give it an initial value.
 
@@ -53,6 +54,11 @@ Declare a .local and (maybe) give it an initial value.
 .macro iter(collection)
   .local pmc iterator
   iterator = iter .collection
+.endm
+
+.macro interp()
+  .local pmc interp
+  interp = getinterp
 .endm
 
 =head2 Try(try)

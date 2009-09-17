@@ -13,8 +13,6 @@ source lib/test_more.tcl
 
 plan 8
 
-set TODO {TODO {not implemented yet}}
-
 eval_is {apply foo} \
   {can't interpret "foo" as a lambda expression} \
   {bad lambda expression}
@@ -25,8 +23,7 @@ eval_is {apply {foo bar baz bit}} \
 
 eval_is {apply {foo bar baz}} \
   {namespace "::baz" not found} \
-  {namespace doesn't exist} \
-  $TODO
+  {namespace doesn't exist}
 
 eval_is {apply} \
   {wrong # args: should be "apply lambdaExpr ?arg1 arg2 ...?"} \
@@ -34,17 +31,14 @@ eval_is {apply} \
 
 eval_is {apply {{foo {bar 2} {baz 3}}  bar}} \
   {wrong # args: should be "apply {{foo {bar 2} {baz 3}}  bar} foo ?bar? ?baz?"} \
-  {too few args} \
-  $TODO
+  {too few args}
 
 eval_is {apply {{}   bar} foo} \
   {wrong # args: should be "apply {{}   bar}"} \
-  {too many args} \
-  $TODO
+  {too many args}
 
 eval_is {apply {{n} {expr {$n*$n}}} {5}} 25 \
-  {squaring function} \
-  $TODO
+  {squaring function}
 
 eval_is {
   unset -nocomplain x func
@@ -55,5 +49,4 @@ eval_is {
   }
   apply [list {var {i 1}} $func] x
   set x
-} 5 {incr} \
-  $TODO
+} 5 {incr}
