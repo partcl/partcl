@@ -71,6 +71,13 @@ warn <<END_WARN
 END_WARN
   unless $opt{has_icu};
 
+# Get the SVN revision using svn or git-svn
+my $cmd = 'svn info';
+$cmd    = 'git svn info README' if -d '.git';
+my $out = `$cmd`;
+$out    =~ /Revision: (\d+)/;
+my $partcl_revision = $1;
+
 my $build_tool = $opt{perl} . ' '
                . $opt{libdir}
                . $opt{versiondir}
@@ -90,7 +97,7 @@ my %makefiles = (
 foreach my $template (keys %makefiles) {
     my $makefile = $makefiles{$template};
     print "Creating $makefile\n";
-    if (system("$build_tool $template $makefile") != 0) {
+    if (system("$build_tool $template $makefile --partcl_revision=$partcl_revision") != 0) {
         die "Unable to create makefile; did you run parrot's 'make install-dev' ?\n";
     }
 }
