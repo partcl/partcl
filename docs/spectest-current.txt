@@ -5,7 +5,6 @@ assocd.test:	Total	11	Passed	0	Skipped	11	Failed	0
 basic.test:	Total	140	Passed	39	Skipped	74	Failed	27
 case.test:	Total	15	Passed	0	Skipped	0	Failed	15
 chan.test:	Total	35	Passed	2	Skipped	0	Failed	33
-chanio.test:	Total	775	Passed	3	Skipped	458	Failed	314
 cmdIL.test:	Total	122	Passed	73	Skipped	3	Failed	46
 cmdInfo.test:	Total	12	Passed	0	Skipped	12	Failed	0
 cmdMZ.test:	Total	71	Passed	0	Skipped	3	Failed	68
@@ -14,6 +13,7 @@ compExpr.test:	Total	80	Passed	76	Skipped	0	Failed	4
 concat.test:	Total	9	Passed	9	Skipped	0	Failed	0
 config.test:	Total	9	Passed	0	Skipped	0	Failed	9
 dcall.test:	Total	6	Passed	0	Skipped	6	Failed	0
+dict.test:	Total	226	Passed	167	Skipped	0	Failed	59
 dstring.test:	Total	35	Passed	0	Skipped	35	Failed	0
 env.test:	Total	20	Passed	6	Skipped	1	Failed	13
 eval.test:	Total	12	Passed	11	Skipped	0	Failed	1
@@ -70,6 +70,7 @@ rename.test:	Total	18	Passed	7	Skipped	7	Failed	4
 result.test:	Total	23	Passed	0	Skipped	22	Failed	1
 scan.test:	Total	171	Passed	93	Skipped	4	Failed	74
 security.test:	Total	1	Passed	1	Skipped	0	Failed	0
+set-old.test:	Total	149	Passed	126	Skipped	0	Failed	23
 set.test:	Total	63	Passed	58	Skipped	1	Failed	4
 socket.test:	Total	60	Passed	0	Skipped	60	Failed	0
 source.test:	Total	20	Passed	6	Skipped	0	Failed	14
