@@ -1,105 +1,145 @@
+## shell commands
 RM_F    = @rm_f@
 PERL    = @perl@
 MAKE    = @make_c@
+RENAME  = @mv@
 
+## external directories
 VERSION_DIR = @versiondir@
 INCLUDE_DIR = @includedir@$(VERSION_DIR)
-LIB_DIR = @libdir@$(VERSION_DIR)
-BIN_DIR = @bindir@
-PARROT  = $(BIN_DIR)/parrot@exe@
-TOOLS_DIR = @libdir@$(VERSION_DIR)@slash@tools
-RECONFIGURE = $(PERL) $(LIB_DIR)/tools/dev/gen_makefile.pl
-PBC_TO_EXE    = $(BIN_DIR)/pbc_to_exe@exe@
+LIB_DIR     = @libdir@$(VERSION_DIR)
+BIN_DIR     = @bindir@
+TOOLS_DIR   = @libdir@$(VERSION_DIR)/tools
+TGE_DIR     = $(LIB_DIR)/languages/tge
+
+## local directories
+PMC_DIR     = src/pmc
+OPS_DIR     = src/ops
+CLASS_DIR   = src/class
+BUILTIN_DIR = runtime/builtin
+TCLLIB_DIR  = library
+
+## parrot binaries & tools
+PARROT       = $(BIN_DIR)/parrot@exe@
+RECONFIGURE  = $(PERL) $(LIB_DIR)/tools/dev/gen_makefile.pl
+PBC_TO_EXE   = $(BIN_DIR)/pbc_to_exe@exe@
+PERL6GRAMMAR = $(LIB_DIR)/library/PGE/Perl6Grammar.pbc
 #IF(darwin):
 #IF(darwin):# MACOSX_DEPLOYMENT_TARGET must be defined for OS X compilation/linking
 #IF(darwin):export MACOSX_DEPLOYMENT_TARGET := @osx_version@
 
-TCL_LIB   = library
+## file extensions
 O         = @o@
-PMCDIR    = src/pmc
-OPSDIR    = src/ops
-CLASSDIR  = src/class
 LOAD_EXT  = @load_ext@
-COPY      = @cp@
-RENAME    = @mv@
 
+## compiler
 CC_SHARED  = @cc_shared@
 CFLAGS     = @ccflags@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@ $(CC_SHARED)
 CC         = @cc@
 
-TGE_DIR  = $(LIB_DIR)/languages/tge
-PERL6GRAMMAR = $(LIB_DIR)/library/PGE/Perl6Grammar.pbc
+## partcl source 
+BUILTINS_PIR = \
+  $(BUILTIN_DIR)/after.pir      $(BUILTIN_DIR)/append.pir \
+  $(BUILTIN_DIR)/apply.pir      $(BUILTIN_DIR)/array.pir \
+  $(BUILTIN_DIR)/bgerror.pir    $(BUILTIN_DIR)/binary.pir \
+  $(BUILTIN_DIR)/break.pir      $(BUILTIN_DIR)/catch.pir \
+  $(BUILTIN_DIR)/cd.pir         $(BUILTIN_DIR)/chan.pir \
+  $(BUILTIN_DIR)/clock.pir      $(BUILTIN_DIR)/close.pir \
+  $(BUILTIN_DIR)/concat.pir     $(BUILTIN_DIR)/continue.pir \
+  $(BUILTIN_DIR)/dde.pir        $(BUILTIN_DIR)/dict.pir \
+  $(BUILTIN_DIR)/encoding.pir   $(BUILTIN_DIR)/eof.pir \
+  $(BUILTIN_DIR)/error.pir      $(BUILTIN_DIR)/eval.pir \
+  $(BUILTIN_DIR)/exec.pir       $(BUILTIN_DIR)/exit.pir \
+  $(BUILTIN_DIR)/expr.pir       $(BUILTIN_DIR)/fblocked.pir \
+  $(BUILTIN_DIR)/fconfigure.pir $(BUILTIN_DIR)/fcopy.pir \
+  $(BUILTIN_DIR)/file.pir       $(BUILTIN_DIR)/fileevent.pir \
+  $(BUILTIN_DIR)/flush.pir      $(BUILTIN_DIR)/for.pir \
+  $(BUILTIN_DIR)/foreach.pir    $(BUILTIN_DIR)/format.pir \
+  $(BUILTIN_DIR)/gets.pir       $(BUILTIN_DIR)/glob.pir \
+  $(BUILTIN_DIR)/global.pir     $(BUILTIN_DIR)/if.pir \
+  $(BUILTIN_DIR)/incr.pir       $(BUILTIN_DIR)/info.pir \
+  $(BUILTIN_DIR)/inline.pir     $(BUILTIN_DIR)/interp.pir \
+  $(BUILTIN_DIR)/join.pir       $(BUILTIN_DIR)/lappend.pir \
+  $(BUILTIN_DIR)/lassign.pir    $(BUILTIN_DIR)/lindex.pir \
+  $(BUILTIN_DIR)/linsert.pir    $(BUILTIN_DIR)/list.pir \
+  $(BUILTIN_DIR)/llength.pir    $(BUILTIN_DIR)/load.pir \
+  $(BUILTIN_DIR)/lrange.pir     $(BUILTIN_DIR)/lrepeat.pir \
+  $(BUILTIN_DIR)/lreplace.pir   $(BUILTIN_DIR)/lreverse.pir \
+  $(BUILTIN_DIR)/lsearch.pir    $(BUILTIN_DIR)/lset.pir \
+  $(BUILTIN_DIR)/lsort.pir      $(BUILTIN_DIR)/memory.pir \
+  $(BUILTIN_DIR)/namespace.pir  $(BUILTIN_DIR)/open.pir \
+  $(BUILTIN_DIR)/package.pir    $(BUILTIN_DIR)/pid.pir \
+  $(BUILTIN_DIR)/proc.pir       $(BUILTIN_DIR)/puts.pir \
+  $(BUILTIN_DIR)/pwd.pir        $(BUILTIN_DIR)/read.pir \
+  $(BUILTIN_DIR)/regexp.pir     $(BUILTIN_DIR)/registry.pir \
+  $(BUILTIN_DIR)/regsub.pir     $(BUILTIN_DIR)/rename.pir \
+  $(BUILTIN_DIR)/return.pir     $(BUILTIN_DIR)/scan.pir \
+  $(BUILTIN_DIR)/seek.pir       $(BUILTIN_DIR)/set.pir \
+  $(BUILTIN_DIR)/socket.pir     $(BUILTIN_DIR)/source.pir \
+  $(BUILTIN_DIR)/split.pir      $(BUILTIN_DIR)/string.pir \
+  $(BUILTIN_DIR)/subst.pir      $(BUILTIN_DIR)/switch.pir \
+  $(BUILTIN_DIR)/tell.pir       $(BUILTIN_DIR)/time.pir \
+  $(BUILTIN_DIR)/trace.pir      $(BUILTIN_DIR)/unload.pir \
+  $(BUILTIN_DIR)/unset.pir      $(BUILTIN_DIR)/update.pir \
+  $(BUILTIN_DIR)/uplevel.pir    $(BUILTIN_DIR)/upvar.pir \
+  $(BUILTIN_DIR)/variable.pir   $(BUILTIN_DIR)/vwait.pir \
+  $(BUILTIN_DIR)/while.pir
 
-RUNTIME_PIR = runtime/builtin/after.pir        runtime/builtin/linsert.pir \
-runtime/builtin/append.pir       runtime/builtin/list.pir \
-runtime/builtin/apply.pir        runtime/builtin/llength.pir \
-runtime/builtin/array.pir        runtime/builtin/load.pir \
- runtime/builtin/lrange.pir \
- runtime/builtin/lrepeat.pir \
-runtime/builtin/bgerror.pir      runtime/builtin/lreplace.pir \
-runtime/builtin/binary.pir       runtime/builtin/lreverse.pir \
-runtime/builtin/break.pir        runtime/builtin/lsearch.pir \
-runtime/builtin/catch.pir        runtime/builtin/lset.pir \
-runtime/builtin/cd.pir           runtime/builtin/lsort.pir \
-runtime/builtin/chan.pir         runtime/builtin/memory.pir \
-runtime/builtin/clock.pir        runtime/builtin/namespace.pir \
-runtime/builtin/close.pir        runtime/builtin/open.pir \
-runtime/builtin/concat.pir       runtime/builtin/package.pir \
-runtime/builtin/continue.pir     \
-runtime/builtin/dde.pir          runtime/builtin/pid.pir \
-runtime/builtin/dict.pir         runtime/builtin/proc.pir \
-runtime/builtin/encoding.pir     runtime/builtin/puts.pir \
-runtime/builtin/eof.pir          runtime/builtin/pwd.pir \
-runtime/builtin/error.pir        runtime/builtin/read.pir \
-runtime/builtin/eval.pir         runtime/builtin/regexp.pir \
-runtime/builtin/exec.pir         runtime/builtin/registry.pir \
-runtime/builtin/exit.pir         runtime/builtin/regsub.pir \
-runtime/builtin/expr.pir         runtime/builtin/rename.pir \
-runtime/builtin/fblocked.pir     runtime/builtin/return.pir \
-runtime/builtin/fconfigure.pir   runtime/builtin/scan.pir \
-runtime/builtin/fcopy.pir        runtime/builtin/seek.pir \
-runtime/builtin/file.pir         runtime/builtin/set.pir \
-runtime/builtin/fileevent.pir    runtime/builtin/socket.pir \
-runtime/builtin/flush.pir        runtime/builtin/source.pir \
-runtime/builtin/for.pir          runtime/builtin/split.pir \
-runtime/builtin/foreach.pir      runtime/builtin/string.pir \
-runtime/builtin/format.pir       runtime/builtin/subst.pir \
-runtime/builtin/gets.pir         runtime/builtin/switch.pir \
-runtime/builtin/glob.pir         runtime/builtin/tell.pir \
-runtime/builtin/global.pir       runtime/builtin/time.pir \
-runtime/builtin/trace.pir \
-runtime/builtin/if.pir           \
-runtime/builtin/incr.pir         runtime/builtin/unload.pir \
-runtime/builtin/info.pir         runtime/builtin/unset.pir \
-runtime/builtin/inline.pir       runtime/builtin/update.pir \
-runtime/builtin/interp.pir       runtime/builtin/uplevel.pir \
-runtime/builtin/join.pir         runtime/builtin/upvar.pir \
-runtime/builtin/lappend.pir      runtime/builtin/variable.pir \
-runtime/builtin/lassign.pir      runtime/builtin/vwait.pir \
-runtime/builtin/lindex.pir       runtime/builtin/while.pir
+CLASSES = \
+  $(CLASS_DIR)/string.pir \
+  $(CLASS_DIR)/tclarray.pir \
+  $(CLASS_DIR)/tclconst.pir \
+  $(CLASS_DIR)/tcldict.pir \
+  $(CLASS_DIR)/tclint.pir \
+  $(CLASS_DIR)/tcllist.pir \
+  $(CLASS_DIR)/tclproc.pir \
+  $(CLASS_DIR)/tclstring.pir \
+  $(CLASS_DIR)/tracearray.pir
 
-DEPS = \
-runtime/compilers.pir \
-runtime/conversions.pir \
-runtime/variables.pir \
-runtime/options.pir \
-src/macros.pir \
-src/mathops.pir \
-src/returncodes.pasm \
-src/grammar/expr/expression.pir \
-src/grammar/expr/functions.pir \
-src/grammar/expr/parse.pir \
-src/grammar/expr/operators.pir \
-src/grammar/expr/past2pir.pir \
-src/grammar/expr/pge2past.pir \
-$(TCL_LIB)/parray.tcl \
-$(RUNTIME_PIR)
+SRC_DEPS = \
+  runtime/builtins.pir \
+  runtime/compilers.pir \
+  runtime/conversions.pir \
+  runtime/variables.pir \
+  runtime/options.pir \
+  src/macros.pir \
+  src/mathops.pir \
+  src/returncodes.pasm \
+  src/grammar/expr/expression.pir \
+  src/grammar/expr/functions.pir \
+  src/grammar/expr/parse.pir \
+  src/grammar/expr/operators.pir \
+  src/grammar/expr/past2pir.pir \
+  src/grammar/expr/pge2past.pir \
+  $(TCLLIB_DIR)/parray.tcl \
+  $(CLASSES)
 
+## build
 all: tclsh@exe@
+
+tclsh@exe@: tcl.pbc $(PBC_TO_EXE)
+	$(PBC_TO_EXE) tcl.pbc
+	$(RENAME) tcl@exe@ tclsh@exe@
 
 tcl.pbc: $(PARROT) pmcs ops runtime/tcllib.pbc src/tclsh.pir
 	$(PARROT) --output=tcl.pbc src/tclsh.pir
 
+runtime/builtins.pir: $(BUILTINS_PIR) tools/gen_builtins.pl
+	$(PERL) tools/gen_builtins.pl > runtime/builtins.pir
+
+runtime/tcllib.pbc: $(PARROT) runtime/tcllib.pir pmcs ops $(SRC_DEPS)
+	$(PARROT) --output=runtime/tcllib.pbc runtime/tcllib.pir
+
+runtime/tcllib.pir: runtime/builtins.pir
+
+## subdirs
+pmcs:
+	$(MAKE) $(PMC_DIR)
+
+ops: src/binary$(O)
+	$(MAKE) $(OPS_DIR)
+
+## suffix rules
 .SUFFIXES : .pir .pg .tg
 
 .tg.pir :
@@ -111,37 +151,10 @@ tcl.pbc: $(PARROT) pmcs ops runtime/tcllib.pbc src/tclsh.pir
 .pir.pbc :
 	$(PARROT) --output=$@ $<
 
-CLASSES = \
-  $(CLASSDIR)/string.pir \
-  $(CLASSDIR)/tclarray.pir \
-  $(CLASSDIR)/tclconst.pir \
-  $(CLASSDIR)/tcldict.pir \
-  $(CLASSDIR)/tclint.pir \
-  $(CLASSDIR)/tcllist.pir \
-  $(CLASSDIR)/tclproc.pir \
-  $(CLASSDIR)/tclstring.pir \
-  $(CLASSDIR)/tracearray.pir
-
-pmcs:
-	$(MAKE) $(PMCDIR)
-
 .c$(O) :
 	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) @cc_o_out@$@ -c $<
 
-ops: src/binary$(O)
-	$(MAKE) $(OPSDIR)
-
-runtime/builtins.pir: $(DEPS) tools/gen_builtins.pl
-	$(PERL) tools/gen_builtins.pl > runtime/builtins.pir
-
-runtime/tcllib.pbc: $(PARROT) runtime/tcllib.pir runtime/builtins.pir $(CLASSES) ops
-	$(PARROT) --output=runtime/tcllib.pbc runtime/tcllib.pir
-
-# targets for building a standalone tclsh
-tclsh@exe@: tcl.pbc $(PBC_TO_EXE)
-	$(PBC_TO_EXE) tcl.pbc
-	$(RENAME) tcl@exe@ tclsh@exe@
-
+## Testing
 test: tcl.pbc
 	$(PERL) -I$(TOOLS_DIR)/lib t/harness
 
@@ -160,6 +173,8 @@ specinfo: tcl.pbc
 unfudge: tcl.pbc
 	$(PERL) tools/tcl_test.pl --skip
 
+## cleanup
+
 CLEANERS = \
 tcl.c \
 tcl$(O) \
@@ -168,33 +183,33 @@ tcl.pbc \
 runtime/builtins.pir \
 "runtime/*.pbc" \
 "$(CLASSDIR)/*.pbc" \
-"$(PMCDIR)/pmc_*.h" \
-"$(PMCDIR)/*_group.h" \
-"$(PMCDIR)/*$(LOAD_EXT)" \
-"$(PMCDIR)/*.dump" \
-#IF(ld_parrot_exe_def):"$(PMCDIR)/*.def" \
-"$(PMCDIR)/*.c" \
-"$(PMCDIR)/*$(O)" \
-"$(PMCDIR)/*.exp" \
-"$(PMCDIR)/*.ilk" \
-"$(PMCDIR)/*.lib" \
-"$(PMCDIR)/*.pdb" \
+"$(PMC_DIR)/pmc_*.h" \
+"$(PMC_DIR)/*_group.h" \
+"$(PMC_DIR)/*$(LOAD_EXT)" \
+"$(PMC_DIR)/*.dump" \
+#IF(ld_parrot_exe_def):"$(PMC_DIR)/*.def" \
+"$(PMC_DIR)/*.c" \
+"$(PMC_DIR)/*$(O)" \
+"$(PMC_DIR)/*.exp" \
+"$(PMC_DIR)/*.ilk" \
+"$(PMC_DIR)/*.lib" \
+"$(PMC_DIR)/*.pdb" \
 "t/*.pir" \
 "t/*.tcl" \
 src/grammar/expr/expression.pir \
 src/grammar/expr/past2pir.pir \
 src/grammar/expr/pge2past.pir \
-"$(OPSDIR)/*.c" \
-"$(OPSDIR)/*.h" \
+"$(OPS_DIR)/*.c" \
+"$(OPS_DIR)/*.h" \
 "src/*$(O)" \
-"$(OPSDIR)/*$(O)" \
-"$(OPSDIR)/*$(LOAD_EXT)" \
-"$(OPSDIR)/*.bundle" \
-"$(OPSDIR)/*.exp" \
-"$(OPSDIR)/*.ilk" \
-"$(OPSDIR)/*.lib" \
-"$(OPSDIR)/*.pdb" \
-"$(TCL_LIB)/*.pir" \
+"$(OPS_DIR)/*$(O)" \
+"$(OPS_DIR)/*$(LOAD_EXT)" \
+"$(OPS_DIR)/*.bundle" \
+"$(OPS_DIR)/*.exp" \
+"$(OPS_DIR)/*.ilk" \
+"$(OPS_DIR)/*.lib" \
+"$(OPS_DIR)/*.pdb" \
+"$(TCLLIB_DIR)/*.pir" \
 dynext/* \
 lib/*.pre_c
 
@@ -205,19 +220,21 @@ clean:
 
 realclean: clean
 	$(RM_F) examples/Makefile Makefile t_tcl \
-		$(PMCDIR)/Makefile $(OPSDIR)/Makefile \
+		$(PMC_DIR)/Makefile $(OPS_DIR)/Makefile \
 		lib/Parrot/Installed.pm \
                 t/internals/select_option.t \
                 t/internals/select_switches.t
 
 distclean: realclean
 
-# regenerate the Makefiles
-Makefile: config/makefiles/root.in config/makefiles/pmc.in config/makefiles/ops.in
+## regenerate makefiles
+Makefile: config/makefiles/root.in
 	$(RECONFIGURE) config/makefiles/root.in Makefile
-	$(RECONFIGURE) config/makefiles/pmc.in $(PMCDIR)/Makefile
-	$(RECONFIGURE) config/makefiles/ops.in $(OPSDIR)/Makefile
+src/pmc/Makefile: config/makefiles/pmc.in
+	$(RECONFIGURE) config/makefiles/pmc.in $(PMC_DIR)/Makefile
+src/ops/Makefile: config/makefiles/ops.in
+	$(RECONFIGURE) config/makefiles/ops.in $(OPS_DIR)/Makefile
 
-# fetch the tcl source.
+## copy tcl cvs repository
 tcl-cvs:
 	$(PERL) tools/tcl_cvs.pl tcl-cvs
