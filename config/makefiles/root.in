@@ -217,7 +217,7 @@ clean:
 	$(RM_F) $(CLEANERS)
 
 realclean: clean
-	$(RM_F) examples/Makefile Makefile t_tcl \
+	$(RM_F) Makefile t_tcl tcl-cvs \
 		$(PMC_DIR)/Makefile $(OPS_DIR)/Makefile \
 		lib/Parrot/Installed.pm \
                 t/internals/select_option.t \
