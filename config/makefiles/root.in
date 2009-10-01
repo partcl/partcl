@@ -130,8 +130,6 @@ runtime/builtins.pir: $(BUILTINS_PIR) tools/gen_builtins.pl
 runtime/tcllib.pbc: $(PARROT) runtime/tcllib.pir pmcs ops $(SRC_DEPS)
 	$(PARROT) --output=runtime/tcllib.pbc runtime/tcllib.pir
 
-runtime/tcllib.pir: runtime/builtins.pir
-
 ## subdirs
 pmcs:
 	$(MAKE) $(PMC_DIR)
