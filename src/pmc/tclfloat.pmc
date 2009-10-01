@@ -1,6 +1,6 @@
 /*
  *  $Id: tclfloat.pmc 26652 2008-03-31 02:23:48Z coke $
- *  Copyright (C) 2001-2009, The Perl Foundation.
+ *  Copyright (C) 2001-2009, The Parrot Foundation.
  */
 
 #include "pmc/pmc_integer.h"

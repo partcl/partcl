@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2006-2008, The Perl Foundation.
+# Copyright (C) 2006-2008, The Parrot Foundation.
 # $Id: cmd_apply.t 26472 2008-03-18 14:27:51Z coke $
 
 # the following lines re-execute this as a tcl script

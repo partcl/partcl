@@ -1,6 +1,6 @@
 /*
  * $Id: tcl.ops 30350 2008-08-19 18:32:51Z coke $
- * Copyright (C) 2006-2008, The Perl Foundation.
+ * Copyright (C) 2006-2008, The Parrot Foundation.
  */
 
 BEGIN_OPS_PREAMBLE

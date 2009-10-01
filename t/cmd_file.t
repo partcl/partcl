@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2006-2007, The Perl Foundation.
+# Copyright (C) 2006-2007, The Parrot Foundation.
 # $Id: cmd_file.t 21247 2007-09-13 06:31:01Z paultcochrane $
 
 # the following lines re-execute this as a tcl script
@@ -59,4 +59,3 @@ is [file dirname .] .  \
 
 is [file dirname file.ext] .  \
   {[file dirname] dirname simple file}
-

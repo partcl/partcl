@@ -1,6 +1,6 @@
 #! perl
 
-# Copyright (C) 2004-2007, The Perl Foundation.
+# Copyright (C) 2004-2007, The Parrot Foundation.
 
 # the following lines re-execute this as a tcl script
 # the \ at the end of these lines makes them a comment in tcl \

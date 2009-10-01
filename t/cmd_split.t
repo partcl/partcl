@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2006-2007, The Perl Foundation.
+# Copyright (C) 2006-2007, The Parrot Foundation.
 # $Id: cmd_split.t 21247 2007-09-13 06:31:01Z paultcochrane $
 
 # the following lines re-execute this as a tcl script

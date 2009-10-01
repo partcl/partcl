@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2004-2007, The Perl Foundation.
+# Copyright (C) 2004-2007, The Parrot Foundation.
 # $Id: cmd_catch.t 31351 2008-09-22 21:14:32Z coke $
 
 # the following lines re-execute this as a tcl script

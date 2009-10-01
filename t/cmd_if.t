@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2004-2008, The Perl Foundation.
+# Copyright (C) 2004-2008, The Parrot Foundation.
 # $Id: cmd_if.t 26489 2008-03-19 04:42:41Z coke $
 
 # the following lines re-execute this as a tcl script
@@ -162,4 +162,3 @@ eval_is {if 0 then} \
 eval_is {if 0} \
   {wrong # args: no script following "0" argument} \
   {no script following conditional}
-

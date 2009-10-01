@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2005-2008, The Perl Foundation.
+# Copyright (C) 2005-2008, The Parrot Foundation.
 # $Id: cmd_info.t 26489 2008-03-19 04:42:41Z coke $
 
 # the following lines re-execute this as a tcl script
@@ -231,4 +231,3 @@ like [info nameofexecutable] parrot {basic exec name}
 
 eval_is {info nameofexecutable 1} \
   {wrong # args: should be "info nameofexecutable"} {too many args}
-

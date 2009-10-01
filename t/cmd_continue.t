@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2004-2006, The Perl Foundation.
+# Copyright (C) 2004-2006, The Parrot Foundation.
 # $Id: cmd_continue.t 21247 2007-09-13 06:31:01Z paultcochrane $
 
 # the following lines re-execute this as a tcl script

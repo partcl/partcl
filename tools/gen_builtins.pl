@@ -1,6 +1,6 @@
 #! perl
 
-# Copyright (C) 2003-2006, The Perl Foundation.
+# Copyright (C) 2003-2006, The Parrot Foundation.
 # $Id: gen_builtins.pl 29804 2008-07-27 18:57:09Z coke $
 
 use strict;

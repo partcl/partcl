@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2005-2006, The Perl Foundation.
+# Copyright (C) 2005-2006, The Parrot Foundation.
 # $Id: cmd_parray.t 31349 2008-09-22 20:05:49Z coke $
 
 use strict;
@@ -82,4 +82,3 @@ OUT
 #   fill-column: 100
 # End:
 # vim: expandtab shiftwidth=4:
-

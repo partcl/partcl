@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2005-2007, The Perl Foundation.
+# Copyright (C) 2005-2007, The Parrot Foundation.
 # $Id: cmd_lassign.t 21247 2007-09-13 06:31:01Z paultcochrane $
 
 # the following lines re-execute this as a tcl script
@@ -45,4 +45,3 @@ eval_is {
   set e [lassign {x y z} a b c d]
   list $a $b $c $d $e
 } {x y z {} {}} {4 variables, not enough values}
-

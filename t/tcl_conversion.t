@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2005-2007, The Perl Foundation.
+# Copyright (C) 2005-2007, The Parrot Foundation.
 # $Id: tcl_conversion.t 26436 2008-03-17 03:15:34Z coke $
 
 # the following lines re-execute this as a tcl script

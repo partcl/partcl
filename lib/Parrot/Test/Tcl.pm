@@ -1,4 +1,4 @@
-# Copyright (C) 2009, The Perl Foundation.
+# Copyright (C) 2009, The Parrot Foundation.
 # $Id: Tcl.pm 29434 2008-07-14 15:42:24Z coke $
 
 package Parrot::Test::Tcl;

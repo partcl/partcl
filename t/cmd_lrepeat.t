@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2004-2006, The Perl Foundation.
+# Copyright (C) 2004-2006, The Parrot Foundation.
 # $Id: cmd_lrepeat.t 21247 2007-09-13 06:31:01Z paultcochrane $
 
 # the following lines re-execute this as a tcl script
@@ -35,10 +35,3 @@ eval_is {lrepeat 0 2} \
 eval_is {lrepeat 0.2 2} \
   {expected integer but got "0.2"} \
   {noninteger count}
-
-
-
-
-
-
-

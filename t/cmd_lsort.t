@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2005-2008, The Perl Foundation.
+# Copyright (C) 2005-2008, The Parrot Foundation.
 # $Id: cmd_lsort.t 29810 2008-07-28 00:11:43Z coke $
 
 # the following lines re-execute this as a tcl script

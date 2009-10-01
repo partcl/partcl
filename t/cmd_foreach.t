@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2004-2008, The Perl Foundation.
+# Copyright (C) 2004-2008, The Parrot Foundation.
 # $Id: cmd_foreach.t 29812 2008-07-28 00:44:19Z coke $
 
 # the following lines re-execute this as a tcl script

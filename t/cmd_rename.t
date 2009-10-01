@@ -1,6 +1,6 @@
 #!perl
 
-# Copyright (C) 2004-2007, The Perl Foundation.
+# Copyright (C) 2004-2007, The Parrot Foundation.
 # $Id: cmd_rename.t 26313 2008-03-11 14:43:47Z coke $
 
 use strict;

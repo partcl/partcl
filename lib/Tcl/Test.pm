@@ -1,6 +1,6 @@
 package Tcl::Test;
 
-# Copyright (C) 2006-2007, The Perl Foundation.
+# Copyright (C) 2006-2007, The Parrot Foundation.
 # $Id: Test.pm 29432 2008-07-14 14:38:24Z coke $
 
 use warnings;
