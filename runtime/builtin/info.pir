@@ -441,9 +441,7 @@ compile:
         .return(level)
 
       find_info_level:
-        .local pmc info_level
-        info_level = get_root_global ['_tcl'], 'info_level'
-        $P0 = info_level[level]
+        .getInfoLevel(level, $P0)
         .return($P0)
     })
     .If(subcommand=='script', {

@@ -1,6 +1,10 @@
 .HLL '_tcl'
 .namespace []
 
+### XXX Temporary subs to help while refactoring.
+
+### XXX
+
 =head2 _Tcl::readVar
 
 Read a variable from its name. It may be a scalar or an

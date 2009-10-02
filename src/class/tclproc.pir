@@ -64,10 +64,7 @@ create:
 .sub '' :anon
     .param pmc argv :slurpy
 
-    .local pmc call_chain, lexpad
-    call_chain = get_root_global ['_tcl'], 'call_chain'
-    lexpad = new 'Hash'
-    push call_chain, lexpad
+    .pushCallChain()
 
     .local pmc info_level
     info_level = get_root_global ['_tcl'], 'info_level'
@@ -180,8 +177,8 @@ done_args:
     code.'emit'(<<'END_PIR', name, args_usage)
     goto ARGS_OK
 BAD_ARGS:
-  $P0 = pop call_chain
-  $P0 = shift info_level
+    .popCallChain()
+    .shiftInfoLevel()
   tcl_error 'wrong # args: should be "%0%1"'
 ARGS_OK:
   push_eh is_return
@@ -196,8 +193,8 @@ END_PIR
     code.'emit'(<<'END_PIR', body_reg)
     pop_eh
 was_ok:
-    $P0 = pop call_chain
-    $P0 = shift info_level
+    .popCallChain()
+    .shiftInfoLevel()
     .return(%0)
 END_PIR
 
@@ -205,8 +202,8 @@ END_PIR
 is_return:
   .catch()
   .get_return_code($I0)
-  $P0 = pop call_chain
-  $P0 = shift info_level
+  .popCallChain()
+  .shiftInfoLevel()
   if $I0 == .CONTROL_CONTINUE goto bad_continue
   if $I0 == .CONTROL_BREAK    goto bad_break
   if $I0 != .CONTROL_RETURN   goto not_return_nor_ok

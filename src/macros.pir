@@ -1,5 +1,29 @@
 .include 'src/returncodes.pasm'
 
+### XXX Temporary subs to help while refactoring.
+.macro getInfoLevel(level, result)
+        .local pmc info_level
+        info_level = get_root_global ['_tcl'], 'info_level'
+        .result = info_level[.level]
+.endm
+
+.macro pushCallChain()
+    .local pmc call_chain, lexpad
+    call_chain = get_root_global ['_tcl'], 'call_chain'
+    lexpad = new 'Hash'
+    push call_chain, lexpad
+.endm
+
+.macro popCallChain()
+    $P0 = pop call_chain
+.endm
+
+.macro shiftInfoLevel()
+    $P0 = shift info_level
+.endm
+
+### XXX
+
 =head1 PIR macros
 
 =head2 .str(name,init)
