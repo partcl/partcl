@@ -27,59 +27,61 @@ was this a valid tcl-style level, or did we get this value as a default?
 =cut
 
 .sub getCallLevel
-  .param pmc tcl_level
+    .param pmc tcl_level
 
-  .local pmc parrot_level, orig_level
-  .int(defaulted,0)
+    .int(defaulted,0)
+    .int(parrot_level,0)
 
-  .local pmc call_chain
-  .local int call_level
-  call_chain = get_root_global ['_tcl'], 'call_chain'
-  call_level = elements call_chain
-  orig_level = new 'TclInt'
-  orig_level = call_level
+    .local pmc call_chain
+    call_chain = get_root_global ['_tcl'], 'call_chain'
 
-  .local int num_length
+    .local int call_level
+    call_level = getCallDepth()
+
+    .local int orig_level
+    orig_level = call_level
+
+    .local int num_length
 
 get_absolute:
-  # Is this an absolute?
-  $S0 = tcl_level
-  $S1 = substr $S0, 0, 1, ''
-  if $S1 != '#' goto get_integer
-  push_eh default
-    parrot_level = toNumber($S0)
-  pop_eh
-  goto bounds_check
+    # Is this an absolute?
+    $S0 = tcl_level
+    $S1 = substr $S0, 0, 1, ''
+    if $S1 != '#' goto get_integer
+
+    push_eh default
+        parrot_level = toNumber($S0)
+    pop_eh
+    goto bounds_check
 
 get_integer:
-  push_eh default
-    parrot_level = toNumber(tcl_level)
-  pop_eh
+    push_eh default
+        parrot_level = toNumber(tcl_level)
+    pop_eh
 
-  if parrot_level < 0 goto default_no_eh
-  parrot_level = orig_level - parrot_level
-  goto bounds_check
+    if parrot_level < 0 goto default_no_eh
+    parrot_level = orig_level - parrot_level
+    goto bounds_check
 
 default:
-  .catch()
+    .catch()
 default_no_eh:
-  defaulted = 1
-  parrot_level = new 'TclInt'
-  parrot_level = orig_level - 1
-  # fallthrough.
+    defaulted = 1
+    parrot_level = orig_level - 1
+    # fallthrough.
 
 bounds_check:
-  # Are we < 0 ?
-  if parrot_level < 0          goto bad_level
-  if parrot_level > orig_level goto bad_level
+    # Are we < 0 ?
+    if parrot_level < 0          goto bad_level
+    if parrot_level > orig_level goto bad_level
 
-  .return(parrot_level,defaulted)
+    .return(parrot_level,defaulted)
 
 bad_level:
-  $S0 = tcl_level
-  $S0 = 'bad level "' . $S0
-  $S0 = $S0 . '"'
-  die $S0
+   $S0 = tcl_level
+   $S0 = 'bad level "' . $S0
+   $S0 = $S0 . '"'
+   tcl_error $S0
 .end
 
 ### XXX
