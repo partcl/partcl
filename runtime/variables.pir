@@ -29,9 +29,8 @@ was this a valid tcl-style level, or did we get this value as a default?
 .sub getCallLevel
   .param pmc tcl_level
 
-  .local pmc parrot_level, defaulted, orig_level
-  defaulted = new 'TclInt'
-  defaulted = 0
+  .local pmc parrot_level, orig_level
+  .int(defaulted,0)
 
   .local pmc call_chain
   .local int call_level
@@ -74,8 +73,7 @@ bounds_check:
   if parrot_level < 0          goto bad_level
   if parrot_level > orig_level goto bad_level
 
-  $I1 = defaulted
-  .return(parrot_level,$I1)
+  .return(parrot_level,defaulted)
 
 bad_level:
   $S0 = tcl_level
