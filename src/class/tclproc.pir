@@ -65,13 +65,7 @@ create:
     .param pmc argv :slurpy
 
     .pushCallChain()
-
-    .local pmc info_level
-    info_level = get_root_global ['_tcl'], 'info_level'
-    $P0 = new 'TclList'
-    assign $P0, argv
-    unshift $P0, '%0'
-    unshift info_level, $P0
+    .unshiftInfoLevel(argv,'%0')
 END_PIR
 
     .dict(defaults_info)
