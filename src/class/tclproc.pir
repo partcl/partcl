@@ -65,7 +65,9 @@ create:
     .param pmc argv :slurpy
 
     .pushCallChain()
-    .unshiftInfoLevel(argv,'%0')
+    $P0 = clone argv
+    unshift $P0, '%0'
+    .unshiftInfoLevel($P0)
 END_PIR
 
     .dict(defaults_info)

@@ -25,13 +25,10 @@
     $P9999 = shift info_level
 .endm
 
-.macro unshiftInfoLevel(args,command)
+.macro unshiftInfoLevel(command)
     .local pmc info_level
     info_level = get_root_global ['_tcl'], 'info_level'
-    $P9999 = new 'TclList'
-    assign $P9999, .args
-    unshift $P9999, .command
-    unshift info_level, $P9999
+    unshift info_level, .command
 .endm
 
 ### XXX

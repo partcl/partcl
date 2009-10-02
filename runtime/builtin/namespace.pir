@@ -213,12 +213,10 @@ doesnt_exist:
   .list(temp_call_chain)
   set_root_global ['_tcl'], 'call_chain', temp_call_chain
 
-  .local pmc info_level
-  info_level = get_root_global ['_tcl'], 'info_level'
   $P0 = clone argv
   unshift $P0, 'eval'
   unshift $P0, 'namespace'
-  unshift info_level, $P0
+  .unshiftInfoLevel($P0)
 
   .local pmc ns, splitNamespace
   splitNamespace = get_root_global ['_tcl'], 'splitNamespace'
