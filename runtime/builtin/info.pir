@@ -19,6 +19,8 @@
     .const 'Sub' splitNamespace = 'splitNamespace'
     .const 'Sub' readVar = 'readVar'
     .const 'Sub' options = 'info_options'
+    .const 'Sub' getCallDepth = 'getCallDepth'
+    .const 'Sub' getLexPad = 'getLexPad'
 
     .If(argc==0, {
         die 'wrong # args: should be "info subcommand ?argument ...?"'
@@ -336,13 +338,13 @@ compile:
         .If(argc>1, {
             die 'wrong # args: should be "info vars ?pattern?"'
         })
-        .local pmc call_chain, lexpad
-        call_chain = get_root_global ['_tcl'], 'call_chain'
-        $I1 = elements call_chain
+
+        $I1 = getCallDepth()
         .IfElse($I1==0, {
             subcommand='globals' # fall through to globals handler.
         }, {
-            lexpad = call_chain[-1]
+            .local pmc lexpad
+            lexpad = getLexPad(-1)
 
             .list(retval)
 
@@ -423,9 +425,7 @@ compile:
             die 'wrong # args: should be "info level ?number?"'
 	})
 	.If(argc==0, {
-            .local pmc call_chain
-            call_chain = get_root_global ['_tcl'], 'call_chain'
-            $I0 = elements call_chain
+            $I0 = getCallDepth()
             .return($I0)
 	})
         # argc ==1 
