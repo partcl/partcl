@@ -11,10 +11,12 @@
   if argc < 2 goto bad_args
 
   .local pmc getCallLevel, call_chain
-  .local int call_level
   getCallLevel = get_root_global ['_tcl'], 'getCallLevel'
   call_chain   = get_root_global ['_tcl'], 'call_chain'
-  call_level   = elements call_chain
+  .const 'Sub' getCallDepth = 'getCallDepth'
+
+  .local int call_level
+  call_level = getCallDepth()
 
   .local int new_call_level, defaulted
   $P0 = argv[0]

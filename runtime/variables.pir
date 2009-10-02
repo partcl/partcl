@@ -3,6 +3,13 @@
 
 ### XXX Temporary subs to help while refactoring.
 
+.sub getCallDepth
+    .local pmc call_chain
+    call_chain = get_root_global ['_tcl'], 'call_chain'
+    $I0 = elements call_chain
+    .return($I0)
+.end
+
 ### XXX
 
 =head2 _Tcl::readVar
@@ -274,16 +281,18 @@ Gets the actual variable from memory and returns it.
   if $I0 != -1 goto global_var
   if isglobal  goto global_var
 
-  .local pmc call_chain
+  .const 'Sub' getCallDepth = 'getCallDepth'
   .local int call_level
-  call_chain = get_root_global ['_tcl'], 'call_chain'
-  call_level = elements call_chain
+  call_level = getCallDepth()
+
   if call_level == 0 goto global_var
 
   name = '$' . name
 
   .local pmc lexpad, variable
   push_eh lexical_notfound
+    .local pmc call_chain
+    call_chain = get_root_global ['_tcl'], 'call_chain'
     lexpad     = call_chain[-1]
     value      = lexpad[name]
   pop_eh

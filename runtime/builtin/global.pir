@@ -7,12 +7,13 @@
 
   if argc == 0 goto badargs
 
-  .local pmc call_chain
+  .const 'Sub' getCallDepth = 'getCallDepth'
   .local int call_level
-  call_chain = get_root_global ['_tcl'], 'call_chain'
-  call_level = elements call_chain
+  call_level = getCallDepth()
   unless call_level goto done # global doesn't work when already global.
   .local pmc lexpad
+  .local pmc call_chain
+  call_chain = get_root_global ['_tcl'], 'call_chain'
   lexpad = call_chain[-1]
 
   .local string varname

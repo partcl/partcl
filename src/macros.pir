@@ -1,6 +1,7 @@
 .include 'src/returncodes.pasm'
 
 ### XXX Temporary subs to help while refactoring.
+
 .macro getInfoLevel(level, result)
         .local pmc info_level
         info_level = get_root_global ['_tcl'], 'info_level'
@@ -15,11 +16,13 @@
 .endm
 
 .macro popCallChain()
-    $P0 = pop call_chain
+    $P9999 = pop call_chain
 .endm
 
 .macro shiftInfoLevel()
-    $P0 = shift info_level
+    .local pmc info_level
+    info_level = get_root_global ['_tcl'], 'info_level'
+    $P9999 = shift info_level
 .endm
 
 ### XXX
