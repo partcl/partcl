@@ -290,6 +290,8 @@ Gets the actual variable from memory and returns it.
   if isglobal  goto global_var
 
   .const 'Sub' getCallDepth = 'getCallDepth'
+  .const 'Sub' getLexPad = 'getLexPad'
+
   .local int call_level
   call_level = getCallDepth()
 
@@ -299,10 +301,8 @@ Gets the actual variable from memory and returns it.
 
   .local pmc lexpad, variable
   push_eh lexical_notfound
-    .local pmc call_chain
-    call_chain = get_root_global ['_tcl'], 'call_chain'
-    lexpad     = call_chain[-1]
-    value      = lexpad[name]
+    lexpad = getLexPad(-1)
+    value  = lexpad[name]
   pop_eh
   if null value goto args_check
   $I0 = isa value, 'Undef'
@@ -382,6 +382,7 @@ Sets the actual variable from memory.
   .param int    depth    :named('depth')  :optional
 
   .const 'Sub' getCallDepth = 'getCallDepth'
+  .const 'Sub' getLexPad = 'getLexPad'
 
   .local pmc ns
 
@@ -395,10 +396,8 @@ Sets the actual variable from memory.
 
   name = '$' . name
 lexical_var:
-  .local pmc call_chain
-  call_chain = get_root_global ['_tcl'], 'call_chain'
   .local pmc lexpad
-  lexpad       = call_chain[-1]
+  lexpad = getLexPad(-1)
 
   $P0 = lexpad[name]
   if null $P0 goto lexical_is_null
