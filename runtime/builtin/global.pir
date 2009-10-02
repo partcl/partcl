@@ -8,13 +8,12 @@
   if argc == 0 goto badargs
 
   .const 'Sub' getCallDepth = 'getCallDepth'
+  .const 'Sub' getLexPad = 'getLexPad'
   .local int call_level
   call_level = getCallDepth()
   unless call_level goto done # global doesn't work when already global.
   .local pmc lexpad
-  .local pmc call_chain
-  call_chain = get_root_global ['_tcl'], 'call_chain'
-  lexpad = call_chain[-1]
+  lexpad = getLexPad(-1)
 
   .local string varname
   .local string sigil_varname

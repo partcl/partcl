@@ -10,6 +10,14 @@
     .return($I0)
 .end
 
+.sub getLexPad
+    .param int depth
+    .local pmc call_chain
+    call_chain = get_root_global ['_tcl'], 'call_chain'
+    $P1 = call_chain[depth]
+    .return($P1)
+.end
+
 ### XXX
 
 =head2 _Tcl::readVar
