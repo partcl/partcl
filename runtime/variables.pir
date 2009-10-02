@@ -381,20 +381,22 @@ Sets the actual variable from memory.
   .param int    isglobal :named('global') :optional
   .param int    depth    :named('depth')  :optional
 
+  .const 'Sub' getCallDepth = 'getCallDepth'
+
   .local pmc ns
 
   $I0 = index name, '::'
   if $I0 != -1 goto global_var
   if isglobal goto global_var
 
-  .local pmc call_chain
   .local int call_level
-  call_chain = get_root_global ['_tcl'], 'call_chain'
-  call_level = elements call_chain
+  call_level = getCallDepth()
   if call_level == 0 goto global_var
 
   name = '$' . name
 lexical_var:
+  .local pmc call_chain
+  call_chain = get_root_global ['_tcl'], 'call_chain'
   .local pmc lexpad
   lexpad       = call_chain[-1]
 
