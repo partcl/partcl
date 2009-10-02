@@ -8,16 +8,6 @@ cleanly do language interoperability.
 
 =over 4
 
-=item PDD20 - lexical vars
-
-The current scheme (PDD20) for lexical vars means that to be able use the
-'store_lex', and 'find_lex' opcodes, you have to be inside a sub that's
-marked C<:lex>: That is, inside a sub that corresponds to a HLL block that
-introduces a new lexical scope. Tcl uses helper functions to figure out
-whether a particular '$a' is referring to a global or a lexical var. We
-keep track of the lexpads in the 'call_chain' variable and manually
-look up lexicals in the lexpads.
-
 =item user defined subs; parameter handling.
 
 Tcl provides nice exceptions for dealing with argument handling - to continue
@@ -30,11 +20,6 @@ Right now, this is handled I<inside> the function definition - it is defined
 to take an arbitary number of args, and then is checked for correctness
 internally. It would be nice to have invoke() automatically figure this out
 and generate an exception that Tcl can use.
-
-=item stack depth
-
-Cheating and keeping a global around right now, so we can figure out if we
-should be using a global or a lexical (and if so, how far down or up).
 
 =item flush diagnostics
 
