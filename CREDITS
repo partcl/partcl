@@ -45,6 +45,9 @@ E: Jerry.Gay@gmail.com
 D: twiddles random bits
 S: Seattle, WA
 
+N: Jonathan Leto
+D: setup github repo
+
 N: Matt Diephouse
 E: matt at diephouse dot com
 D: Initial run of Tcl's spec test in partcl, namespaces, lots more.
