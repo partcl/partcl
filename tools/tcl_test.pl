@@ -50,11 +50,9 @@ each individual C<.test> file.
 my $specfile = 'SpecTestStatus.wiki';
 warn "Getting a copy of $specfile\n";
 
-my $svn_info = `svn info .` || `git svn info README`;
-$svn_info =~ /Repository Root:\s+(.*)\n/;
-my $repo = $1;
-my $specstatus = $repo . "/wiki/$specfile";
-`svn export $specstatus tools/$specfile`;
+my $repo_url = "http://partcl.googlecode.com/svn/wiki/$specfile";
+
+`svn export $repo_url tools/$specfile`;
 
 # Normally, skip tests marked with @SKIP
 # If invoked with --skip, ONLY run those tests, so we can
