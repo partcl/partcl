@@ -59,7 +59,7 @@ my $end = time();
 
 my $diff = $end - $start;
 
-printf {$csv_fh} '"%s",%i,"%s",%i,%i,%i,%i,%i,%i' . "\n",
+printf {$csv_fh} '"%s","%s","%s",%i,%i,%i,%i,%i,%i' . "\n",
   $time,$revision,$parrot_revision,$files,$total,$passed,$failed,$skipped,$diff;
 
 close $sum_fh;
