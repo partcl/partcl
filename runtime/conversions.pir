@@ -141,7 +141,7 @@ A lot of this work could probably be pushed into the AST.
 
     unless match goto bad_index
     .int(idx_len, {length idx})
-
+   
     $I0 = match.'to'()
 
     unless $I0 == idx_len goto bad_index # must match whole thing.
@@ -171,7 +171,7 @@ A lot of this work could probably be pushed into the AST.
     .local int    int_l, int_r
     .If($I0 >0 , {
         # get both integers and add them.
-        str_l = substr idx, 0, $I0
+        str_l = substr idx, 0, $I0 
         inc $I0
         str_r = substr idx, $I0
 	int_l = 'toInteger'(str_l)
@@ -184,7 +184,7 @@ A lot of this work could probably be pushed into the AST.
     $I0 = index idx, '-'
     .If($I0 > 0, {
         # get both integers and subtract them.
-        str_l = substr idx, 0, $I0
+        str_l = substr idx, 0, $I0 
         inc $I0
         str_r = substr idx, $I0
 	int_l = 'toInteger'(str_l)
@@ -237,6 +237,59 @@ bad_channel:
   $S0 .= '"'
   die $S0
 
+.end
+
+=head2 _Tcl::splitNamespace
+
+Given a string namespace, return an array of names.
+
+=cut
+
+.sub splitNamespace
+  .param string name
+  .param int    depth     :optional
+  .param int    has_depth :opt_flag
+
+  if has_depth goto depth_set
+  depth = 0
+
+depth_set:
+  .local pmc colons, split
+  colons = get_root_global ['_tcl'], 'colons'
+  split  = get_root_global ['parrot'; 'PGE'; 'Util'], 'split'
+
+  .local pmc ns_name
+  ns_name = split(colons, name)
+  $I0 = elements ns_name
+  if $I0 == 0 goto relative
+  $S0 = ns_name[0]
+  if $S0 != '' goto relative
+
+absolute:
+  $P1 = shift ns_name
+  goto return
+
+relative:
+  .local pmc interp
+  interp = getinterp
+relative_loop:
+  inc depth
+  $P0 = interp['sub'; depth]
+  $P0 = $P0.'get_namespace'()
+  $P0 = $P0.'get_name'()
+  $S0 = $P0[0]
+  if $S0 == '_tcl' goto relative_loop
+
+  $I0 = elements $P0
+combine_loop:
+  dec $I0
+  if $I0 == 0 goto return
+  $P1 = $P0[$I0]
+  unshift ns_name, $P1
+  goto combine_loop
+
+return:
+  .return(ns_name)
 .end
 
 =head2 _Tcl::backslash_newline_subst

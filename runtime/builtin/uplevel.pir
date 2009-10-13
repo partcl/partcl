@@ -2,42 +2,84 @@
 .namespace []
 
 .sub '&uplevel'
-    .param pmc argv :slurpy
-    .argc()
+  .param pmc argv :slurpy
+  .argc()
 
-    .const 'Sub' getCallLevel = 'getCallLevel'
-    .const 'Sub' getCallDepth = 'getCallDepth'
-    .const 'Sub' runUpLevel = 'runUpLevel'
+  if argc == 0 goto bad_args
 
-    if argc == 0 goto bad_args
+  .local pmc compileTcl, getCallLevel
+  compileTcl        = get_root_global ['_tcl'], 'compileTcl'
+  getCallLevel    = get_root_global ['_tcl'], 'getCallLevel'
+  .local int rethrow_flag
 
-    .local int call_level
-    call_level = getCallDepth()
+  # save the old call level
+  .local pmc call_chain
+  .local int call_level
+  call_chain = get_root_global ['_tcl'], 'call_chain'
+  call_level = elements call_chain
 
-    .local pmc argv0
-    argv0 = argv[0]
+  .local pmc new_call_level
+  new_call_level = argv[0]
 
-    .local int new_call_level, defaulted
-    (new_call_level,defaulted) = getCallLevel(argv0)
+  .local int defaulted
+  (new_call_level,defaulted) = getCallLevel(new_call_level)
+  if defaulted == 1 goto skip
 
-    .Unless(defaulted, {
-        # if we only have a level, then we don't have a command to run!
-        if argc == 1 goto bad_args
+  # if we only have a level, then we don't have a command to run!
+  if argc == 1 goto bad_args
+  # pop the call level argument
+  $P1 = shift argv
 
-        # pop the call level argument
-        $P1 = shift argv
-    })
+skip:
+  .local int difference
+  $I0 = new_call_level
+  difference = call_level - $I0
 
-    .local string code
-    code = join ' ', argv
+  .list(saved_call_chain)
+  $I0 = 0
+save_chain_loop:
+  if $I0 == difference goto save_chain_end
+  $P0 = pop call_chain
+  push saved_call_chain, $P0
+  inc $I0
+  goto save_chain_loop
+save_chain_end:
 
-    .local int difference
-    difference = call_level - new_call_level
+  $S0 = join ' ', argv
+  # if we get an exception, we have to reset the environment
+  .local pmc retval
+  push_eh restore_and_rethrow
+    $P0 = compileTcl($S0)
+    retval = $P0()
+  pop_eh
 
-    .tailcall runUpLevel(difference,code)
+  rethrow_flag = 0
+  goto restore
+
+restore_and_rethrow:
+  .catch()
+  rethrow_flag = 1
+  goto restore
+
+restore:
+  # restore the old level
+  $I0 = 0
+restore_chain_loop:
+  if $I0 == difference goto restore_chain_end
+  $P0 = pop saved_call_chain
+  push call_chain, $P0
+  inc $I0
+  goto restore_chain_loop
+restore_chain_end:
+  if rethrow_flag goto rethrow
+  retval = clone retval
+  .return(retval)
+
+rethrow:
+  .rethrow()
 
 bad_args:
-    tcl_error 'wrong # args: should be "uplevel ?level? command ?arg ...?"'
+  die 'wrong # args: should be "uplevel ?level? command ?arg ...?"'
 .end
 
 # Local Variables:

@@ -20,7 +20,6 @@
     .const 'Sub' readVar = 'readVar'
     .const 'Sub' options = 'info_options'
     .const 'Sub' getCallDepth = 'getCallDepth'
-    .const 'Sub' getCallLevel = 'getCallLevel'
     .const 'Sub' getLexPad = 'getLexPad'
 
     .If(argc==0, {
@@ -430,8 +429,9 @@ compile:
             .return($I0)
 	})
         # argc ==1 
-        .local pmc toInteger
+        .local pmc toInteger, getCallLevel
         toInteger    = get_root_global ['_tcl'], 'toInteger'
+        getCallLevel = get_root_global ['_tcl'], 'getCallLevel'
 
         .local pmc level
         level = shift argv
