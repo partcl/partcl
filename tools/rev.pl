@@ -1,8 +1,7 @@
 #! perl
 
-# Get the SVN revision using svn or git-svn
-my $cmd = 'svn info';
-$cmd    = 'git svn info README' if -d '.git';
+# Get the git revision
+my $cmd = 'git rev-parse master';
 my $out = `$cmd`;
-$out    =~ /Revision: (\d+)/;
-print $1;
+chomp $out;
+print $out;

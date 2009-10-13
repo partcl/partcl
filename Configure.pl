@@ -71,12 +71,7 @@ warn <<END_WARN
 END_WARN
   unless $opt{has_icu};
 
-# Get the SVN revision using svn or git-svn
-my $cmd = 'svn info';
-$cmd    = 'git svn info README' if -d '.git';
-my $out = `$cmd`;
-$out    =~ /Revision: (\d+)/;
-my $partcl_revision = $1;
+my $partcl_revision = `$^X tools/rev.pl`;
 
 my $build_tool = $opt{perl} . ' '
                . $opt{libdir}
