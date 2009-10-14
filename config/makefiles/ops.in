@@ -1,7 +1,5 @@
 PERL          = @perl@
-RM_F          = @rm_f@
 CHMOD         = @chmod@
-CP            = @cp@
 VERSION_DIR   = @versiondir@
 INCLUDE_DIR   = @includedir@$(VERSION_DIR)
 LIB_DIR       = @libdir@$(VERSION_DIR)
@@ -27,18 +25,17 @@ LINKARGS        = $(LDFLAGS) $(LD_LOAD_FLAGS)  ../binary$(O) $(LIBPARROT)
 OPS_FILE = tcl.ops
 
 OPS_TARGETS := \
-#IF(cg_flag):  tcl_ops_cg$(LOAD_EXT) \
-#IF(cg_flag):  tcl_ops_cgp$(LOAD_EXT) \
-  tcl_ops$(LOAD_EXT) \
-  tcl_ops_switch$(LOAD_EXT) \
+#IF(cg_flag):  $(INSTALL_DIR)/tcl_ops_cg$(LOAD_EXT) \
+#IF(cg_flag):  $(INSTALL_DIR)/tcl_ops_cgp$(LOAD_EXT) \
+  $(INSTALL_DIR)/tcl_ops$(LOAD_EXT) \
+  $(INSTALL_DIR)/tcl_ops_switch$(LOAD_EXT) \
 
 
 all : $(OPS_TARGETS)
-#IF(cygwin or hpux):	CHMOD 0775 "*$(LOAD_EXT)"
-	$(CP) "*$(LOAD_EXT)" $(INSTALL_DIR)
 
-tcl_ops$(LOAD_EXT): tcl_ops$(O)
-	$(LD) $(LD_OUT) tcl_ops$(LOAD_EXT) tcl_ops$(O) $(LINKARGS)
+$(INSTALL_DIR)/tcl_ops$(LOAD_EXT): tcl_ops$(O)
+	$(LD) $(LD_OUT) $(INSTALL_DIR)/tcl_ops$(LOAD_EXT) tcl_ops$(O) $(LINKARGS)
+#IF(cygwin or hpux):	CHMOD 0775 "$(INSTALL_DIR)/tcl_ops$(LOAD_EXT)"
 
 tcl_ops$(O): tcl_ops.c
 	$(CC) $(CC_OUT) tcl_ops$(O) $(INCLUDES) $(CFLAGS) tcl_ops.c
@@ -46,8 +43,9 @@ tcl_ops$(O): tcl_ops.c
 tcl_ops.c: $(OPS_FILE)
 	$(OPS2C) C --dynamic $(OPS_FILE)
 
-tcl_ops_switch$(LOAD_EXT): tcl_ops_switch$(O)
-	$(LD) $(LD_OUT) tcl_ops_switch$(LOAD_EXT) tcl_ops_switch$(O) $(LINKARGS)
+$(INSTALL_DIR)/tcl_ops_switch$(LOAD_EXT): tcl_ops_switch$(O)
+	$(LD) $(LD_OUT) $(INSTALL_DIR)/tcl_ops_switch$(LOAD_EXT) tcl_ops_switch$(O) $(LINKARGS)
+#IF(cygwin or hpux):	CHMOD 0775 "$(INSTALL_DIR)/tcl_ops_switch$(LOAD_EXT)"
 
 tcl_ops_switch$(O): tcl_ops_switch.c
 	$(CC) $(CC_OUT) tcl_ops_switch$(O) $(INCLUDES) $(CFLAGS) tcl_ops_switch.c
@@ -55,8 +53,9 @@ tcl_ops_switch$(O): tcl_ops_switch.c
 tcl_ops_switch.c: $(OPS_FILE)
 	$(OPS2C) CSwitch --dynamic $(OPS_FILE)
 
-tcl_ops_cg$(LOAD_EXT): tcl_ops_cg$(O)
-	$(LD) $(LD_OUT) tcl_ops_cg$(LOAD_EXT) tcl_ops_cg$(O) $(LINKARGS)
+$(INSTALL_DIR)/tcl_ops_cg$(LOAD_EXT): tcl_ops_cg$(O)
+	$(LD) $(LD_OUT) $(INSTALL_DIR)/tcl_ops_cg$(LOAD_EXT) tcl_ops_cg$(O) $(LINKARGS)
+#IF(cygwin or hpux):	CHMOD 0775 "$(INSTALL_DIR)/tcl_ops_cg$(LOAD_EXT)"
 
 tcl_ops_cg$(O): tcl_ops_cg.c
 	$(CC) $(CC_OUT) tcl_ops_cg$(O) $(INCLUDES) $(CFLAGS) tcl_ops_cg.c
@@ -64,8 +63,8 @@ tcl_ops_cg$(O): tcl_ops_cg.c
 tcl_ops_cg.c: $(OPS_FILE)
 	$(OPS2C) CGoto --dynamic $(OPS_FILE)
 
-tcl_ops_cgp$(LOAD_EXT): tcl_ops_cgp$(O)
-	$(LD) $(LD_OUT) tcl_ops_cgp$(LOAD_EXT) tcl_ops_cgp$(O) $(LINKARGS)
+$(INSTALL_DIR)/tcl_ops_cgp$(LOAD_EXT): tcl_ops_cgp$(O)
+	$(LD) $(LD_OUT) $(INSTALL_DIR)/tcl_ops_cgp$(LOAD_EXT) tcl_ops_cgp$(O) $(LINKARGS)
 
 tcl_ops_cgp$(O): tcl_ops_cgp.c
 	$(CC) $(CC_OUT) tcl_ops_cgp$(O) $(INCLUDES) $(CFLAGS) tcl_ops_cgp.c
