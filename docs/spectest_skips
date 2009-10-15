@@ -1,0 +1,248 @@
+= Introduction =
+
+{{{make spectest}}} will run all the tcl specification tests that run
+to completion.
+
+The files are listed with their basename; for example 'chan' corresponds to
+{{{t_tcl/chan.test}}}. If {{{ @SKIP}}} appears after the test name,
+that file will not be run during the test.
+
+To avoid regressions, even though a spec test file skips all tests,
+it will still be run as long as it runs to completion.
+
+When running tcl tests, you may notice we're more verbose by default than tcl
+itself; We're using a slightly modified version of {{{tcltest.tcl}}}
+to generate more verbose feedback.
+
+= Progress so far =
+
+  * [http://code.google.com/p/partcl/source/browse/trunk/docs/spectest-current.txt Current test results]
+  * [http://code.google.com/p/partcl/source/browse/trunk/docs/spectest-progress.csv Progress of results over time]
+
+= Missing features =
+
+==Flesh out {{{[return]}}} to avoid spurious "bad call to return" errors.==
+
+  * proc
+  * result
+
+==smarter {{{[format]}}} ==
+
+{{{[format]}}} is a very thin wrapper around parrot's {{{sprintf}}}; need to
+translate some of the tcl idioms in the format string into parrot. {{{[get]}}}
+uses format on the failing tests, but they might be numeric conversion issues.
+
+  * get
+
+== undiagnosed ==
+  * apply
+  * basic
+  * chan
+  * chanio
+  * cmdIL
+  * cmdMZ
+  * compExpr
+  * compExpr-old
+  * dict
+  * env
+  * execute
+  * expr-old
+  * eval
+  * format
+  * incr-old
+  * info
+  * init
+  * ioUtil
+  * lindex
+  * list
+  * lsearch
+  * lsetComp
+  * load
+  * main
+  * namespace
+  * namespace-old
+  * package
+  * parse
+  * parseExpr
+  * parseOld
+  * platform
+  * pkg (actually reports as no tests, which is wrong)
+  * proc-old
+  * regexp
+  * regexpComp
+  * rename
+  * scan
+  * set
+  * set-old
+  * source
+  * string
+  * stringComp
+  * subst
+  * switch
+  * trace
+  * timer
+  * unknown
+  * uplevel
+  * upvar
+  * utf
+  * util
+  * var
+  * while
+
+== Need {{{[trace]}}} ==
+
+  * append
+  * appendComp
+
+== Need stacktrace support ==
+
+The following test files work, and in some cases pass many tests,
+but the remaining failures are attributable to a lack of stacktrace
+support when throwing errors.
+
+  * for
+  * foreach
+  * if
+  * incr
+  * while-old
+
+== Only a stub/not implemented ==
+
+The implementation that currently exists (if any) is just a stub. Might
+also rely on part of the standard library that we haven't yet imported.
+
+  * case
+  * config
+  * event
+  * pid
+  * tm
+  * unixFile
+  * unload
+
+== Mostly Skipped ==
+
+These tests are nearly all skipped. The skips are a result of the test
+constraints, which we've done no special work to support. These are not
+tests that we've marked skipped in an effort to avoid.
+
+  * assocd
+  * cmdInfo
+  * dcall
+  * dstring
+  * history
+  * iogt
+  * indexObj
+  * link
+  * lset
+  * misc (one PASSED)
+  * notify
+  * socket
+  * stringObj
+  * thread
+  * winConsole
+  * winPipe
+  * winTime
+  * unixInit
+  * unixNotfy
+  * winNotify
+
+== Mostly PASSED ==
+
+  * concat
+  * for-old
+  * if-old
+  * join
+  * linsert
+  * listObj (one SKIPPED)
+  * llength
+  * lrange
+  * lrepeat
+  * lreplace
+  * pwd
+  * security
+  * split
+
+= Unexpected errors =
+
+These test files die, either as a result of missing functionality,
+a stub returning a wrongly
+typed value, or a more developed stub throwing an error when none
+is expected, or an issue with the underlying parrot VM.
+
+Because of these failures, *no* PASS from these
+file are being counted. (Though in some cases, we might not have any
+passes to count.)
+
+== Memory PANIC ==
+
+Running with a ulimit -v of {{{virtual memory (kbytes, -v) 524288}}},
+(See ParrotIssues)
+
+  * clock @SKIP - during compilation
+  * expr @SKIP  - after expr-46.10
+
+== segfault ==
+  * mathop @SKIP - after mathop-24.2 - see Issue #97
+  * obj @SKIP - after obj-31.6 - see Issue #98
+
+== {{{ delete_keyed() not implemented in class 'String;'}}} ==
+  * error
+
+== {{{can't read "setupFailure": no such variable}}} ==
+  * binary @SKIP - after binary-46.2
+
+== {{{can't set "result(foo,ov0)": variable isn't array}}} ==
+  * msgcat @SKIP - after msgcat-2.7
+
+== {{{can't read "infonames(S)": no such element in array}}} ==
+  * reg @SKIP - after reg-2.5.error
+
+== can't run httpd ==
+  * http @SKIP - can't run httpd
+  * httpold @SKIP - can't run http
+
+== {{{can't read "testConstraints(*)": no such element in array}}} ==
+  * cmdAH @SKIP - win
+  * fCmd @SKIP - 95
+  * fileName @SKIP - win
+  * macOSXFCmd @SKIP - unix
+  * macOSXLoad @SKIP - unix
+  * registry @SKIP - win
+  * stack @SKIP  - unix
+  * winDde @SKIP - win
+  * winFCmd @SKIP - winOnly
+  * winFile @SKIP - nt
+  * unixFCmd @SKIP - unix
+
+== Hangs ==
+  * exec @SKIP - after exec-10.1
+  * async @SKIP - after aysnc-3.1
+
+This test is hanging when invoking {{{proc}}} with a body containing 1.5million {{{incrs}}}.  
+
+  * io @SKIP - after io-38.2
+
+== {{{wrong # args: should be "if a b"}}} ===
+  * compile @SKIP - after compile-16.22.0
+
+== Unable to open filehandle / could not read  ==
+
+{{{...}}} below indicates the partcl build directory.
+
+  * pkgMkIndex @SKIP - after pkgMkIndex-1.1 {{{.../pkg/simple.tcl}}}
+  * autoMkindex @SKIP - after autoMkindex-3.3 {{{.../pkg/samename.tcl}}}
+  * fileSystem @SKIP - no output {{{.../dir.dir/inside.file}}}
+  * tcltest @SKIP - after tcltest-8.60 {{{.../normaldirectory}}}
+  * ioCmd @SKIP - after iocmd.tf-32.1 {{{.../test5}}}
+
+  This last one appeared after we put in a semi-functional {{{[file delete]}}}.
+
+== {{{invalid command name "gen-jisx0208-cp932"}}} ==
+  * encoding @SKIP - after encoding-24.3
+
+== wrong # args: should be "interp" ==
+  * interp @SKIP
+
+== invalid command name "OptNewInst" ==
+  * opt @SKIP - after opt-10.4
+  * safe @SKIP - after safe-4.2

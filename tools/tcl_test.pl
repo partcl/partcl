@@ -45,14 +45,8 @@ each individual C<.test> file.
 
 =cut
 
-# Get a listing of skippable files
-
-my $specfile = 'SpecTestStatus.wiki';
-warn "Getting a copy of $specfile\n";
-
-my $repo_url = "http://partcl.googlecode.com/svn/wiki/$specfile";
-
-`svn export $repo_url tools/$specfile`;
+# listing of skippable files
+my $specfile = 'docs/spectest_skips';
 
 # Normally, skip tests marked with @SKIP
 # If invoked with --skip, ONLY run those tests, so we can
@@ -64,7 +58,7 @@ if (@ARGV && $ARGV[0] eq "--skip") {
 }
 
 my @skipfiles;
-open my $fh, '<', "tools/$specfile";
+open my $fh, '<', $specfile;
 while (my $line = <$fh>) {
     if ($line =~ m/^\s+\*\s+(\S*)(\s+\@SKIP)?/) {
         my $file = $1;
