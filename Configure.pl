@@ -85,8 +85,6 @@ my $build_tool = $opt{perl} . ' '
 
 my %makefiles = (
     "config/makefiles/root.in" => "Makefile",
-    "config/makefiles/pmc.in"  => "src/pmc/Makefile",
-    "config/makefiles/ops.in"  => "src/ops/Makefile",
 );
 
 foreach my $template (keys %makefiles) {

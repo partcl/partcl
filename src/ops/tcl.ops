@@ -9,7 +9,7 @@ BEGIN_OPS_PREAMBLE
 #include "parrot/string_funcs.h"
 #include "parrot/exceptions.h"
 
-#include "../binary.h"
+#include "src/binary.h"
 
 END_OPS_PREAMBLE
 

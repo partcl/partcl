@@ -1,8 +1,9 @@
 ## shell commands
-RM_F    = @rm_f@
-PERL    = @perl@
+CHMOD   = @chmod@
 MAKE    = @make_c@
+PERL    = @perl@
 RENAME  = @mv@
+RM_F    = @rm_f@
 
 ## external directories
 VERSION_DIR = @versiondir@
@@ -11,6 +12,8 @@ LIB_DIR     = @libdir@$(VERSION_DIR)
 BIN_DIR     = @bindir@
 TOOLS_DIR   = @libdir@$(VERSION_DIR)/tools
 TGE_DIR     = $(LIB_DIR)/languages/tge
+SRC_DIR     = src
+INSTALL_DIR = dynext
 
 ## local directories
 PMC_DIR     = src/pmc
@@ -36,8 +39,11 @@ LOAD_EXT  = @load_ext@
 CC_SHARED  = @cc_shared@
 CFLAGS     = @ccflags@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@ $(CC_SHARED)
 CC         = @cc@
+LD         = @ld@
 
 ## partcl source 
+TCL_GROUP = tcl_group
+
 BUILTINS_PIR = \
   $(BUILTIN_DIR)/after.pir      $(BUILTIN_DIR)/append.pir \
   $(BUILTIN_DIR)/apply.pir      $(BUILTIN_DIR)/array.pir \
@@ -121,21 +127,14 @@ tclsh@exe@: tcl.pbc $(PBC_TO_EXE)
 	$(PBC_TO_EXE) tcl.pbc
 	$(RENAME) tcl@exe@ tclsh@exe@
 
-tcl.pbc: $(PARROT) pmcs ops runtime/tcllib.pbc src/tclsh.pir
+tcl.pbc: $(PARROT) runtime/tcllib.pbc src/tclsh.pir $(INSTALL_DIR)/tcl_ops$(LOAD_EXT) $(INSTALL_DIR)/$(TCL_GROUP)$(LOAD_EXT)
 	$(PARROT) --output=tcl.pbc src/tclsh.pir
 
 runtime/builtins.pir: $(BUILTINS_PIR) tools/gen_builtins.pl
 	$(PERL) tools/gen_builtins.pl > runtime/builtins.pir
 
-runtime/tcllib.pbc: $(PARROT) runtime/tcllib.pir pmcs ops $(SRC_DEPS)
+runtime/tcllib.pbc: $(PARROT) runtime/tcllib.pir $(SRC_DEPS) $(INSTALL_DIR)/tcl_ops$(LOAD_EXT) $(INSTALL_DIR)/$(TCL_GROUP)$(LOAD_EXT)
 	$(PARROT) --output=runtime/tcllib.pbc runtime/tcllib.pir
-
-## subdirs
-pmcs:
-	$(MAKE) $(PMC_DIR)
-
-ops: src/binary$(O)
-	$(MAKE) $(OPS_DIR)
 
 ## suffix rules
 .SUFFIXES : .pir .pg .tg
@@ -218,7 +217,7 @@ clean:
 
 realclean: clean
 	$(RM_F) Makefile t_tcl tcl-cvs \
-		$(PMC_DIR)/Makefile $(OPS_DIR)/Makefile \
+		$(PMC_DIR)/Makefile \
 		lib/Parrot/Installed.pm \
                 t/internals/select_option.t \
                 t/internals/select_switches.t
@@ -230,9 +229,134 @@ Makefile: config/makefiles/root.in
 	$(RECONFIGURE) config/makefiles/root.in Makefile
 src/pmc/Makefile: config/makefiles/pmc.in
 	$(RECONFIGURE) config/makefiles/pmc.in $(PMC_DIR)/Makefile
-src/ops/Makefile: config/makefiles/ops.in
-	$(RECONFIGURE) config/makefiles/ops.in $(OPS_DIR)/Makefile
 
 ## copy tcl cvs repository
 tcl-cvs:
 	$(PERL) tools/tcl_cvs.pl tcl-cvs
+
+## ops
+CC            = @cc@ -c
+LDFLAGS       = @ldflags@ @ld_debug@ @rpath_blib@ @linkflags@
+LD_LOAD_FLAGS = @ld_load_flags@
+CFLAGS        = @ccflags@ @cc_shared@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@
+CC_OUT        = @cc_o_out@
+LD_OUT        = @ld_out@
+#IF(parrot_is_shared):LIBPARROT = @inst_libparrot_ldflags@
+#ELSE:LIBPARROT =
+
+BUILD_TOOLS_DIR = $(LIB_DIR)@slash@tools@slash@build
+OPS2C           = $(PERL) $(BUILD_TOOLS_DIR)@slash@ops2c.pl
+
+INCLUDES        = -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)@slash@pmc -I.
+LINKARGS        = $(LDFLAGS) $(LD_LOAD_FLAGS)  $(SRC_DIR)/binary$(O) $(LIBPARROT)
+
+OPS_FILE = $(OPS_DIR)/tcl.ops
+
+OPS_TARGETS := \
+#IF(cg_flag):  $(INSTALL_DIR)/tcl_ops_cg$(LOAD_EXT) \
+#IF(cg_flag):  $(INSTALL_DIR)/tcl_ops_cgp$(LOAD_EXT) \
+  $(INSTALL_DIR)/tcl_ops$(LOAD_EXT) \
+  $(INSTALL_DIR)/tcl_ops_switch$(LOAD_EXT) \
+
+$(INSTALL_DIR)/tcl_ops$(LOAD_EXT): $(OPS_DIR)/tcl_ops$(O) $(SRC_DIR)/binary$(O)
+	$(LD) $(LD_OUT) $(INSTALL_DIR)/tcl_ops$(LOAD_EXT) $(OPS_DIR)/tcl_ops$(O) $(LINKARGS)
+#IF(cygwin or hpux):	CHMOD 0775 "$(INSTALL_DIR)/tcl_ops$(LOAD_EXT)"
+
+$(OPS_DIR)/tcl_ops$(O): $(OPS_DIR)/tcl_ops.c
+	$(CC) $(CC_OUT) $(OPS_DIR)/tcl_ops$(O) $(INCLUDES) $(CFLAGS) $(OPS_DIR)/tcl_ops.c
+
+$(OPS_DIR)/tcl_ops.c: $(OPS_FILE)
+	$(OPS2C) C --dynamic $(OPS_FILE)
+
+$(INSTALL_DIR)/tcl_ops_switch$(LOAD_EXT): $(OPS_DIR)/tcl_ops_switch$(O)
+	$(LD) $(LD_OUT) $(INSTALL_DIR)/tcl_ops_switch$(LOAD_EXT) $(OPS_DIR)/tcl_ops_switch$(O) $(LINKARGS)
+#IF(cygwin or hpux):	CHMOD 0775 "$(INSTALL_DIR)/tcl_ops_switch$(LOAD_EXT)"
+
+$(OPS_DIR)/tcl_ops_switch$(O): $(OPS_DIR)/tcl_ops_switch.c
+	$(CC) $(CC_OUT) $(OPS_DIR)/tcl_ops_switch$(O) $(INCLUDES) $(CFLAGS) $(OPS_DIR)/tcl_ops_switch.c
+
+$(OPS_DIR)/tcl_ops_switch.c: $(OPS_FILE)
+	$(OPS2C) CSwitch --dynamic $(OPS_FILE)
+
+$(INSTALL_DIR)/tcl_ops_cg$(LOAD_EXT): $(OPS_DIR)/tcl_ops_cg$(O)
+	$(LD) $(LD_OUT) $(INSTALL_DIR)/tcl_ops_cg$(LOAD_EXT) $(OPS_DIR)/tcl_ops_cg$(O) $(LINKARGS)
+#IF(cygwin or hpux):	CHMOD 0775 "$(INSTALL_DIR)/tcl_ops_cg$(LOAD_EXT)"
+
+$(OPS_DIR)/tcl_ops_cg$(O): $(OPS_DIR)/tcl_ops_cg.c
+	$(CC) $(CC_OUT) $(OPS_DIR)/tcl_ops_cg$(O) $(INCLUDES) $(CFLAGS) $(OPS_DIR)/tcl_ops_cg.c
+
+$(OPS_DIR)/tcl_ops_cg.c: $(OPS_FILE)
+	$(OPS2C) CGoto --dynamic $(OPS_FILE)
+
+$(INSTALL_DIR)/tcl_ops_cgp$(LOAD_EXT): $(OPS_DIR)/tcl_ops_cgp$(O)
+	$(LD) $(LD_OUT) $(INSTALL_DIR)/tcl_ops_cgp$(LOAD_EXT) $(OPS_DIR)/tcl_ops_cgp$(O) $(LINKARGS)
+
+$(OPS_DIR)/tcl_ops_cgp$(O): $(OPS_DIR)/tcl_ops_cgp.c
+	$(CC) $(CC_OUT) $(OPS_DIR)/tcl_ops_cgp$(O) $(INCLUDES) $(CFLAGS) $(OPS_DIR)/tcl_ops_cgp.c
+
+$(OPS_DIR)/tcl_ops_cgp.c: $(OPS_FILE)
+	$(OPS2C) CGP --dynamic $(OPS_FILE)
+
+## pmcs 
+PSRC_DIR       = @srcdir@$(VERSION_DIR)
+CC            = @cc@ -c
+LDFLAGS       = @ldflags@ @ld_debug@
+LD_LOAD_FLAGS = @ld_load_flags@
+CFLAGS        = @ccflags@ @cc_shared@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@
+CC_OUT        = @cc_o_out@
+LD_OUT        = @ld_out@
+#IF(parrot_is_shared):LIBPARROT = @inst_libparrot_ldflags@
+#ELSE:LIBPARROT =
+
+BUILD_TOOLS_DIR = $(LIB_DIR)@slash@tools@slash@build
+PMC2C_INCLUDES  = --include $(PSRC_DIR) --include $(PSRC_DIR)@slash@pmc
+PMC2C           = $(PERL) $(BUILD_TOOLS_DIR)@slash@pmc2c.pl
+PMC2CD = $(PMC2C) --dump $(PMC2C_INCLUDES)
+PMC2CC = $(PMC2C) --c $(PMC2C_INCLUDES)
+
+PMC_SOURCES = \
+  $(PMC_DIR)/tclstring.pmc \
+  $(PMC_DIR)/tclint.pmc \
+  $(PMC_DIR)/tclfloat.pmc
+
+PMC_SOURCES_pmc2c = \
+  tclstring.pmc \
+  tclint.pmc \
+  tclfloat.pmc
+
+$(INSTALL_DIR)/$(TCL_GROUP)$(LOAD_EXT): $(PMC_DIR)/tclstring$(O) $(PMC_DIR)/tclint$(O) $(PMC_DIR)/tclfloat$(O) $(PMC_DIR)/lib-$(TCL_GROUP)$(O) $(SRC_DIR)/binary$(O)
+	$(LD) $(LD_OUT) $(INSTALL_DIR)/$(TCL_GROUP)$(LOAD_EXT) $(PMC_DIR)/lib-$(TCL_GROUP)$(O) $(PMC_DIR)/tclstring$(O) $(PMC_DIR)/tclint$(O) $(PMC_DIR)/tclfloat$(O) $(LINKARGS)
+#IF(cygwin or hpux):	CHMOD 0775 "$(INSTALL_DIR)/$(TCL_GROUP)$(LOAD_EXT)"
+
+$(PMC_DIR)/lib-$(TCL_GROUP)$(O): $(PMC_DIR)/$(TCL_GROUP).c
+	$(CC) $(CC_OUT) $(PMC_DIR)/lib-$(TCL_GROUP)$(O) $(INCLUDES) $(CFLAGS) $(PMC_DIR)/$(TCL_GROUP).c
+
+$(PMC_DIR)/$(TCL_GROUP).c: $(PMC_SOURCES) $(PMC_DIR)/tclstring.c $(PMC_DIR)/tclint.c $(PMC_DIR)/tclfloat.c
+	cd $(PMC_DIR) && $(PMC2C) --library $(TCL_GROUP) --c $(PMC_SOURCES_pmc2c)
+
+$(PMC_DIR)/tclstring.dump: $(PMC_DIR)/tclstring.pmc
+	cd $(PMC_DIR) && $(PMC2CD) tclstring.pmc
+
+$(PMC_DIR)/tclstring.c: $(PMC_DIR)/tclstring.dump
+	cd $(PMC_DIR) && $(PMC2CC) tclstring.pmc
+
+$(PMC_DIR)/tclstring$(O): $(PMC_DIR)/tclstring.c
+	$(CC) $(CC_OUT) $(PMC_DIR)/tclstring$(O) $(INCLUDES) $(CFLAGS) $(PMC_DIR)/tclstring.c
+
+$(PMC_DIR)/tclint.dump: $(PMC_DIR)/tclint.pmc
+	cd $(PMC_DIR) && $(PMC2CD) tclint.pmc
+
+$(PMC_DIR)/tclint.c: $(PMC_DIR)/tclint.dump
+	cd $(PMC_DIR) && $(PMC2CC) tclint.pmc
+
+$(PMC_DIR)/tclint$(O): $(PMC_DIR)/tclint.c
+	$(CC) $(CC_OUT) $(PMC_DIR)/tclint$(O) $(INCLUDES) $(CFLAGS) $(PMC_DIR)/tclint.c
+
+$(PMC_DIR)/tclfloat.dump: $(PMC_DIR)/tclfloat.pmc
+	cd $(PMC_DIR) && $(PMC2CD) tclfloat.pmc
+
+$(PMC_DIR)/tclfloat.c: $(PMC_DIR)/tclfloat.dump
+	cd $(PMC_DIR) && $(PMC2CC) tclfloat.pmc
+
+$(PMC_DIR)/tclfloat$(O): $(PMC_DIR)/tclfloat.c
+	$(CC) $(CC_OUT) $(PMC_DIR)/tclfloat$(O) $(INCLUDES) $(CFLAGS) $(PMC_DIR)/tclfloat.c
