@@ -55,6 +55,7 @@ misc.test:	Total	301	Passed	1	Skipped	299	Failed	1
 namespace-old.test:	Total	126	Passed	82	Skipped	0	Failed	44
 namespace.test:	Total	277	Passed	116	Skipped	1	Failed	160
 notify.test:	Total	23	Passed	0	Skipped	23	Failed	0
+obj.test:	Total	90	Passed	1	Skipped	89	Failed	0
 package.test:	Total	16	Passed	6	Skipped	0	Failed	10
 parse.test:	Total	251	Passed	63	Skipped	156	Failed	32
 parseExpr.test:	Total	263	Passed	4	Skipped	196	Failed	63
@@ -89,7 +90,7 @@ unixNotfy.test:	Total	4	Passed	0	Skipped	4	Failed	0
 unknown.test:	Total	7	Passed	6	Skipped	0	Failed	1
 unload.test:	Total	26	Passed	1	Skipped	0	Failed	25
 uplevel.test:	Total	19	Passed	17	Skipped	0	Failed	2
-upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
+upvar.test:	Total	55	Passed	26	Skipped	7	Failed	22
 utf.test:	Total	114	Passed	82	Skipped	12	Failed	20
 util.test:	Total	290	Passed	130	Skipped	128	Failed	32
 var.test:	Total	84	Passed	39	Skipped	17	Failed	28
