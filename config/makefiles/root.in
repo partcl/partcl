@@ -6,27 +6,35 @@ RENAME  = @mv@
 RM_F    = @rm_f@
 
 ## external directories
-VERSION_DIR = @versiondir@
-INCLUDE_DIR = @includedir@$(VERSION_DIR)
-LIB_DIR     = @libdir@$(VERSION_DIR)
-BIN_DIR     = @bindir@
-TOOLS_DIR   = @libdir@$(VERSION_DIR)/tools
-TGE_DIR     = $(LIB_DIR)/languages/tge
-SRC_DIR     = src
-INSTALL_DIR = dynext
+BIN_DIR         = @bindir@
+BUILD_TOOLS_DIR = $(TOOLS_DIR)/build
+INCLUDE_DIR     = @includedir@$(VERSION_DIR)
+LIB_DIR         = @libdir@$(VERSION_DIR)
+PARROT_SRC_DIR  = @srcdir@$(VERSION_DIR)
+TOOLS_DIR       = @libdir@$(VERSION_DIR)/tools
+TGE_DIR         = $(LIB_DIR)/languages/tge
+VERSION_DIR     = @versiondir@
 
 ## local directories
+SRC_DIR     = src
 PMC_DIR     = src/pmc
 OPS_DIR     = src/ops
 CLASS_DIR   = src/class
 BUILTIN_DIR = runtime/builtin
 TCLLIB_DIR  = library
+INSTALL_DIR = dynext
 
 ## parrot binaries & tools
-PARROT       = $(BIN_DIR)/parrot@exe@
-RECONFIGURE  = $(PERL) $(LIB_DIR)/tools/dev/gen_makefile.pl
-PBC_TO_EXE   = $(BIN_DIR)/pbc_to_exe@exe@
-PERL6GRAMMAR = $(LIB_DIR)/library/PGE/Perl6Grammar.pbc
+PARROT          = $(BIN_DIR)/parrot@exe@
+RECONFIGURE     = $(PERL) $(LIB_DIR)/tools/dev/gen_makefile.pl
+PBC_TO_EXE      = $(BIN_DIR)/pbc_to_exe@exe@
+PERL6GRAMMAR    = $(LIB_DIR)/library/PGE/Perl6Grammar.pbc
+OPS2C           = $(PERL) $(BUILD_TOOLS_DIR)/ops2c.pl
+PMC2C_INCLUDES  = --include $(PARROT_SRC_DIR) --include $(PARROT_SRC_DIR)/pmc
+PMC2C           = $(PERL) $(BUILD_TOOLS_DIR)/pmc2c.pl
+PMC2CD          = $(PMC2C) --dump $(PMC2C_INCLUDES)
+PMC2CC          = $(PMC2C) --c $(PMC2C_INCLUDES)
+
 #IF(darwin):
 #IF(darwin):# MACOSX_DEPLOYMENT_TARGET must be defined for OS X compilation/linking
 #IF(darwin):export MACOSX_DEPLOYMENT_TARGET := @osx_version@
@@ -36,13 +44,23 @@ O         = @o@
 LOAD_EXT  = @load_ext@
 
 ## compiler
-CC_SHARED  = @cc_shared@
-CFLAGS     = @ccflags@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@ $(CC_SHARED)
-CC         = @cc@
-LD         = @ld@
+CFLAGS        = @ccflags@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@ @cc_shared@ -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)/pmc -I.
+CC            = @cc@
+CCC           = @cc@ -c
+CC_OUT        = @cc_o_out@
+LD            = @ld@
+LD_OUT        = @ld_out@
+LD_LOAD_FLAGS = @ld_load_flags@
+LDFLAGS       = @ldflags@ @ld_debug@ @rpath_blib@ @linkflags@
+LINKARGS      = $(LDFLAGS) $(LD_LOAD_FLAGS)  $(SRC_DIR)/binary$(O) $(LIBPARROT)
+
+
+#IF(parrot_is_shared):LIBPARROT = @inst_libparrot_ldflags@
+#ELSE:LIBPARROT =
 
 ## partcl source 
 TCL_GROUP = tcl_group
+OPS_FILE = $(OPS_DIR)/tcl.ops
 
 BUILTINS_PIR = \
   $(BUILTIN_DIR)/after.pir      $(BUILTIN_DIR)/append.pir \
@@ -149,7 +167,7 @@ runtime/tcllib.pbc: $(PARROT) runtime/tcllib.pir $(SRC_DEPS) $(INSTALL_DIR)/tcl_
 	$(PARROT) --output=$@ $<
 
 .c$(O) :
-	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) @cc_o_out@$@ -c $<
+	$(CC) $(CFLAGS) @cc_o_out@$@ -c $<
 
 ## Testing
 test: tcl.pbc
@@ -217,7 +235,6 @@ clean:
 
 realclean: clean
 	$(RM_F) Makefile t_tcl tcl-cvs \
-		$(PMC_DIR)/Makefile \
 		lib/Parrot/Installed.pm \
                 t/internals/select_option.t \
                 t/internals/select_switches.t
@@ -227,31 +244,12 @@ distclean: realclean
 ## regenerate makefiles
 Makefile: config/makefiles/root.in
 	$(RECONFIGURE) config/makefiles/root.in Makefile
-src/pmc/Makefile: config/makefiles/pmc.in
-	$(RECONFIGURE) config/makefiles/pmc.in $(PMC_DIR)/Makefile
 
 ## copy tcl cvs repository
 tcl-cvs:
 	$(PERL) tools/tcl_cvs.pl tcl-cvs
 
 ## ops
-CC            = @cc@ -c
-LDFLAGS       = @ldflags@ @ld_debug@ @rpath_blib@ @linkflags@
-LD_LOAD_FLAGS = @ld_load_flags@
-CFLAGS        = @ccflags@ @cc_shared@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@
-CC_OUT        = @cc_o_out@
-LD_OUT        = @ld_out@
-#IF(parrot_is_shared):LIBPARROT = @inst_libparrot_ldflags@
-#ELSE:LIBPARROT =
-
-BUILD_TOOLS_DIR = $(LIB_DIR)@slash@tools@slash@build
-OPS2C           = $(PERL) $(BUILD_TOOLS_DIR)@slash@ops2c.pl
-
-INCLUDES        = -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)@slash@pmc -I.
-LINKARGS        = $(LDFLAGS) $(LD_LOAD_FLAGS)  $(SRC_DIR)/binary$(O) $(LIBPARROT)
-
-OPS_FILE = $(OPS_DIR)/tcl.ops
-
 OPS_TARGETS := \
 #IF(cg_flag):  $(INSTALL_DIR)/tcl_ops_cg$(LOAD_EXT) \
 #IF(cg_flag):  $(INSTALL_DIR)/tcl_ops_cgp$(LOAD_EXT) \
@@ -263,7 +261,7 @@ $(INSTALL_DIR)/tcl_ops$(LOAD_EXT): $(OPS_DIR)/tcl_ops$(O) $(SRC_DIR)/binary$(O)
 #IF(cygwin or hpux):	CHMOD 0775 "$(INSTALL_DIR)/tcl_ops$(LOAD_EXT)"
 
 $(OPS_DIR)/tcl_ops$(O): $(OPS_DIR)/tcl_ops.c
-	$(CC) $(CC_OUT) $(OPS_DIR)/tcl_ops$(O) $(INCLUDES) $(CFLAGS) $(OPS_DIR)/tcl_ops.c
+	$(CCC) $(CC_OUT) $(OPS_DIR)/tcl_ops$(O) $(CFLAGS) $(OPS_DIR)/tcl_ops.c
 
 $(OPS_DIR)/tcl_ops.c: $(OPS_FILE)
 	$(OPS2C) C --dynamic $(OPS_FILE)
@@ -273,7 +271,7 @@ $(INSTALL_DIR)/tcl_ops_switch$(LOAD_EXT): $(OPS_DIR)/tcl_ops_switch$(O)
 #IF(cygwin or hpux):	CHMOD 0775 "$(INSTALL_DIR)/tcl_ops_switch$(LOAD_EXT)"
 
 $(OPS_DIR)/tcl_ops_switch$(O): $(OPS_DIR)/tcl_ops_switch.c
-	$(CC) $(CC_OUT) $(OPS_DIR)/tcl_ops_switch$(O) $(INCLUDES) $(CFLAGS) $(OPS_DIR)/tcl_ops_switch.c
+	$(CCC) $(CC_OUT) $(OPS_DIR)/tcl_ops_switch$(O) $(CFLAGS) $(OPS_DIR)/tcl_ops_switch.c
 
 $(OPS_DIR)/tcl_ops_switch.c: $(OPS_FILE)
 	$(OPS2C) CSwitch --dynamic $(OPS_FILE)
@@ -283,7 +281,7 @@ $(INSTALL_DIR)/tcl_ops_cg$(LOAD_EXT): $(OPS_DIR)/tcl_ops_cg$(O)
 #IF(cygwin or hpux):	CHMOD 0775 "$(INSTALL_DIR)/tcl_ops_cg$(LOAD_EXT)"
 
 $(OPS_DIR)/tcl_ops_cg$(O): $(OPS_DIR)/tcl_ops_cg.c
-	$(CC) $(CC_OUT) $(OPS_DIR)/tcl_ops_cg$(O) $(INCLUDES) $(CFLAGS) $(OPS_DIR)/tcl_ops_cg.c
+	$(CCC) $(CC_OUT) $(OPS_DIR)/tcl_ops_cg$(O) $(CFLAGS) $(OPS_DIR)/tcl_ops_cg.c
 
 $(OPS_DIR)/tcl_ops_cg.c: $(OPS_FILE)
 	$(OPS2C) CGoto --dynamic $(OPS_FILE)
@@ -292,28 +290,12 @@ $(INSTALL_DIR)/tcl_ops_cgp$(LOAD_EXT): $(OPS_DIR)/tcl_ops_cgp$(O)
 	$(LD) $(LD_OUT) $(INSTALL_DIR)/tcl_ops_cgp$(LOAD_EXT) $(OPS_DIR)/tcl_ops_cgp$(O) $(LINKARGS)
 
 $(OPS_DIR)/tcl_ops_cgp$(O): $(OPS_DIR)/tcl_ops_cgp.c
-	$(CC) $(CC_OUT) $(OPS_DIR)/tcl_ops_cgp$(O) $(INCLUDES) $(CFLAGS) $(OPS_DIR)/tcl_ops_cgp.c
+	$(CCC) $(CC_OUT) $(OPS_DIR)/tcl_ops_cgp$(O) $(CFLAGS) $(OPS_DIR)/tcl_ops_cgp.c
 
 $(OPS_DIR)/tcl_ops_cgp.c: $(OPS_FILE)
 	$(OPS2C) CGP --dynamic $(OPS_FILE)
 
 ## pmcs 
-PSRC_DIR       = @srcdir@$(VERSION_DIR)
-CC            = @cc@ -c
-LDFLAGS       = @ldflags@ @ld_debug@
-LD_LOAD_FLAGS = @ld_load_flags@
-CFLAGS        = @ccflags@ @cc_shared@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@
-CC_OUT        = @cc_o_out@
-LD_OUT        = @ld_out@
-#IF(parrot_is_shared):LIBPARROT = @inst_libparrot_ldflags@
-#ELSE:LIBPARROT =
-
-BUILD_TOOLS_DIR = $(LIB_DIR)@slash@tools@slash@build
-PMC2C_INCLUDES  = --include $(PSRC_DIR) --include $(PSRC_DIR)@slash@pmc
-PMC2C           = $(PERL) $(BUILD_TOOLS_DIR)@slash@pmc2c.pl
-PMC2CD = $(PMC2C) --dump $(PMC2C_INCLUDES)
-PMC2CC = $(PMC2C) --c $(PMC2C_INCLUDES)
-
 PMC_SOURCES = \
   $(PMC_DIR)/tclstring.pmc \
   $(PMC_DIR)/tclint.pmc \
@@ -329,7 +311,7 @@ $(INSTALL_DIR)/$(TCL_GROUP)$(LOAD_EXT): $(PMC_DIR)/tclstring$(O) $(PMC_DIR)/tcli
 #IF(cygwin or hpux):	CHMOD 0775 "$(INSTALL_DIR)/$(TCL_GROUP)$(LOAD_EXT)"
 
 $(PMC_DIR)/lib-$(TCL_GROUP)$(O): $(PMC_DIR)/$(TCL_GROUP).c
-	$(CC) $(CC_OUT) $(PMC_DIR)/lib-$(TCL_GROUP)$(O) $(INCLUDES) $(CFLAGS) $(PMC_DIR)/$(TCL_GROUP).c
+	$(CCC) $(CC_OUT) $(PMC_DIR)/lib-$(TCL_GROUP)$(O) $(CFLAGS) $(PMC_DIR)/$(TCL_GROUP).c
 
 $(PMC_DIR)/$(TCL_GROUP).c: $(PMC_SOURCES) $(PMC_DIR)/tclstring.c $(PMC_DIR)/tclint.c $(PMC_DIR)/tclfloat.c
 	cd $(PMC_DIR) && $(PMC2C) --library $(TCL_GROUP) --c $(PMC_SOURCES_pmc2c)
@@ -341,7 +323,7 @@ $(PMC_DIR)/tclstring.c: $(PMC_DIR)/tclstring.dump
 	cd $(PMC_DIR) && $(PMC2CC) tclstring.pmc
 
 $(PMC_DIR)/tclstring$(O): $(PMC_DIR)/tclstring.c
-	$(CC) $(CC_OUT) $(PMC_DIR)/tclstring$(O) $(INCLUDES) $(CFLAGS) $(PMC_DIR)/tclstring.c
+	$(CCC) $(CC_OUT) $(PMC_DIR)/tclstring$(O) $(CFLAGS) $(PMC_DIR)/tclstring.c
 
 $(PMC_DIR)/tclint.dump: $(PMC_DIR)/tclint.pmc
 	cd $(PMC_DIR) && $(PMC2CD) tclint.pmc
@@ -350,7 +332,7 @@ $(PMC_DIR)/tclint.c: $(PMC_DIR)/tclint.dump
 	cd $(PMC_DIR) && $(PMC2CC) tclint.pmc
 
 $(PMC_DIR)/tclint$(O): $(PMC_DIR)/tclint.c
-	$(CC) $(CC_OUT) $(PMC_DIR)/tclint$(O) $(INCLUDES) $(CFLAGS) $(PMC_DIR)/tclint.c
+	$(CCC) $(CC_OUT) $(PMC_DIR)/tclint$(O) $(CFLAGS) $(PMC_DIR)/tclint.c
 
 $(PMC_DIR)/tclfloat.dump: $(PMC_DIR)/tclfloat.pmc
 	cd $(PMC_DIR) && $(PMC2CD) tclfloat.pmc
@@ -359,4 +341,4 @@ $(PMC_DIR)/tclfloat.c: $(PMC_DIR)/tclfloat.dump
 	cd $(PMC_DIR) && $(PMC2CC) tclfloat.pmc
 
 $(PMC_DIR)/tclfloat$(O): $(PMC_DIR)/tclfloat.c
-	$(CC) $(CC_OUT) $(PMC_DIR)/tclfloat$(O) $(INCLUDES) $(CFLAGS) $(PMC_DIR)/tclfloat.c
+	$(CCC) $(CC_OUT) $(PMC_DIR)/tclfloat$(O) $(CFLAGS) $(PMC_DIR)/tclfloat.c
