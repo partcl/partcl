@@ -59,6 +59,7 @@ uses format on the failing tests, but they might be numeric conversion issues.
   * lsetComp
   * load
   * main
+  * mathop
   * namespace
   * namespace-old
   * obj
@@ -183,7 +184,6 @@ Running with a ulimit -v of {{{virtual memory (kbytes, -v) 524288}}},
 
 == segfault ==
   * string @SKIP 
-  * mathop @SKIP - after mathop-24.2 - see Issue #97
 
 == {{{ delete_keyed() not implemented in class 'String;'}}} ==
   * error
