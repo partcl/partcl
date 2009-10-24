@@ -22,7 +22,7 @@ empty_string:
     die "can't use empty string as operand of \"!\""
 
 bad_args:
-    die "wrong # args: should be \"::tcl::mathop::! boolean\""
+    die "wrong # args: should be \"! boolean\""
 .end
 
 .sub '&+'
@@ -45,6 +45,7 @@ loop_begin:
     push_eh bad_arg
         arg = toNumber(arg)
     pop_eh
+    .if_nan(arg,nan)
     result += arg
     goto loop_begin
 loop_end:
@@ -63,6 +64,9 @@ bad_octal_arg:
 
 empty_string:
     die "can't use empty string as operand of \"+\""
+
+nan:
+    die "can't use non-numeric floating-point value as operand of \"+\""
 
  nullary:
     .return(0)
@@ -111,7 +115,7 @@ empty_string:
     die "can't use empty string as operand of \"-\""
 
 bad_args:
-    die "wrong # args: should be \"::tcl::mathop::- value ?value ...?\""
+    die "wrong # args: should be \"- value ?value ...?\""
 .end
 
 .sub '&*'
@@ -134,6 +138,7 @@ loop_begin:
     push_eh bad_arg
         arg = toNumber(arg)
     pop_eh
+    .if_nan(arg, nan)
     result *= arg
     goto loop_begin
 loop_end:
@@ -148,6 +153,9 @@ bad_arg:
 
 bad_octal_arg:
     die "can't use invalid octal number as operand of \"*\""
+
+nan:
+    die "can't use non-numeric floating-point value as operand of \"*\""
 
  nullary:
     .return(1)
@@ -198,7 +206,7 @@ empty_string:
     die "can't use empty string as operand of \"/\""
 
 bad_args:
-    die "wrong # args: should be \"::tcl::mathop::/ value ?value ...?\""
+    die "wrong # args: should be \"/ value ?value ...?\""
 .end
 
 .sub '&%'
@@ -245,7 +253,7 @@ divide_by_zero:
     die "divide by zero"
 
 bad_args:
-    die "wrong # args: should be \"::tcl::mathop::% integer integer\""
+    die "wrong # args: should be \"% integer integer\""
 .end
 
 .sub '&**'
@@ -374,7 +382,7 @@ true:
     .return(1)
 
 bad_args:
-    die 'wrong # args: should be "::tcl::mathop::!= value value"'
+    die 'wrong # args: should be "!= value value"'
 .end
 
 .sub '&ne'
@@ -393,7 +401,7 @@ true:
     .return(1)
 
 bad_args:
-    die 'wrong # args: should be "::tcl::mathop::!= value value"'
+    die 'wrong # args: should be "!= value value"'
 .end
 
 .sub '&<'
@@ -457,6 +465,7 @@ bad_arg:
     push_eh bad_string_arg
       toNumber(arg)       
     pop_eh 
+    .if_nan(arg,nan)
     die "can't use floating-point value as operand of \"&\""
 
 bad_string_arg:
@@ -468,6 +477,9 @@ bad_octal_arg:
 
 empty_string:
     die "can't use empty string as operand of \"&\""
+
+nan:
+    die "can't use non-numeric floating-point value as operand of \"&\""
 
  nullary:
     .return(-1)
@@ -509,6 +521,7 @@ bad_arg:
     push_eh bad_string_arg
       toNumber(arg)       
     pop_eh 
+    .if_nan(arg,nan)
     die "can't use floating-point value as operand of \"|\""
 
 bad_string_arg:
@@ -520,6 +533,9 @@ bad_octal_arg:
 
 empty_string:
     die "can't use empty string as operand of \"|\""
+
+nan:
+    die "can't use non-numeric floating-point value as operand of \"|\""
 
  nullary:
     .return(0)
@@ -561,6 +577,7 @@ bad_arg:
     push_eh bad_string_arg
       toNumber(arg)       
     pop_eh 
+    .if_nan(arg,nan)
     die "can't use floating-point value as operand of \"^\""
 
 bad_string_arg:
@@ -572,6 +589,9 @@ bad_octal_arg:
 
 empty_string:
     die "can't use empty string as operand of \"^\""
+
+nan:
+    die "can't use non-numeric floating-point value as operand of \"^\""
 
  nullary:
     .return(0)
