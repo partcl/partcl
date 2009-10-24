@@ -77,6 +77,7 @@ uses format on the failing tests, but they might be numeric conversion issues.
   * set
   * set-old
   * source
+  * string
   * stringComp
   * subst
   * switch
@@ -182,8 +183,6 @@ Running with a ulimit -v of {{{virtual memory (kbytes, -v) 524288}}},
   * clock @SKIP - during compilation
   * expr @SKIP  - after expr-46.10
 
-== segfault ==
-  * string @SKIP 
 
 == {{{ delete_keyed() not implemented in class 'String;'}}} ==
   * error
