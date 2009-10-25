@@ -78,6 +78,7 @@ set.test:	Total	63	Passed	58	Skipped	1	Failed	4
 socket.test:	Total	60	Passed	0	Skipped	60	Failed	0
 source.test:	Total	20	Passed	6	Skipped	0	Failed	14
 split.test:	Total	16	Passed	16	Skipped	0	Failed	0
+string.test:	Total	473	Passed	385	Skipped	1	Failed	87
 stringComp.test:	Total	143	Passed	134	Skipped	0	Failed	9
 stringObj.test:	Total	59	Passed	0	Skipped	59	Failed	0
 subst.test:	Total	59	Passed	35	Skipped	0	Failed	24
