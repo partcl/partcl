@@ -367,19 +367,14 @@
         })
 
         .local string the_string
-        .local pmc    the_repeat
+        .local int    the_repeat
         the_string = argv[0]
         the_repeat = argv[1]
 
-        .local pmc toInteger
-        toInteger = get_root_global ['_tcl'], 'toInteger'
-        the_repeat = toInteger(the_repeat)
-
-        $I0 = the_repeat
-        .If($I0 <= 0, {
+        .If(the_repeat<= 0, {
             .return('')
         })
-        $S0 = repeat the_string, $I0
+        $S0 = repeat the_string, the_repeat
         .return($S0)
     })
 
@@ -894,10 +889,8 @@
         argc = elements argv
         if argc == 0 goto bad_args3
 
-        .local pmc toInteger
-        toInteger = get_root_global ['_tcl'], 'toInteger'
-        $S4  = shift argv
-        size = toInteger($S4)
+        $P4  = shift argv
+        size = $P4
         # "if -length is negative, it is ignored"
         if size < 0 goto args_processment
         $S1 = substr $S1, 0, size

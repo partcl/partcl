@@ -10,18 +10,16 @@
   # get necessary conversion subs
   .local pmc compileTcl
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
+
   .local pmc a_command
   a_command = argv[0]
   a_command = compileTcl(a_command)
-  .local pmc a_count
+  .local int a_count
   if argc < 2 goto default_count
   a_count = argv[1]
-  a_count = toInteger(a_count)
   goto done_count
 default_count:
-  a_count = box 1
+  a_count = 1
 done_count:
   .local string R
 

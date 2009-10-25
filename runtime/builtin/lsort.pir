@@ -123,13 +123,12 @@ wrong_args:
   # check that they're actually integers.
   # We recalculate this every time, but without smarter PMCs, we can't
   # afford to change the string value of the given PMC.
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
-  .local pmc i1,i2
+
+  .local int i1,i2
   s1 = clone s1
   s2 = clone s2
-  i1 = toInteger(s1)
-  i2 = toInteger(s2)
+  i1 = s1
+  i2 = s2
   $I0 = cmp_num i1, i2
   .return ($I0)
 

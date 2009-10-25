@@ -435,10 +435,8 @@ bad_args:
 
      if argc == 0 goto nullary
 
-     .local pmc toInt
-     toInt = get_root_global ['_tcl'], 'toInteger'
-
     .local pmc iterator, arg
+    .local int arg_i
     iterator = iter argv
     .local int result
     result = -1
@@ -446,10 +444,9 @@ loop_begin:
     unless iterator goto loop_end
     arg = shift iterator
     push_eh bad_arg
-        arg = toInt(arg)
+        arg_i = arg
     pop_eh
-    $I0 = arg
-    result = band result, $I0
+    result = band result, arg_i
     goto loop_begin
 loop_end:
     .return (result)
@@ -491,10 +488,8 @@ nan:
 
      if argc == 0 goto nullary
 
-     .local pmc toInt
-     toInt = get_root_global ['_tcl'], 'toInteger'
-
     .local pmc iterator, arg
+    .local int arg_i
     iterator = iter argv
     .local int result
     result = 0
@@ -502,10 +497,9 @@ loop_begin:
     unless iterator goto loop_end
     arg = shift iterator
     push_eh bad_arg
-        arg = toInt(arg)
+        arg_i = arg
     pop_eh
-    $I0 = arg
-    result = bor result, $I0
+    result = bor result, arg_i
     goto loop_begin
 loop_end:
     .return (result)
@@ -547,10 +541,8 @@ nan:
 
      if argc == 0 goto nullary
 
-     .local pmc toInt
-     toInt = get_root_global ['_tcl'], 'toInteger'
-
     .local pmc iterator, arg
+    .local int arg_i
     iterator = iter argv
     .local int result
     result = 0
@@ -558,10 +550,9 @@ loop_begin:
     unless iterator goto loop_end
     arg = shift iterator
     push_eh bad_arg
-        arg = toInt(arg)
+        arg_i = arg
     pop_eh
-    $I0 = arg
-    result = bxor result, $I0
+    result = bxor result, arg_i
     goto loop_begin
 loop_end:
     .return (result)

@@ -6,8 +6,6 @@
     .argc()
 
     .const 'Sub' getChannel = 'getChannel'
-    .local pmc toInteger
-    toInteger    = get_root_global ['_tcl'], 'toInteger'
   
     .int(args_ok, 1)
     .If(argc < 2, {
@@ -25,8 +23,7 @@
     channel = getChannel(channel)
 
     .local int offset
-    $P0 = shift argv
-    offset = toInteger($P0)
+    offset = shift argv
 
     .int(whence, 0)
     .If(argc==3, {

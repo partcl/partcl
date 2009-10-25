@@ -71,55 +71,6 @@ NaN:
   die $S1
 .end
 
-=head2 _Tcl::toInteger
-
-Given a PMC, get an integer from it.
-
-=cut
-
-.sub toInteger :multi(TclInt)
-  .param pmc n
-  .return(n)
-.end
-
-.sub toInteger :multi(_)
-  .param pmc value
-  .param pmc rawhex :named ('rawhex') :optional
-  .param int has_rawhex               :opt_flag
-
-  unless has_rawhex goto normal
-  $S0 = value
-  $S0 =  '0x' . $S0
-  value = $S0
-
-normal:
-  .local pmc integer
-
-  push_eh not_integer_eh
-    integer = toNumber(value)
-  pop_eh
-  $S0 = typeof integer
-  if $S0 != 'TclInt' goto not_integer
-
-  copy value, integer
-
-  .return(value)
-
-not_integer:
-  $S1 = value
-  $S0 = 'expected integer but got "'
-  $S0 .= $S1
-  $S0 .= '"'
-  die $S0
-
-not_integer_eh:
-  .catch()
-  $S99 = exception
-  $I0 = index $S99, 'expected integer'
-  if $I0 == -1 goto not_integer # got some other exception, rewrap it.
-  .rethrow()
-.end
-
 =head2 _Tcl::getIndex
 
 Given a tcl-style index and a string|list, return the corresponding
@@ -155,13 +106,13 @@ A lot of this work could probably be pushed into the AST.
     $S0 = substr idx, 0, 4
     .If($S0 == 'end-', {
         $S0 = substr idx, 4
-        $I0 = toInteger($S0)
+        $I0 = $S0
         $I1 = obj_len - $I0
         .return($I1)
     })
     .If($S0 == 'end+', {
         $S0 = substr idx, 4
-        $I0 = toInteger($S0)
+        $I0 = $S0
         $I1 = obj_len + $I0
         .return($I1)
     })
@@ -174,8 +125,8 @@ A lot of this work could probably be pushed into the AST.
         str_l = substr idx, 0, $I0 
         inc $I0
         str_r = substr idx, $I0
-	int_l = 'toInteger'(str_l)
-	int_r = 'toInteger'(str_r)
+	int_l = str_l
+	int_r = str_r
 
         $I0 = int_l + int_r
 	.return($I0)
@@ -187,15 +138,15 @@ A lot of this work could probably be pushed into the AST.
         str_l = substr idx, 0, $I0 
         inc $I0
         str_r = substr idx, $I0
-	int_l = 'toInteger'(str_l)
-	int_r = 'toInteger'(str_r)
+	int_l = str_l
+	int_r = str_r
 
         $I0 = int_l - int_r
 	.return($I0)
     })
 
     # otherwise, it's just a plain integer.
-    $I0 = toInteger(idx)
+    $I0 = idx
    .return($I0)
 
 bad_index:

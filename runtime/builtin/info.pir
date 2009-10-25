@@ -429,13 +429,11 @@ compile:
             .return($I0)
 	})
         # argc ==1 
-        .local pmc toInteger, getCallLevel
-        toInteger    = get_root_global ['_tcl'], 'toInteger'
+        .local pmc getCallLevel
         getCallLevel = get_root_global ['_tcl'], 'getCallLevel'
 
-        .local pmc level
+        .local int level
         level = shift argv
-        level = toInteger(level)
         if level >= 0 goto find_info_level
         level = getCallLevel(level)
         .return(level)

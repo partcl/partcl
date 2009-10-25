@@ -11,8 +11,7 @@
 
   .list(results)
 
-  .local pmc toInteger, toNumber
-  toInteger = get_root_global [ '_tcl' ], 'toInteger'
+  .local pmc toNumber
   toNumber = get_root_global [ '_tcl' ], 'toNumber'
   .local pmc decimal
   decimal = get_root_global ['parrot'; 'TclExpr'; 'Grammar'], 'decimal'
@@ -132,19 +131,19 @@ check_xpg3:
   if $S0 == '$' goto got_xpg3
   # We got a number, but it was the width.
   $S0 = match
-  width = toInteger($S0)
+  width = $S0
   goto got_width
 
 got_xpg3:
   $S0 = match
-  xpg3 = toInteger($S0)
+  xpg3 = $S0
 
 get_width:
   inc format_pos
   match = decimal(format, 'pos'=>format_pos, 'grammar'=>'TclExpr::Grammar')
   unless match goto got_width
   $S0 = match
-  width = toInteger($S0)
+  width = $S0
 
   $I0 = match.'from'()
   $I1 = match.'to'()
@@ -354,7 +353,9 @@ handle_hex:
 
 hex_width:
   input_pos += $I2
-  $P0 = toInteger($S0, 'rawhex'=>1)
+  # xxx rawhex ?
+  $I0 = $S0
+  $P0 = $I0
   goto set_val
 
 handle_integer:
@@ -373,7 +374,8 @@ do_integer:
 
 integer_width:
   input_pos += $I2
-  $P0 = toInteger($S0)
+  $I0 = $S0
+  $P0 = $I0
   goto set_val
 
 handle_float:
