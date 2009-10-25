@@ -9,11 +9,14 @@
         die 'wrong # args: should be "after option ?arg arg ...?"'
     })
 
-    .int(msec, argv[0])
-    .int(sec , msec / 1000)
-
-    sleep sec
-
+   .TryCatch({
+        .int(msec, argv[0])
+        .int(sec , msec / 1000)
+        sleep sec
+    }, {
+        # don't handle any of the other options yet.
+    })
+ 
     .return('')
 .end
 
