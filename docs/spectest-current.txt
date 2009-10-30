@@ -6,7 +6,7 @@ basic.test:	Total	140	Passed	39	Skipped	74	Failed	27
 case.test:	Total	15	Passed	0	Skipped	0	Failed	15
 chan.test:	Total	35	Passed	2	Skipped	0	Failed	33
 chanio.test:	Total	775	Passed	3	Skipped	458	Failed	314
-cmdIL.test:	Total	122	Passed	75	Skipped	3	Failed	44
+cmdIL.test:	Total	122	Passed	73	Skipped	3	Failed	46
 cmdInfo.test:	Total	12	Passed	0	Skipped	12	Failed	0
 cmdMZ.test:	Total	71	Passed	0	Skipped	3	Failed	68
 compExpr-old.test:	Total	190	Passed	172	Skipped	4	Failed	14
@@ -51,6 +51,7 @@ lsearch.test:	Total	101	Passed	47	Skipped	0	Failed	54
 lset.test:	Total	77	Passed	0	Skipped	77	Failed	0
 lsetComp.test:	Total	19	Passed	13	Skipped	0	Failed	6
 main.test:	Total	67	Passed	0	Skipped	45	Failed	22
+mathop.test:	Total	329	Passed	182	Skipped	0	Failed	147
 misc.test:	Total	301	Passed	1	Skipped	299	Failed	1
 namespace-old.test:	Total	126	Passed	82	Skipped	0	Failed	44
 namespace.test:	Total	277	Passed	116	Skipped	1	Failed	160
@@ -77,6 +78,7 @@ set.test:	Total	63	Passed	58	Skipped	1	Failed	4
 socket.test:	Total	60	Passed	0	Skipped	60	Failed	0
 source.test:	Total	20	Passed	6	Skipped	0	Failed	14
 split.test:	Total	16	Passed	16	Skipped	0	Failed	0
+string.test:	Total	473	Passed	385	Skipped	1	Failed	87
 stringComp.test:	Total	143	Passed	134	Skipped	0	Failed	9
 stringObj.test:	Total	59	Passed	0	Skipped	59	Failed	0
 subst.test:	Total	59	Passed	35	Skipped	0	Failed	24
@@ -90,7 +92,7 @@ unixNotfy.test:	Total	4	Passed	0	Skipped	4	Failed	0
 unknown.test:	Total	7	Passed	6	Skipped	0	Failed	1
 unload.test:	Total	26	Passed	1	Skipped	0	Failed	25
 uplevel.test:	Total	19	Passed	17	Skipped	0	Failed	2
-upvar.test:	Total	55	Passed	26	Skipped	7	Failed	22
+upvar.test:	Total	55	Passed	27	Skipped	7	Failed	21
 utf.test:	Total	114	Passed	82	Skipped	12	Failed	20
 util.test:	Total	290	Passed	130	Skipped	128	Failed	32
 var.test:	Total	84	Passed	39	Skipped	17	Failed	28

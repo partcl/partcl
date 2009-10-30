@@ -48,6 +48,20 @@ pmclass TclString
 	}
         return result;
      }
+
+    VTABLE INTVAL get_integer() {
+        PMC    * const _class     = VTABLE_get_class(interp, SELF);
+        STRING * const get_integer= CONST_STRING(interp, "get_integer");
+        INTVAL result = -10000; /* default, should never be used */
+
+        /* Get the vtable override for 'get_integer', run that instead. */
+        PMC * const method = Parrot_oo_find_vtable_override_for_class(interp, _class, get_integer);
+
+        if (!PMC_IS_NULL(method)) {
+            Parrot_ext_call(interp, method, "Pi->I", SELF, &result);
+	}
+        return result;
+     }
 }
 
 /*

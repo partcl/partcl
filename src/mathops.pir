@@ -22,7 +22,7 @@ empty_string:
     die "can't use empty string as operand of \"!\""
 
 bad_args:
-    die "wrong # args: should be \"::tcl::mathop::! boolean\""
+    die "wrong # args: should be \"! boolean\""
 .end
 
 .sub '&+'
@@ -45,6 +45,7 @@ loop_begin:
     push_eh bad_arg
         arg = toNumber(arg)
     pop_eh
+    .if_nan(arg,nan)
     result += arg
     goto loop_begin
 loop_end:
@@ -63,6 +64,9 @@ bad_octal_arg:
 
 empty_string:
     die "can't use empty string as operand of \"+\""
+
+nan:
+    die "can't use non-numeric floating-point value as operand of \"+\""
 
  nullary:
     .return(0)
@@ -111,7 +115,7 @@ empty_string:
     die "can't use empty string as operand of \"-\""
 
 bad_args:
-    die "wrong # args: should be \"::tcl::mathop::- value ?value ...?\""
+    die "wrong # args: should be \"- value ?value ...?\""
 .end
 
 .sub '&*'
@@ -134,6 +138,7 @@ loop_begin:
     push_eh bad_arg
         arg = toNumber(arg)
     pop_eh
+    .if_nan(arg, nan)
     result *= arg
     goto loop_begin
 loop_end:
@@ -148,6 +153,9 @@ bad_arg:
 
 bad_octal_arg:
     die "can't use invalid octal number as operand of \"*\""
+
+nan:
+    die "can't use non-numeric floating-point value as operand of \"*\""
 
  nullary:
     .return(1)
@@ -198,7 +206,7 @@ empty_string:
     die "can't use empty string as operand of \"/\""
 
 bad_args:
-    die "wrong # args: should be \"::tcl::mathop::/ value ?value ...?\""
+    die "wrong # args: should be \"/ value ?value ...?\""
 .end
 
 .sub '&%'
@@ -245,7 +253,7 @@ divide_by_zero:
     die "divide by zero"
 
 bad_args:
-    die "wrong # args: should be \"::tcl::mathop::% integer integer\""
+    die "wrong # args: should be \"% integer integer\""
 .end
 
 .sub '&**'
@@ -374,7 +382,7 @@ true:
     .return(1)
 
 bad_args:
-    die 'wrong # args: should be "::tcl::mathop::!= value value"'
+    die 'wrong # args: should be "!= value value"'
 .end
 
 .sub '&ne'
@@ -393,7 +401,7 @@ true:
     .return(1)
 
 bad_args:
-    die 'wrong # args: should be "::tcl::mathop::!= value value"'
+    die 'wrong # args: should be "!= value value"'
 .end
 
 .sub '&<'
@@ -427,10 +435,8 @@ bad_args:
 
      if argc == 0 goto nullary
 
-     .local pmc toInt
-     toInt = get_root_global ['_tcl'], 'toInteger'
-
     .local pmc iterator, arg
+    .local int arg_i
     iterator = iter argv
     .local int result
     result = -1
@@ -438,10 +444,9 @@ loop_begin:
     unless iterator goto loop_end
     arg = shift iterator
     push_eh bad_arg
-        arg = toInt(arg)
+        arg_i = arg
     pop_eh
-    $I0 = arg
-    result = band result, $I0
+    result = band result, arg_i
     goto loop_begin
 loop_end:
     .return (result)
@@ -457,6 +462,7 @@ bad_arg:
     push_eh bad_string_arg
       toNumber(arg)       
     pop_eh 
+    .if_nan(arg,nan)
     die "can't use floating-point value as operand of \"&\""
 
 bad_string_arg:
@@ -469,6 +475,9 @@ bad_octal_arg:
 empty_string:
     die "can't use empty string as operand of \"&\""
 
+nan:
+    die "can't use non-numeric floating-point value as operand of \"&\""
+
  nullary:
     .return(-1)
 .end
@@ -479,10 +488,8 @@ empty_string:
 
      if argc == 0 goto nullary
 
-     .local pmc toInt
-     toInt = get_root_global ['_tcl'], 'toInteger'
-
     .local pmc iterator, arg
+    .local int arg_i
     iterator = iter argv
     .local int result
     result = 0
@@ -490,10 +497,9 @@ loop_begin:
     unless iterator goto loop_end
     arg = shift iterator
     push_eh bad_arg
-        arg = toInt(arg)
+        arg_i = arg
     pop_eh
-    $I0 = arg
-    result = bor result, $I0
+    result = bor result, arg_i
     goto loop_begin
 loop_end:
     .return (result)
@@ -509,6 +515,7 @@ bad_arg:
     push_eh bad_string_arg
       toNumber(arg)       
     pop_eh 
+    .if_nan(arg,nan)
     die "can't use floating-point value as operand of \"|\""
 
 bad_string_arg:
@@ -521,6 +528,9 @@ bad_octal_arg:
 empty_string:
     die "can't use empty string as operand of \"|\""
 
+nan:
+    die "can't use non-numeric floating-point value as operand of \"|\""
+
  nullary:
     .return(0)
 .end
@@ -531,10 +541,8 @@ empty_string:
 
      if argc == 0 goto nullary
 
-     .local pmc toInt
-     toInt = get_root_global ['_tcl'], 'toInteger'
-
     .local pmc iterator, arg
+    .local int arg_i
     iterator = iter argv
     .local int result
     result = 0
@@ -542,10 +550,9 @@ loop_begin:
     unless iterator goto loop_end
     arg = shift iterator
     push_eh bad_arg
-        arg = toInt(arg)
+        arg_i = arg
     pop_eh
-    $I0 = arg
-    result = bxor result, $I0
+    result = bxor result, arg_i
     goto loop_begin
 loop_end:
     .return (result)
@@ -561,6 +568,7 @@ bad_arg:
     push_eh bad_string_arg
       toNumber(arg)       
     pop_eh 
+    .if_nan(arg,nan)
     die "can't use floating-point value as operand of \"^\""
 
 bad_string_arg:
@@ -572,6 +580,9 @@ bad_octal_arg:
 
 empty_string:
     die "can't use empty string as operand of \"^\""
+
+nan:
+    die "can't use non-numeric floating-point value as operand of \"^\""
 
  nullary:
     .return(0)

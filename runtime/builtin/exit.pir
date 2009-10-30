@@ -11,13 +11,7 @@
     returnCode = 0
     if argc == 0 goto got_returnCode
 
-    .local pmc toInteger
-    toInteger = get_root_global ['_tcl'], 'toInteger'
-    .local pmc arg
-    arg = shift argv
-    arg = toInteger(arg)
-
-    returnCode = arg
+    returnCode = shift argv
 
 got_returnCode:
 

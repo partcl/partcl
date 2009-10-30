@@ -660,16 +660,11 @@ is_string:
   .if_nan(a,nan)
   .if_nan(b,nan)
    
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
-
   push_eh is_string
-    a = toInteger(a)
-    b = toInteger(b)
+    $I0 = a
+    $I1 = b
   pop_eh
 
-  $I0 = a
-  $I1 = b
   $I0 = band $I0, $I1
   .return($I0)
 
@@ -689,14 +684,10 @@ nan:
   .param pmc a
   .param int b
 
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
-
   push_eh is_string
-    a = toInteger(a)
+    $I0 = a
   pop_eh
 
-  $I0 = a
   $I0 = band $I0, b
   .return($I0)
 
@@ -713,14 +704,10 @@ empty_string:
   .param int a
   .param pmc b
 
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
-
   push_eh is_string
-    b = toInteger(b)
+    $I0 = b
   pop_eh
 
-  $I0 = b
   $I0 = band a, $I0
   .return($I0)
 
@@ -739,11 +726,8 @@ empty_string:
 
     .if_nan(a,nan)
 
-    .local pmc toInteger
-    toInteger = get_root_global ['_tcl'], 'toInteger'
-
     push_eh is_string
-        b = toInteger(b)
+        $I0 = b 
     pop_eh
     die "can't use floating-point value as operand of \"&\""
 
@@ -764,11 +748,8 @@ nan:
 
     .if_nan(b,nan)
 
-    .local pmc toInteger
-    toInteger = get_root_global ['_tcl'], 'toInteger'
-
     push_eh is_string
-        a = toInteger(a)
+        $I0 = a
     pop_eh
     die "can't use floating-point value as operand of \"&\""
 
@@ -820,16 +801,11 @@ nan:
   .if_nan(a,nan)
   .if_nan(b,nan)
 
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
-
   push_eh is_string
-    a = toInteger(a)
-    b = toInteger(b)
+    $I0 = a
+    $I1 = b
   pop_eh
 
-  $I0 = a
-  $I1 = b
   $I0 = bxor $I0, $I1
   .return($I0)
 
@@ -849,14 +825,10 @@ nan:
   .param pmc a
   .param int b
 
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
-
   push_eh is_string
-    a = toInteger(a)
+    $I0 = a
   pop_eh
 
-  $I0 = a
   $I0 = bxor $I0, b
   .return($I0)
 
@@ -873,14 +845,10 @@ empty_string:
   .param int a
   .param pmc b
 
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
-
   push_eh is_string
-    b = toInteger(b)
+    $I0 = b
   pop_eh
 
-  $I0 = b
   $I0 = bxor a, $I0
   .return($I0)
 
@@ -899,11 +867,8 @@ empty_string:
 
     .if_nan(a,nan)
 
-    .local pmc toInteger
-    toInteger = get_root_global ['_tcl'], 'toInteger'
-
     push_eh is_string
-        b = toInteger(b)
+        $I0 = b
     pop_eh
     die "can't use floating-point value as operand of \"^\""
 
@@ -924,11 +889,8 @@ nan:
 
     .if_nan(b, nan)
 
-    .local pmc toInteger
-    toInteger = get_root_global ['_tcl'], 'toInteger'
-
     push_eh is_string
-        a = toInteger(a)
+        $I0 = a
     pop_eh
     die "can't use floating-point value as operand of \"^\""
 
@@ -982,16 +944,11 @@ nan:
   .if_nan(a,nan) 
   .if_nan(b,nan) 
   
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
-
   push_eh is_string
-    a = toInteger(a)
-    b = toInteger(b)
+    $I0 = a
+    $I1 = b
   pop_eh
 
-  $I0 = a
-  $I1 = b
   $I0 = bor $I0, $I1
   .return($I0)
 
@@ -1011,14 +968,10 @@ nan:
   .param pmc a
   .param int b
 
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
-
   push_eh is_string
-    a = toInteger(a)
+    $I0 = a
   pop_eh
 
-  $I0 = a
   $I0 = bor $I0, b
   .return($I0)
 
@@ -1035,14 +988,10 @@ empty_string:
   .param int a
   .param pmc b
 
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
-
   push_eh is_string
-    b = toInteger(b)
+    $I0 = b
   pop_eh
 
-  $I0 = b
   $I0 = bor a, $I0
   .return($I0)
 
@@ -1061,11 +1010,8 @@ empty_string:
 
     .if_nan(a,nan)
 
-    .local pmc toInteger
-    toInteger = get_root_global ['_tcl'], 'toInteger'
-
     push_eh is_string
-        b = toInteger(b)
+        $I0 = b
     pop_eh
     die "can't use floating-point value as operand of \"|\""
 
@@ -1086,11 +1032,8 @@ nan:
 
     .if_nan(b, nan)
 
-    .local pmc toInteger
-    toInteger = get_root_global ['_tcl'], 'toInteger'
-
     push_eh is_string
-        a = toInteger(a)
+        $I0 = a
     pop_eh
     die "can't use floating-point value as operand of \"|\""
 

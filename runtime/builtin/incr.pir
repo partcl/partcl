@@ -9,8 +9,6 @@
   if argc > 2 goto bad_args
 
   # get helper subs
-  .local pmc toInteger
-  toInteger = get_root_global ['_tcl'], 'toInteger'
   .const 'Sub' makeVar = 'makeVar'
 
   # Get/Vivify variable
@@ -22,13 +20,13 @@
   if $I0 goto got_var
   var = 0
 got_var:
-  var = toInteger(var)
+  $I0 = var
+  var = $I0
 
   # Increment
   if argc < 2 goto default_increment
-  .local pmc increment
+  .local int increment
   increment = argv[1]
-  increment = toInteger(increment)
   var += increment
   goto done_increment
 default_increment:

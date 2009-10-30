@@ -250,3 +250,34 @@ check_numeric:
         die $S0
     })
 .end
+
+.sub get_integer :vtable
+  .local pmc integer
+
+  .local pmc toNumber 
+  toNumber = get_root_global ['_tcl'], 'toNumber'
+
+  push_eh not_integer_eh
+    integer = toNumber(self)
+  pop_eh
+  $S0 = typeof integer
+  if $S0 != 'TclInt' goto not_integer
+
+  copy self, integer
+
+  .return(self)
+
+not_integer:
+  $S1 = self
+  $S0 = 'expected integer but got "'
+  $S0 .= $S1
+  $S0 .= '"'
+  die $S0
+
+not_integer_eh:
+  .catch()
+  $S99 = exception
+  $I0 = index $S99, 'expected integer'
+  if $I0 == -1 goto not_integer # got some other exception, rewrap it.
+  .rethrow()
+.end

@@ -9,12 +9,8 @@
         die 'wrong # args: should be "lrepeat positiveCount value ?value ...?"'
     })
 
-    .local pmc toInteger
-    toInteger = get_root_global ['_tcl'], 'toInteger'
-
-    $P0 = shift argv
     .local int count
-    count = toInteger($P0)
+    count = shift argv
 
     .If(count < 1, {
         die 'must have a count of at least 1'

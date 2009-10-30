@@ -261,6 +261,13 @@ done:
   $P0 = value
 .end
 
+.sub 'get_integer' :vtable
+  $P1 = new 'TclString'
+  assign $P1, self
+  $I1 = $P1
+  .return($I1)
+.end
+
 =head2 __dump
 
 This method enables Data::Dumper to work on us; shouldn't need it, because

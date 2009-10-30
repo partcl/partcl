@@ -427,14 +427,12 @@ got_dict:
   .local pmc key
   key = shift argv
 
-  .local pmc increment
-  increment = box 1
+  .int(increment, 1)
 
   if argc == 2 goto got_increment
   increment = shift argv
-  increment = toInteger (increment)
 
-  .local pmc value
+  .local int value
 
 got_increment:
   $I0 = exists dictionary[key]
@@ -444,7 +442,6 @@ got_increment:
 
 vivified:
   value = dictionary[key]
-  value = toInteger(value)
   value += increment
 
 done:
