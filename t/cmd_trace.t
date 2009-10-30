@@ -23,4 +23,4 @@ set a(1) 2
 trace variable a r tracer
 set a(1) 3
 is $a(1) 3 {set should still work}
-is $some_var x {trigger should have hit} {TODO "disabled for speed reasons"}
+is $some_var x {trigger should have hit}

@@ -61,9 +61,8 @@ skip:
   $P1()
   working = 0
 delegate:
-  # Delegate to our parent..
-  # Finally, delegate to our parent's set_string
-  $P0 = getattribute self, ['TclArray'], 'proxy'
+  # Delegate to our first PMC ancestor.
+  $P0 = getattribute self, ['Hash'], 'proxy'
   .local pmc result
   result = $P0[key]
   .return (result)

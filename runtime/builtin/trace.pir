@@ -5,9 +5,6 @@
 .sub '&trace'
   .param pmc argv :slurpy
 
-  # comment this line to reactivate basic (BUT VERY SLOW) tracing
-  .return()
-
   .local string subcommand
   subcommand = shift argv
   if subcommand != 'variable' goto unimplemented
