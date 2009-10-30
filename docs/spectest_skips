@@ -62,7 +62,6 @@ uses format on the failing tests, but they might be numeric conversion issues.
   * mathop
   * namespace
   * namespace-old
-  * obj
   * package
   * parse
   * parseExpr
@@ -136,8 +135,12 @@ tests that we've marked skipped in an effort to avoid.
   * indexObj
   * link
   * lset
+  * macOSXFCmd
+  * macOSXLoad
   * misc (one PASSED)
   * notify
+  * registry
+  * stack
   * socket
   * stringObj
   * thread
@@ -146,6 +149,7 @@ tests that we've marked skipped in an effort to avoid.
   * winTime
   * unixInit
   * unixNotfy
+  * winFile
   * winNotify
 
 == Mostly PASSED ==
@@ -175,6 +179,9 @@ Because of these failures, *no* PASS from these
 file are being counted. (Though in some cases, we might not have any
 passes to count.)
 
+== segfault ==
+  * obj
+
 == Memory PANIC ==
 
 Running with a ulimit -v of {{{virtual memory (kbytes, -v) 524288}}},
@@ -199,19 +206,6 @@ Running with a ulimit -v of {{{virtual memory (kbytes, -v) 524288}}},
   * http @SKIP - can't run httpd
   * httpold @SKIP - can't run http
 
-== {{{can't read "testConstraints(*)": no such element in array}}} ==
-  * cmdAH @SKIP - win
-  * fCmd @SKIP - 95
-  * fileName @SKIP - win
-  * macOSXFCmd @SKIP - unix
-  * macOSXLoad @SKIP - unix
-  * registry @SKIP - win
-  * stack @SKIP  - unix
-  * winDde @SKIP - win
-  * winFCmd @SKIP - winOnly
-  * winFile @SKIP - nt
-  * unixFCmd @SKIP - unix
-
 == Hangs ==
   * exec @SKIP - after exec-10.1
   * async @SKIP - after aysnc-3.1
@@ -231,9 +225,17 @@ This test is hanging when invoking {{{proc}}} with a body containing 1.5million 
   * autoMkindex @SKIP - after autoMkindex-3.3 {{{.../pkg/samename.tcl}}}
   * fileSystem @SKIP - no output {{{.../dir.dir/inside.file}}}
   * tcltest @SKIP - after tcltest-8.60 {{{.../normaldirectory}}}
+  * cmdAH @SKIP - after cmdAH-17.3 {{{.../dir.file}}}
   * ioCmd @SKIP - after iocmd.tf-32.1 {{{.../test5}}}
 
   This last one appeared after we put in a semi-functional {{{[file delete]}}}.
+
+== no such file or directory
+  * fCmd @SKIP - after fCmd-28.15.2
+  * fileName @SKIP
+  * winDde @SKIP
+  * winFCmd @SKIP
+  * unixFCmd @SKIP
 
 == {{{invalid command name "gen-jisx0208-cp932"}}} ==
   * encoding @SKIP - after encoding-24.3
