@@ -81,7 +81,6 @@ uses format on the failing tests, but they might be numeric conversion issues.
   * subst
   * switch
   * trace
-  * timer
   * unknown
   * uplevel
   * upvar
@@ -209,6 +208,7 @@ Running with a ulimit -v of {{{virtual memory (kbytes, -v) 524288}}},
 == Hangs ==
   * exec @SKIP - after exec-10.1
   * async @SKIP - after aysnc-3.1
+  * timer @SKIP - (started after adding basic [trace] support.)
 
 This test is hanging when invoking {{{proc}}} with a body containing 1.5million {{{incrs}}}.  
 
