@@ -9,7 +9,7 @@ use Tcl::Test; #\
 __DATA__
 
 source lib/test_more.tcl
-plan 376
+plan 377
 
 # namespace
 namespace eval test { variable x 5 }
@@ -24,6 +24,8 @@ is [expr 3e0]     3.0 {scientific with 0 exponent}
 is [expr 2.3e2] 230.0 {scientific with float base}
 is [expr 2.3E2] 230.0 {scientific with float base (upper E)}
 is [expr 2e17]  2e+17 {scientific in, scientific out}
+is [expr 1.1e-05] 1.1e-5 {scientific, negative exponent, removes 0} {TODO {Issue #103}}
+
 eval_is {expr 3e2.0} \
  {missing operator at _@_
 in expression "3e2_@_.0"} \
