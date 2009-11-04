@@ -1,5 +1,4 @@
 /*
- * $Id: binary.c 29858 2008-07-29 18:34:44Z infinoid $
  * Copyright (C) 2007, The Parrot Foundation.
  */
 

@@ -1,7 +1,6 @@
 #!perl
 
 # Copyright (C) 2005-2006, The Parrot Foundation.
-# $Id: cmd_inline.t 27335 2008-05-06 05:49:04Z coke $
 
 use strict;
 use warnings;

@@ -1,7 +1,6 @@
 #!perl
 
 # Copyright (C) 2006-2007, The Parrot Foundation.
-# $Id: cmd_lset.t 21247 2007-09-13 06:31:01Z paultcochrane $
 
 # the following lines re-execute this as a tcl script
 # the \ at the end of these lines makes them a comment in tcl \

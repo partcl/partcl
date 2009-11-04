@@ -1,7 +1,6 @@
 #!perl
 
 # Copyright (C) 2004-2006, The Parrot Foundation.
-# $Id: cmd_unset.t 26434 2008-03-17 01:01:32Z coke $
 
 # the following lines re-execute this as a tcl script
 # the \ at the end of these lines makes them a comment in tcl \

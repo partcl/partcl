@@ -1,7 +1,6 @@
 #!perl
 
 # Copyright (C) 2006, The Parrot Foundation.
-# $Id: cmd_cd.t 26334 2008-03-12 17:34:46Z particle $
 
 use strict;
 use warnings;

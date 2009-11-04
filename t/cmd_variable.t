@@ -1,7 +1,6 @@
 #!perl
 
 # Copyright (C) 2006-2007, The Parrot Foundation.
-# $Id: cmd_variable.t 31354 2008-09-23 01:11:49Z coke $
 
 # the following lines re-execute this as a tcl script
 # the \ at the end of these lines makes them a comment in tcl \

@@ -1,7 +1,6 @@
 #!perl
 
 # Copyright (C) 2005-2008, The Parrot Foundation.
-# $Id: cmd_switch.t 26472 2008-03-18 14:27:51Z coke $
 
 # the following lines re-execute this as a tcl script
 # the \ at the end of these lines makes them a comment in tcl \

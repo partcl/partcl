@@ -1,5 +1,3 @@
-# $Id: functions.pir 29952 2008-08-02 22:45:13Z allison $
-
 =head1 NAME
 
 src/grammar/expr/functions - [expr] function definitions

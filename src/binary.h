@@ -1,5 +1,4 @@
 /*
- * $Id: binary.h 21247 2007-09-13 06:31:01Z paultcochrane $
  * Copyright (C) 2007, The Parrot Foundation.
  */
 

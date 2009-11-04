@@ -1,7 +1,6 @@
 #! perl
 
 # Copyright (C) 2004-2007, The Parrot Foundation.
-# $Id: tcl_misc.t 31338 2008-09-22 17:08:26Z coke $
 
 use strict;
 use warnings;

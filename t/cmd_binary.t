@@ -1,7 +1,6 @@
 #!perl
 
 # Copyright (C) 2007, The Parrot Foundation.
-# $Id: cmd_binary.t 29717 2008-07-24 02:19:53Z coke $
 
 # the following lines re-execute this as a tcl script
 # the \ at the end of these lines makes them a comment in tcl \
