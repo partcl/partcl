@@ -28,7 +28,7 @@ eval_is {
 } {} {command with no args}
 
 eval_is {
-  list
+  list;
 } {} {command with no args, semicolon}
 
 eval_is {
