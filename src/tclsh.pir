@@ -49,7 +49,7 @@
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
 
   .local pmc get_options
-  get_options = new 'Getopt::Obj'
+  get_options = new ['Getopt'; 'Obj']
   push get_options, 'e=s'
   push get_options, 'q'
 
