@@ -24,8 +24,6 @@ A Tcl-style list
   .local pmc interp
   interp = getinterp
   interp.'hll_map'(core,tcl)
-  core = get_class 'Array'
-  interp.'hll_map'(core,tcl)
 .end
 
 .HLL '_tcl'
@@ -38,8 +36,6 @@ A Tcl-style list
   tcl  = get_class 'TclList'
   .local pmc interp
   interp = getinterp
-  interp.'hll_map'(core,tcl)
-  core = get_class 'Array'
   interp.'hll_map'(core,tcl)
 .end
 

@@ -20,7 +20,7 @@ Convert to a string for printing.
 
     .str(fmt, "%.*vg")
 
-    $P1 = new 'Array'
+    $P1 = new 'ResizablePMCArray'
     $P1 = 2
     $P1[0] = precision 
     $P1[1] = self
