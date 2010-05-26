@@ -17,6 +17,14 @@ providing a compreg-compatible method.
 
 .HLL '_tcl'
 
+.macro config_get_intval(reg, val)
+    # hack to avoid using HLL mapped strings which may not yet be usable
+    $S0 = config[.val]
+    $P0 = new ['String']
+    $P0 = $S0
+    .reg = $P0
+.endm
+
 .sub 'mappings' :anon :load
   .local pmc interp
   .local pmc core_int, tclint
@@ -144,7 +152,7 @@ win:
   $P1['platform'] = 'windows'
 got_platform:
   set_root_global ['tcl'], '$tcl_platform', $P1
-  $I1 = config['bigendian']
+  .config_get_intval($I0, 'bigendian')
   if $I1 goto big_endian
   $P1['byteOrder'] = 'littleEndian'
   goto done_endian
@@ -152,7 +160,7 @@ got_platform:
   $P1['byteOrder'] = 'bigEndian'
 
  done_endian:
-  $I1 = config['intsize']
+  .config_get_intval($I1, 'intsize')
   $P1['wordSize'] = $I1
 
   $S1 = config['osname']
