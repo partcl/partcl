@@ -18,8 +18,8 @@ noargs:
 
 cd_it:
   $P0 = new 'OS'
-  $S0 = $P0.'chdir'(dir)
-  .return  ($S0)
+  $P0.'chdir'(dir)
+  .return('')
 
 bad_args:
   die 'wrong # args: should be "cd ?dirName?"'
