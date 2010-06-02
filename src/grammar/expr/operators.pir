@@ -168,9 +168,12 @@ empty_string:
 
     if a == 0 goto zero
 
-    $P0 = new 'TclFloat'
-    $P0 = pow a, b
-    .return ($P0)
+    $N1 = a
+    $N2 = b
+    $N0 = pow $N1, $N2
+
+    $I0 = $N0
+    .return ($I0)
 
 is_string:
     .catch()
