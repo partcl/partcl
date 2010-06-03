@@ -55,7 +55,7 @@ present in TclList.
 
 =cut
 
-.sub getDictValue :method
+.sub getDictValue :method :nsentry
     .return(self)
 .end
 

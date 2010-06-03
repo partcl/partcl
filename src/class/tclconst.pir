@@ -275,7 +275,7 @@ we're subclassing String...
 
 =cut
 
-.sub '__dump' :method
+.sub '__dump' :method :nsentry
   .param pmc dumper
   .param string label
   print self

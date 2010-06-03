@@ -8,7 +8,7 @@ call Tcl methods on them.
 .HLL 'parrot'
 .namespace ['String']
 
-.sub getListValue :method
+.sub getListValue :method :nsentry
   # a TclString would know what to do!
   .local pmc tclstring
   tclstring = new 'TclString'

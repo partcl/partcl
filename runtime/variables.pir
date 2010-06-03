@@ -405,6 +405,7 @@ root_global_var:
   absolute = 1
   .local pmc colons, split
   colons = get_root_global ['_tcl'], 'colons'
+  colons = colons[0]
   split  = get_root_global ['parrot'; 'PGE'; 'Util'], 'split'
 
   ns  = split(colons, name)

@@ -48,7 +48,7 @@ Create a new iterator and track it.
 
 =cut
 
-.sub new_iter :method
+.sub new_iter :method :nsentry
   .param string array_name
 
   .local pmc ids, searches
@@ -80,7 +80,7 @@ Remove iterator from our list.
 
 =cut
 
-.sub rm_iter :method
+.sub rm_iter :method :nsentry
   .param string named
 
   .local pmc ids, searches
@@ -119,7 +119,7 @@ Return the named iterator
 
 =cut
 
-.sub get_iter :method
+.sub get_iter :method :nsentry
   .param string named
 
   .local pmc searches

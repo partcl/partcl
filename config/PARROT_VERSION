@@ -1,6 +1,7 @@
 # Minimum svn revision, e.g.:
 # revision: 12345
-revision: 45800
+revision: 45827
+
 # TODO: allow specification of a maximum version, as parrot trunk does
 # sometimes break.
 

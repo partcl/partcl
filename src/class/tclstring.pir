@@ -14,7 +14,7 @@ Convert to a List.
 
 =cut
 
-.sub getListValue :method
+.sub getListValue :method :nsentry
     .local pmc retval
     retval = new 'TclList'
 
@@ -190,7 +190,7 @@ done:
 
 =cut
 
-.sub getDictValue :method
+.sub getDictValue :method :nsentry
     # convert to list, then to dict.
     $P1 = self.'getListValue'()
     .tailcall $P1.'getDictValue'()

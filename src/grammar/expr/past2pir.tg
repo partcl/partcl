@@ -244,6 +244,7 @@ transform pir (PAST::StaticCommand) {
     .local pmc split, colons
     split  = get_root_global ['parrot'; 'PGE'; 'Util'], 'split'
     colons = get_root_global ['_tcl'], 'colons'
+    colons = colons[0]
     $P0    = split(colons, name)
     $S1    = pop $P0
 
@@ -368,6 +369,7 @@ transform pir (PAST::DynamicCommand) {
   $S0 = %1
   .local pmc colons, split
   colons = get_root_global ['_tcl'], 'colons'
+  colons = colons[0]
   split  = get_root_global ['parrot'; 'PGE'; 'Util'], 'split'
   $P0 = split(colons, $S0)
   $S0 = ""

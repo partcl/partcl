@@ -13,7 +13,7 @@ Convert to a List.
 
 =cut
 
-.sub getListValue :method
+.sub getListValue :method :nsentry
     .list(retval)
     $I0 = self
     retval[0] = $I0

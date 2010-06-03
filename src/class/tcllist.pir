@@ -48,7 +48,7 @@ Return a list-ified version of this Tcl PMC.
 
 =cut
 
-.sub getListValue :method
+.sub getListValue :method :nsentry
   .return(self)
 .end
 
@@ -61,7 +61,7 @@ moved back into parrot core where we'd be happy to inherit it.
 
 =cut
 
-.sub reverse :method
+.sub reverse :method :nsentry
     .local int low,high
     low = 0
     high = elements self
@@ -277,7 +277,7 @@ Copy the contents of other to self.
 
 =cut
 
-.sub getDictValue :method
+.sub getDictValue :method :nsentry
 
   .local int sizeof_list
   sizeof_list = elements self

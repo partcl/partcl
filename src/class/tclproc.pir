@@ -24,7 +24,7 @@ Define the attributes required for the class.
   addattribute $P1, 'defaults'
 .end
 
-.sub 'create' :method
+.sub 'create' :method :nsentry
     .param pmc args
     .param pmc body
     .param string name # short proc name, or apply {...}

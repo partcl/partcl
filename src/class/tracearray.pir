@@ -22,7 +22,7 @@ Define the attributes required for the class.
   addattribute $P1, 'working'
 .end
 
-.sub set_reader :method
+.sub set_reader :method :nsentry
   .param pmc reader
 
   $S0 = reader
