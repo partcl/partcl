@@ -5,6 +5,10 @@
 # then parse and interpret/compile the tcl code we were passed.
 
 .loadlib 'tcl_ops'
+.loadlib 'bit_ops'        # from parrot
+.loadlib 'io_ops'         # from parrot
+.loadlib 'trans_ops'      # from parrot
+
 
 .include 'hllmacros.pir'
 
