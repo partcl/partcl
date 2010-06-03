@@ -112,7 +112,7 @@ wrong_args:
   .param string s1
   .param string s2
 
-  $I0 = cmp_str s1, s2
+  $I0 = cmp s1, s2
   .return ($I0)
 .end
 
@@ -129,7 +129,7 @@ wrong_args:
   s2 = clone s2
   i1 = s1
   i2 = s2
-  $I0 = cmp_num i1, i2
+  $I0 = cmp i1, i2
   .return ($I0)
 
 .end
