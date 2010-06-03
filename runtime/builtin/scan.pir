@@ -226,13 +226,15 @@ normal: # Now at beginning of class. Find the end marker..
   $S0 = substr class_fmt, 0, 1
   if $S0 != '-' goto handle_end
   class['-'] = 1
-  $S0 = substr class_fmt, 0, 1, ''
+  $S0       = substr  class_fmt, 0, 1
+  class_fmt = replace class_fmt, 0, 1, ''
 
 handle_end:
   $S0 = substr class_fmt, -1, 1
   if $S0 != '-' goto loop_dash
   class['-'] = 1
-  $S0 = substr class_fmt, -1, 1, ''
+  $S0       = substr  class_fmt, -1, 1
+  class_fmt = replace class_fmt, -1, 1, ''
 
 loop_dash:
   $I0 = index class_fmt, '-'
@@ -261,7 +263,8 @@ range_loop:
 
 range_loop_done:
 
-  $S0 = substr class_fmt, $I1, 3, ''
+  $S0       = substr  class_fmt, $I1, 3
+  class_fmt = replace class_fmt, $I1, 3, ''
   goto loop_dash
 
 just_chars:

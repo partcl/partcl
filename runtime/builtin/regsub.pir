@@ -102,7 +102,7 @@ handle_bs:
 
 loop_done:
 
-  substr original_target, from, match_len, replStr
+  original_target = replace original_target, from, match_len, replStr
 
   argc = elements argv
   unless argc goto return_it

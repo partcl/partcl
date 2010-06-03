@@ -156,7 +156,7 @@ init_loop:
   if $I1 == -1 goto init_got_type
   $I2 = $I1 + 1
   type = substr switch, $I2, 1
-  substr switch, $I1, 2, '' # assume a single char following the :
+  switch = replace switch, $I1, 2, '' # assume a single char following the :
 
 init_got_type:
   with_type[switch] = type
@@ -172,7 +172,8 @@ init_loop_done:
 loop:
   if pos >= argv_len goto loop_done
   arg = argv[pos]
-  $S1 = substr arg, 0, 1, ''
+  $S1 = substr  arg, 0, 1
+  arg = replace arg, 0, 1, ''
   # args must start with -
   if $S1 != '-' goto loop_done
   # and not have any whitespace.

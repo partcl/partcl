@@ -82,7 +82,7 @@ simple:
   $I1 = exists backslashes[$I0]
   if $I1 goto special
 
-  substr value, pos, 1, ''
+  value = replace value, pos, 1, ''
   inc pos
   goto loop
 
@@ -112,7 +112,7 @@ octal:
                                  # > 7
 octal_only1:
   $S0 = chr octal_value
-  substr value, pos, 2, $S0
+  value = replace value, pos, 2, $S0
 
   inc pos
   goto loop
@@ -135,7 +135,7 @@ octal2:
 
 octal_only2:
   $S0 = chr octal_value
-  substr value, pos, 3, $S0
+  value = replace value, pos, 3, $S0
 
   inc pos
   goto loop
@@ -148,7 +148,7 @@ octal3:
   octal_value += digit
 
   $S0 = chr octal_value
-  substr value, pos, 4, $S0
+  value = replace value, pos, 4, $S0
 
   inc pos
   goto loop # can't have four digits, stop now.
@@ -184,7 +184,7 @@ hex_done:
   $I0 = hex_pos - pos
   if $I0 == 2 goto hex_not_really
   $S0 = chr hex_value
-  substr value, pos, $I0, $S0
+  value = replace value, pos, $I0, $S0
 
   inc pos
 
@@ -192,7 +192,7 @@ hex_done:
 
 hex_not_really:
   # This was a \x escape that had no hex value..
-  substr value, pos, 2, 'x'
+  value = replace value, pos, 2, 'x'
   inc pos
   goto loop
 
@@ -238,20 +238,20 @@ uni_done:
   uni_good:
     $S0 = chr uni_value
 
-  substr value, pos, $I0, $S0
+  value = replace value, pos, $I0, $S0
 
   inc pos
   goto loop
 
 uni_not_really:
   # This was a \u escape that had no uni value..
-  substr value, pos, 2, 'u'
+  value = replace value, pos, 2, 'u'
   inc pos
   goto loop
 
 special:
   $S0 = backslashes[$I0]
-  substr value, pos, 2, $S0
+  value = replace value, pos, 2, $S0
   inc pos
   goto loop
 

@@ -144,7 +144,7 @@ args_next:
     goto args_loop
 
 args_loop_done:
-    chopn args_info,  1
+    args_info = chopn args_info,  1
 
     .If(is_slurpy, {
         args_usage .= ' ...'

@@ -313,7 +313,7 @@ got_platform:
     eq $S0, '$', trim
     goto no_trim
   trim:
-    substr titem, 0, 1, ''
+    titem = replace titem, 0, 1, ''
   no_trim:
     $P0 = sourcens[item]
     symns[titem] = $P0

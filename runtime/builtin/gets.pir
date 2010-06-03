@@ -26,10 +26,10 @@
   # simplistic newline chomp
   lastchar = substr tmps,-1
   if lastchar != "\n" goto done
-  chopn tmps, 1
+  tmps = chopn tmps, 1
   lastchar = substr tmps,-1
   if lastchar != "\r" goto done
-  chopn tmps, 1
+  tmps = chopn tmps, 1
 
 done:
   .return(tmps)

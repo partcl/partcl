@@ -46,7 +46,8 @@ was this a valid tcl-style level, or did we get this value as a default?
 get_absolute:
     # Is this an absolute?
     $S0 = tcl_level
-    $S1 = substr $S0, 0, 1, ''
+    $S1 = substr  $S0, 0, 1
+    $S0 = replace $S0, 0, 1, ''
     if $S1 != '#' goto get_integer
 
     push_eh default

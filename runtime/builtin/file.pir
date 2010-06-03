@@ -363,7 +363,7 @@ bad_args:
 
     $S0 = substr filename, -1, 1
     if $S0 != separator goto continue
-    chopn filename, 1
+    filename = chopn filename, 1
 
   continue:
     .local pmc array
@@ -408,7 +408,7 @@ bad_args:
 
   # Trailing dirsep is removed.
   if $S1 != "/" goto continue
-  chopn $S0, 1
+  $S0 = chopn $S0, 1
 
 continue:
   .local int pos, idx, last_idx
@@ -426,7 +426,7 @@ get_last_index:
 done:
   if last_idx == -1 goto whole
   inc last_idx
-  substr $S0, 0, last_idx, ''
+  $S0 = replace $S0, 0, last_idx, ''
 
 whole:
   .return($S0)

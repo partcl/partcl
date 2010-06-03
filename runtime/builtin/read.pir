@@ -46,7 +46,7 @@
         .Unless(nonewline, {
             $S0 = substr contents, -1, 1
             .If($S0=="\n", {
-                substr contents, -1, 1, ''
+                contents = replace contents, -1, 1, ''
             })
         })
     }, {

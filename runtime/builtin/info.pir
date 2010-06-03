@@ -352,7 +352,8 @@ compile:
             .iter(lexpad)
             .While(iterator, {
                 elem = shift iterator
-                $S0 = substr elem, 0, 1, ''
+                $S0  = substr  elem, 0, 1
+                elem = replace elem, 0, 1, ''
                 .If($S0=='$', {
                     push retval, elem
                 })

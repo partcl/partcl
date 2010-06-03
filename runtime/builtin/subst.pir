@@ -106,7 +106,7 @@ END_PIR
 
     $I0 = match.'to'()
     $I1 = $I0 - pos
-    substr str, pos, $I1, newstr
+    str = replace str, pos, $I1, newstr
 
     pos = $I0
     $I0 = length newstr

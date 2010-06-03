@@ -163,8 +163,8 @@
         chunk_len += 1
 
         .str(portion, {substr orig_str, first_i, chunk_len})
-        downcase portion
-        substr orig_str, first_i, chunk_len, portion
+        portion = downcase portion
+        orig_str = replace orig_str, first_i, chunk_len, portion
 
         .return(orig_str)
     })
@@ -205,8 +205,8 @@
         chunk_len += 1
 
         .str(portion, {substr orig_str, first_i, chunk_len})
-        upcase portion
-        substr orig_str, first_i, chunk_len, portion
+        portion = upcase portion
+        orig_str = replace orig_str, first_i, chunk_len, portion
 
         .return(orig_str)
     })
@@ -247,8 +247,8 @@
         chunk_len += 1
 
         .str(portion, {substr orig_str, first_i, chunk_len})
-        titlecase portion
-        substr orig_str, first_i, chunk_len, portion
+        portion = titlecase portion
+        orig_str = replace orig_str, first_i, chunk_len, portion
 
         .return(orig_str)
     })
@@ -422,13 +422,13 @@
         teststr = substr the_string, strpos, mapstrlen
         # if nocase, tweak 'em both to lc.
         if nocase == 0 goto test
-        downcase teststr
-        downcase mapstr
+        teststr = downcase teststr
+        mapstr  = downcase mapstr
     test:
         if teststr != mapstr goto inner_next
         $I0 = mappos + 1
         replacementstr = map_list [ $I0 ]
-        substr the_string, strpos, mapstrlen,replacementstr
+        the_string = replace the_string, strpos, mapstrlen,replacementstr
         skiplen = length replacementstr
         goto outer_next
 
@@ -488,8 +488,8 @@
         b = shift argv
 
         unless nocase goto skip_lower
-        downcase a
-        downcase b
+        a = downcase a
+        b = downcase b
     skip_lower:
 
         if len == -1 goto skip_shorten
@@ -738,7 +738,7 @@
     replace_do:
         len = high - low
         len += 1
-        substr the_string, low, len, $S4
+        the_string = replace the_string, low, len, $S4
 
     replace_done:
         .return(the_string)
@@ -770,7 +770,7 @@
         $I1 = index $S2, char
 
         if $I1 < 0 goto trimleft_done
-        substr $S1, 0, 1, ''
+        $S1 = replace $S1, 0, 1, ''
         goto trimleft_do
 
     trimleft_done:
@@ -801,7 +801,7 @@
         $I1 = index $S2, char
 
         if $I1 < 0 goto trimright_done
-        chopn $S1, 1
+        $S1 = chopn $S1, 1
         goto trimright_do
 
     trimright_done:
@@ -833,7 +833,7 @@
         $I1 = index $S2, char
 
         if $I1 < 0 goto trim_do2
-        chopn $S1, 1
+        $S1 = chopn $S1, 1
         goto trim_do1
 
     trim_do2:
@@ -844,7 +844,7 @@
         $I1 = index $S2, char
 
         if $I1 < 0 goto trim_done
-        substr $S1, 0, 1, ''
+        $S1 = replace $S1, 0, 1, ''
         goto trim_do2
 
     trim_done:
@@ -880,8 +880,8 @@
         .return(0)
 
     arg_nocase:
-        downcase $S1
-        downcase $S2
+        $S1 = downcase $S1
+        $S2 = downcase $S2
         goto args_processment
 
     arg_length:
