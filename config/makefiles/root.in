@@ -44,7 +44,7 @@ O         = @o@
 LOAD_EXT  = @load_ext@
 
 ## compiler
-CFLAGS        = @ccflags@ @cc_debug@ @ccwarn@ @cc_hasjit@ @cg_flag@ @gc_flag@ @cc_shared@ -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)/pmc -I.
+CFLAGS        = @ccflags@ @cc_debug@ @ccwarn@ @cc_hasjit@ @gc_flag@ @cc_shared@ -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)/pmc -I.
 CC            = @cc@
 CCC           = @cc@ -c
 CC_OUT        = @cc_o_out@
