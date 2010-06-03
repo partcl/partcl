@@ -205,14 +205,14 @@ binary_scan_string_field(PARROT_INTERP, char field,
             if (binstrpos + length > binstrlen)
                 return NULL;
             c     = binstr + binstrpos;
-            value = Parrot_str_concat(interp, value, Parrot_str_new(interp, c, length), 0);
+            value = Parrot_str_concat(interp, value, Parrot_str_new(interp, c, length));
             binstrpos += length;
             break;
         case 'A':
             if (binstrpos + length > binstrlen)
                 return NULL;
             c     = binstr + binstrpos;
-            value = Parrot_str_concat(interp, value, Parrot_str_new(interp, c, length), 0);
+            value = Parrot_str_concat(interp, value, Parrot_str_new(interp, c, length));
             binstrpos += length;
             break;
         default:
@@ -383,25 +383,25 @@ binary_format_number_field(PARROT_INTERP, char field, STRING *binstr, PMC *value
         /* a char */
         case 'c':
             c      = (char)VTABLE_get_integer(interp, value);
-            binstr = Parrot_str_concat(interp, binstr, Parrot_str_new(interp, &c, 1), 0);
+            binstr = Parrot_str_concat(interp, binstr, Parrot_str_new(interp, &c, 1));
             break;
         /* a double */
         case 'd':
             d      = (double)VTABLE_get_number(interp, value);
             len    = sizeof (double)/sizeof (char);
-            binstr = Parrot_str_concat(interp, binstr, Parrot_str_from_num(interp, (float)d), 0);
+            binstr = Parrot_str_concat(interp, binstr, Parrot_str_from_num(interp, (float)d));
             break;
         /* a float */
         case 'f':
             f      = (float)VTABLE_get_number(interp, value);
             len    = sizeof (float)/sizeof (char);
-            binstr = Parrot_str_concat(interp, binstr, Parrot_str_from_num(interp, f), 0);
+            binstr = Parrot_str_concat(interp, binstr, Parrot_str_from_num(interp, f));
             break;
         /* a native integer */
         case 'n':
             n      = (int)VTABLE_get_integer(interp, value);
             len    = sizeof (int)/sizeof (char);
-            binstr = Parrot_str_concat(interp, binstr, Parrot_str_from_int(interp, n), 0);
+            binstr = Parrot_str_concat(interp, binstr, Parrot_str_from_int(interp, n));
             break;
         default:
             break;
@@ -453,19 +453,19 @@ binary_format_string_field(PARROT_INTERP, char field, STRING *binstr,
     {
         case 'a':
             if (strlen > length)
-                Parrot_str_chopn_inplace(interp, strval, strlen - length);
-            binstr = Parrot_str_concat(interp, binstr, strval, 0);
+                strval = Parrot_str_chopn(interp, strval, strlen - length);
+            binstr = Parrot_str_concat(interp, binstr, strval);
             /* pad with nulls if necessary */
             while (length-- > strlen)
-                binstr = Parrot_str_concat(interp, binstr, Parrot_str_new(interp, "", 1), 0);
+                binstr = Parrot_str_concat(interp, binstr, Parrot_str_new(interp, "", 1));
             break;
         case 'A':
             if (strlen > length)
-                Parrot_str_chopn_inplace(interp, strval, strlen - length);
-            binstr = Parrot_str_concat(interp, binstr, strval, 0);
+                strval = Parrot_str_chopn(interp, strval, strlen - length);
+            binstr = Parrot_str_concat(interp, binstr, strval);
             /* pad with spaces if necessary */
             while (length-- > strlen)
-                binstr = Parrot_str_concat(interp, binstr, Parrot_str_new(interp, " ", 1), 0);
+                binstr = Parrot_str_concat(interp, binstr, Parrot_str_new(interp, " ", 1));
             break;
         default:
             break;
