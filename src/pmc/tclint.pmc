@@ -10,7 +10,7 @@ static INTVAL dynpmc_TclFloat;
 static INTVAL dynpmc_TclString;
 
 pmclass TclInt
-    dynpmc
+    dynpmc auto_attrs
     extends Integer
     does    integer
     group   tcl_group
