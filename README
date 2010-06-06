@@ -1,19 +1,20 @@
 Primary site:
-
   http://code.google.com/p/partcl
 
 Source code at:
-
   git://github.com/partcl/partcl.git
 
 Build instructions at:
-
   http://code.google.com/p/partcl/wiki/PartclSource
 
 How to run tcl at:
-
   http://code.google.com/p/partcl/wiki/RunningTclCode
 
 Running the test suite:
-
   http://code.google.com/p/partcl/wiki/TestingPartcl
+
+Isn't partcl dead?
+  While any new development will happen on partcl-nqp, partcl still
+  has more functionality, and is maintained to build on the latest release
+  of parrot. It will eventually be retired when partcl-nqp surpasses it at
+  the official tcl test suite.
