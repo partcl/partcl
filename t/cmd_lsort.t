@@ -93,4 +93,4 @@ proc sortByLen {a b} {
 
 eval_is {
   lsort -command sortByLen [list 12345 {} 1234 1 12345678 123456 1234567]
-} {{} 1 1234 12345 123456 1234567 12345678} {-command option} {TODO {issue #117}}
+} {{} 1 1234 12345 123456 1234567 12345678} {-command option}
