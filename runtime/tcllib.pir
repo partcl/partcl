@@ -14,6 +14,8 @@ providing a compreg-compatible method.
 .loadlib 'bit_ops'        # from parrot
 .loadlib 'io_ops'         # from parrot
 .loadlib 'trans_ops'      # from parrot
+.loadlib 'file'           # from parrot
+.loadlib 'os'             # from parrot
 .include 'hllmacros.pir'  # from parrot
 .include 'src/macros.pir'
 .include 'cclass.pasm'
