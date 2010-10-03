@@ -265,7 +265,8 @@ binary_scan_string(PARROT_INTERP, char field,
                    char *format, int *formatpos, int formatlen,
                    char *binstr, int *binstrpos, int binstrlen)
 {
-    STRING *value = Parrot_str_new_noinit(interp, enum_stringrep_one, 128);
+   
+    STRING *value = Parrot_str_new_noinit(interp, 64);
     PMC *pmcval   = pmc_new(interp, class_TclString);
 
     if ((*formatpos) < formatlen && format[*formatpos] == '*')
@@ -523,7 +524,7 @@ STRING *ParTcl_binary_format(PARROT_INTERP, STRING *FORMAT, PMC *values)
     int formatlen  = Parrot_str_length(interp, FORMAT);
     int formatpos  = 0;
     int valueidx   = 0;
-    STRING *binstr = Parrot_str_new_noinit(interp, enum_stringrep_one, 128);
+    STRING *binstr = Parrot_str_new_noinit(interp, 64);
 
     while (formatpos < formatlen)
     {
