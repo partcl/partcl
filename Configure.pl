@@ -20,7 +20,8 @@ my @keys = qw(
     libdir
     make
     perl
-    revision
+    sha1
+    git_describe
     slash
     VERSION
     versiondir
@@ -59,7 +60,7 @@ while (<$cfh>) {
             print "Need at least r$rev of parrot, using r$opt{revision}.\n";
             last; # that works.
         } else {
-            die "We need at least revision $rev of parrot but only have $opt{revision}.\n"
+            warn "We need at least revision $rev of parrot but only have $opt{revision}.\n"
         }
     }
 }
