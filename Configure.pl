@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use Getopt::Long;
+use Data::Dumper;
 
 use Fatal qw(open);
 
@@ -35,34 +36,11 @@ foreach my $key (@keys) {
 }
 
 # Which version of parrot do we need?
-open my $cfh, '<', 'config/PARROT_VERSION';
+open my $cfh, '<', 'config/PARROT_GIT_DESCRIBE';
 while (<$cfh>) {
     next if /^#/;
     next if /^\s+$/;
-    if (/^release:\s*(.*)\s*$/) {
-        my $rel = $1;
-        # compare dotted notation.
-        if (version_int($opt{VERSION}) >= version_int($rel)) {
-            print "Need at least r$rel of parrot, using r$opt{VERSION}.\n";
-            if ($opt{revision} != 0) {
-                print "Warning: this is a development version of parrot (r$opt{revision}).\n";
-            }
-            last; # that works.
-        } else {
-            die "We need at least release $rel of parrot but only have $opt{VERSION}.\n";
-        }
-    } elsif (/^revision:\s*(.*)\s*$/) {
-        my $rev = $1;
-        if ($opt{revision} == 0) {
-            die "This is a released version of parrot ($opt{VERSION}).\nWe need at least r$rev from the svn repository.\n";
-        }
-        if ($opt{revision} >= $rev) {
-            print "Need at least r$rev of parrot, using r$opt{revision}.\n";
-            last; # that works.
-        } else {
-            warn "We need at least revision $rev of parrot but only have $opt{revision}.\n"
-        }
-    }
+    warn $opt{git_describe};
 }
 
 warn <<END_WARN
@@ -95,6 +73,27 @@ foreach my $template (keys %makefiles) {
         die "Unable to create makefile; did you run parrot's 'make install-dev' ?\n";
     }
 }
+
+sub parse_git_describe {
+    my $g = shift;
+    $g =~ /^REL(?:EASE)?_(\d+)_(\d+)_(\d+)-(\d+)-g[a-f0-9]*$/
+        or die "Invalid revision specifier: '$g' "
+               ."(expected something of format RELEASE_1_2_3-123-gdeadbee)\n";
+    my @c = ($1, $2, $3, $4);
+    return @c;
+}
+
+sub compare_describe_strings {
+    my ($s1, $s2) = @_;
+    my @a = parse_git_describe($s1);
+    my @b = parse_git_describe($s2);
+    for (0..3) {
+        my $cmp = $a[$_] <=> $b[$_];
+        return $cmp if $cmp;
+    }
+    return 0;
+}
+
 
 
 print "Creating Parrot::Installed\n";
