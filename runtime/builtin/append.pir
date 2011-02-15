@@ -27,7 +27,7 @@
     .int(looper,1)
     .While( looper!=argc, {
         .str(strVal,argv[looper])
-        concat value, strVal
+        concat value, value, strVal
         inc looper
     })
 

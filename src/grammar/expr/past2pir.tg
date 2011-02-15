@@ -71,7 +71,7 @@ transform pir (PAST::Val) {
     if $I0 >= 0 goto assign_val              # parrotbug #38896
     $I0 = index $S0, 'e'
     if $I0 >= 0 goto assign_val
-    concat $S0, '.'
+    concat $S0, $S0, '.'
   assign_val:
     pir.'emit'(' box %0, %1', ret, $S0)
     goto end
