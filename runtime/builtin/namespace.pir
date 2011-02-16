@@ -237,7 +237,7 @@ doesnt_exist:
 global_ns:
   .local pmc compileTcl, code
   compileTcl = get_root_global ['_tcl'], 'compileTcl'
-  code     = new 'CodeString'
+  code     = new 'StringBuilder'
   $S0 = join ' ', argv
   ($S0, $S1) = compileTcl($S0, 'pir_only'=>1)
   $I0 = code.'unique'()

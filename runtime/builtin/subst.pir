@@ -89,7 +89,7 @@ subst:
     ret = ast['ret']
 
     .local pmc pir
-    pir = new 'CodeString'
+    pir = new 'StringBuilder'
 
     pir.'emit'(<<"END_PIR", namespace, code, ret)
 .HLL 'tcl'

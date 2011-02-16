@@ -7,7 +7,7 @@ transform result (ROOT)  {
 
 transform pir (PAST::Expr) {
     .local pmc pir
-    pir = new 'CodeString'
+    pir = new 'StringBuilder'
 
     .local pmc value
     value = node['value']
@@ -34,7 +34,7 @@ END_PIR
 
 transform pir (PAST::Program) {
     .local pmc pir
-    pir = new 'CodeString'
+    pir = new 'StringBuilder'
 
     .local pmc iterator, child
     iterator = node.'child_iter'()
@@ -56,7 +56,7 @@ transform pir (PAST::Val) {
     .local pmc ret
     .local pmc class
 
-    pir = new 'CodeString'
+    pir = new 'StringBuilder'
     ret = pir.'unique'('$P')
     class = node['class']
     $S0 = node['value']
@@ -90,7 +90,7 @@ transform pir (PAST::Val) {
 
 transform pir (PAST::Var) {
     .local pmc pir, ret
-    pir = new 'CodeString'
+    pir = new 'StringBuilder'
     ret = pir.'unique'('$P')
     node['ret']    = ret
     node['istemp'] = 1
@@ -130,7 +130,7 @@ transform pir (PAST::Op) {
     .local pmc args,iterator,pir
     .local pmc return_register
  
-    pir = new 'CodeString'
+    pir = new 'StringBuilder'
     args = new 'TclList'
     iterator = node.'child_iter'()
   iter_loop: 
@@ -165,7 +165,7 @@ transform pir (PAST::MathFunc) {
     .local pmc args,iterator,pir
     .local pmc return_register
  
-    pir  = new 'CodeString'
+    pir  = new 'StringBuilder'
     args = new 'TclList'
     iterator = node.'child_iter'()
   iter_loop: 
@@ -197,7 +197,7 @@ transform pir (PAST::StaticCommand) {
     .local pmc args, children, iterator, pir
     .local string reg
     
-    pir  = new 'CodeString'
+    pir  = new 'StringBuilder'
     args = new 'TclList'
     children = node.'get_children'()
     iterator = iter children
@@ -325,7 +325,7 @@ END_PIR
 transform pir (PAST::DynamicCommand) {
     .local pmc args, children, iterator, pir, reg
     
-    pir  = new 'CodeString'
+    pir  = new 'StringBuilder'
     args = new 'TclList'
     children = node.'get_children'()
     iterator = iter children
@@ -410,7 +410,7 @@ END_PIR
 
 transform pir (PAST::Expand) {
     .local pmc pir, value
-    pir   = new 'CodeString'
+    pir   = new 'StringBuilder'
     value = node['value']
 
     $S0 = tree.'get'('pir', value)
@@ -433,7 +433,7 @@ transform pir (PAST::Cond) {
     .local pmc children, cond, then, else
     .local string cond_result, then_result, else_result
 
-    pir = new 'CodeString'
+    pir = new 'StringBuilder'
 
     # This node has 3 children. generate PIR so that:
     # if node1 then node2 else node3

@@ -59,7 +59,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
     ret = ast['ret']
 
     .local pmc pir
-    pir = new 'CodeString'
+    pir = new 'StringBuilder'
 
     pir.'emit'(<<"END_PIR", namespace, result, ret)
 .HLL 'tcl'
@@ -156,7 +156,7 @@ end_preamble:
     ret = ast['ret']
 
     .local pmc pir
-    pir = new 'CodeString'
+    pir = new 'StringBuilder'
     unless has_pir_only goto do_wrapper
     unless pir_only goto do_wrapper
     if has_wrapper  goto do_wrapper

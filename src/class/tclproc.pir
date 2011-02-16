@@ -45,9 +45,9 @@ Define the attributes required for the class.
     .pmc(pirc,{compreg 'PIR'})
 
     .local pmc code, args_code, defaults
-    code      = new 'CodeString'
-    args_code = new 'CodeString'
-    defaults  = new 'CodeString'
+    code      = new 'StringBuilder'
+    args_code = new 'StringBuilder'
+    defaults  = new 'StringBuilder'
 
     .str(namespace,'[]')
     $I0 = ns
