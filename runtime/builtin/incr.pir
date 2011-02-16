@@ -30,7 +30,7 @@ got_var:
   var += increment
   goto done_increment
 default_increment:
-  inc var
+  var += 1
 
 done_increment:
   .return(var)
