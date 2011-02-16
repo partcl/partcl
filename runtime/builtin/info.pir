@@ -315,13 +315,13 @@ compile:
         .If(argc != 0, {
             die 'wrong # args: should be "info tclversion"'
         })
-        .tailcall readVar('tcl_version', 'global'=>1)
+        .tailcall readVar('tcl_version')
     })
     .If(subcommand=='patchlevel', {
         .If(argc!=0, {
             die 'wrong # args: should be "info patchlevel"'
         })
-        .tailcall readVar('tcl_patchLevel', 'global'=>1)
+        .tailcall readVar('tcl_patchLevel')
     })
     .If(subcommand=='library', {
         .If(argc!=0, {
