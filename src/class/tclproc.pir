@@ -58,7 +58,7 @@ Define the attributes required for the class.
     })
 
 create:
-  code.'emit'(<<'END_PIR', name, namespace)
+  code.'append_format'(<<'END_PIR', name, namespace)
 .HLL 'tcl'
 .namespace %1
 .sub '' :anon
@@ -107,7 +107,7 @@ args_loop:
     if $I0 == 2 goto default_arg
 
     min = i + 1
-    args_code.'emit'(<<"END_PIR", $S0)
+    args_code.'append_format'(<<"END_PIR", $S0)
     $P1 = shift argv
     lexpad['$%0'] = $P1
 END_PIR
@@ -117,7 +117,7 @@ END_PIR
     goto args_next
 
 default_arg:
-    args_code.'emit'(<<'END_PIR', i, $S0, $S1)
+    args_code.'append_format'(<<'END_PIR', i, $S0, $S1)
     unless argv goto default_%0
     $P1 = shift argv
     lexpad['$%1'] = $P1
@@ -129,7 +129,7 @@ END_PIR
 
 got_default_key:
 
-    defaults.'emit'(<<'END_PIR', i, $S0, $S1)
+    defaults.'append_format'(<<'END_PIR', i, $S0, $S1)
 default_%0:
     $P1 = box '%2'
     lexpad['$%1'] = $P1
@@ -155,22 +155,22 @@ args_loop_done:
   .argc()
 END_PIR
 
-    code.'emit'('  if argc < %0 goto BAD_ARGS', min)
+    code.'append_format'("  if argc < %0 goto BAD_ARGS\n", min)
     if is_slurpy goto emit_args
-    code.'emit'('  if argc > %0 goto BAD_ARGS', max)
+    code.'append_format'("  if argc > %0 goto BAD_ARGS\n", max)
 
 emit_args:
     code .= args_code
 
     # save anything left into args.
-    code.'emit'(<<'END_PIR')
+    code.'append_format'(<<'END_PIR')
     lexpad['args'] = argv
 END_PIR
 
 done_args:
-    code.'emit'('  goto ARGS_OK')
+    code.'append_format'("  goto ARGS_OK\n")
     code .= defaults
-    code.'emit'(<<'END_PIR', name, args_usage)
+    code.'append_format'(<<'END_PIR', name, args_usage)
     goto ARGS_OK
 BAD_ARGS:
     .popCallChain()
@@ -186,7 +186,7 @@ END_PIR
 
     code .= parsed_body
 
-    code.'emit'(<<'END_PIR', body_reg)
+    code.'append_format'(<<'END_PIR', body_reg)
     pop_eh
 was_ok:
     .popCallChain()

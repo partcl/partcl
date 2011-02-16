@@ -244,7 +244,7 @@ global_ns:
   ($S0, $S1) = compileTcl($S0, 'pir_only'=>1)
   $I0 = unique()
   .const 'Sub' ns_wrapper = 'namespace_wrapper'
-  code.'emit'(ns_wrapper, namespace, $S0, $I0, $S1)
+  code.'append_format'(ns_wrapper, namespace, $S0, $I0, $S1)
 
   .local pmc pir_compiler
   pir_compiler = compreg 'PIR'

@@ -91,7 +91,7 @@ subst:
     .local pmc pir
     pir = new 'StringBuilder'
 
-    pir.'emit'(<<"END_PIR", namespace, code, ret)
+    pir.'append_format'(<<"END_PIR", namespace, code, ret)
 .HLL 'tcl'
 .namespace %0
 .sub '_anon' :anon

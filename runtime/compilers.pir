@@ -61,7 +61,7 @@ Given an expression, return a subroutine, or optionally, the raw PIR
     .local pmc pir
     pir = new 'StringBuilder'
 
-    pir.'emit'(<<"END_PIR", namespace, result, ret)
+    pir.'append_format'(<<"END_PIR", namespace, result, ret)
 .HLL 'tcl'
 .namespace %0
 .sub '_anon' :anon
@@ -164,7 +164,7 @@ end_preamble:
     goto only_pir
 
 do_wrapper:
-    pir.'emit'(<<"END_PIR", namespace, result, ret)
+    pir.'append_format'(<<"END_PIR", namespace, result, ret)
 .HLL 'tcl'
 .namespace %0
 .include 'src/macros.pir'
