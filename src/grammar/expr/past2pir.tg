@@ -60,6 +60,8 @@ transform pir (PAST::Val) {
     .local pmc class
     .local pmc unique
     unique = get_root_global ['parrot'; 'PGE'; 'Util'], 'unique'
+    .local pmc escape
+    escape = get_root_global ['parrot'; 'PGE'; 'Util'], 'pir_str_escape'
 
     pir = new 'StringBuilder'
     ret = unique('$P')
@@ -85,7 +87,7 @@ transform pir (PAST::Val) {
     pir.'emit'(' %0 = "NaN"', ret)
     goto end
   assign_string:
-    $S0 = pir.'escape'($S0)
+    $S0 = escape($S0)
     pir.'emit'(' box %0, %1', ret, $S0)
   end:
     node['ret'] = ret
@@ -210,6 +212,8 @@ transform pir (PAST::StaticCommand) {
     .local string reg
     .local pmc unique
     unique = get_root_global ['parrot'; 'PGE'; 'Util'], 'unique'
+    .local pmc escape
+    escape = get_root_global ['parrot'; 'PGE'; 'Util'], 'pir_str_escape'
 
     pir  = new 'StringBuilder'
     args = new 'TclList'
@@ -263,7 +267,7 @@ transform pir (PAST::StaticCommand) {
     $S1    = pop $P0
 
     $S1 = '&' . $S1
-    $S1 = pir.'escape'($S1)
+    $S1 = escape($S1)
 
     $S2 = $P0[0]
     if $S2 == "" goto root_ns
@@ -301,14 +305,14 @@ END_PIR
 
   no_ns:
     $S1 = '&' . name
-    $S1 = pir.'escape'($S1)
+    $S1 = escape($S1)
     pir.'emit'(<<'END_PIR', retval, $S1, invalid_)
     %0 = find_name %1
     if null %0 goto %2
 END_PIR
 
   emit:
-    $S3  = pir.'escape'(name)
+    $S3  = escape(name)
     if $S0 == "" goto no_args
     pir.'emit'(<<'END_PIR', retval, $S3, $S0, invalid_, done_)
     %0 = %0(%2)
