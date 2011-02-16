@@ -6,6 +6,9 @@ transform result (ROOT)  {
 }
 
 transform pir (PAST::Expr) {
+    .local pmc unique
+    unique = get_root_global ['parrot'; 'PGE'; 'Util'], 'unique'
+
     .local pmc pir
     pir = new 'StringBuilder'
 
@@ -18,7 +21,7 @@ transform pir (PAST::Expr) {
 
     .local pmc ret, label
     ret   = node['ret']
-    label = pir.'unique'('expr_is_string')
+    label = unique('expr_is_string')
  
     pir.'emit'(<<'END_PIR', ret, label)
   .local pmc toNumber
@@ -55,9 +58,11 @@ transform pir (PAST::Val) {
     .local pmc pir
     .local pmc ret
     .local pmc class
+    .local pmc unique
+    unique = get_root_global ['parrot'; 'PGE'; 'Util'], 'unique'
 
     pir = new 'StringBuilder'
-    ret = pir.'unique'('$P')
+    ret = unique('$P')
     class = node['class']
     $S0 = node['value']
     if class == 'TclString' goto assign_string
@@ -91,7 +96,10 @@ transform pir (PAST::Val) {
 transform pir (PAST::Var) {
     .local pmc pir, ret
     pir = new 'StringBuilder'
-    ret = pir.'unique'('$P')
+    .local pmc unique
+    unique = get_root_global ['parrot'; 'PGE'; 'Util'], 'unique'
+
+    ret = unique('$P')
     node['ret']    = ret
     node['istemp'] = 1
     
@@ -129,7 +137,9 @@ END_PIR
 transform pir (PAST::Op) {
     .local pmc args,iterator,pir
     .local pmc return_register
- 
+    .local pmc unique
+    unique = get_root_global ['parrot'; 'PGE'; 'Util'], 'unique'
+
     pir = new 'StringBuilder'
     args = new 'TclList'
     iterator = node.'child_iter'()
@@ -144,7 +154,7 @@ transform pir (PAST::Op) {
   iter_done:
     # get a result PMC
     .local pmc retval
-    retval = pir.'unique'('$P')
+    retval = unique('$P')
     pir .= retval
     pir .= " = get_hll_global '"
     $S0 = node['opfunc']
@@ -164,7 +174,9 @@ transform pir (PAST::Op) {
 transform pir (PAST::MathFunc) {
     .local pmc args,iterator,pir
     .local pmc return_register
- 
+    .local pmc unique
+    unique = get_root_global ['parrot'; 'PGE'; 'Util'], 'unique'
+
     pir  = new 'StringBuilder'
     args = new 'TclList'
     iterator = node.'child_iter'()
@@ -179,7 +191,7 @@ transform pir (PAST::MathFunc) {
   iter_done:
     # get a result PMC
     .local pmc retval
-    retval = pir.'unique'('$P')
+    retval = unique('$P')
     $S0    = node['mathfunc']
     pir.'emit'("%0 = get_hll_global ['tcl'; 'mathfunc'], '&%1'", retval, $S0)
     pir .= retval
@@ -196,7 +208,9 @@ transform pir (PAST::MathFunc) {
 transform pir (PAST::StaticCommand) {
     .local pmc args, children, iterator, pir
     .local string reg
-    
+    .local pmc unique
+    unique = get_root_global ['parrot'; 'PGE'; 'Util'], 'unique'
+
     pir  = new 'StringBuilder'
     args = new 'TclList'
     children = node.'get_children'()
@@ -225,12 +239,12 @@ transform pir (PAST::StaticCommand) {
     goto iter_loop
   iter_done:
     .local string retval
-    retval = pir.'unique'('$P')
+    retval = unique('$P')
 
     .local string invalid_, done_, exec_
-    invalid_ = pir.'unique'('invalid_')
-    done_    = pir.'unique'('done_')
-    exec_    = pir.'unique'('exec_')
+    invalid_ = unique('invalid_')
+    done_    = unique('done_')
+    exec_    = unique('exec_')
 
     $P0 = shift children
     $S0 = $P0['value']
@@ -259,7 +273,7 @@ transform pir (PAST::StaticCommand) {
     ns = ns . "'], "
 
     .local string root_
-    root_ = pir.'unique'('root_')
+    root_ = unique('root_')
     pir.'emit'(<<'END_PIR', retval, ns, $S1, root_, exec_)
     %0 = get_global %1 %2
     if null %0 goto %3
@@ -324,7 +338,9 @@ END_PIR
 
 transform pir (PAST::DynamicCommand) {
     .local pmc args, children, iterator, pir, reg
-    
+    .local pmc unique
+    unique = get_root_global ['parrot'; 'PGE'; 'Util'], 'unique'
+
     pir  = new 'StringBuilder'
     args = new 'TclList'
     children = node.'get_children'()
@@ -355,16 +371,16 @@ transform pir (PAST::DynamicCommand) {
     goto iter_loop
   iter_done:
     .local pmc retval, name
-    retval = pir.'unique'('$P')
+    retval = unique('$P')
     name = shift args
     
-    $S1 = pir.'unique'('invalid_')
-    $S2 = pir.'unique'('done_')
+    $S1 = unique('invalid_')
+    $S2 = unique('done_')
 
     $P0 = shift children
     $S0 = join ", ", args
-    $S4 = pir.'unique'('curr_namespace')
-    $S5 = pir.'unique'('root_namespace')
+    $S4 = unique('curr_namespace')
+    $S5 = unique('root_namespace')
     pir.'emit'(<<'END_PIR', retval, name, $S0, $S1, $S2, $S4, $S5)
   $S0 = %1
   .local pmc colons, split
@@ -412,14 +428,16 @@ transform pir (PAST::Expand) {
     .local pmc pir, value
     pir   = new 'StringBuilder'
     value = node['value']
+    .local pmc unique
+    unique = get_root_global ['parrot'; 'PGE'; 'Util'], 'unique'
 
     $S0 = tree.'get'('pir', value)
     pir .= $S0
 
     $S0 = value['ret']
-    $S1 = pir.'unique'('$P')
-    $S2 = pir.'unique'('loop_')
-    $S3 = pir.'unique'('end_')
+    $S1 = unique('$P')
+    $S2 = unique('loop_')
+    $S3 = unique('end_')
     pir.'emit'(<<'END_PIR', $S0)
 %0 = %0.'getListValue'()
 END_PIR
@@ -432,6 +450,8 @@ transform pir (PAST::Cond) {
     .local pmc args, pir, ret, label
     .local pmc children, cond, then, else
     .local string cond_result, then_result, else_result
+    .local pmc unique
+    unique = get_root_global ['parrot'; 'PGE'; 'Util'], 'unique'
 
     pir = new 'StringBuilder'
 
@@ -439,10 +459,10 @@ transform pir (PAST::Cond) {
     # if node1 then node2 else node3
 
     # pick a unique register to store our result in.
-    ret = pir.'unique'('$P')
+    ret = unique('$P')
 
     #  pick a unique number for our labels..
-    label = pir.'unique'('label_')
+    label = unique('label_')
 
     children = node.'get_children'()
 
@@ -452,7 +472,7 @@ transform pir (PAST::Cond) {
     cond_result = cond['ret']
 
     .local pmc bool
-    bool = pir.'unique'('$I')
+    bool = unique('$I')
     pir.'emit'("  %1 = istrue %0", cond_result, bool)
     pir.'emit'("  unless %0 goto else_%1", bool, label)
 
