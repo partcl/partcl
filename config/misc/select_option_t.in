@@ -15,7 +15,7 @@ Excercise select_options() - the feature that lets us specify, for example
 
 =cut
 
-.HLL 'Tcl'
+.HLL 'tcl'
 .loadlib 'tcl_group'
 .namespace []
 
