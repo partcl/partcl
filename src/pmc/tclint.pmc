@@ -18,18 +18,18 @@ pmclass TclInt
     maps    Integer
 {
 
-    void class_init() {
+    VTABLE void class_init() {
         dynpmc_TclFloat  = pmc_type(INTERP, CONST_STRING(INTERP, "TclFloat"));
         dynpmc_TclString = pmc_type(INTERP, CONST_STRING(INTERP, "TclString"));
     }
 
-    void set_number_native(FLOATVAL value) {
+    VTABLE void set_number_native(FLOATVAL value) {
         pmc_reuse(INTERP, SELF, dynpmc_TclFloat, 0);
         SETATTR_Float_fv(INTERP, SELF, value);
     }
 
 
-    void set_string_native(STRING *value) {
+    VTABLE void set_string_native(STRING *value) {
         pmc_reuse(INTERP, SELF, dynpmc_TclString, 0);
         SETATTR_String_str_val(INTERP, SELF, Parrot_str_copy(INTERP, value));
     }

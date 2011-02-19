@@ -19,17 +19,17 @@ pmclass TclString
 {
 
 
-    void class_init() {
+    VTABLE void class_init() {
         dynpmc_TclFloat = pmc_type(INTERP, CONST_STRING(INTERP, "TclFloat"));
         dynpmc_TclInt   = pmc_type(INTERP, CONST_STRING(INTERP, "TclInt"));
     }
 
-    void set_number_native(FLOATVAL value) {
+    VTABLE void set_number_native(FLOATVAL value) {
         pmc_reuse(INTERP, SELF, dynpmc_TclFloat, 0);
         SETATTR_Float_fv(INTERP, SELF, value);
     }
 
-    void set_integer_native(INTVAL value) {
+    VTABLE void set_integer_native(INTVAL value) {
         pmc_reuse(INTERP, SELF, dynpmc_TclInt, 0);
         SETATTR_Integer_iv(INTERP, SELF, value);
     }

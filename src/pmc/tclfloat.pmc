@@ -17,22 +17,22 @@ pmclass TclFloat
     maps    Float
 {
 
-    void class_init() {
+    VTABLE void class_init() {
         dynpmc_TclInt    = pmc_type(INTERP, CONST_STRING(INTERP, "TclInt"));
         dynpmc_TclString = pmc_type(INTERP, CONST_STRING(INTERP, "TclString"));
     }
 
-    void set_integer_native(INTVAL value) {
+    VTABLE void set_integer_native(INTVAL value) {
         pmc_reuse(INTERP, SELF, dynpmc_TclInt, 0);
         SETATTR_Integer_iv(INTERP, SELF, value);
     }
 
-    void set_string_native(STRING *value) {
+    VTABLE void set_string_native(STRING *value) {
         pmc_reuse(INTERP, SELF, dynpmc_TclString, 0);
         SETATTR_String_str_val(INTERP, SELF, Parrot_str_copy(INTERP, value));
     }
 
-    STRING* get_string() {
+    VTABLE STRING* get_string() {
         UINTVAL buflen;
         int check_flag;
         STRING *buff;
