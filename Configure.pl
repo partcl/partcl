@@ -40,7 +40,7 @@ open my $cfh, '<', 'config/PARROT_GIT_DESCRIBE';
 while (<$cfh>) {
     next if /^#/;
     next if /^\s+$/;
-    warn $opt{git_describe};
+    warn "Using parrot version: " . $opt{git_describe} . "\n";
 }
 
 warn <<END_WARN
