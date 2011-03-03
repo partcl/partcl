@@ -413,10 +413,9 @@ is [
 # XXX  add tests for ::tcl::mathfunc
 
 # tcl_precision
-set TODO {TODO "broken between parrot r48160-r49772."}
-is [set tcl_precision 3; expr 1/3.] 0.333 { precision 3} $TODO
-is [set tcl_precision 7; expr 1/3.] 0.3333333 { precision 7} $TODO
-is [set tcl_precision 12; expr 1/3.] 0.333333333333 { precision 12} $TODO
+is [set tcl_precision 3; expr 1/3.] 0.333 { precision 3}
+is [set tcl_precision 7; expr 1/3.] 0.3333333 { precision 7}
+is [set tcl_precision 12; expr 1/3.] 0.333333333333 { precision 12}
 
 # blocker bugs for t_tcl/expr.t parsing.
 set TODO {SKIP "awaiting real bigint support"}
