@@ -119,7 +119,6 @@ bad_args:
 
   .local pmc colons, split, name
   colons = get_root_global ['_tcl'], 'colons'
-  colons = colons[0]
   split  = get_root_global ['parrot'; 'PGE'; 'Util'], 'split'
 
   name = argv[0]

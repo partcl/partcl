@@ -207,9 +207,7 @@ Given a string namespace, return an array of names.
 depth_set:
   .local pmc colons, split
   colons = get_root_global ['_tcl'], 'colons'
-  colons = colons[0]
   split  = get_root_global ['parrot'; 'PGE'; 'Util'], 'split'
-
 
   .local pmc ns_name
   ns_name = split(colons, name)

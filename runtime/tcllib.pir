@@ -225,11 +225,7 @@ got_platform:
   .local pmc p6rule, colons
   p6rule = compreg 'PGE::Perl6Regex'
   colons = p6rule('\:\:+')
-  # XXX Workaround TT #1672 - put this sub into a TclList
-  # and pop it out each time we want to invoke it. 
-  $P1 = new 'TclList'
-  $P1[0] = colons
-  set_root_global ['_tcl'], 'colons', $P1
+  set_hll_global 'colons', colons
 
   # register the TCL compiler.
   $P1 = get_root_global ['_tcl'], 'compileTcl'
@@ -239,7 +235,6 @@ got_platform:
   $P1 = box 0
   set_global 'compiled_num', $P1
 .end
-
 
 .HLL 'parrot'
 .include 'src/grammar/expr/expression.pir'
