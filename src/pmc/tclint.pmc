@@ -38,7 +38,7 @@ pmclass TclInt
      * TclInt shouldn't automatically promote division to float;
      *  also, explicitly use floor when dividing.
      */
-    MULTI PMC *divide(Integer value, PMC* dest) {
+    MULTI PMC *divide(Integer *value, PMC* dest) {
         FLOATVAL d = VTABLE_get_number(INTERP, value);
 
         if (d == 0)
@@ -49,6 +49,21 @@ pmclass TclInt
             dest = pmc_new(INTERP, SELF->vtable->base_type);
 
         VTABLE_set_integer_native(INTERP, dest, floor(SELF.get_integer() / d));
+        return dest;
+    }
+
+    /*
+     * Workaround for bug #1811 when "div TclInt, TclFloat" dispatched
+     * to Integer.divide(DEFAULT).
+     */
+    MULTI PMC *divide(DEFAULT *value, PMC* dest) {
+        FLOATVAL d = VTABLE_get_number(INTERP, value);
+
+        if (d == 0)
+            Parrot_ex_throw_from_c_args(INTERP, NULL, EXCEPTION_DIV_BY_ZERO,
+                "divide by zero");
+
+        dest = Parrot_pmc_box_number(INTERP, SELF.get_integer() / d);
         return dest;
     }
 }
