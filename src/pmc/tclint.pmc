@@ -2,7 +2,6 @@
  *  Copyright (C) 2001-2009, The Parrot Foundation.
  */
 
-#include "parrot/embed.h"
 #include "pmc/pmc_float.h"
 #include "pmc/pmc_string.h"
 
