@@ -314,10 +314,10 @@ PMC *ParTcl_binary_scan(PARROT_INTERP, STRING *BINSTR, STRING *FORMAT)
     /* make sure we've found the type numbers for the PMCs we want to create */
     if (!class_TclFloat)
     {
-        class_TclFloat  = pmc_type(interp, string_from_literal(interp, "TclFloat"));
-        class_TclInt    = pmc_type(interp, string_from_literal(interp, "TclInt"));
-        class_TclList   = pmc_type(interp, string_from_literal(interp, "TclList"));
-        class_TclString = pmc_type(interp, string_from_literal(interp, "TclString"));
+        class_TclFloat  = Parrot_pmc_get_type_str(interp, string_from_literal(interp, "TclFloat"));
+        class_TclInt    = Parrot_pmc_get_type_str(interp, string_from_literal(interp, "TclInt"));
+        class_TclList   = Parrot_pmc_get_type_str(interp, string_from_literal(interp, "TclList"));
+        class_TclString = Parrot_pmc_get_type_str(interp, string_from_literal(interp, "TclString"));
     }
 
     values = pmc_new(interp, class_TclList);
