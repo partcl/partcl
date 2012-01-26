@@ -51,12 +51,8 @@ got_retval:
 
 handle_retval:
   # We need to convert the code
-  if retval != .CONTROL_OK goto handle_error
+  if retval != .CONTROL_OK goto handle_return
   retval = .TCL_OK
-  goto done
-handle_error:
-  if retval != .CONTROL_ERROR goto handle_return
-  retval = .TCL_ERROR
   goto done
 handle_return:
   if retval != .CONTROL_RETURN goto handle_break
@@ -67,7 +63,12 @@ handle_break:
   retval = .TCL_BREAK
   goto done
 handle_continue:
+  if retval != .CONTROL_CONTINUE goto handle_error
   retval = .TCL_CONTINUE
+  goto done
+handle_error:
+  # .CONTROL_ERROR (tcl) .EXCEPTION_DIE (parrot), anything else.
+  retval = .TCL_ERROR
 
 done:
   if argc != 3 goto return_val
