@@ -45,7 +45,7 @@ pmclass TclInt
                 "divide by zero");
 
         if (!dest)
-            dest = pmc_new(INTERP, SELF->vtable->base_type);
+            dest = Parrot_pmc_new(INTERP, SELF->vtable->base_type);
 
         VTABLE_set_integer_native(INTERP, dest, floor(SELF.get_integer() / d));
         return dest;

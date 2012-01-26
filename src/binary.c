@@ -80,7 +80,7 @@ binary_scan_number_field(PARROT_INTERP, char field, char *binstr, int *_pos, int
             if (pos >= length)
                 break;
             c     = (char *)(binstr + pos);
-            value = pmc_new(interp, class_TclInt);
+            value = Parrot_pmc_new(interp, class_TclInt);
             VTABLE_set_integer_native(interp, value, (INTVAL)*c);
             pos += 1;
             break;
@@ -90,7 +90,7 @@ binary_scan_number_field(PARROT_INTERP, char field, char *binstr, int *_pos, int
             if (pos + len > length)
                 break;
             d     = (double *)(binstr + pos);
-            value = pmc_new(interp, class_TclFloat);
+            value = Parrot_pmc_new(interp, class_TclFloat);
             VTABLE_set_number_native(interp, value, *d);
             pos += len;
             break;
@@ -100,7 +100,7 @@ binary_scan_number_field(PARROT_INTERP, char field, char *binstr, int *_pos, int
             if (pos + len > length)
                 break;
             f     = (float *)(binstr + pos);
-            value = pmc_new(interp, class_TclFloat);
+            value = Parrot_pmc_new(interp, class_TclFloat);
             VTABLE_set_number_native(interp, value, *f);
             pos += len;
             break;
@@ -110,7 +110,7 @@ binary_scan_number_field(PARROT_INTERP, char field, char *binstr, int *_pos, int
             if (pos + len > length)
                 break;
             n     = (int *)(binstr + pos);
-            value = pmc_new(interp, class_TclInt);
+            value = Parrot_pmc_new(interp, class_TclInt);
             VTABLE_set_integer_native(interp, value, *n);
             pos += len;
             break;
@@ -136,7 +136,7 @@ static PMC *
 binary_scan_number_slurpy(PARROT_INTERP, char field, char *binstr, int *_pos, int length)
 {
     PMC *elem;
-    PMC *values = pmc_new(interp, class_TclList);
+    PMC *values = Parrot_pmc_new(interp, class_TclList);
 
     while ((elem = binary_scan_number_field(interp, field, binstr, _pos, length)) != PMCNULL)
         VTABLE_push_pmc(interp, values, elem);
@@ -267,7 +267,7 @@ binary_scan_string(PARROT_INTERP, char field,
 {
    
     STRING *value = Parrot_str_new_noinit(interp, 64);
-    PMC *pmcval   = pmc_new(interp, class_TclString);
+    PMC *pmcval   = Parrot_pmc_new(interp, class_TclString);
 
     if ((*formatpos) < formatlen && format[*formatpos] == '*')
     {
@@ -320,7 +320,7 @@ PMC *ParTcl_binary_scan(PARROT_INTERP, STRING *BINSTR, STRING *FORMAT)
         class_TclString = Parrot_pmc_get_type_str(interp, string_from_literal(interp, "TclString"));
     }
 
-    values = pmc_new(interp, class_TclList);
+    values = Parrot_pmc_new(interp, class_TclList);
     while (formatpos < formatlen)
     {
         char field = format[formatpos++];

@@ -80,7 +80,7 @@ and $errorInfo of C<''>.
 inline op tcl_error(in STR, in PMC, in PMC) :flow {
     PMC      *errorCode, *errorInfo, *ns;
     PMC      *const root_ns = interp->root_namespace;
-    PMC      *tcl_key        = pmc_new(interp, enum_class_Key);
+    PMC      *tcl_key        = Parrot_pmc_new(interp, enum_class_Key);
     PMC *exception = Parrot_ex_build_exception(interp, EXCEPT_error,
             CONTROL_ERROR, $1);
     opcode_t * const ret  = expr NEXT();
@@ -104,7 +104,7 @@ inline op tcl_error(in STR, in PMC, in PMC) :flow {
 inline op tcl_error(in STR, in PMC) :flow {
     PMC      *errorCode, *errorInfo, *ns;
     PMC      *const root_ns = interp->root_namespace;
-    PMC      *tcl_key        = pmc_new(interp, enum_class_Key);
+    PMC      *tcl_key        = Parrot_pmc_new(interp, enum_class_Key);
     PMC *exception = Parrot_ex_build_exception(interp, EXCEPT_error,
             CONTROL_ERROR, $1);
     opcode_t * const ret  = expr NEXT();
@@ -119,7 +119,7 @@ inline op tcl_error(in STR, in PMC) :flow {
     VTABLE_assign_pmc(interp, errorInfo, $2);
 
     errorCode = Parrot_ns_find_namespace_global(interp, ns, string_from_literal(interp, "$errorCode"));
-    newEC = pmc_new(interp, Parrot_hll_get_ctx_HLL_type(interp, enum_class_String));
+    newEC = Parrot_pmc_new(interp, Parrot_hll_get_ctx_HLL_type(interp, enum_class_String));
     VTABLE_set_string_native(interp, newEC, string_from_literal(interp, "NONE"));
     VTABLE_assign_pmc(interp, errorCode, newEC);
 
@@ -131,7 +131,7 @@ inline op tcl_error(in STR, in PMC) :flow {
 inline op tcl_error(in STR) :flow {
     PMC      *errorCode, *errorInfo, *ns;
     PMC      *const root_ns = interp->root_namespace;
-    PMC      *tcl_key        = pmc_new(interp, enum_class_Key);
+    PMC      *tcl_key        = Parrot_pmc_new(interp, enum_class_Key);
     PMC *exception = Parrot_ex_build_exception(interp, EXCEPT_error,
             CONTROL_ERROR, $1);
     opcode_t * const ret  = expr NEXT();
@@ -143,12 +143,12 @@ inline op tcl_error(in STR) :flow {
     ns = Parrot_ns_get_namespace_keyed(interp, root_ns, tcl_key);
 
     errorInfo = Parrot_ns_find_namespace_global(interp, ns, string_from_literal(interp, "$errorCode"));
-    newEI = pmc_new(interp, Parrot_hll_get_ctx_HLL_type(interp, enum_class_String));
+    newEI = Parrot_pmc_new(interp, Parrot_hll_get_ctx_HLL_type(interp, enum_class_String));
     VTABLE_set_string_native(interp, newEI, string_from_literal(interp, ""));
     VTABLE_assign_pmc(interp, errorInfo, newEI);
 
     errorCode = Parrot_ns_find_namespace_global(interp, ns, string_from_literal(interp, "$errorCode"));
-    newEC = pmc_new(interp, Parrot_hll_get_ctx_HLL_type(interp, enum_class_String));
+    newEC = Parrot_pmc_new(interp, Parrot_hll_get_ctx_HLL_type(interp, enum_class_String));
     VTABLE_set_string_native(interp, newEC, string_from_literal(interp, "NONE"));
     VTABLE_assign_pmc(interp, errorCode, newEC);
 
