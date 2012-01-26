@@ -20,8 +20,8 @@ pmclass TclString
 
 
     VTABLE void class_init() {
-        dynpmc_TclFloat = pmc_type(INTERP, CONST_STRING(INTERP, "TclFloat"));
-        dynpmc_TclInt   = pmc_type(INTERP, CONST_STRING(INTERP, "TclInt"));
+        dynpmc_TclFloat = Parrot_pmc_get_type_str(INTERP, CONST_STRING(INTERP, "TclFloat"));
+        dynpmc_TclInt   = Parrot_pmc_get_type_str(INTERP, CONST_STRING(INTERP, "TclInt"));
     }
 
     VTABLE void set_number_native(FLOATVAL value) {

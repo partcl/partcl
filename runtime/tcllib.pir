@@ -11,6 +11,7 @@ providing a compreg-compatible method.
 .HLL 'parrot'
 
 .loadlib 'tcl_ops'
+.loadlib 'tcl_group'
 .loadlib 'bit_ops'        # from parrot
 .loadlib 'io_ops'         # from parrot
 .loadlib 'trans_ops'      # from parrot
