@@ -23,12 +23,12 @@ pmclass TclFloat
     }
 
     VTABLE void set_integer_native(INTVAL value) {
-        pmc_reuse(INTERP, SELF, dynpmc_TclInt, 0);
+        Parrot_pmc_reuse(INTERP, SELF, dynpmc_TclInt, 0);
         SETATTR_Integer_iv(INTERP, SELF, value);
     }
 
     VTABLE void set_string_native(STRING *value) {
-        pmc_reuse(INTERP, SELF, dynpmc_TclString, 0);
+        Parrot_pmc_reuse(INTERP, SELF, dynpmc_TclString, 0);
         SETATTR_String_str_val(INTERP, SELF, Parrot_str_copy(INTERP, value));
     }
 
